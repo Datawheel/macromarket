@@ -13,9 +13,7 @@ import ProductWithId from "./components/ProductWithId.jsx";
 
 ReactDOM.render(
     <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <Route path="dd" component={Country}/>
-    </Route>
+    <Route path="/" component={App}/>
     <Route path="/country" component={Country}/>
     <Route path="/country/:countryWithId" component={CountryWithId}/>
     <Route path="/company" component={Company}/>
