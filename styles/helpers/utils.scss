@@ -1,0 +1,18 @@
+@mixin flexbox {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+@mixin flex-wrap($value: nowrap) {
+	-webkit-flex-wrap: $value;
+	-moz-flex-wrap: $value;
+	@if $value == nowrap {
+		-ms-flex-wrap: none;
+	} @else {
+		-ms-flex-wrap: $value;
+	}
+	flex-wrap: $value;
+}

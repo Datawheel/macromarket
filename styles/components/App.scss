@@ -1,0 +1,17 @@
+.main-content {
+    padding-top: 30px;
+}
+
+.dropdown-list {
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    .dropdown-list {
+        display: block;
+    }
+}

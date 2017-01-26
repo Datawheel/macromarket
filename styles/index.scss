@@ -1,5 +1,6 @@
 @import "../node_modules/normalize.css/normalize";
 @import "helpers/colors";
+@import "helpers/utils";
 
 // Google Fonts
 $open-sans: "Open Sans", sans-serif;
@@ -10,9 +11,12 @@ $open-sans: "Open Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
 
-  text-align: center;
+
 
   @import "components/App";
-  @import "components/Greeting";
+  @import "components/NavBar";
+  @import "components/Search";
+  @import "components/Detailed";
+
 
 }

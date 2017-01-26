@@ -1,0 +1,18 @@
+.nav-bar {
+  list-style-type: none;
+  text-align: right;
+
+  .nav-bar-element {
+    display: inline-block;
+    color:black;
+    padding: 10px;
+    a {
+        text-decoration: none;
+    }
+
+  }
+
+  .logo {
+    float: left;
+  }
+}
