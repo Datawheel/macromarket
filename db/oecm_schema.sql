@@ -50,7 +50,7 @@ INSERT INTO product (id, name, description) VALUES ('0806', 'Grapes', 'Grapes ar
 INSERT INTO product (id, name, description) VALUES ('0808', 'Apples and Pears', 'Apples and Pears are the 308th most traded product.');
 INSERT INTO product (id, name, description) VALUES ('7108', 'Gold', 'Gold is the 9th most traded product.');
 
-CREATE TYPE trade_flow AS ENUM ('export', 'import');
+
 
 DROP TABLE IF EXISTS trade CASCADE;
 CREATE TABLE trade (
@@ -77,7 +77,7 @@ CREATE TABLE "user" (
   image CHARACTER VARYING(255)
 );
 
-INSERT INTO "user" (email, name, password, country_id, company_name, image) VALUES ('kantor.sa@husky.neu.edu','Sabrina Kantor', 'password', 'CHL', '12345', 'prof-pic.jpg');
-INSERT INTO "user" (email, name, password, country_id, company_name, image) VALUES ('melissa@gmail','Melissa Kantor', 'pw', 'CHN', '45678', 'prof-pic.jpg');
-INSERT INTO "user" (email, name, password, country_id, company_name, image) VALUES ('sam@gmail','Sam Kantor', 'password123', 'USA', '56789', 'prof-pic.jpg');
+INSERT INTO "user" (email, name, password, country_id, company_id, image) VALUES ('kantor.sa@husky.neu.edu','Sabrina Kantor', 'password', 'CHL', '12345', 'prof-pic.jpg');
+INSERT INTO "user" (email, name, password, country_id, company_id, image) VALUES ('melissa@gmail','Melissa Kantor', 'pw', 'CHN', '45678', 'prof-pic.jpg');
+INSERT INTO "user" (email, name, password, country_id, company_id, image) VALUES ('sam@gmail','Sam Kantor', 'password123', 'USA', '56789', 'prof-pic.jpg');
 COMMIT;
