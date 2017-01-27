@@ -1,8 +1,8 @@
 import React from "react";
 import {Link, browserHistory} from "react-router";
 
-import NavBar from "./NavBar";
-import Search from "./Search";
+import NavBar from "./NavBar.jsx";
+import Search from "./Search.jsx";
 
 export default class App extends React.Component {
     constructor(props) {

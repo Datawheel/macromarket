@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./DetailedSidebar";
+import Sidebar from "./DetailedSidebar.jsx";
 import {Link} from "react-router";
 
 export default class CompanyWithId extends React.Component {

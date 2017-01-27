@@ -1,4 +1,4 @@
-require.context("../img/", true, /^\.\/.*\.(png|svg)/);
+// require.context("../img/", true, /^\.\/.*\.(png|svg)/);
 import "../styles/index.scss";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
 import React from "react";

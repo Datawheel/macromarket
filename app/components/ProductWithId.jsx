@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "./DropDown";
+import Dropdown from "./DropDown.jsx";
 import {Link} from "react-router";
 
 

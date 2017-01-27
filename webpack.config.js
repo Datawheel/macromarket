@@ -1,73 +1,78 @@
+var Webpack = require('webpack');
+var path = require('path');
 const autoprefixer = require("autoprefixer");
-const path = require("path");
-const merge = require("webpack-merge");
-const webpack = require("webpack");
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var buildPath = path.resolve(__dirname, 'public', 'build');
+var mainPath = path.resolve(__dirname, 'app', 'index.jsx');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const TARGET = process.env.npm_lifecycle_event;
-const PATHS = {
-  "app": path.join(__dirname, "app"),
-  "build": path.join(__dirname, "build"),
-  "styles": path.join(__dirname, "styles")
-};
+var config = {
 
-process.env.BABEL_ENV = TARGET;
+  // Makes sure errors in console map to the correct file
+  // and line number
+  devtool: 'eval',
+  entry: [
 
-const common = {
-  "entry": {"app": PATHS.app},
-  "resolve": {
-    "extensions": ["", ".js", ".jsx", ".json"],
-    "modulesDirectories": ["node_modules"]
+    // For hot style updates
+    'webpack/hot/dev-server',
+
+    // The script refreshing the browser on none hot updates
+    'webpack-dev-server/client?http://localhost:8080',
+
+    // Our application
+    mainPath],
+  output: {
+
+    // We need to give Webpack a path. It does not actually need it,
+    // because files are kept in memory in webpack-dev-server, but an
+    // error will occur if nothing is specified. We use the buildPath
+    // as that points to where the files will eventually be bundled
+    // in production
+    path: buildPath,
+    filename: 'bundle.js',
+
+    // Everything related to Webpack should go through a build path,
+    // localhost:3000/build. That makes proxying easier to handle
+    publicPath: '/build/'
   },
-  "output": {"path": PATHS.build, "filename": "bundle.js"},
-  "module": {
-    "loaders": [
-      {"test": /\.(png|svg)$/, "loader": "file?name=public/[path][name].[ext]"},
-      {"test": /\.s?css$/, "loader": ExtractTextPlugin.extract("style-loader", "css!postcss!sass")},
-      {
-        "test": /\.jsx?$/,
-        "loader": "babel",
-        "query": {
-          "cacheDirectory": true,
-          "presets": ["react", "es2015"],
-          "plugins": ["array-includes", "transform-class-properties", "transform-object-assign", "syntax-object-rest-spread"],
-          "env": {
-            "start": {
-              "presets": ["react-hmre"]
-            }
+  module: {
+
+    loaders: [
+
+    // I highly recommend using the babel-loader as it gives you
+    // ES6/7 syntax and JSX transpiling out of the box
+    {
+      "test": /\.jsx?$/,
+      "loader": "babel",
+      "query": {
+        "cacheDirectory": true,
+        "presets": ["react", "es2015"],
+        "plugins": ["array-includes", "transform-class-properties", "transform-object-assign", "syntax-object-rest-spread"],
+        "env": {
+          "start": {
+            "presets": ["react-hmre"]
           }
-        },
-        "include": PATHS.app
-      }
+        }
+      },
+      include: path.join(__dirname, 'app'),
+      exclude: [nodeModulesPath]
+    },
+
+    // Let us also add the style-loader and css-loader, which you can
+    // expand with less-loader etc.
+    {"test": /\.(png|svg)$/, "loader": "file?name=public/[path][name].[ext]"},
+    {"test": /\.s?css$/, "loader": ExtractTextPlugin.extract("style-loader", "css!postcss!sass")},
+
     ]
   },
-  "plugins": [new ExtractTextPlugin("public/style.css", {"allChunks": true})],
-  "postcss": () => [autoprefixer]
+
+  // We have to manually add the Hot Replacement plugin when running
+  // from Node
+  plugins: [
+    new Webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin("style.css", {"allChunks": true})
+  ],
+  postcss: () => [autoprefixer]
 };
 
-const dev = {
-  "devServer": {
-    "contentBase": PATHS.build,
-    "devtool": "eval-source-map",
-    "historyApiFallback": true,
-    "host": process.env.HOST,
-    // enable for testing on entire network
-    // "host": process.env.HOST || '0.0.0.0',
-    "hot": true,
-    "inline": true,
-    "stats": "errors-only",
-    "port": process.env.PORT,
-    "progress": true
-  },
-  "plugins": [new webpack.HotModuleReplacementPlugin()]
-};
-
-const build = {
-  "plugins": [
-    new webpack.DefinePlugin({"process.env.NODE_ENV": "\"production\""}),
-    new webpack.optimize.UglifyJsPlugin({"compress": {"warnings": false}})
-  ]
-};
-
-if (TARGET === "build") module.exports = merge(common, build);
-else module.exports = merge(common, dev);
+module.exports = config;
