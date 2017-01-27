@@ -46,6 +46,9 @@ proxy.on('error', function(e) {
   console.log('Could not connect to proxy, please try again...');
 });
 
-app.listen(port, function () {
-  console.log('Server running on port ' + port);
+app.listen(port, function onStart(err) {
+  if (err) {
+    console.log(err);
+  }
+  console.info('==> 🌎 Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
 });
