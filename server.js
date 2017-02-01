@@ -14,7 +14,7 @@ app.use(express.static(publicPath));
 
 
 var routes = require('./server/routes/index.js');
-app.use('/', routes);
+app.use('/api', routes);
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
@@ -38,6 +38,10 @@ if (!isProduction) {
   });
 
 }
+
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
 
 // It is important to catch any errors from the proxy or the
 // server will crash. An example of this is connecting to the

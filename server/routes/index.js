@@ -3,17 +3,17 @@ var router = express.Router();
 var models = require('../../db/models/index');
 
 
-router.get('/api', (req, res) => {
+router.get('/', (req, res) => {
   res.status(200).send('App is running');
 });
 
-router.get('/api/countries', (req, res) => {
+router.get('/countries', (req, res) => {
   models.Country.findAll({}).then(function(country) {
      res.json(country);
    });
 });
 
-router.get('/api/company/:id', (req, res) => {
+router.get('/company/:id', (req, res) => {
   models.Company.find({
     where: {
       id: req.params.id
