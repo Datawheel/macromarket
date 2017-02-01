@@ -13,4 +13,14 @@ router.get('/api/countries', (req, res) => {
    });
 });
 
+router.get('/api/company/:id', (req, res) => {
+  models.Company.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(company) {
+    res.json(company);
+  });
+});
+
 module.exports = router;

@@ -1,17 +1,32 @@
 import React from "react";
 import Sidebar from "./DetailedSidebar.jsx";
 import {Link} from "react-router";
+import axios from "axios";
 
 export default class CompanyWithId extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            company:null
+        };
+    }
+
+    componentWillMount() {
+      axios.get(`/api/company/${this.props.params.companyWithId}`).then( (response) => {
+          this.setState({company:response.data});
+          console.log(this.state);
+      }).catch(function(error) {
+          console.log(error);
+      });
     }
 
     render() {
+      const {company} = this.state;
+      console.log(company);
         return (
             <div className="detailed-content-wrapper">
                 <Sidebar>
-                    <h3>Company {this.props.params.companyWithId}
+                    <h3>{company ? company.name : ''}
                     </h3>
                     <p>Av. Nueva Tajamar 481 Torre Norte Oficina 1901, Las Condes Santiago, Chile</p>
                     <p>(503) 329 8721</p>
@@ -20,17 +35,35 @@ export default class CompanyWithId extends React.Component {
                         <div className="imports">
                             Imports
                             <ul>
-                                <li><Link to="/product/111"> Grapes</Link></li>
-                                <li><Link to="/product/222"> Dirt</Link></li>
-                                <li><Link to="/product/444"> Salt</Link></li>
+                                <li>
+                                    <Link to="/product/111">
+                                        Grapes</Link>
+                                </li>
+                                <li>
+                                    <Link to="/product/222">
+                                        Dirt</Link>
+                                </li>
+                                <li>
+                                    <Link to="/product/444">
+                                        Salt</Link>
+                                </li>
                             </ul>
                         </div>
                         <div className="exports">
                             Exports
                             <ul>
-                                <li><Link to="/product/444"> Steel</Link></li>
-                                <li><Link to="/product/555"> Wine</Link></li>
-                                <li><Link to="/product/666"> Wood</Link></li>
+                                <li>
+                                    <Link to="/product/444">
+                                        Steel</Link>
+                                </li>
+                                <li>
+                                    <Link to="/product/555">
+                                        Wine</Link>
+                                </li>
+                                <li>
+                                    <Link to="/product/666">
+                                        Wood</Link>
+                                </li>
                             </ul>
 
                         </div>

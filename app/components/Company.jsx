@@ -11,7 +11,8 @@ export default class Company extends React.Component {
   render() {
     return (<div>
       <p>List of Companies</p>
-      <ul><li><Link to="/company/123">Company 123</Link></li>
+      <ul><li><Link to="/company/1">Company 1</Link></li>
+          <li><Link to="/company/2">Company 2</Link></li>
       <li><Link to="/company/345">Company 345</Link></li>
       </ul>
     </div>);
