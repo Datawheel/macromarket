@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Company = sequelize.define('company', {
+  var Company = sequelize.define('Company', {
     name: DataTypes.STRING,
     address: DataTypes.TEXT,
     phone_number: DataTypes.TEXT,
@@ -13,10 +13,10 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-         Company.belongsTo(models.User);
-         Company.belongsToMany(models.Trade);
+        //  Company.belongsTo(models.User);
+        //  Company.belongsToMany(models.Trade);
       }
     }
   });
-  return company;
+  return Company;
 };

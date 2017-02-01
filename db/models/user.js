@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-         User.hasOne(models.Company);
-          User.hasOne(models.Country);
+        //  User.hasOne(models.Company);
+        //  User.hasOne(models.Country);
       }
     }
   });

@@ -12,9 +12,9 @@ var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
 
-app.get('/api', (req, res) => {
-  res.status(200).send('App is running');
-});
+
+var routes = require('./server/routes/index.js');
+app.use('/', routes);
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());

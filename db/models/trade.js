@@ -1,14 +1,14 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Trade = sequelize.define('Trade', {
-    trade_flow: DataTypes.ENUM
+    trade_flow: DataTypes.ENUM('imports', 'exports')
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-         Trade.hasMany(models.Company);
-         Trade.hasMany(models.Country);
-         Trade.hasMany(models.Product);
+        //  Trade.hasMany(models.Company);
+        //  Trade.hasMany(models.Country);
+        //  Trade.hasMany(models.Product);
       }
     }
   });
