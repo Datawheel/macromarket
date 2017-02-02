@@ -18,21 +18,33 @@ import Logout from "./components/Logout.jsx";
 import Inbox from "./components/Inbox.jsx";
 import ProductWithId from "./components/ProductWithId.jsx";
 
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
+import oecmReducer from "./reducers";
+
+import promiseMiddleware from "redux-promise-middleware";
+
+const store = createStore(oecmReducer, {}, applyMiddleware(
+  promiseMiddleware()
+));
+
 ReactDOM.render(
+  <Provider store={store}>
     <Router history={browserHistory}>
-    <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
-        <Route path="/country" component={Country}/>
-        <Route path="/country/:countryWithId" component={CountryWithId}/>
-        <Route path="/company" component={Company}/>
-        <Route path="/company/:companyWithId" component={CompanyWithId}/>
-        <Route path="/product" component={Product}/>
-        <Route path="/product/:productWithId" component={ProductWithId}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/user/:userId" component={Profile}/>
-        <Route path="/user/:userId/settings" component={Settings}></Route>
-        <Route path="/user/:userId/inbox" component={Inbox}></Route>
-        <Route path="/user/:userId/logout" component={Logout}></Route>
-    </Route>
-</Router>, document.getElementById("component"));
+      <Route path="/" component={App}>
+          <IndexRoute component={Home}/>
+          <Route path="/country" component={Country}/>
+          <Route path="/country/:countryWithId" component={CountryWithId}/>
+          <Route path="/company" component={Company}/>
+          <Route path="/company/:companyWithId" component={CompanyWithId}/>
+          <Route path="/product" component={Product}/>
+          <Route path="/product/:productWithId" component={ProductWithId}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/signup" component={Signup}/>
+          <Route path="/user/:userId" component={Profile}/>
+          <Route path="/user/:userId/settings" component={Settings}></Route>
+          <Route path="/user/:userId/inbox" component={Inbox}></Route>
+          <Route path="/user/:userId/logout" component={Logout}></Route>
+      </Route>
+    </Router>
+  </Provider>, document.getElementById("component"));
