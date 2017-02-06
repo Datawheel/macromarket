@@ -83,9 +83,7 @@ class CompanyWithId extends React.Component {
                   <div className="header-image-wrapper"></div>
                   <div className="description-wrapper">
                       <h3>Company Description</h3>
-                      <p>Our main goal is to create expressive and innovative wines from one of the world’s southernmost wine regions. Cono Sur Vineyards’ Winery was founded in 1993, with the vision of producing premium, expressive and innovative wines conveying the spirit of the New World. Our name refers to the company’s geographic position; it represents wines proudly made in South America’s Southern Cone, on whose western edge lies Chile and its gifted wine valleys. Our logo also evokes a freehand drawing of the silhouette of South America.
-                      </p>
-                      <p>Our quest is to present the world with the finest grape expression and character, from Chile’s varied wine regions. Right from the start Cono Sur applied the newest ideas and technology to winemaking’s traditional methods. Our main goal, therefore, is to create expressive and innovative wines from one of the world’s southernmost wine regions.</p>
+                      <p>{company.description}</p>
                   </div>
               </div>
           </div>

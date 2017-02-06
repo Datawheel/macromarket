@@ -1,17 +1,63 @@
 import React from "react";
 import {Link} from "react-router";
+import {connect} from "react-redux";
+import {fetchProducts} from '../actions/productsActions';
 
-export default class Product extends React.Component {
+class Product extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  render() {
-    return <div><p>List of Products</p>
-      <ul><li><Link to="/product/123">Product 123</Link></li>
-      <li><Link to="/product/345">Product 345</Link></li>
-      </ul>
-    </div>;
+  componentWillMount() {
+    this.props.fetchProducts();
   }
 
+  render() {
+    const {products, loading, error} = this.props;
+    if(loading || !products){
+      return (
+        <div className="detailed-content-wrapper">
+          <div>loading...</div>
+        </div>
+      )
+    }
+
+    if(error){
+      return (
+        <div className="detailed-content-wrapper">
+          <h2>Error</h2>
+          <p>Please refresh the page.</p>
+        </div>
+      )
+    }
+
+    return (<div><p>List of Products </p>
+
+      {products.map((product) => {
+        return(
+        <Link key={product.id} to={'/product/' + product.id}>
+          <p>{product.name}</p>
+        </Link> );
+      })}
+    </div>);
+  }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProducts: () => {
+      dispatch(fetchProducts())
+    }
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    products: state.products.products,
+    loading: state.products.loading,
+    error: state.products.error || null
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product)

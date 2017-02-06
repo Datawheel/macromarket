@@ -1,9 +1,10 @@
 import React from "react";
 import Dropdown from "./DropDown.jsx";
 import {Link} from "react-router";
+import {connect} from "react-redux";
+import {fetchProduct} from '../actions/productActions';
 
-
-export default class ProductWithId extends React.Component {
+class ProductWithId extends React.Component {
     constructor(props) {
         super(props);
         this.results = [
@@ -22,13 +23,38 @@ export default class ProductWithId extends React.Component {
         };
     }
 
+    componentWillMount() {
+      const id = this.props.params.productWithId;
+      this.props.fetchProduct(id);
+    }
+
     render() {
+
+      const {product, loading, error} = this.props;
+
+      if(loading || !product){
+        return (
+          <div className="detailed-content-wrapper">
+            <div>loading...</div>
+          </div>
+        )
+      }
+
+      if(error){
+        return (
+          <div className="detailed-content-wrapper">
+            <h2>Error</h2>
+            <p>Please refresh the page.</p>
+          </div>
+        )
+      }
+
         return (
             <div className="detailed-content-wrapper">
                 <div className="sidebar-wrapper">
                     <div className="sidebar">
-                        <h3>Product {this.props.params.productWithId}</h3>
-                        <p>Alcoholic beverage made from fermented grapes. These grapes are generally Vitis vinifera, or a hybrid with Vitis labrusca or Vitis rupestris. Grapes are fermented without the addition of sugars, acids, enzymes, water, or other nutrients. Yeast consumes the sugar in the grapes and converts it to ethanol and carbon dioxide.
+                        <h3>{product.name}</h3>
+                        <p>{product.description}
                         </p>
                         <h3>From</h3>
                         <Dropdown list={this.from} selected={this.state.selectedFrom}/>
@@ -55,5 +81,22 @@ export default class ProductWithId extends React.Component {
             </div>
         );
     }
-
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProduct: (id) => {
+      dispatch(fetchProduct(id))
+    }
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    product: state.productProfile.product,
+    loading: state.productProfile.loading,
+    error: state.productProfile.error || null
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductWithId)
