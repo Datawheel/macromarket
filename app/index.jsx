@@ -33,6 +33,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
           <IndexRoute component={Home}/>
+          <Route path="/hello" component={Country}/>
           <Route path="/country" component={Country}/>
           <Route path="/country/:countryWithId" component={CountryWithId}/>
           <Route path="/company" component={Company}/>
@@ -41,7 +42,7 @@ ReactDOM.render(
           <Route path="/product/:productWithId" component={ProductWithId}/>
           <Route path="/login" component={Login}/>
           <Route path="/signup" component={Signup}/>
-          <Route path="/user/:userId" component={Profile}/>
+          <Route path="/profile" component={Profile}/>
           <Route path="/user/:userId/settings" component={Settings}></Route>
           <Route path="/user/:userId/inbox" component={Inbox}></Route>
           <Route path="/user/:userId/logout" component={Logout}></Route>

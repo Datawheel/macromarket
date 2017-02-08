@@ -8,17 +8,18 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div>Sign Up
-        <div className="form-wrapper">
-          <form>
-              <input  placeholder="username"  type="text"/>
-              <input placeholder="password" type="text"/>
-                <input placeholder="repeat password" type="text"/>
-              <button>
-                  Submit
-              </button>
-          </form>
-        </div>
-      </div>);
+      <div>
+      <form method="post" action="/api/signup">
+        <h2 class="form-signin-heading">Create an account</h2>
+        <label>Email</label>
+        <input type="text" name="email" class="form-control" placeholder="Username"></input>
+        <label>Password</label>
+        <input type="password"  name="password" class="form-control" placeholder="Password" ></input>
+        <label> Repeat Password</label>
+        <input type="password"  name="password2" class="form-control" placeholder="Repeat Password"></input>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+      </form>
+    </div>)
+
   }
 }
