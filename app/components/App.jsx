@@ -18,6 +18,7 @@ export default class App extends React.Component {
 
     }
 
+
     toggleSearch = () => {
         return this.setState({
             searchHidden: !this.state.searchHidden

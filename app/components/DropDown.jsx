@@ -9,9 +9,10 @@ export default class Dropdown extends React.Component {
         }
     }
 
-    select = (item) => {
+    select = item => {
         this.props.selected = item;
     }
+
     show = () => {
         this.setState({listVisible: true});
         document.addEventListener("click", this.hide);

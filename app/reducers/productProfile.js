@@ -1,9 +1,15 @@
-const ACTION_TYPE = 'GET_PRODUCT';
+const ACTION_TYPE = "GET_PRODUCT";
 
-export default (state = {product:null, loading:false}, action) => {
+export default (state = {
+  product: null,
+  loading: false
+}, action) => {
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
-      return {product:null, loading:true};
+      return {
+        product: null,
+        loading: true
+      };
 
     case `${ACTION_TYPE}_FULFILLED`:
       return {
@@ -18,6 +24,7 @@ export default (state = {product:null, loading:false}, action) => {
         error: action.payload
       };
 
-    default: return state;
+    default:
+      return state;
   }
-}
+};

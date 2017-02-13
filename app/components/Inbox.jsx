@@ -7,7 +7,9 @@ export default class Inbox extends React.Component {
   }
 
   render() {
-    return(<div>Inbox</div>);
+    return (
+      <div>Inbox</div>
+    );
   }
 
 }

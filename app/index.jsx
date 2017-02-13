@@ -14,18 +14,14 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import Profile from "./components/Profile.jsx";
 import Settings from "./components/Settings.jsx";
-import Logout from "./components/Logout.jsx";
 import Inbox from "./components/Inbox.jsx";
 import ProductWithId from "./components/ProductWithId.jsx";
-
+import thunk from "redux-thunk";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import oecmReducer from "./reducers";
 
-import promiseMiddleware from "redux-promise-middleware";
-
-const store = createStore(oecmReducer, {}, applyMiddleware(
-  promiseMiddleware()
+const store = createStore(oecmReducer, {}, applyMiddleware(thunk
 ));
 
 ReactDOM.render(
@@ -33,7 +29,6 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
           <IndexRoute component={Home}/>
-          <Route path="/hello" component={Country}/>
           <Route path="/country" component={Country}/>
           <Route path="/country/:countryWithId" component={CountryWithId}/>
           <Route path="/company" component={Company}/>
@@ -43,9 +38,8 @@ ReactDOM.render(
           <Route path="/login" component={Login}/>
           <Route path="/signup" component={Signup}/>
           <Route path="/profile" component={Profile}/>
-          <Route path="/user/:userId/settings" component={Settings}></Route>
-          <Route path="/user/:userId/inbox" component={Inbox}></Route>
-          <Route path="/user/:userId/logout" component={Logout}></Route>
+          <Route path="/settings" component={Settings}></Route>
+          <Route path="/inbox" component={Inbox}></Route>
       </Route>
     </Router>
   </Provider>, document.getElementById("component"));

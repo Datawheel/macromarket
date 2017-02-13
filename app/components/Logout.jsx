@@ -8,7 +8,9 @@ export default class Logout extends React.Component {
   }
 
   render() {
-    return(<div>Logout</div>);
+    return (
+      <div>Logout</div>
+    );
   }
 
 }
