@@ -8,7 +8,8 @@ import userProfile from "./userProfile";
 import countries from "./countries";
 import products from "./products";
 import companies from "./companies";
-import authentication from "./authentication.js";
+import authentication from "./authentication";
+import user from "./user";
 
 // Root reducer
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
   products,
   companies,
   userProfile,
-  authentication
+  authentication,
+  user
 });

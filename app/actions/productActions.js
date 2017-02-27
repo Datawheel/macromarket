@@ -1,11 +1,34 @@
 import axios from "axios";
-const ACTION_TYPE = 'GET_PRODUCT';
+
+function requestProduct() {
+  return {
+    type: "PRODUCT_PENDING"
+  };
+}
+
+function receiveProduct(json) {
+  return {
+    type: "PRODUCT_FULFILLED",
+    data: json
+  };
+}
+
+function productError(json) {
+  return {
+    type: "PRODUCT_REJECTED",
+    data: json
+  };
+}
 
 export function fetchProduct(id) {
-  const request = axios.get(`/api/product/${id}`)
-
-  return {
-    type: ACTION_TYPE,
-    payload: request
+  return function(dispatch) {
+    dispatch(requestProduct());
+    return axios.get(`/api/product/${id}`)
+    .then(response => {
+      dispatch(receiveProduct(response.data));
+    })
+    .catch(response => {
+      dispatch(productError(response.data));
+    });
   };
 }

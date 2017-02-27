@@ -1,23 +1,31 @@
-const ACTION_TYPE = 'GET_COMPANY';
+const ACTION_TYPE = "COMPANY";
 
-export default (state = {company:null, loading:false}, action) => {
+export default (state = {
+  company: null,
+  loading: false
+}, action) => {
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
-      return {company:null, loading:true};
+      return {
+        company: null,
+        loading: true
+      };
 
     case `${ACTION_TYPE}_FULFILLED`:
+    console.log(action.data);
       return {
         loading: false,
-        company: action.payload.data
+        company: action.data
       };
 
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
         company: null,
-        error: action.payload
+        error: action.data
       };
 
-    default: return state;
+    default:
+      return state;
   }
-}
+};

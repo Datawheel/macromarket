@@ -14,7 +14,7 @@ jwtOptions.secretOrKey = process.env.SESSION_SECRET || "tasmanianDevil";
 //  authentication
 module.exports = function(router) {
   router.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
   }));
   router.use(bodyParser.json());
   router.use(passport.initialize());
@@ -27,6 +27,7 @@ module.exports = function(router) {
       }
     }).then((user, err) => {
       if (err) {
+        console.log(err);
         return next(err);
       }
       if (!user) {
@@ -37,6 +38,7 @@ module.exports = function(router) {
       return next(null, user);
     });
   });
+
   passport.use(strategy);
 
   // Authentication routes
@@ -65,8 +67,7 @@ module.exports = function(router) {
         res.status(401).json({
           message: "Incorrect password."
         });
-      }
-      else {
+      } else {
         const payload = {
           id: user.id
         };
@@ -81,35 +82,48 @@ module.exports = function(router) {
 
   router.get("/logout", (req, res) => {
     req.logout();
-    res.json({message: "Logged out."});
+    res.json({
+      message: "Logged out."
+    });
   });
 
   router.post("/signup", (req, res) => {
     const email = req.body.email;
-    const password = req.body.password;
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    console.log(req.body);
-    const newUser = {
-      email,
-      salt,
-      password: hashedPassword
-    };
 
-    models.User.create(newUser).then(user => {
-      const payload = {
-        id: user.id
+    User.findOne({
+      where: {
+        email
+      }
+    }).then(err => {
+      if (err) {
+        return res.status(400).json({
+          message: "A user with that email already exits!"
+        });
+      }
+      const password = req.body.password;
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+
+      const newUser = {
+        email,
+        salt,
+        password: hashedPassword
       };
-      const token = jwt.sign(payload, jwtOptions.secretOrKey);
-      return res.json({
-        message: "ok",
-        token
-      });
-    })
-    .catch(error => {
-      console.log("error in creating user:", error);
-      res.status(500).json({
-        message: "Passwords did not match."
+      console.log(newUser);
+      models.User.create(newUser).then(user => {
+        const payload = {
+          id: user.id
+        };
+        const token = jwt.sign(payload, jwtOptions.secretOrKey);
+        return res.json({
+          message: "ok",
+          token
+        });
+      })
+      .catch(() => {
+        res.status(500).json({
+          message: "Passwords did not match."
+        });
       });
     });
   });
@@ -122,5 +136,6 @@ module.exports = function(router) {
     } || null;
     res.json(userResp);
   });
+
 
 };

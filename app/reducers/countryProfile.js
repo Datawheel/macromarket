@@ -1,4 +1,4 @@
-const ACTION_TYPE = 'GET_COUNTRY';
+const ACTION_TYPE = 'COUNTRY';
 
 export default (state = {country:null, loading:false}, action) => {
   switch (action.type) {
@@ -8,14 +8,14 @@ export default (state = {country:null, loading:false}, action) => {
     case `${ACTION_TYPE}_FULFILLED`:
       return {
         loading: false,
-        country: action.payload.data
+        country: action.data
       };
 
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
         country: null,
-        error: action.payload
+        error: action.data
       };
 
     default: return state;

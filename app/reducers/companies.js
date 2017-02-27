@@ -1,4 +1,4 @@
-const ACTION_TYPE = 'GET_COMPANIES';
+const ACTION_TYPE = 'COMPANIES';
 
 export default (state = {companies:null, loading:false}, action) => {
   switch (action.type) {
@@ -8,13 +8,13 @@ export default (state = {companies:null, loading:false}, action) => {
     case `${ACTION_TYPE}_FULFILLED`:
       return {
         loading: false,
-        companies: action.payload.data
+        companies: action.data
       };
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
         companies: null,
-        error: action.payload
+        error: action.data
       };
     default: return state;
   }

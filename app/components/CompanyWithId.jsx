@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./DetailedSidebar.jsx";
+import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCompany} from '../actions/companyActions';
@@ -16,7 +16,6 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error} = this.props;
-
     if (loading || !company) {
       return (
         <div className="detailed-content-wrapper">
@@ -34,9 +33,14 @@ class CompanyWithId extends React.Component {
       );
     }
 
+    const coverImage = {backgroundImage: `url(${company.cover_image})`};
+    const profileImage = {backgroundImage: `url(${company.profile_image})`};
+
     return (
       <div className="detailed-content-wrapper">
         <Sidebar>
+          <div className="profile-image-wrapper">
+          <div className="background-image" style={profileImage}></div></div>
           <h3>{company.name}</h3>
           <p>{company.address}</p>
           <p>{company.phone_number}</p>
@@ -80,7 +84,9 @@ class CompanyWithId extends React.Component {
           </div>
         </Sidebar>
         <div className="center-content">
-          <div className="header-image-wrapper"></div>
+          <div className="header-image-wrapper">
+                <div className="background-image" style={coverImage}></div>
+          </div>
           <div className="description-wrapper">
             <h3>Company Description</h3>
             <p>{company.description}</p>

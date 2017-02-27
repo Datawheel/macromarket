@@ -2,7 +2,6 @@ import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import Login from "./Login.jsx";
 import {authenticate, logout} from "../actions/authenticationActions";
 
 class userWithId extends React.Component {
@@ -11,15 +10,16 @@ class userWithId extends React.Component {
   }
 
   componentWillMount() {
-    this.props.authenticate();
-    console.log(this.props);
-    if (!this.props.user && !this.props.loading) {
+    if (this.props.token) {
+      this.props.authenticate(this.props.token);
+    }
+    if (!this.props.token) {
       browserHistory.push("/login");
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.user && !nextProps.loading) {
+  componentDidUpdate() {
+    if (!this.props.token) {
       browserHistory.push("/login");
     }
   }
@@ -63,8 +63,8 @@ class userWithId extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticate: () => {
-      dispatch(authenticate())
+    authenticate: token => {
+      dispatch(authenticate(token))
     },
     logout: () => {
       dispatch(logout())
@@ -73,11 +73,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {
-    user: state.authentication.user,
-    loading: state.authentication.loading,
-    error: state.authentication.error || null
-  };
+  return {user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error, token: state.authentication.token};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(userWithId);

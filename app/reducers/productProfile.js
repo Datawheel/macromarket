@@ -1,4 +1,4 @@
-const ACTION_TYPE = "GET_PRODUCT";
+const ACTION_TYPE = "PRODUCT";
 
 export default (state = {
   product: null,
@@ -12,16 +12,17 @@ export default (state = {
       };
 
     case `${ACTION_TYPE}_FULFILLED`:
+    console.log(action);
       return {
         loading: false,
-        product: action.payload.data
+        product: action.data
       };
 
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
         product: null,
-        error: action.payload
+        error: action.data
       };
 
     default:

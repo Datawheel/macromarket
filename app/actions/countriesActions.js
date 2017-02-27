@@ -1,11 +1,35 @@
 import axios from "axios";
-const ACTION_TYPE = 'GET_COUNTRIES';
+
+function requestCountries() {
+  return {
+    type: "COUNTRIES_PENDING"
+  };
+}
+
+function receiveCountries(json) {
+  return {
+    type: "COUNTRIES_FULFILLED",
+    data: json
+  };
+}
+
+function countriesError(json) {
+  return {
+    type: "COUNTRIES_REJECTED",
+    data: json
+  };
+}
 
 export function fetchCountries() {
-  const request = axios.get('/api/countries');
+  return function(dispatch) {
+    dispatch(requestCountries());
+    return axios.get("/api/countries")
+    .then(response => {
+      dispatch(receiveCountries(response.data));
 
-  return {
-    type: ACTION_TYPE,
-    payload: request
+    })
+    .catch(response => {
+      dispatch(countriesError(response.data));
+    });
   };
 }

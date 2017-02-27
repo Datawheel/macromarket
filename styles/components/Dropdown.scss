@@ -1,0 +1,15 @@
+.dropdown-container {
+    position: relative;
+    border: 1px solid;
+
+
+    .selected-wrapper {}
+
+    ul {
+        border: 1px solid;
+        margin: -1px;
+        position: absolute;
+        width: 100%;
+        background: white;
+    }
+}

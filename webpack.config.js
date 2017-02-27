@@ -47,7 +47,7 @@ var config = {
       "query": {
         "cacheDirectory": true,
         "presets": ["react", "es2015"],
-        "plugins": ["array-includes", "transform-class-properties", "transform-object-assign", "syntax-object-rest-spread"],
+        "plugins": ["array-includes", "transform-class-properties", "transform-object-assign", "syntax-object-rest-spread", "transform-object-rest-spread"],
         "env": {
           "start": {
             "presets": ["react-hmre"]

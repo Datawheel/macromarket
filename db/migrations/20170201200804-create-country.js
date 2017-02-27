@@ -4,9 +4,8 @@ module.exports = {
     return queryInterface.createTable('Countries', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       image: {
         type: Sequelize.STRING

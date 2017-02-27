@@ -1,44 +1,6 @@
 import axios from "axios";
-//
-// export function authenticate() {
-//   const request = axios.get("api/authenticate");
-//   return {
-//     type: "AUTHENTICATE",
-//     payload: request
-//   };
-// }
-//
-// export function logIn(email, password) {
-//   const request = axios.post("api/login", {
-//     email,
-//     password
-//   });
-//
-//   return {
-//     type: "LOG_IN",
-//     payload: request
-//   };
-// }
-//
-// export function signUp(email, password) {
-//   const request = axios.post("api/signup", {
-//     email,
-//     password
-//   });
-//
-//   return {
-//     type: "SIGN_UP",
-//     payload: request
-//   };
-// }
-//
-// export function logOut() {
-//   const request = axios.get("api/logout");
-//   return {
-//     type: "LOG_OUT",
-//     payload: request
-//   };
-// }
+import receiveCompany from "./companyActions";
+
 function requestAuth() {
   return {
     type: "AUTH_PENDING"
@@ -58,7 +20,6 @@ function receiveAuthError(json) {
     data: json
   };
 }
-
 
 function requestLogin() {
   return {
@@ -101,7 +62,6 @@ function receiveLogoutError(json) {
 }
 
 export function authenticate(token) {
-
   return function(dispatch) {
     dispatch(requestAuth());
     const config = {
@@ -112,7 +72,6 @@ export function authenticate(token) {
     axios.get("/api/authenticate", config).then(response => {
       dispatch(receiveAuth(response.data));
     }, err => {
-      console.log("ERROR!", err.response);
       dispatch(receiveAuthError(err));
     });
   };
@@ -150,7 +109,8 @@ export function signup(email, password) {
       authenticate(response.data.token)(dispatch);
     })
     .catch(response => {
-      dispatch(receiveLoginError(response.data));
+      console.log(response.response.data.message);
+      dispatch(receiveLoginError(response.response.data));
     });
   };
 }
@@ -158,6 +118,10 @@ export function signup(email, password) {
 export function logout(email, password) {
   return function(dispatch) {
     localStorage.removeItem("token");
+    dispatch({
+      type: "COMPANY_FULFILLED",
+      data: null
+    })
     dispatch(requestLogout());
     return axios.get("api/logout", {
       email,

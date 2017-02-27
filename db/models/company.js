@@ -13,8 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        //  Company.belongsTo(models.User);
-        //  Company.belongsToMany(models.Trade);
+        Company.belongsTo(models.User, { foreignKey: 'user_id'});
       }
     }
   });

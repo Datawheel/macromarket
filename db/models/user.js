@@ -4,13 +4,14 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     name: DataTypes.STRING,
     salt: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    image: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        //  User.hasOne(models.Company);
-        //  User.hasOne(models.Country);
+        User.belongsTo(models.Company, {foreignKey: 'company_id'});
+      
       }
     }
   });

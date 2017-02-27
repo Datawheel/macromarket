@@ -17,9 +17,9 @@ class ProductWithId extends React.Component {
       "Casa Silva"
     ];
 
-    this.from = ["USA", "Chile", "France", "China", "Germany"];
+    this.countries = ["USA", "Chile", "France", "China", "Germany"];
     this.state = {
-      selectedFrom: this.from[0]
+      selectedFrom: this.countries[0]
     };
   }
 
@@ -28,10 +28,14 @@ class ProductWithId extends React.Component {
     this.props.fetchProduct(id);
   }
 
+  selectDropDown = item => {
+    this.setState({selectedFrom: item});
+  }
+
   render() {
 
     const {product, loading, error} = this.props;
-
+    console.log(this.props);
     if (loading || !product) {
       return (
         <div className="detailed-content-wrapper">
@@ -57,7 +61,7 @@ class ProductWithId extends React.Component {
             <p>{product.description}
             </p>
             <h3>From</h3>
-            <Dropdown list={this.from} selected={this.state.selectedFrom}/>
+            <Dropdown select={this.selectDropDown} selected={this.state.selectedFrom} items={this.countries}></Dropdown>
             <h3>To</h3>
           </div>
         </div>

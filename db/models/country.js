@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 module.exports = function(sequelize, DataTypes) {
-  var Country = sequelize.define('Country', {
+  var Country = sequelize.define("Country", {
     image: DataTypes.STRING,
     name: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        // Country.belongsToMany(models.Trade);
-        // Country.belongsToMany(models.User);
+        Country.hasMany(models.Trade, {
+          as: "Trades"
+        });
+        Country.hasMany(models.Company, {
+          as: "Companies"
+        });
       }
     }
   });

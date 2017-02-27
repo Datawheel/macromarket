@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       trade_flow: {
-        type: Sequelize.ENUM('exports', 'imports')
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

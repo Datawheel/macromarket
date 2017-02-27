@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {browserHistory} from 'react-router';
-import {login} from '../actions/authenticationActions';
+import {browserHistory} from "react-router";
+import {authenticate, login} from "../actions/authenticationActions";
 
 class Login extends React.Component {
   constructor(props) {
@@ -10,42 +10,41 @@ class Login extends React.Component {
     this.state = {
       email: "",
       password: ""
+    };
+  }
+
+  componentWillMount() {
+    const {token} = this.props;
+    if (token) {
+      this.props.authenticate(this.props.token);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      browserHistory.push('/profile');
+  componentDidUpdate() {
+    const {token, user} = this.props;
+    if (user) {
+      browserHistory.push("/profile");
+    }
+    if (token) {
+      this.props.authenticate(this.props.token);
     }
   }
 
-  handlePasswordChange = (event) => {
-    //set error message for valid password here
-    this.setState({password: event.target.value})
+  handlePasswordChange = event => {
+    this.setState({password: event.target.value});
   }
 
-  handleEmailChange = (event) => {
-    //set error message for valid email here
-    this.setState({email: event.target.value})
+  handleEmailChange = event => {
+    this.setState({email: event.target.value});
   }
 
-  logIn = (e) => {
+  logIn = e => {
     e.preventDefault();
     this.props.login(this.state.email, this.state.password);
   }
 
   render() {
-    const {user, loading, error} = this.props;
-
-    if (error) {
-
-      return (
-        <div className="detailed-content-wrapper">
-          <h2>Error</h2>
-          <p>Username password combo is incorrect.</p>
-        </div>
-      )
-    }
+    const {loading, error} = this.props;
 
     if (loading) {
       return (
@@ -57,6 +56,7 @@ class Login extends React.Component {
 
     return (
       <div>
+        { error ? <div className="err">error</div> : null }
         <h2>login</h2>
         <div className="login-form-wrapper">
           <form>
@@ -83,18 +83,24 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {user: state.authentication.user,
-    loading: state.authentication.loading,
-    error: state.authentication.error || null}
-}
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = state => {
   return {
-    login: (email, password) => {
-      dispatch(login(email, password))
-    }
-  }
-}
+    user: state.authentication.user,
+    error: state.authentication.error || null,
+    loading: state.authentication.loading,
+    token: state.authentication.token
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+const mapDispatchToProps = dispatch => {
+  return {
+    authenticate: token => {
+      dispatch(authenticate(token));
+    },
+    login: (email, password) => {
+      dispatch(login(email, password));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

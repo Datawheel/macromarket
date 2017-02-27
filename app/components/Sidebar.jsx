@@ -1,7 +1,6 @@
 import React from "react";
-import {Link} from "react-router";
 
-export default class DetailedSidebar extends React.Component {
+export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +10,9 @@ export default class DetailedSidebar extends React.Component {
     return (
       <div className="sidebar-wrapper">
         <div className="sidebar">
-          {this.props.children}
+          <div className="sidebar-inner">
+            {this.props.children}
+          </div>
         </div>
       </div>
     );
