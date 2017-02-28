@@ -27,7 +27,6 @@ module.exports = function(router) {
       }
     }).then((user, err) => {
       if (err) {
-        console.log(err);
         return next(err);
       }
       if (!user) {
