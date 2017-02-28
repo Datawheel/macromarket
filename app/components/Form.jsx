@@ -1,9 +1,12 @@
 import React from "react";
 import Dropdown from "./DropDown.jsx";
+import {connect} from "react-redux";
+import {fetchCountries} from "../actions/countriesActions";
 
-export default class Form extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
+
     if (this.props.company) {
       this.state = {
         company: this.props.company,
@@ -27,7 +30,7 @@ export default class Form extends React.Component {
           importerExporter: false,
           transporter: false,
           name: "",
-          country: "Argentina",
+          country_id: "ARG",
           address: "",
           phone_number: "",
           website: "",
@@ -47,14 +50,9 @@ export default class Form extends React.Component {
       };
     }
 
-    this.countries = [
-      "Argentina",
-      "USA",
-      "Chile",
-      "France",
-      "China",
-      "Germany"
-    ];
+  }
+  componentWillMount() {
+    this.props.fetchCountries();
   }
 
   handleChange = e => {
@@ -94,9 +92,12 @@ export default class Form extends React.Component {
   }
 
   selectDropDown = item => {
-    this.setState({company: {... this.state.company,
-      country: item    
-    }});
+    this.setState({
+      company: {
+        ...this.state.company,
+        country_id: item
+      }
+    });
 
   }
 
@@ -105,7 +106,7 @@ export default class Form extends React.Component {
   }
 
   render() {
-    const {loading, error} = this.props;
+    const {loading, error, countries} = this.props;
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -145,7 +146,7 @@ export default class Form extends React.Component {
 
             <div className="input-wrapper">
               <label>Country</label>
-              <Dropdown select={this.selectDropDown} selected={company.country} items={this.countries}></Dropdown>
+              <Dropdown select={this.selectDropDown} selected={company.country_id} items={countries}></Dropdown>
             </div>
 
             <div className="input-wrapper">
@@ -191,3 +192,21 @@ export default class Form extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchCountries: () => {
+      dispatch(fetchCountries());
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    countries: state.countries.countries,
+    loading: state.countries.loading,
+    error: state.countries.error || null
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

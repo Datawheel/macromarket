@@ -8,7 +8,6 @@ function requestCompany() {
 }
 
 export function receiveCompany(json) {
-  console.log(json);
   return {
     type: "COMPANY_FULFILLED",
     data: json

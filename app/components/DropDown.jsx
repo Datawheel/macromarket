@@ -16,16 +16,26 @@ export default class Dropdown extends React.Component {
 
   select = item => {
     this.handleDropDown();
-    this.props.select(item);
+    this.props.select(item.id);
+  }
+
+  findName = id => {
+    let result = ""
+    this.props.items.map(item => {
+      if (item.id === id) {
+        result = item.name;
+      }
+    });
+    return result;
   }
 
   renderItems = () => {
     return (
       <ul>
-        {this.props.items.map((item, i) => {
+        {this.props.items.map(item => {
           return (
-            <li onClick={this.select.bind(this, item)} key={i}>
-              <div className="dropdown-item">{item}</div>
+            <li onClick={this.select.bind(this, item)} key={item.id}>
+              <div className="dropdown-item">{item.name}</div>
             </li>
           );
         })}
@@ -34,9 +44,11 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
+
     return (
       <div className="dropdown-container">
-        <div className="selected-wrapper" onClick={this.handleDropDown}>{this.props.selected}</div>
+        {this.props.items ?
+        <div className="selected-wrapper" onClick={this.handleDropDown}>{this.findName(this.props.selected)}</div> : null}
         {!this.state.visible
           ? null
           : this.renderItems()

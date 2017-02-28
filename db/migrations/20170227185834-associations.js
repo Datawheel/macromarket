@@ -22,10 +22,11 @@ module.exports = {
           }
         }
       )
-    }).then(function() {
+    })
+    .then(function() {
       return queryInterface.addColumn(
         "Companies",
-        "CountryId", {
+        "country_id", {
           type: Sequelize.STRING,
           references: {
             model: "Countries",

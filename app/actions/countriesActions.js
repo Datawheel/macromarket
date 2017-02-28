@@ -26,7 +26,7 @@ export function fetchCountries() {
     return axios.get("/api/countries")
     .then(response => {
       dispatch(receiveCountries(response.data));
-
+    
     })
     .catch(response => {
       dispatch(countriesError(response.data));

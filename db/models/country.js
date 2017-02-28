@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
           as: "Trades"
         });
         Country.hasMany(models.Company, {
-          as: "Companies"
+          foreignKey: "country_id"
         });
       }
     }
