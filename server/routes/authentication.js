@@ -88,7 +88,7 @@ module.exports = function(router) {
 
   router.post("/signup", (req, res) => {
     const email = req.body.email;
-
+    console.log(email);
     User.findOne({
       where: {
         email
