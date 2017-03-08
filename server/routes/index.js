@@ -11,9 +11,12 @@ router.get("/", (req, res) => {
 authentication(router);
 imgUpload(router);
 
-// router.get("/search",  (req, res) => {
-//
-// });
+router.get("/search/:q",  (req, res) => {
+  const query = req.params.q;
+  models.Search.search(query).then(results => {
+    res.json(results);
+  });
+});
 
 router.post("/registerCompany", (req, res) => {
   const newCompany = req.body;
