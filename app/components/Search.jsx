@@ -50,16 +50,20 @@ export default class Search extends React.Component {
               <p className="label">FILTER</p>
               <div className="filter-icons-wrapper">
                 <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "place")} onClick={this.selectFilter.bind(this, "place")} className="filter-icon-wrapper">
-                <div className={this.state.hover === "place" ? "arrow-box place tool-tip visible" : "arrow-box place tool-tip"}>
+                  <div className={this.state.hover === "place"
+                    ? "arrow-box place tool-tip visible"
+                    : "arrow-box place tool-tip"}>
                     <p>place</p>
                   </div>
                   {this.state.filters.includes("place")
                     ? <img src="./assets/icons/icon-place-yellow.svg"/>
                     : <img src="./assets/icons/icon-place-black.svg"/>
-}
+                  }
                 </div>
                 <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "product")} onClick={this.selectFilter.bind(this, "product")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "product" ? "arrow-box tool-tip product visible" : "arrow-box product tool-tip"}>
+                  <div className={this.state.hover === "product"
+                    ? "arrow-box tool-tip product visible"
+                    : "arrow-box product tool-tip"}>
                     <p>product</p>
                   </div>
                   {this.state.filters.includes("product")
@@ -67,7 +71,9 @@ export default class Search extends React.Component {
                     : <img src="./assets/icons/icon-product-black.svg"/>}
                 </div>
                 <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "company")} onClick={this.selectFilter.bind(this, "company")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "company" ? "arrow-box company tool-tip visible" : "arrow-box  company tool-tip"}>
+                  <div className={this.state.hover === "company"
+                    ? "arrow-box company tool-tip visible"
+                    : "arrow-box company tool-tip"}>
                     <p>company</p>
                   </div>
                   {this.state.filters.includes("company")
@@ -75,7 +81,9 @@ export default class Search extends React.Component {
                     : <img src="./assets/icons/icon-company-black.svg"/>}
                 </div>
                 <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "transport")} onClick={this.selectFilter.bind(this, "transport")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "transport" ? "arrow-box transport tool-tip visible" : "arrow-box transport tool-tip"}>
+                  <div className={this.state.hover === "transport"
+                    ? "arrow-box transport tool-tip visible"
+                    : "arrow-box transport tool-tip"}>
                     <p>transportation</p>
                   </div>
                   {this.state.filters.includes("transport")

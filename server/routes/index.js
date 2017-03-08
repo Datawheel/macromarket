@@ -11,6 +11,10 @@ router.get("/", (req, res) => {
 authentication(router);
 imgUpload(router);
 
+// router.get("/search",  (req, res) => {
+//
+// });
+
 router.post("/registerCompany", (req, res) => {
   const newCompany = req.body;
   models.Company.create(newCompany).then(company => {

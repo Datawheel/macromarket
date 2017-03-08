@@ -14,7 +14,9 @@ export default class NavBar extends React.Component {
 
                 <ul className="nav-bar">
                     <li className="logo nav-bar-element">
-                        <Link to="/">OECM LOGO</Link>
+                        <Link to="/">
+                          <img className="oec-logo" src="./assets/icons/white-oec-logo.svg"/>
+                        </Link>
                     </li>
                     <li className="nav-bar-element">
                         <Link to="/company">Company</Link>
