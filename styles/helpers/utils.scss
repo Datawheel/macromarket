@@ -16,3 +16,9 @@
 	}
 	flex-wrap: $value;
 }
+
+$border-raidus: 2px;
+
+textarea:focus, input:focus, button {
+    outline: none;
+}

@@ -1,30 +1,20 @@
-const ACTION_TYPE = "PRODUCT";
+const ACTION_TYPE = "TRADES";
 
-export default (state = {
-  product: null,
-  loading: false
-}, action) => {
+export default (state = {trades: null, loading: false}, action) => {
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
-      return {
-        product: null,
-        loading: true
-      };
-
+      return {trades: null, loading: true};
     case `${ACTION_TYPE}_FULFILLED`:
       return {
         loading: false,
-        product: action.data
+        trades: action.data
       };
-
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
-        product: null,
+        trades: null,
         error: action.data
       };
-
-    default:
-      return state;
+    default: return state;
   }
 };

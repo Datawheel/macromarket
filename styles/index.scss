@@ -3,11 +3,15 @@
 @import "helpers/utils";
 
 // Google Fonts
-$open-sans: "Open Sans", sans-serif;
+$montserrat: "Montserrat", sans-serif;
+$libreFranklin: "Libre Franklin", sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500);
+@import url(https://fonts.googleapis.com/css?family=Libre+Franklin:300,400,500);
+
 
 .container {
-  font-family: $open-sans;
+  font-family: $montserrat;
   font-size: 16px;
   font-weight: 400;
 
@@ -17,8 +21,12 @@ $open-sans: "Open Sans", sans-serif;
   @import "components/NavBar";
   @import "components/Search";
   @import "components/Detailed";
+  @import "components/Detailed-country";
+  @import "components/Dropdown";
   @import "components/Form";
   @import "components/Dropdown";
+  @import "components/Home";
+  @import "components/Card";
 
 
 }

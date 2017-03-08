@@ -17,7 +17,8 @@ module.exports = function(sequelize, DataTypes) {
         //   foreignKey: "country_id"
         // });
       }
-    }
+    },
+      timestamps:false
   });
   return Country;
 };

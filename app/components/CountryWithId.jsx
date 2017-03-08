@@ -14,6 +14,7 @@ class CountryWithId extends React.Component {
     this.props.fetchCountry(id);
   }
 
+
   render() {
     const {country, loading, error} = this.props;
 
@@ -35,57 +36,12 @@ class CountryWithId extends React.Component {
     }
 
     return (
-      <div className="detailed-content-wrapper">
-        <Sidebar>
-          <h3>{country.name}</h3>
-          <p>{country.address}</p>
-          <p>{country.phone_number}</p>
-          <p>{country.website}</p>
-          <div className="products">
-            <div className="imports">
-              Imports
-              <ul>
-                <li>
-                  <Link to="/product/111">
-                    Grapes</Link>
-                </li>
-                <li>
-                  <Link to="/product/222">
-                    Dirt</Link>
-                </li>
-                <li>
-                  <Link to="/product/444">
-                    Salt</Link>
-                </li>
-              </ul>
-            </div>
-            <div className="exports">
-              Exports
-              <ul>
-                <li>
-                  <Link to="/product/444">
-                    Steel</Link>
-                </li>
-                <li>
-                  <Link to="/product/555">
-                    Wine</Link>
-                </li>
-                <li>
-                  <Link to="/product/666">
-                    Wood</Link>
-                </li>
-              </ul>
-
-            </div>
-          </div>
-        </Sidebar>
-        <div className="center-content">
-          <div className="header-image-wrapper"></div>
-          <div className="description-wrapper">
-            <h3>Country Description</h3>
-            <p>Our main goal is to create expressive and innovative wines from one of the world’s southernmost wine regions. Cono Sur Vineyards’ Winery was founded in 1993, with the vision of producing premium, expressive and innovative wines conveying the spirit of the New World. Our name refers to the country’s geographic position; it represents wines proudly made in South America’s Southern Cone, on whose western edge lies Chile and its gifted wine valleys. Our logo also evokes a freehand drawing of the silhouette of South America.
-            </p>
-            <p>Our quest is to present the world with the finest grape expression and character, from Chile’s varied wine regions. Right from the start Cono Sur applied the newest ideas and technology to winemaking’s traditional methods. Our main goal, therefore, is to create expressive and innovative wines from one of the world’s southernmost wine regions.</p>
+      <div className="detailed-content-wrapper country">
+        <div className="header-image-wrapper">
+          <img src="https://www.flickr.com/photos/47563830@N06/8034675814/"/>
+          <div className="image-overlay-wrapper">
+            <h3>{country.name}</h3>
+            <h4>{country.continent}</h4>
           </div>
         </div>
       </div>

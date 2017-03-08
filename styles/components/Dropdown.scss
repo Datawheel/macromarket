@@ -3,13 +3,20 @@
     border: 1px solid;
 
 
-    .selected-wrapper {}
+    .selected-wrapper {
+      padding: 5px;
+      text-align: left;
+    }
 
     ul {
+      text-align: left;
         border: 1px solid;
-        margin: -1px;
+        margin: 0px -1px;
         position: absolute;
         width: 100%;
         background: white;
+        li {
+          padding:3px;
+        }
     }
 }

@@ -10,7 +10,7 @@ export default class NavBar extends React.Component {
     render() {
 
         return (
-            <div>
+            <div className={this.props.location.pathname === '/' ? "home" : null}>
 
                 <ul className="nav-bar">
                     <li className="logo nav-bar-element">

@@ -2,8 +2,6 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize, done) {
-    queryInterface.removeColumn("Countries", "createdAt");
-    queryInterface.removeColumn("Countries", "updatedAt");
     queryInterface.removeColumn("Countries", "image");
     queryInterface.addColumn(
       "Countries",
@@ -31,14 +29,6 @@ module.exports = {
     queryInterface.addColumn(
       "Countries",
       "image", {type: Sequelize.STRING}
-    );
-    queryInterface.addColumn(
-      "Countries",
-      "createdAt", {type: Sequelize.TIME}
-    );
-    queryInterface.addColumn(
-      "Countries",
-      "updatedAt", {type: Sequelize.TIME}
     );
     done();
   }

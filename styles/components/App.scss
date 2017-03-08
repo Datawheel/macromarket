@@ -15,3 +15,67 @@
         display: block;
     }
 }
+
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.chevron::before {
+    border-style: solid;
+    border-width: 0.1em 0.1em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.45em;
+    left: 0.1em;
+    position: relative;
+    top: 0.1em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: 0.45em;
+}
+
+.chevron.right:before {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+    top: 0;
+    transform: rotate(135deg);
+}
+
+.chevron.left:before {
+    left: 0.25em;
+    transform: rotate(-135deg);
+}
+
+.arrow-box {
+    position: relative;
+    background: $accent-color;
+}
+
+.arrow-box:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: $accent-color;
+    border-width: 8px;
+    margin-left: -8px;
+}
+
+.visible {
+  visibility: visible!important;
+}
+
+input,
+p {
+    font-family: $libreFranklin;
+    font-weight: 300;
+}

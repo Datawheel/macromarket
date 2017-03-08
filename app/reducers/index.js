@@ -10,6 +10,7 @@ import products from "./products";
 import companies from "./companies";
 import authentication from "./authentication";
 import user from "./user";
+import trades from "./trades";
 
 // Root reducer
 export default combineReducers({
@@ -21,5 +22,6 @@ export default combineReducers({
   companies,
   userProfile,
   authentication,
-  user
+  user,
+  trades
 });

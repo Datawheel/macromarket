@@ -13,16 +13,8 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
-    }).then(function() {
+    }, {timestamps: false}).then(function() {
       return queryInterface.createTable("Companies", {
         id: {
           allowNull: false,
@@ -114,16 +106,8 @@ module.exports = {
         },
         description: {
           type: Sequelize.STRING
-        },
-        createdAt: {
-          allowNull: false,
-          type: Sequelize.DATE
-        },
-        updatedAt: {
-          allowNull: false,
-          type: Sequelize.DATE
         }
-      });
+      }, {timestamps: false});
     }).then(function() {
       return queryInterface.createTable("Trades", {
         id: {

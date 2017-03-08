@@ -16,18 +16,18 @@ export default class Dropdown extends React.Component {
 
   select = item => {
     this.handleDropDown();
-    this.props.select(item.id);
+    this.props.select(item);
   }
 
   findName = id => {
-    let result = ""
+    let result = "";
     this.props.items.map(item => {
       if (item.id === id) {
         result = item.name;
       }
     });
     return result;
-  }
+  };
 
   renderItems = () => {
     return (
@@ -41,7 +41,7 @@ export default class Dropdown extends React.Component {
         })}
       </ul>
     );
-  }
+  };
 
   render() {
 

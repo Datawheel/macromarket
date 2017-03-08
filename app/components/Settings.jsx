@@ -85,12 +85,13 @@ class Settings extends React.Component {
         </Sidebar>
         <div className="center-content">
           {user.company_id
-            ? <div onClick={() => {
+            ? <div><div onClick={() => {
                 this.props.deleteCompany(user.company_id);
               }}>
                 Delete Company</div>
-            : null}
-          <Form company={this.props.company} user={user} title="Company Data" saveCompany={this.props.saveCompany}/>
+              <Form company={this.props.company} user={user} title="Company Data" saveCompany={this.props.saveCompany}/>
+              </div>
+            : <div><Form company={null} user={user} title="Company Data" saveCompany={this.props.saveCompany}/></div>}
         </div>
       </div>
     );
@@ -99,9 +100,6 @@ class Settings extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticate: token => {
-      dispatch(authenticate(token));
-    },
     saveCompany: (company, imagesToUpload) => {
       dispatch(uploadImage(company, imagesToUpload));
     },

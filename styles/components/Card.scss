@@ -1,0 +1,69 @@
+.card {
+    background: white;
+    position: relative;
+    font-family: $montserrat;
+    font-weight: 500;
+    margin: 6px 3px;
+
+    .flag {
+        position: absolute;
+        right: 10px;
+    }
+
+    .image-wrapper {
+        position: relative;
+        background: #fafafa;
+        height: 120px;
+
+        .icon-wrapper {
+            position: absolute;
+            bottom: 0;
+            width: 22px;
+            height: 22px;
+            padding: 5px;
+            text-align: center;
+
+            img {
+                height: 22px;
+            }
+        }
+
+        .sa-icon-wrapper {
+            background: #00923F;
+        }
+
+        .na-icon-wrapper {
+            background: #0B1097;
+        }
+
+        .e-icon-wrapper {
+            background: #752277;
+        }
+    }
+
+    .text-wrapper {
+        padding: 25px 15px;
+
+        .category {
+            text-transform: uppercase;
+            margin: 0;
+            font-weight: 500;
+            font-size: 12px;
+            color: $middle-grey;
+        }
+
+        .name {
+            color: $accent-color;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .yellow-line {
+            left: 0;
+            background: $accent-color;
+            position: absolute;
+            width: 5px;
+            height: 15px;
+        }
+    }
+}

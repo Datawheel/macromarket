@@ -1,8 +1,85 @@
 .search-container {
-  position: absolute;
-  background: white;
-  width: 100%;
-  height: 100%;
-  text-align: center;
+    position: absolute;
+    background: $dark-grey;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
 
+    .search-wrapper {
+        padding: 20% 10% 0;
+
+        .filter-wrapper,
+        .search-input {
+            display: inline-block;
+            padding: 0;
+        }
+
+        .search-input {
+            background: none;
+            border: none;
+            border-bottom: 1px solid white;
+            color: white;
+            width: 60%;
+            height: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            margin: 0 20px;
+        }
+
+        .search-icon {
+            margin-left: -12px;
+        }
+
+        .tool-tip {
+            border-radius:  $border-raidus;
+            position: absolute;
+            background: $accent-color;
+            padding: 3px 10px;
+            color: white;
+            top: -45px;
+            left: -5px;
+            visibility: hidden;
+        }
+
+        .product {left: -15px;}
+        .company{left: -20px;}
+        .transport{left: -40px;}
+
+        .filter-icons-wrapper {
+            display: inline-block;
+            background: white;
+            border-radius: 10px;
+
+            .filter-icon-wrapper {
+                position: relative;
+                padding: 5px 2px;
+                width: 40px;
+                border-left: 1px solid $light-grey;
+                color: black;
+                display: inline-block;
+
+                img {}
+
+                p {
+                    margin: 0;
+                }
+
+                .selected {
+                    color: $accent-color;
+                }
+            }
+
+            .filter-icon-wrapper:first-child {
+                border: none;
+            }
+
+            .filter-icon-wrapper:last-child {
+                vertical-align: top;
+                padding: 9px 0;
+            }
+        }
+    }
 }

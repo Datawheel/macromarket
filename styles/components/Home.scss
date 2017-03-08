@@ -1,0 +1,205 @@
+.home {
+    background-image: url("../public/assets/background-body.png");
+    top: 0;
+    width: 100%;
+    position: absolute;
+    background-size: cover;
+
+    .oec-logo-wrapper {
+        margin-bottom: 5px;
+    }
+
+    .tagline {
+        color: white;
+    }
+
+    .header-wrapper {
+        text-align: center;
+        margin: 50px 0;
+    }
+
+    .grid-wrapper {
+      h3 {
+        color: $light-grey;
+        text-transform: uppercase;
+        font-size: 14px;
+        text-align: center;
+      }
+      padding: 100px 0;
+      .row {
+        display: inline-block;
+        width: 33%;
+      }
+    }
+
+    .dropdown-item {
+        color: $light-grey;
+        font-size: 12px;
+        padding: 8px;
+        font-family: $libreFranklin;
+    }
+
+    .content-wrapper {
+        padding: 10%;
+
+        .search-wrapper {
+            background-color: white;
+            border: 1px solid white;
+            border-radius: $border-raidus;
+            display: inline-block;
+            width: 84%;
+            font-family: $libreFranklin;
+            font-weight: 300;
+        }
+
+        .filter-dropdown-container,
+        .search-button,
+        .search-input,
+        .search-input-wrapper,
+        .selected-wrapper {
+            display: inline-block;
+            height: 60px;
+            border: 0;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            margin: 0 -1px;
+            width: 75%;
+
+            .search-input {
+                background: none;
+                width: 100%;
+                margin-left: 10px;
+                color: $middle-grey;
+            }
+        }
+
+        .filter-dropdown-container {
+            width: 25%;
+            float: right;
+            border-left: 1px solid $light-grey;
+            color: $middle-grey;
+
+            .selected-wrapper {
+                height: 60px;
+
+                .chevron,
+                p {
+                    margin: 0 12px;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 80%;
+                }
+
+                .chevron {
+                    text-align: right;
+                }
+
+                .top {
+                    margin-top: 5px;
+                }
+            }
+        }
+
+        ul {
+            border-top: 1px solid $light-grey;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .search-button {
+            width: 15%;
+            background-color: black;
+            color: white;
+            text-transform: uppercase;
+            border-radius: $border-raidus;
+        }
+
+        .suggestions-wrapper {
+            background: white;
+            width: 100%;
+            margin: 0;
+            position: absolute;
+
+            .icon {
+                padding: 0 10px;
+            }
+
+            li {
+                position: relative;
+
+                p {
+                    margin: 0;
+                    display: inline-block;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+
+    .cta-buttons-wrapper {
+        margin-top: 80px;
+        margin-right: 2%;
+        @include flexbox;
+        @include flex-wrap(wrap);
+
+        .cta-button {
+            border-radius: $border-raidus;
+            width: 31%;
+            margin-left: 2%;
+            background-color: $accent-color;
+
+            .text-wrapper {
+                position: relative;
+                padding: 10% 0;
+                font-size: 12px;
+
+                .chevron {
+                    right: 10%;
+                }
+
+                .chevron,
+                .icon {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                .icon {
+                    width: 22px;
+                    left: 7%;
+                }
+
+                .transport {
+                    width: 37px;
+                }
+
+                .text-inner {
+                    margin: 0 auto;
+                    width: 50%;
+                }
+
+                .chevron:before {
+                    height: 1em;
+                    width: 1em;
+                    border-width: 0.15em 0.15em 0 0;
+                }
+
+                h2,
+                p {
+                    margin: 5px;
+                }
+
+                p {
+                    color: white;
+                }
+            }
+        }
+    }
+}

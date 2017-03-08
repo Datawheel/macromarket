@@ -13,7 +13,6 @@ imgUpload(router);
 
 router.post("/registerCompany", (req, res) => {
   const newCompany = req.body;
-
   models.Company.create(newCompany).then(company => {
     models.User.update({
       company_id: company.id
@@ -22,28 +21,6 @@ router.post("/registerCompany", (req, res) => {
         id: newCompany.user_id
       }
     }).then(() => {
-      // models.Country.findOne({
-      //   where: {
-      //     id: "USA"
-      //   }
-      // }).then(function(country) {
-      //
-      //   country.getCompanies().then(function(value) {
-      //     console.log(value);
-      //   });
-      // });
-      // models.Country.findOne({
-      //   where: {
-      //     id: "USA"
-      //   }
-      // }).then(country => {
-      //   country.addCompanies(1);
-      //   console.log("getCompanies");
-      //   const companies = country.getCompanies();
-      //   companies.then( function (value) {
-      //     console.log(value);
-      //   })
-      // });
       res.json(company.id);
     }).catch(err => {
       res.status(500).send({
@@ -84,14 +61,15 @@ router.put("/company/:id", (req, res) => {
       where: {
         id: req.params.id
       }
-    }).then(() => {
-    res.json(req.params.id);
-  }).catch(error => {
-    res.status(500).json({
-      error,
-      message: "Error in updating company."
+    })
+    .then(() => {
+      res.json(req.params.id);
+    }).catch(error => {
+      res.status(500).json({
+        error,
+        message: "Error in updating company."
+      });
     });
-  });
 });
 
 router.delete("/company/:id", (req, res) => {
@@ -127,6 +105,16 @@ router.get("/company/:id", (req, res) => {
   }).then(company => {
     res.json(company);
   });
+});
+
+router.get("/trades", (req, res) => {
+  // models.Trade.findAll({
+  //   where: {
+  //     req.body
+  //   }
+  // }).then(company => {
+  //   res.json(company);
+  // });
 });
 
 router.get("/country/:id", (req, res) => {

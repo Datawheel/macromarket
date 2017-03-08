@@ -30,7 +30,7 @@ class Form extends React.Component {
           importerExporter: false,
           transporter: false,
           name: "",
-          country_id: "ARG",
+          country_id: "afago",
           address: "",
           phone_number: "",
           website: "",
