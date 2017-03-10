@@ -13,6 +13,7 @@ imgUpload(router);
 
 router.get("/search/:q",  (req, res) => {
   const query = req.params.q;
+  console.log(query);
   models.Search.search(query).then(results => {
     res.json(results);
   });

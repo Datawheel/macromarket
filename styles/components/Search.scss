@@ -1,8 +1,12 @@
-.search-container {
+.overlay {
     position: absolute;
-    background: $dark-grey;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    z-index: 100;
+    background: $dark-grey;
+}
+
+.search-container {
     color: white;
     text-align: center;
 
@@ -34,7 +38,7 @@
         }
 
         .tool-tip {
-            border-radius:  $border-raidus;
+            border-radius: $border-raidus;
             position: absolute;
             background: $accent-color;
             padding: 3px 10px;
@@ -44,9 +48,17 @@
             visibility: hidden;
         }
 
-        .product {left: -15px;}
-        .company{left: -20px;}
-        .transport{left: -40px;}
+        .product {
+            left: -15px;
+        }
+
+        .company {
+            left: -20px;
+        }
+
+        .transport {
+            left: -40px;
+        }
 
         .filter-icons-wrapper {
             display: inline-block;
@@ -80,6 +92,33 @@
                 vertical-align: top;
                 padding: 9px 0;
             }
+        }
+    }
+}
+
+.result-wrapper {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    padding: 100px 50px;
+
+    .card {
+        width: 24%;
+        margin: 5px;
+
+        .text-wrapper {
+          position: relative;;
+          padding: 40px 15px 15px;
+          .profile_type_icon {
+            position: absolute;
+            top: 10px;
+          }
+          .name {
+            color: $middle-grey;
+          }
+          .category {
+            text-transform: none;
+            font-weight: 400;
+          }
         }
     }
 }

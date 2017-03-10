@@ -1,5 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    padding-bottom:60px;
+}
+
 .main-content {
-    padding-top: 30px;
+    padding-top: 95px;
 }
 
 .dropdown-list {
@@ -71,11 +78,23 @@ ul {
 }
 
 .visible {
-  visibility: visible!important;
+    visibility: visible!important;
 }
 
 input,
 p {
     font-family: $libreFranklin;
     font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+}
+
+.footer {
+    background: #000000;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 }

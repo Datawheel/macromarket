@@ -3,6 +3,7 @@ import FilterDropdown from "./FilterDropdown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchProducts} from "../actions/productsActions";
+import {toggleSearch, fetchSearch} from "../actions/searchActions";
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Home extends React.Component {
       keyword: "",
       suggestions: [],
       suggestionsVisible: true
-    }
+    };
   }
 
   componentWillMount() {
@@ -45,7 +46,10 @@ class Home extends React.Component {
   selectSuggestion = suggestion => {
     this.setState({keyword: suggestion.name});
     this.setState({suggestionsVisible: false});
+  }
 
+  search = () => {
+    this.props.toggleSearch();
   }
 
   render() {
@@ -65,7 +69,7 @@ class Home extends React.Component {
                 ? <ul className="suggestions-wrapper">
                     {this.state.suggestions.map(suggestion => {
                       return <li onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                        <img className="icon" src="./assets/icons/icon-place-yellow.svg"/>
+                        <img className="icon" src="./assets/icons/icon-country-yellow.svg"/>
                         <p>{`${suggestion.name}  |
                         ${suggestion.type}`}</p>
                       </li>;
@@ -74,7 +78,7 @@ class Home extends React.Component {
                 : null}</div>
             <FilterDropdown select={this.selectDropDown} selected={this.state.selected} items={this.state.filters}/>
           </div>
-          <button className="search-button">Search</button >
+          <button onClick={this.search} className="search-button">Search</button >
           <div className="cta-buttons-wrapper">
             <div className="cta-button">
               <div className="text-wrapper">
@@ -234,6 +238,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchProducts: () => {
       dispatch(fetchProducts());
+    },
+    toggleSearch: () => {
+      dispatch(toggleSearch());
     }
   };
 };
@@ -245,7 +252,8 @@ const mapStateToProps = state => {
     errorCountries: state.countries.error,
     products: state.products.products,
     loadingProducts: state.products.loading,
-    errorProducts: state.products.error
+    errorProducts: state.products.error,
+    searchVisible: state.search.visible
   };
 };
 

@@ -1,10 +1,12 @@
 import React from "react";
+import {fetchSearch} from "../actions/searchActions";
+import {connect} from "react-redux";
+import Card from "./Card.jsx"
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: "",
       searchTerm: "",
       filters: [],
       hover: ""
@@ -12,21 +14,15 @@ export default class Search extends React.Component {
   }
 
   mouseOver = filter => {
-    console.log(this.state.hover);
     this.setState({hover: filter});
-    console.log(this.state.hover);
   }
 
   mouseOut = () => {
     this.setState({hover: ""});
   }
 
-  submit = () => {
-    this.setState({searchTerm: this.state.input});
-  }
-
   handleChange = event => {
-    this.setState({input: event.target.value});
+    this.setState({searchTerm: event.target.value});
   }
 
   selectFilter = filter => {
@@ -39,13 +35,32 @@ export default class Search extends React.Component {
     this.forceUpdate();
   }
 
+  search = () => {
+    this.props.fetchSearch(this.state.searchTerm);
+  }
+
+  displayResults = () => {
+    const results = this.props.results;
+    if (results.length > 0) {
+      return (
+        <div className="result-wrapper">{results.map(result => {
+          return <Card content={result}/>;
+        })}</div>
+      );
+    }
+    else {
+      return <p>No results.</p>;
+    }
+  }
+
   render() {
+    console.log(this.props);
     return (
-      <div className="content-wrapper">
+      <div className="content-wrapper overlay">
         <div className="search-container">
           <div className="search-wrapper">
-            <input placeholder="Search" className="search-input" value={this.state.input} onChange={this.handleChange} type="text"></input>
-            <img className="search-icon" src="./assets/icons/icon-search-white.svg"></img>
+            <input placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
+            <img onClick={this.search} className="search-icon" src="./assets/icons/icon-search-white.svg"/>
             <div className="filter-wrapper">
               <p className="label">FILTER</p>
               <div className="filter-icons-wrapper">
@@ -56,9 +71,9 @@ export default class Search extends React.Component {
                     <p>place</p>
                   </div>
                   {this.state.filters.includes("place")
-                    ? <img src="./assets/icons/icon-place-yellow.svg"/>
-                    : <img src="./assets/icons/icon-place-black.svg"/>
-                  }
+                    ? <img src="./assets/icons/icon-country-yellow.svg"/>
+                  : <img src="./assets/icons/icon-country-black.svg"/>
+}
                 </div>
                 <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "product")} onClick={this.selectFilter.bind(this, "product")} className="filter-icon-wrapper">
                   <div className={this.state.hover === "product"
@@ -99,10 +114,26 @@ export default class Search extends React.Component {
             </div>
           </div>
         </div>
-        <div className="result-wrapper">
-          {this.state.searchTerm}
-        </div>
+
+        {this.props.results
+          ? this.displayResults()
+          : null}
+
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchSearch: query => {
+      dispatch(fetchSearch(query));
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {results: state.search.results, loading: state.search.loading, error: state.search.error};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

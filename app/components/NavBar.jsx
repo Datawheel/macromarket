@@ -1,43 +1,76 @@
 import React from "react";
 import {Link} from "react-router";
+import {toggleSearch} from "../actions/searchActions";
+import Search from "./Search.jsx";
+import {connect} from "react-redux";
+import {browserHistory} from "react-router";
 
-export default class NavBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.toggleSearch = props.toggleSearch;
-    }
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    browserHistory.listen(location => {
+      if (this.props.searchVisible) {
+        this.props.toggleSearch();
+      }
 
-    render() {
+    });
+  }
 
-        return (
-            <div className={this.props.location.pathname === '/' ? "home" : null}>
+  render() {
+    return (
+      <div>
+        <div className={this.props.location.pathname === '/'
+          ? "home"
+          : null}>
 
-                <ul className="nav-bar">
-                    <li className="logo nav-bar-element">
-                        <Link to="/">
-                          <img className="oec-logo" src="./assets/icons/white-oec-logo.svg"/>
-                        </Link>
-                    </li>
-                    <li className="nav-bar-element">
-                        <Link to="/company">Company</Link>
-                    </li>
-                    <li className="nav-bar-element">
-                        <Link to="/country">Country</Link>
-                    </li>
-                    <li className="nav-bar-element">
-                        <Link to="/product">Product</Link>
-                    </li>
-                    {this.props.location.pathname === '/'
-                        ? null
-                        : <li className="nav-bar-element">
-                            <button onClick={this.toggleSearch}>Search</button>
-                        </li>}
+          <ul className="nav-bar">
+            <li className="logo nav-bar-element">
+              {this.props.location.pathname !== '/'
+                ? <Link to="/">
+                    <div className="logo-wrapper"><img src="./assets/icons/white-oec-logo.svg"/></div>
+                    <div className="logo-wrapper">
+                      <img src="./assets/icons/black-market-logo.svg"/></div>
+                  </Link>
+                : null}
+            </li>
+            <li className="nav-bar-element">
+              <Link to="/company">Company</Link>
+            </li>
+            <li className="nav-bar-element">
+              <Link to="/country">Country</Link>
+            </li>
+            <li className="nav-bar-element">
+              <Link to="/product">Product</Link>
+            </li>
+            {this.props.location.pathname === '/'
+              ? null
+              : <li className="nav-bar-element">
+                <button onClick={this.props.toggleSearch}>Search</button>
+              </li>}
 
-                    <li className="nav-bar-element">
-                        <Link to="/login">Log In</Link>
-                    </li>
-                </ul>
-            </div>
-        );
-    }
+            <li className="nav-bar-element">
+              <Link to="/login">Log In</Link>
+            </li>
+          </ul>
+        </div>
+        {this.props.searchVisible
+          ? <Search></Search>
+          : null}
+      </div>
+    );
+  }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleSearch: () => {
+      dispatch(toggleSearch());
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {searchVisible: state.search.visible};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
