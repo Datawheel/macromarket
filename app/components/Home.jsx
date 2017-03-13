@@ -3,7 +3,19 @@ import FilterDropdown from "./FilterDropdown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchProducts} from "../actions/productsActions";
-import {toggleSearch, fetchSearch} from "../actions/searchActions";
+import {toggleSearch, fetchSearch, setSearch} from "../actions/searchActions";
+import exportIcon from "../img/icons/icon-export.svg";
+import importIcon from "../img/icons/icon-import.svg";
+import oecWhite from "../img/icons/white-oec-logo.svg";
+import marketYellow from "../img/icons/orange-market-logo.svg";
+import transportIconGold from "../img/icons/icon-transport.svg";
+import placeYellow from "../img/icons/icon-country-yellow.svg";
+import europe from "../img/icons/continents/icon-europe.svg";
+import northAmerica from "../img/icons/continents/icon-north-america.svg";
+import southAmerica from "../img/icons/continents/icon-south-america.svg";
+import usaFlag from "../img/icons/flags/usa-flag.svg";
+import chileFlag from "../img/icons/flags/chile-flag.svg";
+import italyFlag from "../img/icons/flags/italy-flag.svg";
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,11 +27,13 @@ class Home extends React.Component {
       selected: "All",
       keyword: "",
       suggestions: [],
-      suggestionsVisible: true
+      suggestionsVisible: true,
+      active: null
     };
   }
 
   componentWillMount() {
+
     this.props.fetchCountries();
     this.props.fetchProducts();
   }
@@ -49,7 +63,11 @@ class Home extends React.Component {
   }
 
   search = () => {
+    this.props.setSearch({keyword: this.state.keyword, filters: this.state.selected});
     this.props.toggleSearch();
+  }
+  hover = button => {
+    this.setState({active: button});
   }
 
   render() {
@@ -58,8 +76,8 @@ class Home extends React.Component {
         <div className="content-wrapper">
           <div className="header-wrapper">
             <div className="oec-logo-wrapper">
-            <img src="./assets/icons/white-oec-logo.svg"></img></div>
-            <img src="./assets/icons/orange-market-logo.svg"></img>
+            <img src={oecWhite}></img></div>
+            <img src={marketYellow}></img>
             <p className="tagline">Market for exported and imported goods.</p>
           </div>
           <div className="search-wrapper">
@@ -69,7 +87,7 @@ class Home extends React.Component {
                 ? <ul className="suggestions-wrapper">
                     {this.state.suggestions.map(suggestion => {
                       return <li onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                        <img className="icon" src="./assets/icons/icon-country-yellow.svg"/>
+                        <img className="icon" src={placeYellow}/>
                         <p>{`${suggestion.name}  |
                         ${suggestion.type}`}</p>
                       </li>;
@@ -80,9 +98,10 @@ class Home extends React.Component {
           </div>
           <button onClick={this.search} className="search-button">Search</button >
           <div className="cta-buttons-wrapper">
-            <div className="cta-button">
+            <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)}  className=
+              {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
-                <img className="icon" src="./assets/icons/icon-import.svg"/>
+                <img className="icon" src={importIcon}/>
                 <div className="text-inner">
                   <h2>I import</h2>
                   <p>View the marketplace.</p>
@@ -90,9 +109,10 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="cta-button">
+            <div onMouseOver={this.hover.bind(this, 1)} onMouseOut={this.hover.bind(this, null)}  className=
+              {this.state.active === 1 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
-                <img className="icon" src="./assets/icons/icon-export.svg"/>
+                <img className="icon" src={exportIcon}/>
                 <div className="text-inner">
                   <h2>I export</h2>
                   <p>Offer my products.</p>
@@ -100,9 +120,10 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="cta-button">
+            <div onMouseOver={this.hover.bind(this, 2)} onMouseOut={this.hover.bind(this, null)} className=
+              {this.state.active === 2 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
-                <img className="icon transport" src="./assets/icons/icon-transport.svg"/>
+                <img className="icon transport" src={transportIconGold}/>
                 <div className="text-inner">
                   <h2>I transport</h2>
                   <p>Offer my services.</p>
@@ -117,24 +138,24 @@ class Home extends React.Component {
               <div className="card">
                 <div className="image-wrapper">
                   <div className="sa-icon-wrapper icon-wrapper">
-                    <img src="./assets/icons/icon-south-america.svg"/>
+                    <img src={southAmerica}/>
                   </div>
                 </div>
                 <div className="text-wrapper">
                 <div className="yellow-line"></div>
-                <img className="flag" src="./assets/icons/flags/chile-flag.svg"/>
+                <img className="flag" src={chileFlag}/>
                 <p className="category">Country - South America</p>
                 <p className="name">Chile</p></div>
               </div>
               <div className="card">
                 <div className="image-wrapper">
                   <div className="na-icon-wrapper icon-wrapper">
-                    <img src="./assets/icons/icon-north-america.svg"/>
+                    <img src={northAmerica}/>
                   </div>
                 </div>
                 <div className="text-wrapper">
                 <div className="yellow-line"></div>
-                  <img className="flag" src="./assets/icons/flags/usa-flag.svg"/>
+                  <img className="flag" src={usaFlag}/>
                 <p className="category">Country - North America</p>
                 <p className="name">USA</p></div>
 
@@ -142,7 +163,7 @@ class Home extends React.Component {
               <div className="card">
                 <div className="image-wrapper">
                   <div className="e-icon-wrapper icon-wrapper">
-                    <img src="./assets/icons/icon-europe.svg"/>
+                    <img src={europe}/>
                   </div>
                 </div>
                 <div className="text-wrapper">
@@ -241,6 +262,12 @@ const mapDispatchToProps = dispatch => {
     },
     toggleSearch: () => {
       dispatch(toggleSearch());
+    },
+    fetchSearch: () => {
+      dispatch(fetchSearch());
+    },
+    setSearch: query => {
+      dispatch(setSearch(query));
     }
   };
 };

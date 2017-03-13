@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCompany} from '../actions/companyActions';
+import companyIcon from "../img/icons/icon-company-white.svg";
 
 class CompanyWithId extends React.Component {
   constructor(props) {
@@ -33,18 +34,23 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    const coverImage = {backgroundImage: `url(${company.cover_image})`};
-    const profileImage = {backgroundImage: `url(${company.profile_image})`};
+    const coverImage = {
+      backgroundImage: `url(${company.cover_image})`
+    };
+    const profileImage = {
+      backgroundImage: `url(${company.profile_image})`
+    };
 
     return (
-      <div className="detailed-content-wrapper">
+      <div className="detailed-content-wrapper company">
         <Sidebar>
-          <div className="profile-image-wrapper">
-          <div className="background-image" style={profileImage}></div></div>
-          <h3>{company.name}</h3>
-          <p>{company.address}</p>
-          <p>{company.phone_number}</p>
-          <p>{company.website}</p>
+          <div className="profile-info">
+            <div className="profile-image-wrapper">
+              <div className="background-image" style={profileImage}></div>
+            </div>
+            <img className="icon" src={companyIcon}/>
+            <h3>{company.name}</h3>
+          </div>
           <div className="products">
             <div className="imports">
               Imports
@@ -85,7 +91,15 @@ class CompanyWithId extends React.Component {
         </Sidebar>
         <div className="center-content">
           <div className="header-image-wrapper">
-                <div className="background-image" style={coverImage}></div>
+            <div className="background-image" style={coverImage}>
+              <div className="company-overlay-wrapper">
+                <div className="company-overlay">
+                </div>
+                <div className="text-wrapper">
+                  <p>{company.address}</p>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="description-wrapper">
             <h3>Company Description</h3>

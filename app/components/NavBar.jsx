@@ -4,6 +4,8 @@ import {toggleSearch} from "../actions/searchActions";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
+import oecLogo from "../img/icons/white-oec-logo.svg";
+import marketLogo from "../img/icons/black-market-logo.svg";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -27,9 +29,9 @@ class NavBar extends React.Component {
             <li className="logo nav-bar-element">
               {this.props.location.pathname !== '/'
                 ? <Link to="/">
-                    <div className="logo-wrapper"><img src="./assets/icons/white-oec-logo.svg"/></div>
+                    <div className="logo-wrapper"><img src={oecLogo}/></div>
                     <div className="logo-wrapper">
-                      <img src="./assets/icons/black-market-logo.svg"/></div>
+                      <img src={marketLogo}/></div>
                   </Link>
                 : null}
             </li>

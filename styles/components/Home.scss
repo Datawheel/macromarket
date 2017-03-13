@@ -149,7 +149,9 @@
         @include flexbox;
         @include flex-wrap(wrap);
 
+
         .cta-button {
+          border: 1px solid $accent-color;
             border-radius: $border-raidus;
             width: 31%;
             margin-left: 2%;
@@ -200,6 +202,11 @@
                     color: white;
                 }
             }
+        }
+        .cta-button-selected {
+
+          background-color: #000000;
+          color:white;
         }
     }
 }

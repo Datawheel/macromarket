@@ -15,7 +15,14 @@ function receiveSearch(json) {
 
 export function toggleSearch() {
   return {
-    type:"TOGGLE_SEARCH"
+    type: "TOGGLE_SEARCH"
+  };
+}
+
+export function setSearch(json) {
+  return {
+    type: "SET_SEARCH",
+    data: json
   };
 }
 
