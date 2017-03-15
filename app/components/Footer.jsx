@@ -1,5 +1,7 @@
 import React from "react";
-import {Link} from "react-router";
+
+import oecLogo from "../img/icons/white-oec-logo.svg";
+import marketLogo from "../img/icons/white-market-logo.svg";
 
 export default class Footer extends React.Component {
   constructor(props) {
@@ -10,9 +12,9 @@ export default class Footer extends React.Component {
 
     return (
     <div className="footer">
-      <div className="logo-wrapper"><img src="./assets/icons/white-oec-logo.svg"/></div>
+      <div className="logo-wrapper"><img src={oecLogo}/></div>
       <div className="logo-wrapper">
-        <img src="./assets/icons/white-market-logo.svg"/></div>
+        <img src={marketLogo}/></div>
     </div>
     );
   }

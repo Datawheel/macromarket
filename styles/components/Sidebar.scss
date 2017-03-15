@@ -20,10 +20,6 @@
             color: white;
         }
 
-        img {
-            width: 100%;
-        }
-
         .icon {
             width: 25px;
             padding: 10px;
@@ -32,6 +28,24 @@
         h3 {
             display: inline-block;
             vertical-align: text-bottom;
+        }
+
+        button {
+            color: white;
+            border: 1px solid white;
+            background: black;
+            padding: 15px 10%;
+        }
+    }
+
+    .section-wrapper {
+      position: relative;
+        .yellow-line {
+            position: absolute;
+            background: $accent-color;
+            width: 12px;
+            bottom: -10px;
+            height: 5px;
         }
     }
 

@@ -1,0 +1,15 @@
+.footer {
+    background: #000000;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+
+    .logo-wrapper {
+        width: 8%;
+
+        img {
+            width: 100%;
+        }
+    }
+}

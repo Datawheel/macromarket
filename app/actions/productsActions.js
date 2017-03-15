@@ -33,3 +33,16 @@ export function fetchProducts() {
     });
   };
 }
+
+export function fetchProductsByCompany(id) {
+  return function(dispatch) {
+    dispatch(requestProducts());
+    return axios.get(`/api/productsByCompany/${id}`)
+    .then(response => {
+      dispatch(receiveProducts(response.data));
+    })
+    .catch(response => {
+      dispatch(productsError(response.data));
+    });
+  };
+}

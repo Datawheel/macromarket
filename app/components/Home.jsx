@@ -15,7 +15,7 @@ import northAmerica from "../img/icons/continents/icon-north-america.svg";
 import southAmerica from "../img/icons/continents/icon-south-america.svg";
 import usaFlag from "../img/icons/flags/usa-flag.svg";
 import chileFlag from "../img/icons/flags/chile-flag.svg";
-import italyFlag from "../img/icons/flags/italy-flag.svg";
+
 
 class Home extends React.Component {
   constructor(props) {

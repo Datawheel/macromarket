@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 authentication(router);
 imgUpload(router);
 
-router.get("/search/:q",  (req, res) => {
+router.get("/search/:q", (req, res) => {
   const query = req.params.q;
   console.log(query);
   models.Search.search(query).then(results => {
@@ -56,6 +56,28 @@ router.get("/companies", (req, res) => {
   });
 });
 
+router.get("/productsByCompany/:id", (req, res) => {
+  models.Trade.findAll({
+    where: {
+      company_id: req.params.id
+    }
+  }).then(trades => {
+
+    var result = []
+    trades.forEach(trade => {
+      models.Product.find({
+        where: {
+          id: trade.product_id
+        }
+      }).then(product => {
+
+        result.push(product);
+        console.log(result, "RESULT");
+      });
+    }).then(res.json(result));
+  });
+});
+
 router.get("/products", (req, res) => {
   models.Product.findAll({}).then(product => {
     res.json(product);
@@ -65,11 +87,11 @@ router.get("/products", (req, res) => {
 router.put("/company/:id", (req, res) => {
   const newCompany = req.body;
   models.Company.update(
-    newCompany, {
-      where: {
-        id: req.params.id
-      }
-    })
+      newCompany, {
+        where: {
+          id: req.params.id
+        }
+      })
     .then(() => {
       res.json(req.params.id);
     }).catch(error => {
