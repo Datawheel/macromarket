@@ -57,24 +57,8 @@ router.get("/companies", (req, res) => {
 });
 
 router.get("/productsByCompany/:id", (req, res) => {
-  models.Trade.findAll({
-    where: {
-      company_id: req.params.id
-    }
-  }).then(trades => {
-
-    var result = []
-    trades.forEach(trade => {
-      models.Product.find({
-        where: {
-          id: trade.product_id
-        }
-      }).then(product => {
-
-        result.push(product);
-        console.log(result, "RESULT");
-      });
-    }).then(res.json(result));
+  models.Trade.findProductsByCompany(models, req.params.id).then(trades => {
+    res.send(trades);
   });
 });
 
@@ -135,16 +119,6 @@ router.get("/company/:id", (req, res) => {
   }).then(company => {
     res.json(company);
   });
-});
-
-router.get("/trades", (req, res) => {
-  // models.Trade.findAll({
-  //   where: {
-  //     req.body
-  //   }
-  // }).then(company => {
-  //   res.json(company);
-  // });
 });
 
 router.get("/country/:id", (req, res) => {

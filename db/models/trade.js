@@ -5,12 +5,21 @@ module.exports = function(sequelize, DataTypes) {
     product_id: DataTypes.INTEGER,
     company_id: DataTypes.INTEGER,
     country_id: DataTypes.INTEGER
-    
+
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
-        // Trade.belongsTo(models.User, {foreignKey: 'user_id'});
+        Trade.belongsTo(models.Product, {
+          foreignKey: "product_id"
+        });
+      },
+      findProducts: function(models, companyId) {
+        return Trade.findAll({
+          where: {
+            company_id: companyId
+          },
+          include: [models.Product]
+        });
       }
     }
   });

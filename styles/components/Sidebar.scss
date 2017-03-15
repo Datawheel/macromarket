@@ -1,4 +1,8 @@
-.sidebar {}
+.sidebar {
+  height: 100vh;
+background: $middle-blue;
+
+}
 
 .sidebar-wrapper {
     display: inline-block;
@@ -50,7 +54,6 @@
     }
 
     .products {
-        background: $middle-blue;
         color: white;
         padding: 40px;
     }

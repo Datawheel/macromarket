@@ -57,53 +57,33 @@ class CompanyWithId extends React.Component {
             <img className="icon" src={companyIcon}/>
             <h3>{company.name}</h3>
           </div>
-          <div className="products">
-            <div className="imports">
-              <div className="section-wrapper">
-                <h5>Products | Imports</h5>
-                <div className="yellow-line"></div>
+          {this.props.trades
+            ? <div className="products">
+                <div className="imports">
+                  <div className="section-wrapper">
+                    <h5>Products | Imports</h5>
+                    <div className="yellow-line"></div>
+                    {this.props.trades.map((trade, index) => {
+                      return (
+                        <div className="product-wrapper" key={index}>
+                          <p>{trade.Product.name}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="exports">
+                  <div className="section-wrapper">
+                    <h5>Products | Exports</h5>
+                    <div className="yellow-line"></div>
+                  </div>
+                </div>
+                <button>
+                  <img className="button-icon" src={getInTouchIcon}/>
+                  Get In Touch
+                </button>
               </div>
-              <ul>
-                <li>
-                  <Link to="/product/111">
-                    Grapes</Link>
-                </li>
-                <li>
-                  <Link to="/product/222">
-                    Dirt</Link>
-                </li>
-                <li>
-                  <Link to="/product/444">
-                    Salt</Link>
-                </li>
-              </ul>
-            </div>
-            <div className="exports">
-              <div className="section-wrapper">
-                <h5>Products | Exports</h5>
-                <div className="yellow-line"></div>
-              </div>
-              <ul>
-                <li>
-                  <Link to="/product/444">
-                    Steel</Link>
-                </li>
-                <li>
-                  <Link to="/product/555">
-                    Wine</Link>
-                </li>
-                <li>
-                  <Link to="/product/666">
-                    Wood</Link>
-                </li>
-              </ul>
-
-            </div>
-            <button>
-              <img className="button-icon" src={getInTouchIcon}/>
-              Get In Touch
-            </button>
-          </div>
+            : null}
         </Sidebar>
         <div className="center-content">
           <div className="header-image-wrapper">

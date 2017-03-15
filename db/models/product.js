@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         // Trade.belongsTo(models.User, {foreignKey: 'user_id'});
+          Product.hasMany(models.Trade, {foreignKey: 'product_id'});
       }
     },
     timestamps:false
