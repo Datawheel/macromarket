@@ -27,10 +27,10 @@ export function setSearch(json) {
 }
 
 
-export function fetchSearch(query) {
+export function fetchSearch(query, filter) {
   return function(dispatch) {
     dispatch(requestSearch());
-    return axios.get(`/api/search/${query}`)
+    return axios.get(`/api/search/${filter}/${query}`)
     .then(response => {
       dispatch(receiveSearch(response.data));
     })

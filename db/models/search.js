@@ -6,19 +6,29 @@ module.exports = function(sequelize, DataTypes) {
     document: DataTypes.STRING
   }, {
     classMethods: {
-      search: function(query) {
-        if(sequelize.options.dialect !== 'postgres') {
+      search: function(query, filter) {
+        if (sequelize.options.dialect !== 'postgres') {
           console.log('Search is only implemented on POSTGRES database');
           return;
         }
         var Search = this;
+        if (filter !==  "all") {
+          var filterByProfileType = " AND profile_type='" + filter + "'";
+        }
+        else {
+          var filterByProfileType = "";
+        }
 
         query = sequelize.getQueryInterface().escape(query);
         return sequelize
-                  .query('SELECT * FROM "' + Search.tableName + '" WHERE document @@ plainto_tsquery(\'english\', :query)',
-                    {replacements: {query: query},
-                      model: Search,
-                      type: sequelize.QueryTypes.SELECT});
+          .query('SELECT * FROM "' + Search.tableName +
+            '" WHERE document @@ plainto_tsquery(\'english\', :query)' + filterByProfileType, {
+              replacements: {
+                query: query
+              },
+              model: Search,
+              type: sequelize.QueryTypes.SELECT
+            });
       }
     },
     timestamps: false,

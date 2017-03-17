@@ -12,7 +12,7 @@ var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
-
+app.use(express.static(path.join(__dirname, 'public/img')));
 
 var routes = require('./server/routes/index.js');
 app.use('/api', routes);

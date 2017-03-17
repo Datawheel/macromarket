@@ -1,9 +1,15 @@
 .overlay {
-    position: absolute;
-    width: 100%;
-    min-height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 100;
     background: $dark-grey;
+    .overlay-inner {
+      height: 100%;
+      overflow: scroll;
+    }
 }
 
 .search-container {
@@ -106,19 +112,22 @@
         margin: 5px;
 
         .text-wrapper {
-          position: relative;;
-          padding: 40px 15px 15px;
-          .profile_type_icon {
-            position: absolute;
-            top: 10px;
-          }
-          .name {
-            color: $middle-grey;
-          }
-          .category {
-            text-transform: none;
-            font-weight: 400;
-          }
+            position: relative;
+            padding: 40px 15px 10px;
+
+            .profile_type_icon {
+                position: absolute;
+                top: 10px;
+            }
+
+            .name {
+                color: $middle-grey;
+            }
+
+            .category {
+                text-transform: none;
+                font-weight: 400;
+            }
         }
     }
 }

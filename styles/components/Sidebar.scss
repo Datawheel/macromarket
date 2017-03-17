@@ -1,7 +1,8 @@
-.sidebar {
-  height: 100vh;
-background: $middle-blue;
-
+.company {
+    .sidebar {
+        min-height: 100vh;
+        background: $middle-blue;
+    }
 }
 
 .sidebar-wrapper {
@@ -19,7 +20,7 @@ background: $middle-blue;
 
         .profile-info {
             padding: 0 40px;
-            height: 400px;
+            height: 450px;
             background: $dark-blue;
             color: white;
         }
@@ -39,22 +40,28 @@ background: $middle-blue;
             border: 1px solid white;
             background: black;
             padding: 15px 10%;
+            margin: 30px 0;
         }
     }
 
     .section-wrapper {
-      position: relative;
+        position: relative;
+        padding-bottom: 30px;
+
         .yellow-line {
             position: absolute;
             background: $accent-color;
-            width: 12px;
-            bottom: -10px;
+            width: 15px;
+            top: 18px;
             height: 5px;
         }
     }
 
-    .products {
-        color: white;
+    .products {    color: white;
         padding: 40px;
+
+        a {
+            color: white;
+        }
     }
 }

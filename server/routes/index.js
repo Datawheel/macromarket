@@ -11,10 +11,10 @@ router.get("/", (req, res) => {
 authentication(router);
 imgUpload(router);
 
-router.get("/search/:q", (req, res) => {
+router.get("/search/:f/:q", (req, res) => {
+  const filter = req.params.f;
   const query = req.params.q;
-  console.log(query);
-  models.Search.search(query).then(results => {
+  models.Search.search(query, filter).then(results => {
     res.json(results);
   });
 });

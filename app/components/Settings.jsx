@@ -76,7 +76,7 @@ class Settings extends React.Component {
     }
 
     return (
-      <div>
+      <div className="settings">
         <Sidebar>
           {user.company_id
             ? <h2>Edit Company</h2>

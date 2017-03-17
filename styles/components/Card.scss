@@ -3,7 +3,7 @@
     position: relative;
     font-family: $montserrat;
     font-weight: 500;
-    margin: 6px 3px;
+    margin: 8px 4px;
 
     .flag {
         position: absolute;
@@ -13,7 +13,8 @@
     .image-wrapper {
         position: relative;
         background: #fafafa;
-        height: 120px;
+        background-size: cover;
+        height: 150px;
 
         .icon-wrapper {
             position: absolute;

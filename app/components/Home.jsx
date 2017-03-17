@@ -15,7 +15,7 @@ import northAmerica from "../img/icons/continents/icon-north-america.svg";
 import southAmerica from "../img/icons/continents/icon-south-america.svg";
 import usaFlag from "../img/icons/flags/usa-flag.svg";
 import chileFlag from "../img/icons/flags/chile-flag.svg";
-
+import {CardHome} from "./Card.jsx";
 
 class Home extends React.Component {
   constructor(props) {
@@ -63,9 +63,10 @@ class Home extends React.Component {
   }
 
   search = () => {
-    this.props.setSearch({keyword: this.state.keyword, filters: this.state.selected});
+    this.props.setSearch({keyword: this.state.keyword, filter: this.state.selected});
     this.props.toggleSearch();
   }
+
   hover = button => {
     this.setState({active: button});
   }
@@ -76,7 +77,8 @@ class Home extends React.Component {
         <div className="content-wrapper">
           <div className="header-wrapper">
             <div className="oec-logo-wrapper">
-            <img src={oecWhite}></img></div>
+              <img src={oecWhite}></img>
+            </div>
             <img src={marketYellow}></img>
             <p className="tagline">Market for exported and imported goods.</p>
           </div>
@@ -98,8 +100,7 @@ class Home extends React.Component {
           </div>
           <button onClick={this.search} className="search-button">Search</button >
           <div className="cta-buttons-wrapper">
-            <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)}  className=
-              {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
+            <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
                 <img className="icon" src={importIcon}/>
                 <div className="text-inner">
@@ -109,8 +110,7 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-            <div onMouseOver={this.hover.bind(this, 1)} onMouseOut={this.hover.bind(this, null)}  className=
-              {this.state.active === 1 ? "cta-button cta-button-selected" : "cta-button"}>
+            <div onMouseOver={this.hover.bind(this, 1)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 1 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
                 <img className="icon" src={exportIcon}/>
                 <div className="text-inner">
@@ -120,8 +120,7 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-            <div onMouseOver={this.hover.bind(this, 2)} onMouseOut={this.hover.bind(this, null)} className=
-              {this.state.active === 2 ? "cta-button cta-button-selected" : "cta-button"}>
+            <div onMouseOver={this.hover.bind(this, 2)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 2 ? "cta-button cta-button-selected" : "cta-button"}>
               <div className="text-wrapper">
                 <img className="icon transport" src={transportIconGold}/>
                 <div className="text-inner">
@@ -135,115 +134,69 @@ class Home extends React.Component {
           <div className="grid-wrapper">
             <div className="countries row">
               <h3>Countries</h3>
-              <div className="card">
-                <div className="image-wrapper">
-                  <div className="sa-icon-wrapper icon-wrapper">
-                    <img src={southAmerica}/>
-                  </div>
-                </div>
-                <div className="text-wrapper">
-                <div className="yellow-line"></div>
-                <img className="flag" src={chileFlag}/>
-                <p className="category">Country - South America</p>
-                <p className="name">Chile</p></div>
-              </div>
-              <div className="card">
-                <div className="image-wrapper">
-                  <div className="na-icon-wrapper icon-wrapper">
-                    <img src={northAmerica}/>
-                  </div>
-                </div>
-                <div className="text-wrapper">
-                <div className="yellow-line"></div>
-                  <img className="flag" src={usaFlag}/>
-                <p className="category">Country - North America</p>
-                <p className="name">USA</p></div>
-
-              </div>
-              <div className="card">
-                <div className="image-wrapper">
-                  <div className="e-icon-wrapper icon-wrapper">
-                    <img src={europe}/>
-                  </div>
-                </div>
-                <div className="text-wrapper">
-                <div className="yellow-line"></div>
-                <p className="category">Country - Europe</p>
-                <p className="name">Italy</p></div>
-
-              </div>
+              <CardHome content={{
+                type: "country",
+                name: "Chile",
+                continent: "South America",
+                id: "sachl",
+                flickr_link: "https://flic.kr/p/g2TM9U"
+              }}/>
+              <CardHome content={{
+                type: "country",
+                name: "USA",
+                continent: "North America",
+                id: "nausa",
+                flickr_link: "https://flic.kr/p/8CZkZ7"
+              }}/>
+              <CardHome content={{
+                type: "country",
+                name: "Italy",
+                continent: "Europe",
+                id: "euita",
+                flickr_link: "https://flic.kr/p/gonJ3Y"
+              }}/>
             </div>
             <div className="products row">
-                <h3>Prdoucts</h3>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
+              <h3>Prdoucts</h3>
+                <CardHome content={{
+                  type: "product",
+                  name: "Wine",
+                  id: "042204",
+                  flickr_link: "https://flic.kr/p/a7awbU"
+                }}/>
+                <CardHome content={{
+                  type: "product",
+                  name: "Electronic printed circuts",
+                  id: "16853400",
+                  flickr_link: null
+                }}/>
+                <CardHome content={{
+                  type: "product",
+                  name: "Plastic pipes",
+                  id: "073917",
+                  flickr_link: "https://flic.kr/p/6ybFaY"
+                }}/>
             </div>
             <div className="companies row">
-                <h3>companies</h3>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
-                  <div className="card">
-                    <div className="image-wrapper">
-                      <div className="sa-icon-wrapper icon-wrapper">
-                        <img src="./assets/icons/icon-south-america.svg"/>
-                      </div>
-                    </div>
-                    <div className="text-wrapper">
-                    <div className="yellow-line"></div>
-                    <p className="category">Country - South America</p>
-                    <p className="name">Chile</p></div>
-                  </div>
+              <h3>companies</h3>
+                <CardHome content={{
+                  type: "company",
+                  name: "Sabrina's Sheeps",
+                  id: "39",
+                  logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
+                }}/>
+                <CardHome content={{
+                  type: "company",
+                  name: "Salmon and Pork",
+                  id: "38",
+                  logo: "https://sabrina-test.s3.amazonaws.com/1489691935730.jpg"
+                }}/>
+                <CardHome content={{
+                  type: "company",
+                  name: "Sabrina's Sheeps",
+                  id: "39",
+                  logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
+                }}/>
             </div>
           </div>
         </div>

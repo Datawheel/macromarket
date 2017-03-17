@@ -12,13 +12,16 @@ module.exports = function(sequelize, DataTypes) {
         Trade.belongsTo(models.Product, {
           foreignKey: "product_id"
         });
+        Trade.belongsTo(models.Country, {
+          foreignKey: "country_id"
+        });
       },
-      findProducts: function(models, companyId) {
+      findProductsByCompany: function(models, companyId) {
         return Trade.findAll({
           where: {
             company_id: companyId
           },
-          include: [models.Product]
+          include: [models.Product, models.Country]
         });
       }
     }

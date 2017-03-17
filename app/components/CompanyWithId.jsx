@@ -22,7 +22,7 @@ class CompanyWithId extends React.Component {
   }
 
   render() {
-    const {company, loading, error} = this.props;
+    const {company, loading, error, trades} = this.props;
     if (loading || !company) {
       return (
         <div className="detailed-content-wrapper">
@@ -46,7 +46,7 @@ class CompanyWithId extends React.Component {
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`
     };
-    console.log(this.props.trades);
+
     return (
       <div className="detailed-content-wrapper company">
         <Sidebar>
@@ -63,19 +63,51 @@ class CompanyWithId extends React.Component {
                   <div className="section-wrapper">
                     <h5>Products | Imports</h5>
                     <div className="yellow-line"></div>
-                    {this.props.trades.map((trade, index) => {
-                      return (
-                        <div className="product-wrapper" key={index}>
-                          <p>{trade.Product.name}</p>
-                        </div>
-                      );
-                    })}
+                    {trades.imports
+                      ? <div>{trades.imports.map((trade, index) => {
+                            return (
+                              <Link to={`/product/${trade.product_id}`}>
+                                <div className="product-wrapper" key={index}>
+                                  <p>{trade.Product.name}</p>
+                                </div>
+                              </Link>
+                            );
+                          })}</div>
+                      : null}
                   </div>
                 </div>
                 <div className="exports">
                   <div className="section-wrapper">
                     <h5>Products | Exports</h5>
                     <div className="yellow-line"></div>
+                    {trades.exports
+                      ? <div>{trades.exports.map((trade, index) => {
+                            return (
+                              <Link to={`/product/${trade.product_id}`}>
+                                <div className="product-wrapper" key={index}>
+                                  <p>{trade.Product.name}</p>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      : null}
+                  </div>
+                </div>
+                <div className="coverage">
+                  <div className="section-wrapper">
+                    <h5>Coverage Area</h5>
+                    <div className="yellow-line"></div>
+                    {trades.countries
+                      ? <div>
+                          {trades.countries.map((country, index) => {
+                            return (
+                              <div className="product-wrapper" key={index}>
+                                <p>{country}</p>
+                              </div>
+                            );
+                          })}</div>
+                      : null}
                   </div>
                 </div>
                 <button>
@@ -88,8 +120,8 @@ class CompanyWithId extends React.Component {
         <div className="center-content">
           <div className="header-image-wrapper">
             <div className="background-image" style={coverImage}>
-              <div className="company-overlay-wrapper">
-                <div className="company-overlay"></div>
+              <div className="image-overlay-wrapper">
+                <div className="image-overlay"></div>
                 <div className="text-wrapper">
                   <div className="section-wrapper">
                     <img src={addressIcon}/>
@@ -138,7 +170,7 @@ const mapStateToProps = state => {
     error: state.companyProfile.error || null,
     trades: state.products.products,
     tradesLoading: state.products.loading,
-    tradesError: state.products.error || null
+    tradesError: state.products.error
   };
 };
 

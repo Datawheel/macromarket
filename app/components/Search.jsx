@@ -1,14 +1,23 @@
 import React from "react";
 import {fetchSearch} from "../actions/searchActions";
 import {connect} from "react-redux";
-import Card from "./Card.jsx";
+import {Card} from "./Card.jsx";
+import countryBlack from "../img/icons/icon-country-black.svg";
+import countryYellow from "../img/icons/icon-country-yellow.svg";
+import productYellow from "../img/icons/icon-product-yellow.svg";
+import productBlack from "../img/icons/icon-product-black.svg";
+import companyYellow from "../img/icons/icon-company-yellow.svg";
+import companyBlack from "../img/icons/icon-company-black.svg";
+import transportYellow from "../img/icons/icon-transport-yellow.svg";
+import transportBlack from "../img/icons/icon-transport-black.svg";
+import search from "../img/icons/icon-search-white.svg";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       searchTerm: this.props.keyword || "",
-      filters: [this.props.filters] || [],
+      filter: this.props.filter || "All",
       hover: ""
     };
   }
@@ -26,18 +35,12 @@ class Search extends React.Component {
   }
 
   selectFilter = filter => {
-    if (!this.state.filters.includes(filter)) {
-      this.state.filters.push(filter);
-    }
-    else {
-      const index = this.state.filters.indexOf(filter);
-      this.state.filters.splice(index, 1);
-    }
+    this.setState({filter});
     this.forceUpdate();
   }
 
   search = () => {
-    this.props.fetchSearch(this.state.searchTerm);
+    this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
   }
 
   componentWillMount = () => {
@@ -51,13 +54,12 @@ class Search extends React.Component {
     if (results.length > 0) {
       return (
         <div className="result-wrapper">{results.map(result => {
-          return <Card content={result}/>;
-        })
-      }
+            return <Card content={result}/>;
+          })
+}
         </div>
       );
-    }
-    else {
+    } else {
       return <p>No results.</p>;
     }
   }
@@ -65,68 +67,68 @@ class Search extends React.Component {
   render() {
     return (
       <div className="content-wrapper overlay">
-        <div className="search-container">
-          <div className="search-wrapper">
-            <input placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
-            <img onClick={this.search} className="search-icon" src="./assets/icons/icon-search-white.svg"/>
-            <div className="filter-wrapper">
-              <p className="label">FILTER</p>
-              <div className="filter-icons-wrapper">
-                <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Place")} onClick={this.selectFilter.bind(this, "Place")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "Place"
-                    ? "arrow-box place tool-tip visible"
-                    : "arrow-box place tool-tip"}>
-                    <p>place</p>
+        <div className="overlay-inner">
+          <div className="search-container">
+            <div className="search-wrapper">
+              <input placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
+              <img onClick={this.search} className="search-icon" src={search}/>
+              <div className="filter-wrapper">
+                <p className="label">FILTER</p>
+                <div className="filter-icons-wrapper">
+                  <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Country")} onClick={this.selectFilter.bind(this, "Country")} className="filter-icon-wrapper">
+                    <div className={this.state.hover === "Country"
+                      ? "arrow-box place tool-tip visible"
+                      : "arrow-box place tool-tip"}>
+                      <p>place</p>
+                    </div>
+                    {this.state.filter === "Country"
+                      ? <img src={countryYellow}/>
+                      : <img src={countryBlack}/>
+                    }
                   </div>
-                  {this.state.filters.includes("Place")
-                    ? <img src="./assets/icons/icon-country-yellow.svg"/>
-                    : <img src="./assets/icons/icon-country-black.svg"/>
-                  }
-                </div>
-                <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Product")} onClick={this.selectFilter.bind(this, "Product")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "Product"
-                    ? "arrow-box tool-tip product visible"
-                    : "arrow-box product tool-tip"}>
-                    <p>product</p>
+                  <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Product")} onClick={this.selectFilter.bind(this, "Product")} className="filter-icon-wrapper">
+                    <div className={this.state.hover === "Product"
+                      ? "arrow-box tool-tip product visible"
+                      : "arrow-box product tool-tip"}>
+                      <p>product</p>
+                    </div>
+                    {this.state.filter === "Product"
+                      ? <img src={productYellow}/>
+                      : <img src={productBlack}/>}
                   </div>
-                  {this.state.filters.includes("Product")
-                    ? <img src="./assets/icons/icon-product-yellow.svg"/>
-                    : <img src="./assets/icons/icon-product-black.svg"/>}
-                </div>
-                <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Company")} onClick={this.selectFilter.bind(this, "Company")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "Company"
-                    ? "arrow-box company tool-tip visible"
-                    : "arrow-box company tool-tip"}>
-                    <p>company</p>
+                  <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Company")} onClick={this.selectFilter.bind(this, "Company")} className="filter-icon-wrapper">
+                    <div className={this.state.hover === "Company"
+                      ? "arrow-box company tool-tip visible"
+                      : "arrow-box company tool-tip"}>
+                      <p>company</p>
+                    </div>
+                    {this.state.filter === "Company"
+                      ? <img src={companyYellow}/>
+                      : <img src={companyBlack}/>}
                   </div>
-                  {this.state.filters.includes("Company")
-                    ? <img src="./assets/icons/icon-company-yellow.svg"/>
-                    : <img src="./assets/icons/icon-company-black.svg"/>}
-                </div>
-                <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Transport")} onClick={this.selectFilter.bind(this, "Transport")} className="filter-icon-wrapper">
-                  <div className={this.state.hover === "Transport"
-                    ? "arrow-box transport tool-tip visible"
-                    : "arrow-box transport tool-tip"}>
-                    <p>transportation</p>
+                  <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Transport")} onClick={this.selectFilter.bind(this, "Transport")} className="filter-icon-wrapper">
+                    <div className={this.state.hover === "Transport"
+                      ? "arrow-box transport tool-tip visible"
+                      : "arrow-box transport tool-tip"}>
+                      <p>transportation</p>
+                    </div>
+                    {this.state.filter === "Transport"
+                      ? <img src={transportYellow}/>
+                      : <img src={transportBlack}/>}
                   </div>
-                  {this.state.filters.includes("Transport")
-                    ? <img src="./assets/icons/icon-transport-yellow.svg"/>
-                    : <img src="./assets/icons/icon-transport-black.svg"/>}
-                </div>
-                <div className="filter-icon-wrapper">
-                  <p className={this.state.filters.length === 0
-                    ? "selected"
-                    : null}>all</p>
+                  <div className="filter-icon-wrapper">
+                    <p className={this.state.filter === "All"
+                      ? "selected"
+                      : null}>all</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          {this.props.results
+            ? this.displayResults()
+            : null}
         </div>
-
-        {this.props.results
-          ? this.displayResults()
-          : null}
-
       </div>
     );
   }
@@ -134,14 +136,14 @@ class Search extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSearch: query => {
-      dispatch(fetchSearch(query));
+    fetchSearch: (query, filter) => {
+      dispatch(fetchSearch(query, filter));
     }
   };
 };
 
 const mapStateToProps = state => {
-  return {results: state.search.results, loading: state.search.loading, error: state.search.error, keyword: state.search.keyword, filters: state.search.filters};
+  return {results: state.search.results, loading: state.search.loading, error: state.search.error, keyword: state.search.keyword, filter: state.search.filter};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

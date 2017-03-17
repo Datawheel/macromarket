@@ -68,16 +68,26 @@ class ProductWithId extends React.Component {
     }
 
 
+    const fallbackId = product.id.substring(0, 2);
+    const img = product.flickr_link
+      ? `/img/product/${product.id}.jpg`
+      : `/img/product/${fallbackId}.jpg`;
+
     return (
       <div className="detailed-content-wrapper product">
         <div className="header">
           <Sidebar>
+            <div className="profile-info">
             <h3>{product.name}</h3>
             <p>{product.description}
-            </p>
+            </p></div>
           </Sidebar>
           <div className="center-content">
-            <div className="header-image-wrapper"></div>
+            <div className="header-image-wrapper">
+              <div className="background-image" style={{
+                backgroundImage: `url(${img})`
+              }}></div>
+            </div>
           </div>
           <div className="filter-wrapper">
             <div className="filter">

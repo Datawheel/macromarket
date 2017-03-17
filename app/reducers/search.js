@@ -5,7 +5,7 @@ export default (state = {
   loading: false,
   visible: false,
   keyword: null,
-  filters: null
+  filter: null
 }, action) => {
   switch (action.type) {
     case "TOGGLE_SEARCH":
@@ -15,7 +15,7 @@ export default (state = {
     case "SET_SEARCH":
       return {...state,
         keyword: action.data.keyword,
-        filters: action.data.filters
+        filter: action.data.filter
       };
     case `${ACTION_TYPE}_PENDING`:
       return {...state,

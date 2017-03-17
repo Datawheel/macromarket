@@ -9,13 +9,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
-        // Country.hasMany(models.Trade, {
-        //   as: "Trades"
-        // });
-        // Country.hasMany(models.Company, {
-        //   foreignKey: "country_id"
-        // });
+        Country.hasMany(models.Trade, {foreignKey: 'country_id'});
       }
     },
       timestamps:false

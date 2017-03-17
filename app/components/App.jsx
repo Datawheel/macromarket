@@ -15,11 +15,8 @@ export default class App extends React.Component {
     return (
       <div>
         <NavBar location={this.props.location}></NavBar>
-
         <div className="main-content">{this.props.children}</div>
-
       </div>
     );
   }
-
 }
