@@ -44,6 +44,7 @@ export function uploadImage(company, imagesToUpload) {
   const formData = new FormData();
   formData.append("profile_pic", imagesToUpload.profile_image);
   formData.append("cover_pic", imagesToUpload.cover_image);
+
   return function(dispatch) {
     dispatch(requestSave());
     if (imagesToUpload.profile_image || imagesToUpload.cover_image) {
@@ -60,8 +61,7 @@ export function uploadImage(company, imagesToUpload) {
         .catch(response => {
           dispatch(saveError(response.data));
         });
-    }
-    else {
+    } else {
       saveCompany(company)(dispatch);
     }
   };
@@ -77,8 +77,7 @@ export function saveCompany(company) {
         .catch(response => {
           dispatch(saveError(response.data));
         });
-    }
-    else {
+    } else {
       return axios.post("api/registerCompany", company)
         .then(response => {
           dispatch(receiveSave(response.data));
@@ -96,6 +95,10 @@ export function deleteCompany(id) {
     dispatch(requestDelete());
     return axios.delete(`api/company/${id}`)
       .then(response => {
+        dispatch({
+          type: "TRADES_FULFILLED",
+          data: null
+        });
         dispatch(receiveDelete(response.data));
       }).catch(response => {
         dispatch(deleteError(response.data));

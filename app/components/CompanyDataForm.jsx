@@ -3,7 +3,8 @@ import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 
-class Form extends React.Component {
+
+class CompanyDataForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +22,10 @@ class Form extends React.Component {
           cover_image: {
             backgroundImage: `url(${this.props.company.cover_image})`
           }
-        }
+        },
+        trades: [],
+        tradesToDelete: [],
+        slide: 0
       };
     }
     else {
@@ -46,10 +50,12 @@ class Form extends React.Component {
         imagesToUpload: {
           profile_image: null,
           cover_image: null
-        }
+        },
+        trades: [],
+        tradesToDelete: [],
+        slide: 0
       };
     }
-
   }
   componentWillMount() {
     this.props.fetchCountries();
@@ -98,10 +104,24 @@ class Form extends React.Component {
         country_id: item
       }
     });
+  }
 
+  addTrade = trade => {
+    this.setState(state => {
+      state.trades = state.trades.concat([trade]);
+      return state;
+    });
+  }
+
+  deleteTrade = trade => {
+    this.setState(state => {
+      state.tradesToDelete = state.tradesToDelete.concat([trade]);
+      return state;
+    });
   }
 
   saveCompany = () => {
+    this.props.nextSlide();
     this.props.saveCompany(this.state.company, this.state.imagesToUpload);
   }
 
@@ -123,9 +143,7 @@ class Form extends React.Component {
         </div>
       );
     }
-
     const {company, previewStyles} = this.state;
-
     return (
       <div className="form">
         <div className="title-wrapper">{this.props.title}</div>
@@ -209,4 +227,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyDataForm);

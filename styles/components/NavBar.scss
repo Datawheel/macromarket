@@ -15,7 +15,9 @@
 
     .nav-bar-element {
         display: inline-block;
-
+        .profile-img-wrapper {
+          width: 25px;
+        }
         a,
         a:visited, button {
             padding: 8px 40px;

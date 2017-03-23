@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCompany} from "../actions/companyActions";
-import {fetchProductsByCompany} from "../actions/productsActions";
+import {fetchProductsByCompany} from "../actions/tradesActions";
 import companyIcon from "../img/icons/icon-company-white.svg";
 import addressIcon from "../img/icons/icon-country-yellow.svg";
 import phoneIcon from "../img/icons/icon-telephone-yellow.svg";
@@ -72,7 +72,8 @@ class CompanyWithId extends React.Component {
                                 </div>
                               </Link>
                             );
-                          })}</div>
+                          })}
+                        </div>
                       : null}
                   </div>
                 </div>
@@ -102,9 +103,10 @@ class CompanyWithId extends React.Component {
                       ? <div>
                           {trades.countries.map((country, index) => {
                             return (
+                           <Link to={`/country/${country.id}`}>
                               <div className="product-wrapper" key={index}>
-                                <p>{country}</p>
-                              </div>
+                                <p>{country.name}</p>
+                              </div> </Link>
                             );
                           })}</div>
                       : null}
@@ -168,9 +170,9 @@ const mapStateToProps = state => {
     company: state.companyProfile.company,
     loading: state.companyProfile.loading,
     error: state.companyProfile.error || null,
-    trades: state.products.products,
-    tradesLoading: state.products.loading,
-    tradesError: state.products.error
+    trades: state.trades.trades,
+    tradesLoading: state.trades.loading,
+    tradesError: state.trades.error
   };
 };
 

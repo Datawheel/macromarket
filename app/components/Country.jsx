@@ -14,7 +14,7 @@ class Country extends React.Component {
 
   render() {
     const {countries, loading, error} = this.props;
-    if(loading || !countries) {
+    if (loading || !countries) {
       return (
         <div className="detailed-content-wrapper">
           <div>loading...</div>
@@ -22,7 +22,7 @@ class Country extends React.Component {
       )
     }
 
-    if(error) {
+    if (error) {
       return (
         <div className="detailed-content-wrapper">
           <h2>Error</h2>
@@ -31,20 +31,24 @@ class Country extends React.Component {
       )
     }
 
-    return (<div><p>List of Countries </p>
+    return (
+      <div>
+        <p>List of Countries
+        </p>
 
-      {countries.map((country) => {
-        return(
-        <Link key={country.id} to={'/country/' + country.id}>
-          <p>{country.name}</p>
-        </Link> );
-      })}
-    </div>);
+        {countries.map((country) => {
+          return (
+            <Link key={country.id} to={'/country/' + country.id}>
+              <p>{country.name}</p>
+            </Link>
+          );
+        })}
+      </div>
+    );
   }
 }
 
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     fetchCountries: () => {
       dispatch(fetchCountries())
@@ -52,7 +56,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     countries: state.countries.countries,
     loading: state.countries.loading,

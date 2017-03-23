@@ -21,6 +21,7 @@ router.get("/search/:f/:q", (req, res) => {
 
 router.post("/registerCompany", (req, res) => {
   const newCompany = req.body;
+
   models.Company.create(newCompany).then(company => {
     models.User.update({
       company_id: company.id
@@ -44,6 +45,42 @@ router.post("/registerCompany", (req, res) => {
   });
 });
 
+router.post("/trades/:id", (req, res) => {
+  const company_id = req.params.id;
+  const trades = req.body;
+  var inserted = 0;
+
+  for (var i = 0, len = trades.length; i < len; i++) {
+    if (trades[i].id) {
+      models.Trade.update(
+        trades[i], {
+          where: {
+            id: trades[i].id
+          }
+        }).then(() => {
+        if (++inserted === trades.length) {
+          res.json(company_id);
+        }
+      });
+    } else {
+      models.Trade.create({
+        product_id: trades[i].product_id,
+        company_id,
+        trade_flow: "imports",
+        country_id: trades[i].country_id
+      }).then(() => {
+        if (++inserted === trades.length) {
+          res.json(company_id);
+        }
+      });
+    }
+  }
+
+});
+
+router.delete("/trades", (req, res) => {
+  const tradesToDelete = req.body;
+});
 router.get("/countries", (req, res) => {
   models.Country.findAll({}).then(country => {
     res.json(country);
@@ -93,6 +130,12 @@ router.delete("/company/:id", (req, res) => {
     where: {
       company_id: req.params.id
     }
+  }).then(() => {
+    models.Trade.destroy({
+      where: {
+        company_id: req.params.id
+      }
+    })
   }).then(() => {
     models.Company.destroy({
       where: {

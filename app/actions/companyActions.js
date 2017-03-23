@@ -14,6 +14,13 @@ export function receiveCompany(json) {
   };
 }
 
+export function receiveAuthCompany(json) {
+  return {
+    type: "COMPANY_AUTH_FULFILLED",
+    data: json
+  };
+}
+
 function companyError(json) {
   return {
     type: "COMPANY_REJECTED",
@@ -35,6 +42,11 @@ function receiveAuthError(json) {
   };
 }
 
+function requestAuth() {
+  return {
+    type: "AUTH_PENDING"
+  };
+}
 export function fetchCompany(id) {
   return function(dispatch) {
     dispatch(requestCompany());
@@ -50,6 +62,7 @@ export function fetchCompany(id) {
 
 export function authenticateAndFetchCompany(token) {
   return function(dispatch) {
+    dispatch(requestAuth());
     const config = {
       headers: {
         Authorization: `JWT ${token}`
@@ -57,10 +70,12 @@ export function authenticateAndFetchCompany(token) {
     };
     axios.get("/api/authenticate", config).then(response => {
       dispatch(receiveAuth(response.data));
-      const {user} = response.data;
+      const {
+        user
+      } = response.data;
       if (user.company_id) {
         return axios.get(`/api/company/${user.company_id}`).then(companyResponse => {
-          dispatch(receiveCompany(companyResponse.data));
+          dispatch(receiveAuthCompany(companyResponse.data));
         });
       }
     }, err => {
