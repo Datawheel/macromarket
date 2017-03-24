@@ -25,6 +25,7 @@ class ProductSelectionForm extends React.Component {
   }
 
   addTrade = product => {
+
     const trade = {
       Product: product
     };
@@ -79,7 +80,7 @@ class ProductSelectionForm extends React.Component {
     }
 
     const filteredProducts = allProducts.filter((obj, pos, arr) => {
-      return arr.map(mapObj => mapObj.product_id).indexOf(obj.product_id) === pos;
+      return arr.map(mapObj => mapObj.Product.id).indexOf(obj.Product.id) === pos;
     });
 
     if (loading || !products) {
