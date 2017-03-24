@@ -2,13 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import {fetchProducts} from "../actions/productsActions";
 import {fetchProductsByCompany} from "../actions/tradesActions";
+import ProductSelection from "./ProductSelection.jsx";
 
 class ProductSelectionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       trades: [],
-      tradesToDelete: []
+      tradesToDelete: [],
+      h2: null,
+      h4: null,
+      h6: null
     };
   }
 
@@ -30,8 +34,24 @@ class ProductSelectionForm extends React.Component {
 
   }
 
+  setH2 = h2 => {
+    this.setState({h2});
+    this.setState({h4: null});
+  }
+
+  setH4 = h4 => {
+    this.setState({h4});
+  }
+
   saveProducts = allTrades => {
-    this.props.saveProducts(allTrades, this.state.tradesToDelete);
+    allTrades.map(trade => {
+      if (this.state.tradesToDelete.includes(trade)) {
+        const index = allTrades.indexOf(trade);
+        allTrades.splice(index, 1);
+      }
+    });
+    this.props.saveProducts(allTrades);
+    this.props.deleteTrades(this.state.tradesToDelete);
   }
 
   deleteTrade = trade => {
@@ -40,8 +60,7 @@ class ProductSelectionForm extends React.Component {
         state.tradesToDelete = state.tradesToDelete.concat([trade]);
         return state;
       });
-    }
-    else {
+    } else {
       const index = this.state.trades.indexOf(trade);
       const updatedTrades = this.state.trades.slice();
       updatedTrades.splice(index, 1);
@@ -56,7 +75,6 @@ class ProductSelectionForm extends React.Component {
     if (this.props.trades) {
       allTrades = this.state.trades.concat(this.props.trades.imports).concat(this.props.trades.exports);
     }
-console.log(this.props.trades, "props");
     if (loading || !products) {
       return (
         <div className="detailed-content-wrapper">
@@ -90,17 +108,23 @@ console.log(this.props.trades, "props");
             </div>
           );
         })}
-        <p>List of Products
-        </p>
-        {products.map((product, index) => {
-          return (
-            <div>
-              {index < 100
-                ? <p onClick={this.addTrade.bind(this, product)}>{product.name}</p>
+        <h3>List of Products
+        </h3>
+        <div className="product-selection h2-selection">
+          {products.map((h2, index) => {
+            return (
+              <div key={index}>
+                <p onClick={this.setH2.bind(this, h2)}>{h2.name}</p>
+              </div>
+            );
+          })}</div>
 
-                : null}</div>
-          );
-        })}
+        <div className="product-selection">{this.state.h2
+            ? <ProductSelection select={this.setH4} products={this.state.h2.values}/>
+            : null}</div>
+        <div className="product-selection">{this.state.h4
+            ? <ProductSelection select={this.addTrade} products={this.state.h4.values}/>
+            : null}</div>
         <button onClick={() => this.saveProducts(allTrades)}>Save and Continue</button>
       </div>
     );

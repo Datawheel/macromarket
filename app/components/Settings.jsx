@@ -18,7 +18,8 @@ class Settings extends React.Component {
     this.state = {
       slide: 0,
       products: [],
-      trades: []
+      trades: [],
+      tradesToDelete: []
     };
   }
 
@@ -52,10 +53,6 @@ class Settings extends React.Component {
     this.nextSlide();
   }
 
-  deleteTrades = trades => {
-
-  }
-
   nextSlide = () => {
     this.setState({
       slide: this.state.slide + 1
@@ -84,7 +81,6 @@ class Settings extends React.Component {
   }
 
   render() {
-
     const {user, loading, error, company, trades} = this.props;
     if (error) {
       return (
@@ -146,7 +142,7 @@ class Settings extends React.Component {
             : null}
           {this.state.slide === 1
             ? <div className="slide-1">
-                <ProductSelectionForm company={this.props.company} title="Product Selection" deleteTrade={this.props.deleteTrade} user={this.props.user} saveProducts={this.saveProducts}/>
+                <ProductSelectionForm company={this.props.company} title="Product Selection" deleteTrades={this.props.deleteTrades} user={this.props.user} saveProducts={this.saveProducts}/>
               </div>
             : null}
           {this.state.slide === 2
@@ -164,7 +160,7 @@ class Settings extends React.Component {
                     : <Link to={`/company/${this.props.companySaved}`}>
                       <button>View my listing</button>
                     </Link>
-                  }
+}
                 </div>
               </div>
             : null}

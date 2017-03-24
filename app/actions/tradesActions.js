@@ -41,6 +41,7 @@ function deleteTradesError(json) {
 }
 
 export function deleteTrades(trades) {
+  console.log(trades);
   return function(dispatch) {
     dispatch(requestDeleteTrades());
     return axios.delete("api/trades", trades)

@@ -50,8 +50,10 @@ class CountrySelectionForm extends React.Component {
 
     return (
       <div>
-        {Object.keys(products).map(product => {
-          return <CountrySelection addTrade={this.addTrade} savedCountries={products[product].countries} countries={this.props.countries} trade={products[product].product}/>
+        {Object.keys(products).map((product, index) => {
+          return <div key={index}><CountrySelection addTrade={this.addTrade} 
+            savedCountries={products[product].countries} countries={this.props.countries}
+            trade={products[product].product}/></div>
         })}
         <button onClick={this.props.createTrades}>Save</button>
       </div>

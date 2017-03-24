@@ -80,6 +80,7 @@ router.post("/trades/:id", (req, res) => {
 
 router.delete("/trades", (req, res) => {
   const tradesToDelete = req.body;
+  console.log(tradesToDelete, "TRADE");
 });
 router.get("/countries", (req, res) => {
   models.Country.findAll({}).then(country => {
