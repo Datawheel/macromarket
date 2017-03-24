@@ -78,10 +78,26 @@ router.post("/trades/:id", (req, res) => {
 
 });
 
-router.delete("/trades", (req, res) => {
-  const tradesToDelete = req.body;
-  console.log(tradesToDelete, "TRADE");
+router.post("/deleteTrades", (req, res) => {
+  const productIds = req.body.products;
+  const companyId = req.body.company;
+  var inserted = 0;
+
+  for (var i = 0, len = productIds.length; i < len; i++) {
+    models.Trade.destroy({
+      where: {
+        product_id: productIds[i],
+        company_id: companyId
+      }
+    }).then(() => {
+      if (++inserted === productIds.length) {
+        res.json(productIds);
+      }
+    });
+  }
 });
+
+
 router.get("/countries", (req, res) => {
   models.Country.findAll({}).then(country => {
     res.json(country);

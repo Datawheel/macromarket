@@ -7,7 +7,7 @@ import CompanyDataForm from "./CompanyDataForm.jsx";
 import ProductSelectionForm from "./ProductSelectionForm.jsx";
 import CountrySelectionForm from "./CountrySelectionForm.jsx";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
-import {deleteTrades} from "../actions/tradesActions";
+import {deleteTradesByProduct} from "../actions/tradesActions";
 import {createTrades} from "../actions/tradesActions";
 import {Link} from "react-router";
 import {fetchProductsByCompany} from "../actions/tradesActions";
@@ -136,13 +136,13 @@ class Settings extends React.Component {
                         this.deleteCompany();
                       }}>
                         Delete Company</div>
-                      <CompanyDataForm nextSlide={this.nextSlide} company={this.props.company} user={user} title="Company Data" deleteTrades={this.props.deleteTrades} saveCompany={this.props.saveCompany}/>
+                      <CompanyDataForm nextSlide={this.nextSlide} company={this.props.company} user={user} title="Company Data" saveCompany={this.props.saveCompany}/>
                     </div>
                   : <div><CompanyDataForm nextSlide={this.nextSlide} company={null} user={user} title="Company Data" saveCompany={this.props.saveCompany}/></div>}</div>
             : null}
           {this.state.slide === 1
             ? <div className="slide-1">
-                <ProductSelectionForm company={this.props.company} title="Product Selection" deleteTrades={this.props.deleteTrades} user={this.props.user} saveProducts={this.saveProducts}/>
+                <ProductSelectionForm company={this.props.company} title="Product Selection" deleteTradesByProduct={this.props.deleteTradesByProduct} user={this.props.user} saveProducts={this.saveProducts}/>
               </div>
             : null}
           {this.state.slide === 2
@@ -181,8 +181,8 @@ const mapDispatchToProps = dispatch => {
     deleteCompany: id => {
       dispatch(deleteCompany(id));
     },
-    deleteTrades: trades => {
-      dispatch(deleteTrades(trades));
+    deleteTradesByProduct: (products, id) => {
+      dispatch(deleteTradesByProduct(products, id));
     },
     createTrades: (trades, id) => {
       dispatch(createTrades(trades, id));

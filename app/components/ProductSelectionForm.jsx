@@ -17,6 +17,7 @@ class ProductSelectionForm extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props);
     this.props.fetchProducts();
     if (this.props.company) {
       this.props.fetchProductsByCompany(this.props.company.id);
@@ -43,24 +44,25 @@ class ProductSelectionForm extends React.Component {
     this.setState({h4});
   }
 
-  saveProducts = allTrades => {
-    allTrades.map(trade => {
-      if (this.state.tradesToDelete.includes(trade)) {
-        const index = allTrades.indexOf(trade);
-        allTrades.splice(index, 1);
+  saveProducts = allProducts => {
+    let productsToSave = [];
+    allProducts.map(trade => {
+      if (!this.state.tradesToDelete.includes(trade.product_id)) {
+        productsToSave.push(trade);
       }
     });
-    this.props.saveProducts(allTrades);
-    this.props.deleteTrades(this.state.tradesToDelete);
+    this.props.saveProducts(productsToSave);
+    this.props.deleteTradesByProduct(this.state.tradesToDelete, this.props.company.id);
   }
 
   deleteTrade = trade => {
     if (trade.id) {
       this.setState(state => {
-        state.tradesToDelete = state.tradesToDelete.concat([trade]);
+        state.tradesToDelete = state.tradesToDelete.concat([trade.product_id]);
         return state;
       });
-    } else {
+    }
+    else {
       const index = this.state.trades.indexOf(trade);
       const updatedTrades = this.state.trades.slice();
       updatedTrades.splice(index, 1);
@@ -70,11 +72,16 @@ class ProductSelectionForm extends React.Component {
 
   render() {
     const {products, loading, error} = this.props;
-    let allTrades = this.state.trades;
+    let allProducts = this.state.trades;
 
     if (this.props.trades) {
-      allTrades = this.state.trades.concat(this.props.trades.imports).concat(this.props.trades.exports);
+      allProducts = this.state.trades.concat(this.props.trades.imports).concat(this.props.trades.exports);
     }
+
+    const filteredProducts = allProducts.filter((obj, pos, arr) => {
+      return arr.map(mapObj => mapObj.product_id).indexOf(obj.product_id) === pos;
+    });
+
     if (loading || !products) {
       return (
         <div className="detailed-content-wrapper">
@@ -96,15 +103,16 @@ class ProductSelectionForm extends React.Component {
       <div className="form">
         <p>Selection
         </p>
-        {allTrades.map((trade, index) => {
+        {filteredProducts.map((trade, index) => {
           return (
             <div key={index}>
-              {this.state.tradesToDelete.includes(trade)
+              {this.state.tradesToDelete.includes(trade.product_id)
                 ? null
                 : <div>
                   <h2>{trade.Product.name}</h2>
                   <button onClick={this.deleteTrade.bind(this, trade)}>Delete</button>
-                </div>}
+                </div>
+              }
             </div>
           );
         })}
@@ -125,7 +133,7 @@ class ProductSelectionForm extends React.Component {
         <div className="product-selection">{this.state.h4
             ? <ProductSelection select={this.addTrade} products={this.state.h4.values}/>
             : null}</div>
-        <button onClick={() => this.saveProducts(allTrades)}>Save and Continue</button>
+        <button onClick={() => this.saveProducts(allProducts)}>Save and Continue</button>
       </div>
     );
   }

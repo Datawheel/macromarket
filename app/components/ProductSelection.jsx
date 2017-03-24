@@ -20,11 +20,6 @@ export default class ProductSelection extends React.Component {
   }
 
   render() {
-    // let selected = [];
-    // if (this.props.savedProducts) {
-    //   selected = this.state.selectedProducts.concat(this.props.savedProducts);
-    // }
-
     return (
       <div>
         {this.props.products.map((product, index) => {

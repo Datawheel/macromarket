@@ -40,11 +40,10 @@ function deleteTradesError(json) {
   };
 }
 
-export function deleteTrades(trades) {
-  console.log(trades);
+export function deleteTradesByProduct(productIds, companyId) {
   return function(dispatch) {
     dispatch(requestDeleteTrades());
-    return axios.delete("api/trades", trades)
+    return axios.post("api/deleteTrades", {products: productIds, company: companyId})
       .then(response => {
         dispatch(receiveDeleteTrades(response.data));
       })
