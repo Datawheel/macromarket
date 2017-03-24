@@ -181,20 +181,20 @@ class Home extends React.Component {
               <h3>companies</h3>
                 <CardHome content={{
                   type: "company",
-                  name: "Sabrina's Sheeps",
-                  id: "39",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
+                  name: "Al - Tayyab Enterprises",
+                  id: "3",
+                  logo: "https://sabrina-test.s3.amazonaws.com/1490390523547.jpg"
                 }}/>
                 <CardHome content={{
                   type: "company",
                   name: "Salmon and Pork",
-                  id: "38",
+                  id: "1",
                   logo: "https://sabrina-test.s3.amazonaws.com/1489691935730.jpg"
                 }}/>
                 <CardHome content={{
                   type: "company",
                   name: "Sabrina's Sheeps",
-                  id: "39",
+                  id: "2",
                   logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
                 }}/>
             </div>
