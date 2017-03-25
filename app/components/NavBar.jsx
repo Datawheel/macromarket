@@ -26,7 +26,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {loading, company} = this.props;
+    const {activateSearch, searchActive, loading, company} = this.props;
 
     return (
       <div>
@@ -55,7 +55,7 @@ class NavBar extends React.Component {
             {this.props.location.pathname === '/'
               ? null
               : <li className="nav-bar-element">
-                <button onClick={this.props.toggleSearch}>Search</button>
+                <button onClick={() => activateSearch(true)}>Search</button>
               </li>}
 
 
@@ -64,7 +64,7 @@ class NavBar extends React.Component {
             </li>
           </ul>
         </div>
-        {this.props.searchVisible
+        {searchActive
           ? <Search></Search>
           : null}
       </div>
@@ -74,6 +74,12 @@ class NavBar extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    activateSearch: activeState => {
+      dispatch({
+        type: "ACTIVATE_SEARCH",
+        data: activeState
+      });
+    },
     toggleSearch: () => {
       dispatch(toggleSearch());
     },
@@ -84,8 +90,13 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {searchVisible: state.search.visible, token: state.authentication.token, company: state.companyProfile.company,
-  loading: state.companyProfile.loading};
+  return {
+    searchActive: state.searchActive,
+    searchVisible: state.search.visible,
+    token: state.authentication.token,
+    company: state.companyProfile.company,
+    loading: state.companyProfile.loading
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

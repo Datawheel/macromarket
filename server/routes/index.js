@@ -11,7 +11,11 @@ router.get("/", (req, res) => {
 authentication(router);
 imgUpload(router);
 
-router.get("/search/:f/:q", (req, res) => {
+// Using the "|" aka or operator allows the route to handle the case of
+// a query given or not, i.e. both of the following will work:
+//  - /api/search/all/vietnam
+//  - /api/search/all/
+router.get("/search/(:f|:f/:q)", (req, res) => {
   const filter = req.params.f;
   const query = req.params.q;
   models.Search.search(query, filter).then(results => {

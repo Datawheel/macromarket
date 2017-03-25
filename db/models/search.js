@@ -19,12 +19,12 @@ module.exports = function(sequelize, DataTypes) {
           var filterByProfileType = "";
         }
 
-        query = sequelize.getQueryInterface().escape(query);
+        // query = sequelize.getQueryInterface().escape(query+":*");
         return sequelize
           .query('SELECT * FROM "' + Search.tableName +
-            '" WHERE document @@ plainto_tsquery(\'english\', :query)' + filterByProfileType, {
+            '" WHERE document @@ to_tsquery(:query)' + filterByProfileType, {
               replacements: {
-                query: query
+                query: query+":*"
               },
               model: Search,
               type: sequelize.QueryTypes.SELECT

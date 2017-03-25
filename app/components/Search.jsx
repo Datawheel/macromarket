@@ -32,11 +32,21 @@ class Search extends React.Component {
 
   handleChange = event => {
     this.setState({searchTerm: event.target.value});
+    // Only run the search if the user has typed MORE than 2 characters,
+    // otherwise this returns way too many results and feels laggy.
+    //  - else
+    // clear the results but submitting an empty string
+    if (event.target.value.length > 2) {
+      this.props.fetchSearch(event.target.value, this.state.filter.toLowerCase());
+    }
+    else {
+      this.props.fetchSearch("", this.state.filter.toLowerCase());
+    }
   }
 
   selectFilter = filter => {
     this.setState({filter});
-    this.forceUpdate();
+    this.props.fetchSearch(this.state.searchTerm, filter.toLowerCase());
   }
 
   search = () => {
@@ -49,18 +59,20 @@ class Search extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.refs.search.focus();
+  }
+
   displayResults = () => {
-    const results = this.props.results;
+    const {results} = this.props;
     if (results.length > 0) {
       return (
-        <div className="result-wrapper">{results.map(result => {
-            return <Card content={result}/>;
-          })
-}
+        <div className="result-wrapper">
+          {results.map(result => <Card key={result.id} content={result} />)}
         </div>
       );
     } else {
-      return <p>No results.</p>;
+      return (<p>No results.</p>);
     }
   }
 
@@ -70,7 +82,7 @@ class Search extends React.Component {
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
-              <input placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
+              <input ref="search" placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
               <img onClick={this.search} className="search-icon" src={search}/>
               <div className="filter-wrapper">
                 <p className="label">FILTER</p>
@@ -143,7 +155,13 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {results: state.search.results, loading: state.search.loading, error: state.search.error, keyword: state.search.keyword, filter: state.search.filter};
+  return {
+    results: state.search.results,
+    loading: state.search.loading,
+    error: state.search.error,
+    keyword: state.search.keyword,
+    filter: state.search.filter
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

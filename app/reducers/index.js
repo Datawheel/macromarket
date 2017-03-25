@@ -13,6 +13,14 @@ import user from "./user";
 import trades from "./trades";
 import search from "./search";
 
+const searchActive = (state = false, action) => {
+  switch (action.type) {
+    case "ACTIVATE_SEARCH":
+      return action.data;
+    default:
+      return state;
+  }
+};
 
 // Root reducer
 export default combineReducers({
@@ -26,5 +34,6 @@ export default combineReducers({
   authentication,
   user,
   trades,
-  search
+  search,
+  searchActive
 });
