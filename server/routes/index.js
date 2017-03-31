@@ -49,8 +49,7 @@ router.post("/registerCompany", (req, res) => {
   });
 });
 
-router.post("/trades/:id", (req, res) => {
-  const company_id = req.params.id;
+router.post("/trades", (req, res) => {
   const trades = req.body;
   var inserted = 0;
 
@@ -63,18 +62,15 @@ router.post("/trades/:id", (req, res) => {
           }
         }).then(() => {
         if (++inserted === trades.length) {
-          res.json(company_id);
+          res.json(trades);
         }
       });
     } else {
-      models.Trade.create({
-        product_id: trades[i].product_id,
-        company_id,
-        trade_flow: "imports",
-        country_id: trades[i].country_id
-      }).then(() => {
+      models.Trade.create(
+        trades[i]
+      ).then(() => {
         if (++inserted === trades.length) {
-          res.json(company_id);
+          res.json(trades);
         }
       });
     }
@@ -83,19 +79,15 @@ router.post("/trades/:id", (req, res) => {
 });
 
 router.post("/deleteTrades", (req, res) => {
-  const productIds = req.body.products;
-  const companyId = req.body.company;
+  const trades = req.body
   var inserted = 0;
-
-  for (var i = 0, len = productIds.length; i < len; i++) {
+  for (var i = 0, len = trades.length; i < len; i++) {
+    const trade = trades[i];
     models.Trade.destroy({
-      where: {
-        product_id: productIds[i],
-        company_id: companyId
-      }
+      where: trade
     }).then(() => {
-      if (++inserted === productIds.length) {
-        res.json(productIds);
+      if (++inserted === trades.length) {
+        res.json(trades);
       }
     });
   }

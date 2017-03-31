@@ -60,6 +60,7 @@ export function fetchProducts() {
         dispatch(receiveProducts(json));
       })
       .catch(response => {
+        console.log(response, "ERERERERADFDCNNN")
         dispatch(productsError(response.data));
       });
   };

@@ -51,8 +51,9 @@ class userWithId extends React.Component {
           <Link to="/inbox">
             <li>Inbox</li>
           </Link>
+
           <Link to="/settings">
-            <li>Settings</li>
+            {this.props.user.company_id ? <li>Settings</li> : <li>Register a Company</li>}
           </Link>
         </ul>
         <button onClick={this.props.logout}>Log Out</button>

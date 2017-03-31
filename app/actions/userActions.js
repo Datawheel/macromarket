@@ -83,6 +83,7 @@ export function saveCompany(company) {
           dispatch(receiveSave(response.data));
         })
         .catch(response => {
+          console.log(response, "errr");
           dispatch(saveError(response.data));
         });
     }

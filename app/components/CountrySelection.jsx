@@ -1,41 +1,89 @@
 import React from "react";
 import Dropdown from "./DropDown.jsx";
+import {connect} from "react-redux";
+import {fetchCountries} from "../actions/countriesActions";
 
-export class CountrySelection extends React.Component {
+class CountrySelection extends React.Component {
   constructor(props) {
     super(props);
-    this.content = this.props.content;
     this.state = {
-      selectedCountries: []
-    };
+      deleted: [],
+      saved: []
+    }
   }
 
-  selectCountries = country => {
+  componentWillMount() {
+    this.props.fetchCountries();
+  }
+
+  addCountry = country => {
+    const trade = {
+      product_id: this.props.trade.product_id,
+      country_id: country.id,
+      trade_flow: this.props.trade.trade_flow
+    };
+    console.log(trade);
+    this.props.addCountry(trade);
     this.setState(state => {
-      state.selectedCountries = state.selectedCountries.concat([country]);
+      state.saved = state.saved.concat([{
+          country
+        }]);
       return state;
     });
+  }
 
-    this.props.addTrade(country, this.props.trade);
+  deleteCountry = country => {
+    if (this.props.trade.countries.includes(country)) {
+      this.setState(state => {
+        state.deleted = state.deleted.concat([country.trade_id]);
+        return state;
+      });
+      this.props.deleteCountry(country);
+    }
+    else {
+      const index = this.state.saved.indexOf(country);
+      this.setState(state => {
+        state.saved = state.saved.filter(country => {
+          return state.saved.indexOf(country) !== index;
+        });
+        return state;
+      });
+    }
   }
 
   render() {
-    let selected = [];
-    if (this.props.savedCountries) {
-      selected = this.state.selectedCountries.concat(this.props.savedCountries);
+    const {countries, loading, error} = this.props;
+    if (loading || !countries) {
+      return (
+        <div className="detailed-content-wrapper">
+          <div>loading...</div>
+        </div>
+      );
     }
 
+    if (error) {
+      return (
+        <div className="detailed-content-wrapper">
+          <h2>Error</h2>
+          <p>Please refresh the page.</p>
+        </div>
+      );
+    }
 
+    const allCountries = this.props.trade.countries.concat(this.state.saved);
     return (
-      <div>
-        <p>{this.props.trade.name}</p>
-        <Dropdown select={this.selectCountries} selected={selected} items={this.props.countries}/>
-        <div className="selections">
-          {selected.map((country, index) => {
+      <div className="country-selection">
+        <Dropdown select={this.addCountry} selected={""} items={this.props.countries}/>
+        <div className="selected-countries-wrapper">
+          {allCountries.map((trade, index) => {
             return (
-              <div key={index}>
-                {country ? <p>{country.name}</p> : null}
-
+              <div className="selected-country" key={index}>
+                {!this.state.deleted.includes(trade.trade_id)
+                  ? <div>
+                      <span>{trade.country.name} </span>
+                      <div className="delete" onClick={this.deleteCountry.bind(this, trade)}></div>
+                    </div>
+                  : null}
               </div>
             );
           })}
@@ -44,3 +92,21 @@ export class CountrySelection extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchCountries: () => {
+      dispatch(fetchCountries());
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    countries: state.countries.countries,
+    loading: state.countries.loading,
+    error: state.countries.error || null
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CountrySelection);

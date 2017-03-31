@@ -19,17 +19,18 @@
     }
 
     .grid-wrapper {
-      h3 {
-        color: $light-grey;
-        text-transform: uppercase;
-        font-size: 14px;
-        text-align: center;
-      }
-      padding: 100px 0;
-      .row {
-        display: inline-block;
-        width: 33%;
-      }
+        h3 {
+            color: $light-grey;
+            text-transform: uppercase;
+            font-size: 14px;
+            text-align: center;
+        }
+        padding: 100px 0;
+
+        .row {
+            display: inline-block;
+            width: 33%;
+        }
     }
 
     .dropdown-item {
@@ -40,7 +41,10 @@
     }
 
     .content-wrapper {
-        padding: 10%;
+        width: 80%;
+        display: block;
+        margin: 17% auto;
+        max-width: 1000px;
 
         .search-wrapper {
             background-color: white;
@@ -149,9 +153,8 @@
         @include flexbox;
         @include flex-wrap(wrap);
 
-
         .cta-button {
-          border: 1px solid $accent-color;
+            border: 1px solid $accent-color;
             border-radius: $border-raidus;
             width: 31%;
             margin-left: 2%;
@@ -203,10 +206,10 @@
                 }
             }
         }
-        .cta-button-selected {
 
-          background-color: #000000;
-          color:white;
+        .cta-button-selected {
+            background-color: #000000;
+            color: white;
         }
     }
 }

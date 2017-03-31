@@ -43,6 +43,7 @@ class CompanyWithId extends React.Component {
     const coverImage = {
       backgroundImage: `url(${company.cover_image})`
     };
+    
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`
     };
@@ -64,11 +65,11 @@ class CompanyWithId extends React.Component {
                     <h5>Products | Imports</h5>
                     <div className="yellow-line"></div>
                     {trades.imports
-                      ? <div>{trades.imports.map((trade, index) => {
+                      ? <div>{Object.keys(trades.imports).map((trade, index) => {
                             return (
-                              <Link to={`/product/${trade.product_id}`}>
-                                <div className="product-wrapper" key={index}>
-                                  <p>{trade.Product.name}</p>
+                              <Link key={index} to={`/product/${trade}`}>
+                                <div className="product-wrapper">
+                                  <p>{trades.imports[trade].name}</p>
                                 </div>
                               </Link>
                             );
@@ -82,11 +83,11 @@ class CompanyWithId extends React.Component {
                     <h5>Products | Exports</h5>
                     <div className="yellow-line"></div>
                     {trades.exports
-                      ? <div>{trades.exports.map((trade, index) => {
+                      ? <div>{Object.keys(trades.exports).map((trade, index) => {
                             return (
-                              <Link to={`/product/${trade.product_id}`}>
-                                <div className="product-wrapper" key={index}>
-                                  <p>{trade.Product.name}</p>
+                              <Link key={index} to={`/product/${trade}`}>
+                                <div className="product-wrapper">
+                                  <p>{trades.exports[trade].name}</p>
                                 </div>
                               </Link>
                             );
@@ -101,12 +102,13 @@ class CompanyWithId extends React.Component {
                     <div className="yellow-line"></div>
                     {trades.countries
                       ? <div>
-                          {trades.countries.map((country, index) => {
+                          {Object.keys(trades.countries).map((country, index) => {
                             return (
-                           <Link to={`/country/${country.id}`}>
-                              <div className="product-wrapper" key={index}>
-                                <p>{country.name}</p>
-                              </div> </Link>
+                              <Link key={index} to={`/country/${country}`}>
+                                <div className="product-wrapper">
+                                  <p>{trades.countries[country].name}</p>
+                                </div>
+                              </Link>
                             );
                           })}</div>
                       : null}
@@ -135,7 +137,7 @@ class CompanyWithId extends React.Component {
                   </div>
                   <div className="section-wrapper">
                     <img src={worldIcon}/>
-                    <p>{company.website}</p>
+                    <a rel="external" href={`http://${company.website}`}>{company.website}</a>
                   </div>
                   <div className="section-wrapper">
                     <button><img className="button-icon" src={getInTouchIcon}/>Get in Touch</button>

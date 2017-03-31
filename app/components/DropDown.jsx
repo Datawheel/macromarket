@@ -44,11 +44,10 @@ export default class Dropdown extends React.Component {
   };
 
   render() {
-
     return (
       <div className="dropdown-container">
         {this.props.items ?
-        <div className="selected-wrapper" onClick={this.handleDropDown}>{this.findName(this.props.selected)}</div> : null}
+        <div className="selected-wrapper" onClick={this.handleDropDown}>Select countries</div> : null}
         {!this.state.visible
           ? null
           : this.renderItems()
