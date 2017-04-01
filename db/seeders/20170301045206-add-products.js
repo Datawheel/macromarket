@@ -10,6 +10,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/bWy1e3",
   			"flickr_author": "Marc Dalmulder"
   		},
+      {
+        "id": "0101",
+        "id_hs92": "01",
+        "name": "Live animals",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "010101",
   			"id_hs92": "0101",
@@ -157,6 +164,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0102",
+        "id_hs92": "02",
+        "name": "Meat and edible meat offal",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "010201",
   			"id_hs92": "0201",
@@ -577,6 +591,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0103",
+        "id_hs92": "03",
+        "name": "Fish, crustaceans, molluscs, aquatic invertebrates nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "010301",
   			"id_hs92": "0301",
@@ -1235,6 +1256,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0104",
+        "id_hs92": "04",
+        "name": "Dairy products, eggs, honey, edible animal product nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "010401",
   			"id_hs92": "0401",
@@ -1480,6 +1508,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0105",
+        "id_hs92": "05",
+        "name": "Products of animal origin, nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "010501",
   			"id_hs92": "0501",
@@ -1683,6 +1718,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/5EjKT",
   			"flickr_author": "danny O."
   		},
+      {
+        "id": "0206",
+        "id_hs92": "06",
+        "name": "Live trees, plants, bulbs, roots, cut flowers etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "020601",
   			"id_hs92": "0601",
@@ -1802,6 +1844,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0207",
+        "id_hs92": "07",
+        "name": "Edible vegetables and certain roots and tubers",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "020701",
   			"id_hs92": "0701",
@@ -2299,6 +2348,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0208",
+        "id_hs92": "08",
+        "name": "Edible fruit, nuts, peel of citrus fruit, melons",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "020801",
   			"id_hs92": "0801",
@@ -2747,6 +2803,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0209",
+        "id_hs92": "09",
+        "name": "Coffee, tea, maté and spices",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "020901",
   			"id_hs92": "0901",
@@ -3048,6 +3111,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0210",
+        "id_hs92": "10",
+        "name": "Cereals",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "021001",
   			"id_hs92": "1001",
@@ -3216,6 +3286,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0211",
+        "id_hs92": "11",
+        "name": "Milling products, malt, starches, inulin, wheat gluten",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "021101",
   			"id_hs92": "1101",
@@ -3517,6 +3594,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0212",
+        "id_hs92": "12",
+        "name": "Oil seed, oleagic fruits, grain, seed, fruit, etc, nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "021201",
   			"id_hs92": "1201",
@@ -3923,6 +4007,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0213",
+        "id_hs92": "13",
+        "name": "Lac, gums, resins, vegetable saps and extracts nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "021301",
   			"id_hs92": "1301",
@@ -4021,6 +4112,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0214",
+        "id_hs92": "14",
+        "name": "Vegetable plaiting materials, vegetable products nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "021401",
   			"id_hs92": "1401",
@@ -4133,6 +4231,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/d1piGL",
   			"flickr_author": "U.S. Department of Agriculture"
   		},
+      {
+        "id": "0315",
+        "id_hs92": "15",
+        "name": "Animal,vegetable fats and oils, cleavage products, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "031501",
   			"id_hs92": "1501",
@@ -4665,6 +4770,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/9dDjT4",
   			"flickr_author": "I-5 Design & Manufacture"
   		},
+      {
+        "id": "0416",
+        "id_hs92": "16",
+        "name": "Meat, fish and seafood food preparations nes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "041601",
   			"id_hs92": "1601",
@@ -4875,6 +4987,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0417",
+        "id_hs92": "17",
+        "name": "Sugars and sugar confectionery",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "041701",
   			"id_hs92": "1701",
@@ -5008,6 +5127,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0418",
+        "id_hs92": "18",
+        "name": "Cocoa and cocoa preparations",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "041801",
   			"id_hs92": "1801",
@@ -5127,6 +5253,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0419",
+        "id_hs92": "19",
+        "name": "Cereal, flour, starch, milk preparations and products",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "041901",
   			"id_hs92": "1901",
@@ -5274,6 +5407,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0420",
+        "id_hs92": "20",
+        "name": "Vegetable, fruit, nut, etc food preparations",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "042001",
   			"id_hs92": "2001",
@@ -5652,6 +5792,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0421",
+        "id_hs92": "21",
+        "name": "Miscellaneous edible preparations",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "042101",
   			"id_hs92": "2101",
@@ -5799,6 +5946,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0422",
+        "id_hs92": "22",
+        "name": "Beverages, spirits and vinegar",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "042201",
   			"id_hs92": "2201",
@@ -6009,6 +6163,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0423",
+        "id_hs92": "23",
+        "name": "Residues, wastes of food industry, animal fodder",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "042301",
   			"id_hs92": "2301",
@@ -6240,6 +6401,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0424",
+        "id_hs92": "24",
+        "name": "Tobacco and manufactured tobacco substitutes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "042401",
   			"id_hs92": "2401",
@@ -6331,6 +6499,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/nAH431",
   			"flickr_author": "INNES"
   		},
+      {
+        "id": "0525",
+        "id_hs92": "25",
+        "name": "Salt, sulphur, earth, stone, plaster, lime and cement",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "052501",
   			"id_hs92": "2501",
@@ -7080,6 +7255,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0526",
+        "id_hs92": "26",
+        "name": "Ores, slag and ash",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "052601",
   			"id_hs92": "2601",
@@ -7465,6 +7647,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0527",
+        "id_hs92": "27",
+        "name": "Mineral fuels, oils, distillation products, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "052701",
   			"id_hs92": "2701",
@@ -7997,6 +8186,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/7vFcRJ",
   			"flickr_author": "Horia Varlan"
   		},
+      {
+        "id": "0628",
+        "id_hs92": "28",
+        "name": "Inorganic chemicals, precious metal compound, isotope",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "062801",
   			"id_hs92": "2801",
@@ -9684,6 +9880,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0629",
+        "id_hs92": "29",
+        "name": "Organic chemicals",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "062901",
   			"id_hs92": "2901",
@@ -12057,6 +12260,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0630",
+        "id_hs92": "30",
+        "name": "Pharmaceutical products",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063001",
   			"id_hs92": "3001",
@@ -12309,6 +12519,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0631",
+        "id_hs92": "31",
+        "name": "Fertilizers",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063101",
   			"id_hs92": "3101",
@@ -12526,6 +12743,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0632",
+        "id_hs92": "32",
+        "name": "Tanning, dyeing extracts, tannins, derivs, pigments etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063201",
   			"id_hs92": "3201",
@@ -12953,6 +13177,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0633",
+        "id_hs92": "33",
+        "name": "Essential oils, perfumes, cosmetics, toileteries",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063301",
   			"id_hs92": "3301",
@@ -13240,6 +13471,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0634",
+        "id_hs92": "34",
+        "name": "Soaps, lubricants, waxes, candles, modelling pastes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063401",
   			"id_hs92": "3401",
@@ -13450,6 +13688,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0635",
+        "id_hs92": "35",
+        "name": "Albuminoids, modified starches, glues, enzymes",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063501",
   			"id_hs92": "3501",
@@ -13590,6 +13835,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0636",
+        "id_hs92": "36",
+        "name": "Explosives, pyrotechnics, matches, pyrophorics, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063601",
   			"id_hs92": "3601",
@@ -13688,6 +13940,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0637",
+        "id_hs92": "37",
+        "name": "Photographic or cinematographic goods",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063701",
   			"id_hs92": "3701",
@@ -13989,6 +14248,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0638",
+        "id_hs92": "38",
+        "name": "Miscellaneous chemical products",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "063801",
   			"id_hs92": "3801",
@@ -14556,6 +14822,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/KXue3",
   			"flickr_author": "Geof Wilson"
   		},
+      {
+        "id": "0739",
+        "id_hs92": "39",
+        "name": "Plastics and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "073901",
   			"id_hs92": "3901",
@@ -15599,6 +15872,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0740",
+        "id_hs92": "40",
+        "name": "Rubber and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "074001",
   			"id_hs92": "4001",
@@ -16187,6 +16467,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/p4iRRY",
   			"flickr_author": "only lines"
   		},
+      {
+        "id": "0841",
+        "id_hs92": "41",
+        "name": "Raw hides and skins (other than furskins) and leather",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "084101",
   			"id_hs92": "4101",
@@ -16502,6 +16789,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0842",
+        "id_hs92": "42",
+        "name": "Articles of leather, animal gut, harness, travel good",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "084201",
   			"id_hs92": "4201",
@@ -16698,6 +16992,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0843",
+        "id_hs92": "43",
+        "name": "Furskins and artificial fur, manufactures thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "084301",
   			"id_hs92": "4301",
@@ -16859,6 +17160,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/6XhiRQ",
   			"flickr_author": "uscjas"
   		},
+      {
+        "id": "0944",
+        "id_hs92": "44",
+        "name": "Wood and articles of wood, wood charcoal",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "094401",
   			"id_hs92": "4401",
@@ -17468,6 +17776,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0945",
+        "id_hs92": "45",
+        "name": "Cork and articles of cork",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "094501",
   			"id_hs92": "4501",
@@ -17545,6 +17860,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "0946",
+        "id_hs92": "46",
+        "name": "Manufactures of plaiting material, basketwork, etc.",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "094601",
   			"id_hs92": "4601",
@@ -17608,6 +17930,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/5iSsEo",
   			"flickr_author": "beccaplusmolly"
   		},
+      {
+        "id": "1047",
+        "id_hs92": "47",
+        "name": "Pulp of wood, fibrous cellulosic material, waste etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "104701",
   			"id_hs92": "4701",
@@ -17790,6 +18119,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1048",
+        "id_hs92": "48",
+        "name": "Paper & paperboard, articles of pulp, paper and board",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "104801",
   			"id_hs92": "4801",
@@ -18728,6 +19064,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1049",
+        "id_hs92": "49",
+        "name": "Printed books, newspapers, pictures etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "104901",
   			"id_hs92": "4901",
@@ -18945,6 +19288,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/6zjJP2",
   			"flickr_author": "kris krüg"
   		},
+      {
+        "id": "1150",
+        "id_hs92": "50",
+        "name": "Silk",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115001",
   			"id_hs92": "5001",
@@ -19064,6 +19414,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1151",
+        "id_hs92": "51",
+        "name": "Wool, animal hair, horsehair yarn and fabric thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115101",
   			"id_hs92": "5101",
@@ -19407,6 +19764,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1152",
+        "id_hs92": "52",
+        "name": "Cotton",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115201",
   			"id_hs92": "5201",
@@ -20380,6 +20744,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1153",
+        "id_hs92": "53",
+        "name": "Vegetable textile fibres nes, paper yarn, woven fabri",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115301",
   			"id_hs92": "5301",
@@ -20674,6 +21045,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1154",
+        "id_hs92": "54",
+        "name": "manmade filaments",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115401",
   			"id_hs92": "5401",
@@ -21185,6 +21563,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1155",
+        "id_hs92": "55",
+        "name": "Man-made staple fibres",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115501",
   			"id_hs92": "5501",
@@ -22102,6 +22487,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1156",
+        "id_hs92": "56",
+        "name": "Wadding, felt, nonwovens, yarns, twine, cordage, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115601",
   			"id_hs92": "5601",
@@ -22354,6 +22746,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1157",
+        "id_hs92": "57",
+        "name": "Carpets and other textile floor coverings",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115701",
   			"id_hs92": "5701",
@@ -22550,6 +22949,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1158",
+        "id_hs92": "58",
+        "name": "Special woven or tufted fabric, lace, tapestry etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115801",
   			"id_hs92": "5801",
@@ -22914,6 +23320,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1159",
+        "id_hs92": "59",
+        "name": "Impregnated, coated or laminated textile fabric",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "115901",
   			"id_hs92": "5901",
@@ -23166,6 +23579,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1160",
+        "id_hs92": "60",
+        "name": "Knitted or crocheted fabric",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "116001",
   			"id_hs92": "6001",
@@ -23306,6 +23726,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1161",
+        "id_hs92": "61",
+        "name": "Articles of apparel, accessories, knit or crochet",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "116101",
   			"id_hs92": "6101",
@@ -24223,6 +24650,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1162",
+        "id_hs92": "62",
+        "name": "Articles of apparel, accessories, not knit or crochet",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "116201",
   			"id_hs92": "6201",
@@ -25175,6 +25609,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1163",
+        "id_hs92": "63",
+        "name": "Other made textile articles, sets, worn clothing etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "116301",
   			"id_hs92": "6301",
@@ -25658,6 +26099,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/3aKFzS",
   			"flickr_author": "Andrei Niemimäki"
   		},
+      {
+        "id": "1264",
+        "id_hs92": "64",
+        "name": "Footwear, gaiters and the like, parts thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "126401",
   			"id_hs92": "6401",
@@ -25903,6 +26351,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1165",
+        "id_hs92": "65",
+        "name": "Headgear and parts thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "126501",
   			"id_hs92": "6501",
@@ -26029,6 +26484,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1266",
+        "id_hs92": "66",
+        "name": "Umbrellas, walking-sticks, seat-sticks, whips, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "126601",
   			"id_hs92": "6601",
@@ -26099,6 +26561,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1267",
+        "id_hs92": "67",
+        "name": "Bird skin, feathers, artificial flowers, human hair",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "126701",
   			"id_hs92": "6701",
@@ -26190,6 +26659,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/37xHq",
   			"flickr_author": "Rob Friesel"
   		},
+      {
+        "id": "1368",
+        "id_hs92": "68",
+        "name": "Stone, plaster, cement, asbestos, mica, etc articles",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "136801",
   			"id_hs92": "6801",
@@ -26666,6 +27142,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1369",
+        "id_hs92": "69",
+        "name": "Ceramic products",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "136901",
   			"id_hs92": "6901",
@@ -26960,6 +27443,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1370",
+        "id_hs92": "70",
+        "name": "Glass and glassware",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "137001",
   			"id_hs92": "7001",
@@ -27506,6 +27996,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/os4pAy",
   			"flickr_author": "James St. John"
   		},
+      {
+        "id": "1471",
+        "id_hs92": "71",
+        "name": "Pearls, precious stones, metals, coins, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "147101",
   			"id_hs92": "7101",
@@ -27996,6 +28493,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/o4JKKY",
   			"flickr_author": "Industrial Traffic"
   		},
+      {
+        "id": "1572",
+        "id_hs92": "72",
+        "name": "Iron and steel",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157201",
   			"id_hs92": "7201",
@@ -29557,6 +30061,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1573",
+        "id_hs92": "73",
+        "name": "Articles of iron or steel",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157301",
   			"id_hs92": "7301",
@@ -30565,6 +31076,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1574",
+        "id_hs92": "74",
+        "name": "Copper and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157401",
   			"id_hs92": "7401",
@@ -31104,6 +31622,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1575",
+        "id_hs92": "75",
+        "name": "Nickel and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157501",
   			"id_hs92": "7501",
@@ -31272,6 +31797,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1576",
+        "id_hs92": "76",
+        "name": "Aluminium and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157601",
   			"id_hs92": "7601",
@@ -31622,6 +32154,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1578",
+        "id_hs92": "78",
+        "name": "Lead and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157801",
   			"id_hs92": "7801",
@@ -31734,6 +32273,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1579",
+        "id_hs92": "79",
+        "name": "Zinc and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "157901",
   			"id_hs92": "7901",
@@ -31860,6 +32406,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1580",
+        "id_hs92": "80",
+        "name": "Tin and articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "158001",
   			"id_hs92": "8001",
@@ -31972,6 +32525,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1581",
+        "id_hs92": "81",
+        "name": "Other base metals, cermets, articles thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "158101",
   			"id_hs92": "8101",
@@ -32315,6 +32875,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1582",
+        "id_hs92": "82",
+        "name": "Tools, implements, cutlery, etc of base metal",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "158201",
   			"id_hs92": "8201",
@@ -32875,6 +33442,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1583",
+        "id_hs92": "83",
+        "name": "Miscellaneous articles of base metal",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "158301",
   			"id_hs92": "8301",
@@ -33211,6 +33785,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/aCYviJ",
   			"flickr_author": "Peter Craven"
   		},
+      {
+        "id": "1684",
+        "id_hs92": "84",
+        "name": "Nuclear reactors, boilers, machinery, etc",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "168401",
   			"id_hs92": "8401",
@@ -37292,6 +37873,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1685",
+        "id_hs92": "85",
+        "name": "Electrical, electronic equipment",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "168501",
   			"id_hs92": "8501",
@@ -39483,6 +40071,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/bumXU2",
   			"flickr_author": "Louis Vest"
   		},
+      {
+        "id": "1786",
+        "id_hs92": "86",
+        "name": "Railway, tramway locomotives, rolling stock, equipmen",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "178601",
   			"id_hs92": "8601",
@@ -39714,6 +40309,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1787",
+        "id_hs92": "87",
+        "name": "Vehicles other than railway, tramway",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "178701",
   			"id_hs92": "8701",
@@ -40358,6 +40960,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1788",
+        "id_hs92": "88",
+        "name": "Aircraft, spacecraft, and parts thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "178801",
   			"id_hs92": "8801",
@@ -40498,6 +41107,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1789",
+        "id_hs92": "89",
+        "name": "Ships, boats and other floating structures",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "178901",
   			"id_hs92": "8901",
@@ -40680,6 +41296,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/cJeA",
   			"flickr_author": "Hey Paul"
   		},
+      {
+        "id": "1890",
+        "id_hs92": "90",
+        "name": "Optical, photo, technical, medical, etc apparatus",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "189001",
   			"id_hs92": "9001",
@@ -41975,6 +42598,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1891",
+        "id_hs92": "91",
+        "name": "Clocks and watches and parts thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "189101",
   			"id_hs92": "9101",
@@ -42458,6 +43088,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1892",
+        "id_hs92": "92",
+        "name": "Musical instruments, parts and accessories",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "189201",
   			"id_hs92": "9201",
@@ -42689,6 +43326,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "1993",
+        "id_hs92": "93",
+        "name": "Arms and ammunition, parts and accessories thereof",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "199301",
   			"id_hs92": "9301",
@@ -42864,6 +43508,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/kUvzBc",
   			"flickr_author": "arbyreed"
   		},
+      {
+        "id": "2094",
+        "id_hs92": "94",
+        "name": "Furniture, lighting, signs, prefabricated buildings",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "209401",
   			"id_hs92": "9401",
@@ -43165,6 +43816,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "2095",
+        "id_hs92": "95",
+        "name": "Toys, games, sports requisites",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "209501",
   			"id_hs92": "9501",
@@ -43522,6 +44180,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "2096",
+        "id_hs92": "96",
+        "name": "Miscellaneous manufactured articles",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "209601",
   			"id_hs92": "9601",
@@ -44012,6 +44677,13 @@ module.exports = {
   			"flickr_link": null,
   			"flickr_author": null
   		},
+      {
+        "id": "2197",
+        "id_hs92": "97",
+        "name": "Works of art, collectors pieces and antiques",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "219701",
   			"id_hs92": "9701",
@@ -44110,6 +44782,13 @@ module.exports = {
   			"flickr_link": "https://flic.kr/p/7v9E6p",
   			"flickr_author": "Edward Baker"
   		},
+      {
+        "id": "2299",
+        "id_hs92": "99",
+        "name": "Commodities not specified according to kind",
+        "flickr_link": null,
+        "flickr_author": null
+      },
   		{
   			"id": "229999",
   			"id_hs92": "9999",
