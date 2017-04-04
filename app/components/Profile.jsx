@@ -44,19 +44,23 @@ class userWithId extends React.Component {
     }
 
     return (
-      <div>
-        <h2>{user.email}
-          Profile</h2>
-        <ul>
-          <Link to="/inbox">
-            <li>Inbox</li>
-          </Link>
+      <div className="profile">
+        <div className="inner-content">
+          <h3>{user.email}
+            Profile</h3>
+          <ul>
+            <Link to="/inbox">
+              <li>Inbox</li>
+            </Link>
 
-          <Link to="/settings">
-            {this.props.user.company_id ? <li>Settings</li> : <li>Register a Company</li>}
-          </Link>
-        </ul>
-        <button onClick={this.props.logout}>Log Out</button>
+            <Link to="/settings">
+              {this.props.user.company_id
+                ? <li>Settings</li>
+                : <li>Register a Company</li>}
+            </Link>
+          </ul>
+          <button onClick={this.props.logout}>Log Out</button>
+        </div>
       </div>
     );
   }

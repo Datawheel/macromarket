@@ -55,7 +55,7 @@ class Search extends React.Component {
 
   componentWillMount = () => {
     if (this.props.keyword) {
-      this.props.fetchSearch(this.props.keyword);
+      this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
   }
 
@@ -71,7 +71,8 @@ class Search extends React.Component {
           {results.map(result => <Card key={result.id} content={result} />)}
         </div>
       );
-    } else {
+    } 
+    else {
       return (<p>No results.</p>);
     }
   }

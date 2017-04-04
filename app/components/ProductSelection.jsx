@@ -1,5 +1,4 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {fetchProducts} from "../actions/productsActions";
 import {connect} from "react-redux";
 
@@ -48,9 +47,9 @@ class ProductSelection extends React.Component {
     const {loading, products, error} = this.props;
     if (loading || !products) {
       return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
-        </div>
+        <div className="product-selection-wrapper">
+          <h3 className="product-label">Categories</h3>
+          <div className="product-selection"></div></div>
       );
     }
 
@@ -118,7 +117,7 @@ class ProductSelection extends React.Component {
               </div>
             </div>
           : null}
-</div>
+        </div>
 
     );
   }

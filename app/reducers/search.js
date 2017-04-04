@@ -3,15 +3,10 @@ const ACTION_TYPE = "SEARCH";
 export default (state = {
   results: null,
   loading: false,
-  visible: false,
   keyword: null,
   filter: null
 }, action) => {
   switch (action.type) {
-    case "TOGGLE_SEARCH":
-      return {...state,
-        visible: !state.visible
-      };
     case "SET_SEARCH":
       return {...state,
         keyword: action.data.keyword,

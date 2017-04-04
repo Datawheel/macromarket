@@ -1,0 +1,14 @@
+.profile {
+  height: 100%;
+  background: $dark-grey;
+  color: #fff;
+  .inner-content {
+    padding: 20px;
+    h3 {
+      margin: 0;
+    }
+    li {
+      color: #fff;
+    }
+  }
+}

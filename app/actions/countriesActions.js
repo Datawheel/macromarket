@@ -1,4 +1,6 @@
 import axios from "axios";
+import {nest} from "d3-collection";
+import {ascending} from "d3-array";
 
 function requestCountries() {
   return {
@@ -24,12 +26,18 @@ export function fetchCountries() {
   return function(dispatch) {
     dispatch(requestCountries());
     return axios.get("/api/countries")
-    .then(response => {
-      dispatch(receiveCountries(response.data));
-    
-    })
-    .catch(response => {
-      dispatch(countriesError(response.data));
-    });
+      .then(response => {
+        const countries = nest()
+          .key(d => {
+            return d.continent;
+          })
+          .entries(response.data);
+
+        dispatch(receiveCountries(countries));
+
+      })
+      .catch(response => {
+        dispatch(countriesError(response.data));
+      });
   };
 }

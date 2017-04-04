@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
+import Dropdown from "./CountryDropdown.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar.jsx";

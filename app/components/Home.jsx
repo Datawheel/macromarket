@@ -3,7 +3,7 @@ import FilterDropdown from "./FilterDropdown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchProducts} from "../actions/productsActions";
-import {toggleSearch, fetchSearch, setSearch} from "../actions/searchActions";
+import {fetchSearch, setSearch} from "../actions/searchActions";
 import exportIcon from "../img/icons/icon-export.svg";
 import importIcon from "../img/icons/icon-import.svg";
 import oecWhite from "../img/icons/white-oec-logo.svg";
@@ -47,11 +47,13 @@ class Home extends React.Component {
     this.setState({suggestionsVisible: true});
     this.setState({keyword: e.target.value});
     const length = e.target.value.length;
-    if (length) {
-      this.props.countries.map(country => {
-        if (country.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-          suggestions.push({type: "Country", name: country.name});
-        }
+    if (length && this.props.countries) {
+      Object.keys(this.props.countries).map(continent => {
+        this.props.countries[continent].values.map(country => {
+          if (country.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
+            suggestions.push({type: "Country", name: country.name});
+          }
+        })
       });
     }
     this.setState({suggestions});
@@ -64,7 +66,7 @@ class Home extends React.Component {
 
   search = () => {
     this.props.setSearch({keyword: this.state.keyword, filter: this.state.selected});
-    this.props.toggleSearch();
+    this.props.activateSearch();
   }
 
   hover = button => {
@@ -158,45 +160,45 @@ class Home extends React.Component {
             </div>
             <div className="products row">
               <h3>Prdoucts</h3>
-                <CardHome content={{
-                  type: "product",
-                  name: "Wine",
-                  id: "042204",
-                  flickr_link: "https://flic.kr/p/a7awbU"
-                }}/>
-                <CardHome content={{
-                  type: "product",
-                  name: "Electronic printed circuts",
-                  id: "16853400",
-                  flickr_link: null
-                }}/>
-                <CardHome content={{
-                  type: "product",
-                  name: "Plastic pipes",
-                  id: "073917",
-                  flickr_link: "https://flic.kr/p/6ybFaY"
-                }}/>
+              <CardHome content={{
+                type: "product",
+                name: "Wine",
+                id: "042204",
+                flickr_link: "https://flic.kr/p/a7awbU"
+              }}/>
+              <CardHome content={{
+                type: "product",
+                name: "Electronic printed circuts",
+                id: "16853400",
+                flickr_link: null
+              }}/>
+              <CardHome content={{
+                type: "product",
+                name: "Plastic pipes",
+                id: "073917",
+                flickr_link: "https://flic.kr/p/6ybFaY"
+              }}/>
             </div>
             <div className="companies row">
               <h3>companies</h3>
-                <CardHome content={{
-                  type: "company",
-                  name: "Al - Tayyab Enterprises",
-                  id: "3",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1490390523547.jpg"
-                }}/>
-                <CardHome content={{
-                  type: "company",
-                  name: "Salmon and Pork",
-                  id: "1",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1489691935730.jpg"
-                }}/>
-                <CardHome content={{
-                  type: "company",
-                  name: "Sabrina's Sheeps",
-                  id: "2",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
-                }}/>
+              <CardHome content={{
+                type: "company",
+                name: "Al - Tayyab Enterprises",
+                id: "3",
+                logo: "https://sabrina-test.s3.amazonaws.com/1490390523547.jpg"
+              }}/>
+              <CardHome content={{
+                type: "company",
+                name: "Salmon and Pork",
+                id: "1",
+                logo: "https://sabrina-test.s3.amazonaws.com/1489691935730.jpg"
+              }}/>
+              <CardHome content={{
+                type: "company",
+                name: "Sabrina's Sheeps",
+                id: "2",
+                logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
+              }}/>
             </div>
           </div>
         </div>
@@ -213,8 +215,11 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: () => {
       dispatch(fetchProducts());
     },
-    toggleSearch: () => {
-      dispatch(toggleSearch());
+    activateSearch: activeState => {
+      dispatch({
+        type: "ACTIVATE_SEARCH",
+        data: activeState
+      });
     },
     fetchSearch: () => {
       dispatch(fetchSearch());

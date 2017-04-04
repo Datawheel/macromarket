@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
         // query = sequelize.getQueryInterface().escape(query+":*");
         return sequelize
           .query('SELECT * FROM "' + Search.tableName +
-            '" WHERE document @@ to_tsquery(:query)' + filterByProfileType, {
+            '" WHERE document @@ plainto_tsquery(:query)' + filterByProfileType, {
               replacements: {
                 query: query+":*"
               },

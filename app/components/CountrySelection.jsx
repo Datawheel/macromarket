@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
+import CountryDropdown from "./CountryDropdown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 
@@ -73,7 +73,7 @@ class CountrySelection extends React.Component {
     const allCountries = this.props.trade.countries.concat(this.state.saved);
     return (
       <div className="country-selection">
-        <Dropdown select={this.addCountry} selected={""} items={this.props.countries}/>
+        <CountryDropdown select={this.addCountry} selected={""} items={this.props.countries}/>
         <div className="selected-countries-wrapper">
           {allCountries.map((trade, index) => {
             return (

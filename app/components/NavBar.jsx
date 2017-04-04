@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router";
-import {toggleSearch} from "../actions/searchActions";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
@@ -13,8 +12,8 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     browserHistory.listen(location => {
-      if (this.props.searchVisible) {
-        this.props.toggleSearch();
+      if (this.props.searchActive) {
+        this.props.activateSearch();
       }
     });
   }
@@ -55,7 +54,7 @@ class NavBar extends React.Component {
             {this.props.location.pathname === '/'
               ? null
               : <li className="nav-bar-element">
-                <button onClick={() => activateSearch(true)}>Search</button>
+                <button onClick={() => activateSearch()}>Search</button>
               </li>}
 
 
@@ -80,9 +79,6 @@ const mapDispatchToProps = dispatch => {
         data: activeState
       });
     },
-    toggleSearch: () => {
-      dispatch(toggleSearch());
-    },
     authenticateAndFetchCompany: token => {
       dispatch(authenticateAndFetchCompany(token));
     }
@@ -92,7 +88,6 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     searchActive: state.searchActive,
-    searchVisible: state.search.visible,
     token: state.authentication.token,
     company: state.companyProfile.company,
     loading: state.companyProfile.loading

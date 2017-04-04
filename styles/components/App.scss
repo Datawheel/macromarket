@@ -1,12 +1,13 @@
+
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
     padding-bottom: 60px;
 }
 
 .main-content {
     padding-top: 90px;
+    height: 100%;
 }
 
 .dropdown-list {
@@ -33,13 +34,13 @@ ul {
     border-width: 0.1em 0.1em 0 0;
     content: '';
     display: inline-block;
-    height: 0.45em;
+    height: 0.5em;
     left: 0.1em;
     position: relative;
     top: 0.1em;
     transform: rotate(-45deg);
     vertical-align: top;
-    width: 0.45em;
+    width: 0.5em;
 }
 
 .chevron.right:before {
@@ -55,6 +56,9 @@ ul {
 .chevron.left:before {
     left: 0.25em;
     transform: rotate(-135deg);
+}
+.chevron.down:before {
+  transform:rotate(135deg);
 }
 
 .arrow-box {
@@ -92,5 +96,6 @@ a {
 }
 
 button {
-    border-radius: $border-raidus;
+  cursor: pointer;
+  border-radius: $border-raidus;
 }

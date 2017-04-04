@@ -1,6 +1,4 @@
-import {
-  combineReducers
-} from "redux";
+import {combineReducers} from "redux";
 import companyProfile from "./companyProfile";
 import countryProfile from "./countryProfile";
 import productProfile from "./productProfile";
@@ -16,7 +14,7 @@ import search from "./search";
 const searchActive = (state = false, action) => {
   switch (action.type) {
     case "ACTIVATE_SEARCH":
-      return action.data;
+      return action.data || !state;
     default:
       return state;
   }

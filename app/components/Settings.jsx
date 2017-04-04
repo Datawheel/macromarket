@@ -16,6 +16,7 @@ class Settings extends React.Component {
   }
 
   componentWillMount() {
+
     if (this.props.token) {
       this.props.authenticateAndFetchCompany(this.props.token);
     }
@@ -38,10 +39,17 @@ class Settings extends React.Component {
   }
 
   nextSlide = () => {
+    window.scrollTo(0,0);
     this.setState({
       slide: this.state.slide + 1
     });
+  }
 
+  previousSlide = () => {
+    window.scrollTo(0,0);
+    this.setState({
+      slide: this.state.slide - 1
+    });
   }
 
   deleteCompany = () => {
@@ -94,12 +102,13 @@ class Settings extends React.Component {
               <h2>Edit Company</h2>
                 <div onClick={() => {
                   this.deleteCompany();
-                }}>
-                  Delete Company</div>
+                }}>Delete Company</div>
               </div>
             : <h2>Register</h2>}
           <p>Enter the data of your company or service and you will be able to access this network of exporters and importers of the world</p>
-        </Sidebar>
+          <div className="back-line"></div>
+
+      </Sidebar>
         <div className="center-content form-wrapper">
           {this.state.slide === 0
             ? <div>
@@ -109,9 +118,9 @@ class Settings extends React.Component {
                     </div>
                   : <div><CompanyDataForm nextSlide={this.nextSlide} company={null} user={user} title="Company Data" saveCompany={this.props.saveCompany}/></div>}</div>
             : null}
-          {this.state.slide !== 0 
+          {this.state.slide !== 0
             ? <div>
-                <TradesSelection slide={this.state.slide} nextSlide={this.nextSlide} companyId={this.props.companySaved}/>
+                <TradesSelection previousSlide={this.previousSlide} slide={this.state.slide} nextSlide={this.nextSlide} companyId={this.props.companySaved}/>
               </div>
             : null}
         </div>

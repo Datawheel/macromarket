@@ -12,8 +12,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", () => {
 
+    document.addEventListener("keydown", () => {
       // 's' key
       if (event.keyCode === 83) {
         if (event.target.tagName !== "INPUT") {
@@ -34,7 +34,8 @@ class App extends React.Component {
     return (
       <div>
         <NavBar location={this.props.location}></NavBar>
-        <div className="main-content">{this.props.children}</div>
+        <div className="main-content">{this.props.children}
+        </div>
       </div>
     );
   }

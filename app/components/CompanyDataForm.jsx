@@ -1,5 +1,4 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 
@@ -148,22 +147,10 @@ class CompanyDataForm extends React.Component {
         <div className="form">
           <div className="content-wrapper">
             <div className="col">
-              <div className="input-wrapper">
-                <label>User</label>
-                <input checked={company.importerExporter} onChange={this.handleChange} type="checkbox" name="importerExporter"/>
-                Exporter/Importer
-
-                <input checked={company.transporter} onChange={this.handleChange} type="checkbox" name="transporter"/>
-                Transporter</div>
 
               <div className="input-wrapper">
                 <label>Company Name</label>
                 <input onChange={this.handleChange} value={company.name} name="name"/>
-              </div>
-
-              <div className="input-wrapper">
-                <label>Country</label>
-                <Dropdown select={this.selectDropDown} selected={company.country_id} items={countries}></Dropdown>
               </div>
 
               <div className="input-wrapper">
@@ -190,7 +177,10 @@ class CompanyDataForm extends React.Component {
                     ? <div className="image-preview" style={previewStyles.profile_image}></div>
                     : null}
                 </div>
-                <input name="profile_image" onChange={this.handleImageChange} type="file"/>
+                <div className="image-upload">
+                  <p>Upload a photo</p>
+                  <input name="profile_image" onChange={this.handleImageChange} type="file"/>
+                </div>
               </div>
               <div className="cover-image-wrapper input-wrapper">
                 <div className="image-preview-wrapper">
@@ -198,11 +188,16 @@ class CompanyDataForm extends React.Component {
                     ? <div className="image-preview" style={previewStyles.cover_image}></div>
                     : null}
                 </div>
-                <input name="cover_image" onChange={this.handleImageChange} type="file"/>
+                <div className="image-upload">
+                  <p>Upload a photo</p>
+                  <input name="cover_image" onChange={this.handleImageChange} type="file"/>
+                </div>
               </div>
-              <div>
-                <button onClick={this.saveCompany}>Save</button>
-              </div>
+
+            </div>
+            <div className="button-wrapper">
+              <button className=" button button-next" onClick={this.saveCompany}>Next<span className="chevron right"></span>
+              </button>
             </div>
           </div>
         </div>

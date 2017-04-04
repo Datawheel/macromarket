@@ -1,20 +1,39 @@
 .settings {
-    padding-top: 60px;
+    background-image: url("../app/img/settings-bg.png");
+    padding: 60px 0;
+    min-height: 100%;
+    background-size: cover;
 
     .center-content {
         display: inline-block;
-        width: 69%;
+        width: 67%;
     }
 
     .sidebar-inner {
-      padding: 0 30px;
+        padding: 0 14%;
+
+        h2 {
+            font-weight: 400;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 18px;
+            font-size: 12px;
+            color: $dark-grey;
+        }
+
+        .back-line {
+            background: black;
+            width: 7%;
+            height: 4px;
+        }
     }
 }
 
 .form-wrapper {
-    border: 1px solid;
-    min-height: 700px;
-    background: #f2f2f2;
+    min-height: 600px;
+    background: #EBEBEB;
 
     .title-wrapper {
         background-color: black;
@@ -22,14 +41,96 @@
         display: inline-block;
         padding: 2% 4%;
     }
+
+    .completed-slide {
+        padding-top: 90px;
+        text-align: center;
+    }
+
+    .button-wrapper {
+        width: 100%;
+        text-align: right;
+        padding-top: 20px;
+    }
+
+    .button {
+        position: relative;
+        padding: 8px;
+        width: 20%;
+        max-width: 125px;
+        margin: 3px;
+
+        .right {
+            right: 15%;
+            position: absolute;
+        }
+
+        .left {
+            left: 15%;
+            position: absolute;
+        }
+
+        .left:before,
+        .right:before {
+            top: 4px;
+        }
+    }
+
+    .button-back {
+        background: black;
+        border: 1px solid black;
+        color: white;
+    }
+
+    .button-next {
+        background: $accent-color;
+        border: 1px solid $accent-color;
+    }
+
+    .listing-button {
+        width: 22%;
+        max-width: none;
+
+        .right {
+            right: 8%;
+        }
+    }
 }
 
 .form {
-    padding: 25px;
+    padding: 30px;
 
     input,
     textarea {
         width: 100%;
+        padding: 4px;
+        border: 1px solid $input-grey;
+        border-radius: $border-raidus;
+    }
+
+    .image-upload {
+        cursor: pointer;
+        border-radius: $border-raidus;
+        display: inline-block;
+        width: 39%;
+        height: 35px;
+        background: black;
+        text-align: center;
+
+        p {
+            margin: 10px 0;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        input {
+            opacity: 0;
+            top: 0;
+            left: 0;
+            position: absolute;
+            opacity: 0;
+            padding: 0;
+        }
     }
 
     p {
@@ -60,6 +161,7 @@
     }
 
     label {
+        padding: 10px 0;
         display: block;
     }
 
@@ -88,11 +190,12 @@
         margin: 5px;
         padding: 2px 10px;
         border-radius: 3px;
-        border: 1px solid $light-grey;
+        border: 1px solid $input-grey;
 
         span {
             font-size: 12px;
-            color: $middle-grey;
+            color: $input-text;
+            font-weight: 200;
             font-family: $libreFranklin;
         }
     }
@@ -104,6 +207,7 @@
         .image-preview-wrapper {
             width: 15vw;
             height: 15vw;
+            margin-right: 10px;
         }
     }
 
@@ -111,6 +215,7 @@
         .image-preview-wrapper {
             width: 25vw;
             height: 15vw;
+            margin-bottom: 10px;
         }
     }
 
@@ -131,46 +236,96 @@
         background: #fff;
         height: 325px;
         overflow: scroll;
-        border: 1px solid $light-grey;
+        border: 1px solid $input-grey;
         vertical-align: text-top;
 
         p {
             font-size: 12px;
             margin: 0;
             padding: 7px;
+            font-weight: 200;
         }
 
         .selectedItem {
             background: teal;
+
+            p {
+                color: white;
+            }
         }
     }
 
     .country-selection-wrapper {
-        padding: 20px;
+        padding: 20px 0;
+
+        p {
+            color: $input-text;
+            font-weight: 200;
+        }
 
         .product {
             display: inline-block;
-            display: inline-block;
             vertical-align: top;
-            margin: 0 2%;
-            width: 22%;
+            width: 16%;
+            height: 32px;
+            position: relative;
+
+            .darker-color {
+                @include filter(brightness, 75%) position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+
+            p {
+                position: absolute;
+                top: 50%;
+                width: 80%;
+                padding: 0 10%;
+                transform: translateY(-50%);
+                margin: 0;
+                color: #fff;
+                font-size: 9px;
+            }
+        }
+
+        .icon-wrapper {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            text-align: center;
+            display: inline-block;
+
+            img {
+                position: absolute;
+                top: 50%;
+                left: 10%;
+                transform: translateY(-50%);
+                width: 80%;
+            }
         }
 
         .country-selection {
-            width: 74%;
+            vertical-align: top;
+            width: 70%;
             display: inline-block;
+            margin-left: 25px;
 
             .dropdown-container {
                 display: inline-block;
-                width: 30%;
+                width: 33%;
                 vertical-align: top;
+
+                .chevron.down {
+                    right: 15px;
+                    position: absolute;
+                }
             }
 
             .selected-countries-wrapper {
-                width: 59%;
-                margin: 0 4%;
+                width: 60%;
+                margin-left: 25px;
                 display: inline-block;
-                border: 1px solid $light-grey;
+                border: 1px solid $input-grey;
                 background: #fff;
                 height: 110px;
 
@@ -183,8 +338,11 @@
     }
 
     .product-selection-wrapper {
+        p {
+            color: $input-text;
+        }
         display: inline-block;
-        width: 27%;
+        width: 29%;
         margin-right: 25px;
     }
 
@@ -195,11 +353,15 @@
     }
 
     .selected-products-wrapper {
-        border: 1px solid $light-grey;
+        border: 1px solid $input-grey;
         padding: 5px;
         background: #fff;
         height: 110px;
         margin: 20px 0 35px;
+    }
+
+    .import-wrapper {
+        min-height: 285px;
     }
 
     .selectedH2,
