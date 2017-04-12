@@ -2,7 +2,9 @@ import React from "react";
 import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
+import Dropdown from "./CountryDropdown.jsx";
 import {fetchCountry} from '../actions/countryActions';
+import {fetchProducts} from "../actions/productsActions";
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -12,12 +14,14 @@ class CountryWithId extends React.Component {
   componentWillMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchCountry(id);
+    this.props.fetchProducts();
   }
 
   render() {
-    const {country, loading, error} = this.props;
+    const {country, loading, error, products} = this.props;
+    console.log(products);
 
-    if (loading || !country) {
+    if (loading || !country || !products) {
       return (
         <div className="detailed-content-wrapper">
           <div>loading...</div>
@@ -45,7 +49,7 @@ class CountryWithId extends React.Component {
             backgroundImage: `url(${placeImg})`
           }}></div>
 
-        <div className="image-overlay-wrapper">
+          <div className="image-overlay-wrapper">
             <div className="image-overlay"></div>
             <div className="text-wrapper">
               <div className="section-wrapper">
@@ -57,12 +61,13 @@ class CountryWithId extends React.Component {
         </div>
         <div className="filter-wrapper">
           <div className="filter">
-            <h4>Filter Products</h4>
+            <p>Filter Products</p>
+            <Dropdown  selected={products[0]} items={products}></Dropdown>
           </div>
           <div className="filter">
-            <h4>Filter Companies</h4>
+            <p>Filter Companies</p>
           </div>
-          <button>Go</button>
+          <button className="go">Go</button>
         </div>
       </div>
     );
@@ -74,16 +79,15 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCountry: id => {
       dispatch(fetchCountry(id))
+    },
+    fetchProducts: () => {
+      dispatch(fetchProducts());
     }
   };
 }
 
 const mapStateToProps = state => {
-  return {
-    country: state.countryProfile.country,
-    loading: state.countryProfile.loading,
-    error: state.countryProfile.error || null
-  };
+  return {country: state.countryProfile.country, loading: state.countryProfile.loading, error: state.countryProfile.error, products: state.products.products};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountryWithId)

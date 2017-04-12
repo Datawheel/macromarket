@@ -16,9 +16,11 @@ export class Card extends React.Component {
   }
 
   render() {
-      let img = ""
-    if (this.content.profile_type === "company ") {
-
+      let img = "";
+      let id = this.content.id;
+    if (this.content.profile_type === "company") {
+      id = id.replace('company', "");
+      console.log(id);
     }
     else {
       const id = this.content.id;
@@ -30,7 +32,7 @@ export class Card extends React.Component {
 
     return (
       <div className="card">
-        <Link to={`/${this.content.profile_type}/${this.content.id}`}>
+        <Link to={`/${this.content.profile_type}/${id}`}>
           <div style={{
             backgroundImage: `url(${img})`
           }} className="image-wrapper">
@@ -77,13 +79,11 @@ export class CardHome extends React.Component {
           <div style={{
             backgroundImage: `url(${img})`
           }} className="image-wrapper">
-          <div className="na-icon-wrapper icon-wrapper">
-            <img src={northAmerica}/>
-          </div>
+
           </div>
           <div className="text-wrapper">
           <div className="yellow-line"></div>
-            {this.content.type === "country" ? <img className="flag" src={usaFlag}/> : null}
+            {this.content.type === "country" ? <img className="flag" src={`/img/flags/country_${this.content.id}.png`}/> : null}
               <p className="category">
                 {this.content.type === "country"
                   ? "country - " + this.content.continent

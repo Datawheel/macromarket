@@ -77,12 +77,12 @@ class CountrySelection extends React.Component {
         <div className="selected-countries-wrapper">
           {allCountries.map((trade, index) => {
             return (
-              <div className="selected-country" key={index}>
+              <div className="selected-country-outter">
                 {!this.state.deleted.includes(trade.trade_id)
-                  ? <div>
+                  ? <div className="selected-country" key={index}><div>
                       <span>{trade.country.name} </span>
                       <div className="delete" onClick={this.deleteCountry.bind(this, trade)}></div>
-                    </div>
+                    </div></div>
                   : null}
               </div>
             );

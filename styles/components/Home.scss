@@ -1,9 +1,31 @@
 .home {
     background-image: url("../app/img/background-body.png");
-    top: 0;
     width: 100%;
-    position: absolute;
     background-size: cover;
+
+    .logos-wrapper {
+        text-align: center;
+        padding: 55px 0;
+
+        .img-wrapper {
+            .connect {
+                width: 135px;
+                margin-top: -10px;
+                height: auto;
+            }
+
+            img {
+                padding: 25px 30px;
+                height: 30px;
+                vertical-align: top;
+            }
+        }
+
+        p {
+            color: white;
+            text-transform: uppercase;
+        }
+    }
 
     .oec-logo-wrapper {
         margin-bottom: 5px;
@@ -15,7 +37,7 @@
 
     .header-wrapper {
         text-align: center;
-        margin: 50px 0;
+        margin: 40px 0;
     }
 
     .grid-wrapper {
@@ -25,7 +47,7 @@
             font-size: 14px;
             text-align: center;
         }
-        padding: 100px 0;
+        padding: 25px 0;
 
         .row {
             display: inline-block;
@@ -43,7 +65,8 @@
     .content-wrapper {
         width: 80%;
         display: block;
-        margin: 17% auto;
+        padding: 20% 0 100px;
+        margin: -200px auto 0;
         max-width: 1000px;
 
         .search-wrapper {
@@ -148,7 +171,7 @@
     }
 
     .cta-buttons-wrapper {
-        margin-top: 80px;
+        margin-top: 65px;
         margin-right: 2%;
         @include flexbox;
         @include flex-wrap(wrap);

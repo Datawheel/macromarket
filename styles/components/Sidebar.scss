@@ -7,7 +7,7 @@
 
 .sidebar-wrapper {
     display: inline-block;
-    width: 30%;
+    width: 27%;
     vertical-align: top;
 
     .sidebar-inner {
@@ -61,6 +61,7 @@
         padding: 40px;
 
         a {
+            display: block;
             color: white;
         }
     }

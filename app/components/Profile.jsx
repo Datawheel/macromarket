@@ -46,8 +46,7 @@ class userWithId extends React.Component {
     return (
       <div className="profile">
         <div className="inner-content">
-          <h3>{user.email}
-            Profile</h3>
+          <h3>{user.email}</h3>
           <ul>
             <Link to="/inbox">
               <li>Inbox</li>
@@ -59,7 +58,19 @@ class userWithId extends React.Component {
                 : <li>Register a Company</li>}
             </Link>
           </ul>
-          <button onClick={this.props.logout}>Log Out</button>
+          <div className="form">
+            <h3>Update User Information</h3>
+            <div className="input-wrapper">
+              <label>Old Password</label>
+              <input name="name"/>
+            </div>
+
+            <div className="input-wrapper">
+              <label>Email</label>
+              <input name="name"/>
+            </div>
+<div className-="button-wrapper">
+          <button className="button-back"onClick={this.props.logout}>Log Out</button></div></div>
         </div>
       </div>
     );

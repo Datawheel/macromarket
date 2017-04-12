@@ -191,7 +191,7 @@ class TradeSelection extends React.Component {
               <div className="title-wrapper">Product Selection</div>
               <div className="form">
                 <b>Products | Import</b>
-                <p>Select a maximum of 5 products.</p>
+                <p className="description">Select a maximum of 5 products.</p>
                 <ProductSelection tradeFlow={"imports"} addProduct={this.addProduct} deleteProduct={this.deleteProduct} selectedProducts={imports}/>
                 <div className="selected-products-wrapper">
                   {Object.keys(imports).map((product, index) => {
@@ -206,7 +206,7 @@ class TradeSelection extends React.Component {
                   })}
                 </div>
                 <b>Products | Exports</b>
-                <p>Select a maximum of 5 products.</p>
+                <p className="description">Select a maximum of 5 products.</p>
                 <ProductSelection tradeFlow={"exports"} addProduct={this.addProduct} deleteProduct={this.deleteProduct} selectedProducts={exports}/>
                 <div className="selected-products-wrapper">
                   {Object.keys(exports).map((product, index) => {
@@ -247,7 +247,7 @@ class TradeSelection extends React.Component {
                             <div className={`icon-wrapper color-${id}`}>
                               <img src={`/img/product_icon/hs_${id}.png`}></img>
                             </div>
-                            <div className="product">
+                            <div className="colored-wrapper">
                               <div className={`darker-color color-${id}`}></div>
                               <p>{imports[product].product_name}</p>
                             </div>
@@ -260,7 +260,7 @@ class TradeSelection extends React.Component {
                 {Object.keys(exports).length !== 0
                   ? <div>
                       <b>Exports</b>
-                      <p>Select a maximum of 5 countries per product</p>
+                      <p className="description">Select a maximum of 5 countries per product</p>
                     </div>
                   : null}
                 {Object.keys(exports).map((product, index) => {
@@ -272,7 +272,7 @@ class TradeSelection extends React.Component {
                             <div className={`icon-wrapper color-${id}`}>
                               <img src={`/img/product_icon/hs_${id}.png`}></img>
                             </div>
-                            <div className="product">
+                            <div className="colored-wrapper">
                               <div className={`darker-color color-${id}`}></div>
                               <p>{exports[product].product_name}</p>
                             </div>

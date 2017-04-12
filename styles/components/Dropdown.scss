@@ -2,10 +2,18 @@
     position: relative;
     border: 1px solid $light-grey;
 
+    .colored-wrapper.dropdown-item {
+        width: 100%;
+    }
+
     .dropdown-item {
-        font-size: 14px;
-        color: white;
-        padding: 5px;
+        margin-bottom: 5px;
+
+        p {
+            font-size: 14px;
+            color: white;
+            padding-left: 40px;
+        }
     }
 
     .selected-wrapper {
@@ -15,12 +23,26 @@
     }
 
     .item-wrapper {
-      padding: 5px 10px;
+        padding: 4px 5px 4px 8%;
+        cursor: pointer;
+        position: relative;
     }
 
     .flag {
-      width: 15%;
-      display: inline-block;
+        max-width: 30px;
+        width: 15%;
+        display: inline-block;
+    }
+
+    .flag,
+    ul li p {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .country-name {
+        margin: 3px 0 3px 35px;
     }
 
     ul {
@@ -34,12 +56,7 @@
 
         li,
         p {
-            padding: 3px 5%;
-            margin: 0;
-            width: 75%;
-            vertical-align: top;
             font-size: 12px;
-            display: inline-block;
             font-weight: 200;
             color: $input-text;
             font-family: $libreFranklin;
@@ -56,8 +73,8 @@
         font-family: "Libre Franklin", sans-serif;
     }
 
-      ul {
-        height: 400px;
+    ul {
+        height: 250px;
         overflow: scroll;
-      }
+    }
 }

@@ -112,6 +112,12 @@ router.get("/productsByCompany/:id", (req, res) => {
   });
 });
 
+router.get("/productsByCountry/:id", (req, res) => {
+  models.Trade.findProductsByCountry(models, req.params.id).then(trades => {
+    res.send(trades);
+  });
+});
+
 router.get("/products", (req, res) => {
   models.Product.findAll({}).then(product => {
     res.json(product);
@@ -122,6 +128,7 @@ router.put("/company/:id", (req, res) => {
   const newCompany = req.body;
   models.Company.update(
       newCompany, {
+        individualHooks: true,
         where: {
           id: req.params.id
         }
@@ -151,6 +158,7 @@ router.delete("/company/:id", (req, res) => {
     })
   }).then(() => {
     models.Company.destroy({
+      individualHooks: true,
       where: {
         id: req.params.id
       }

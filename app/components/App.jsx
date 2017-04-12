@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
 
 import NavBar from "./NavBar.jsx";
-import Footer from "./Footer.jsx";
 import Search from "./Search.jsx";
+import Footer from "./Footer.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,14 +15,14 @@ class App extends React.Component {
 
     document.addEventListener("keydown", () => {
       // 's' key
-      if (event.keyCode === 83) {
-        if (event.target.tagName !== "INPUT") {
-          event.preventDefault();
-          this.props.activateSearch(true);
-        }
-      }
+      // if (event.keyCode === 83) {
+      //   if (event.target.tagName !== "INPUT") {
+      //     event.preventDefault();
+      //     this.props.activateSearch(true);
+      //   }
+      // }
       // 'esc' key
-      else if (event.keyCode === 27) {
+      if (event.keyCode === 27) {
         event.preventDefault();
         this.props.activateSearch(false);
       }
@@ -34,8 +34,11 @@ class App extends React.Component {
     return (
       <div>
         <NavBar location={this.props.location}></NavBar>
-        <div className="main-content">{this.props.children}
+        <div className="main-content">
+          {this.props.children}
+              <Footer></Footer>
         </div>
+
       </div>
     );
   }

@@ -23,6 +23,14 @@ module.exports = function(sequelize, DataTypes) {
           },
           include: [models.Product, models.Country]
         });
+      },
+      findProductsByCountry: function(models, countryId) {
+        return Trade.findAll({
+          where: {
+            country_id: countryId
+          },
+          include: [models.Product, models.Company]
+        });
       }
     }
   });

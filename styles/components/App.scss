@@ -1,8 +1,6 @@
-
 body {
     margin: 0;
-    padding: 0;
-    padding-bottom: 60px;
+    padding: 0 0 60px;
 }
 
 .main-content {
@@ -57,8 +55,9 @@ ul {
     left: 0.25em;
     transform: rotate(-135deg);
 }
+
 .chevron.down:before {
-  transform:rotate(135deg);
+    transform: rotate(135deg);
 }
 
 .arrow-box {
@@ -96,6 +95,58 @@ a {
 }
 
 button {
-  cursor: pointer;
-  border-radius: $border-raidus;
+    cursor: pointer;
+    border-radius: $border-raidus;
+    font-family: $libreFranklin;
+}
+//colored product
+.colored-wrapper {
+    display: inline-block;
+    vertical-align: top;
+    height: 32px;
+    width: 100%;
+    position: relative;
+
+    .category-name {
+        margin-left: 40px;
+        padding: 0;
+        color: white;
+        font-size: 12px;
+    }
+
+    .darker-color {
+        @include filter(brightness, 80%) position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+    }
+
+    p {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        width: 80%;
+        padding: 0 10%;
+        transform: translateY(-50%);
+        margin: 0;
+        color: #fff;
+        font-size: 9px;
+    }
+}
+
+.icon-wrapper {
+    width: 32px;
+    height: 32px;
+    z-index: 10;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+
+    img {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translateY(-50%);
+        width: 80%;
+    }
 }

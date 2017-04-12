@@ -15,7 +15,11 @@ import northAmerica from "../img/icons/continents/icon-north-america.svg";
 import southAmerica from "../img/icons/continents/icon-south-america.svg";
 import usaFlag from "../img/icons/flags/usa-flag.svg";
 import chileFlag from "../img/icons/flags/chile-flag.svg";
+import datawheelLogo from "../img/icons/logos/datawheel.png";
+import mitLogo from "../img/icons/logos/mit.png";
+import connectLogo from "../img/icons/logos/connectAmericasLogo.png";
 import {CardHome} from "./Card.jsx";
+
 
 class Home extends React.Component {
   constructor(props) {
@@ -133,6 +137,13 @@ class Home extends React.Component {
               </div>
             </div>
           </div>
+          <div className="logos-wrapper">
+            <p>Created in Collaboration</p>
+            <div className="img-wrapper">
+            <img className="connect" src={connectLogo}></img>
+            <img className="mit" src={mitLogo}></img>
+            <img className="datawheel" src={datawheelLogo}></img>
+          </div></div>
           <div className="grid-wrapper">
             <div className="countries row">
               <h3>Countries</h3>

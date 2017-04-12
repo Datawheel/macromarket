@@ -31,25 +31,37 @@ export function fetchProducts() {
         const json = nest()
                       .key(d => d.id.substring(0, 2))
                       .sortKeys(ascending)
-                      .key(d => d.id.substring(2, 6))
+                      .key(d => d.id.substring(2, 4))
+                      .sortKeys(ascending)
+                      .key(d => d.id.substring(4, 6))
                       .sortKeys(ascending)
                       .entries(response.data)
                       .map(d => {
 
                         const myHs2 = d.values.shift();
+
                         const myNewValues = d.values.map(dd => {
                           const myHs4 = dd.values.shift();
+                          const innerValues = dd.values.map(ddd => {
+                            const myHs6 = ddd.values.shift();
+                            return {
+                              key: ddd.key,
+                              values: ddd.values,
+                              name: myHs6.name
+                            }
+                          });
+
                           return {
                             key: dd.key,
-                            values: dd.values,
-                            name: myHs4.name
+                            values: innerValues,
+                            name: myHs4.values[0].name
                           };
 
                         })
                         const returnData = {
                           key: d.key,
                           values: myNewValues,
-                          name: myHs2.values[0].name
+                          name: myHs2.values[0].values[0].name
 
                         };
 
@@ -60,7 +72,7 @@ export function fetchProducts() {
         dispatch(receiveProducts(json));
       })
       .catch(response => {
-        console.log(response, "ERERERERADFDCNNN")
+        console.log(response);
         dispatch(productsError(response.data));
       });
   };

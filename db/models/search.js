@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         else {
           var filterByProfileType = "";
         }
-
+        console.log(filterByProfileType, "ddddddddd");
         // query = sequelize.getQueryInterface().escape(query+":*");
         return sequelize
           .query('SELECT * FROM "' + Search.tableName +

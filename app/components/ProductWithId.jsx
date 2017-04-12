@@ -100,22 +100,6 @@ class ProductWithId extends React.Component {
             </div>
             <button>Go</button>
           </div>
-          <h2>{`Exports from ${this.state.from.name}
-            to ${this.state.to.name}`}</h2>
-          <div className="result-wrapper">
-            {this.results.map((result, i) => {
-              return (
-                <Link key={i} to="/company/555">
-                  <div className="result-wrapper">
-                    <div className="result">
-                      <p>{result}</p>
-                      <p>Chilean Wine</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
         </div>
       </div>
     );

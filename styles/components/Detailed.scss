@@ -13,6 +13,10 @@
             height: 100px;
             bottom: 0;
 
+            a {
+                color: white;
+            }
+
             .text-wrapper {
                 top: 0;
                 color: white;
@@ -44,7 +48,7 @@
 
     .center-content {
         display: inline-block;
-        width: 70%;
+        width: 73%;
     }
 
     .background-image {
@@ -59,18 +63,38 @@
     .filter-wrapper {
         text-align: center;
         padding: 40px;
-        background: $middle-blue;
+        background: #212831;
         color: white;
+        .go {
+            background: black;
+            border-radius: 0;
+                  padding: 10px 12px;
+        }
+        button {
+          text-transform: uppercase;
+          font-weight: 300;
+          margin: 0;
+          font-size: 14px;
+          color: white;
+          border:none;
 
+
+        }
         .filter {
             width: 30%;
             display: inline-block;
 
             .dropdown-container,
-            h4 {
+            p {
                 display: inline-block;
-            }
 
+            }
+            p {
+              text-transform: uppercase;
+              font-weight: 300;
+              margin: 0;
+              font-size: 14px;
+            }
             .dropdown-container {
                 width: 75%;
                 margin: 15px;
@@ -106,18 +130,15 @@
     }
 
     .product-wrapper {
-        background: teal;
-        width: 60%;
-        height: 30px;
-        margin: 5px 0;
-        position: relative;
+        padding: 2px 0;
 
         p {
-            font-size: 10px;
-            margin: 0 5px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            font-size: 9px;
+        }
+
+        .colored-wrapper {
+            width: 70%;
+            max-width: 165px;
         }
     }
 
@@ -159,7 +180,6 @@
 
             .text-wrapper {
                 padding: 35px;
-
             }
         }
     }
