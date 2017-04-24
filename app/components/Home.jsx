@@ -2,7 +2,8 @@ import React from "react";
 import FilterDropdown from "./FilterDropdown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
-import {fetchProducts} from "../actions/productsActions";
+import {fetchCompanies} from "../actions/companiesActions";
+import {fetchUnNestedProducts} from "../actions/productsActions";
 import {fetchSearch, setSearch} from "../actions/searchActions";
 import exportIcon from "../img/icons/icon-export.svg";
 import importIcon from "../img/icons/icon-import.svg";
@@ -10,6 +11,8 @@ import oecWhite from "../img/icons/white-oec-logo.svg";
 import marketYellow from "../img/icons/orange-market-logo.svg";
 import transportIconGold from "../img/icons/icon-transport.svg";
 import placeYellow from "../img/icons/icon-country-yellow.svg";
+import productYellow from "../img/icons/icon-product-yellow.svg";
+import companyYellow from "../img/icons/icon-company-yellow.svg";
 import europe from "../img/icons/continents/icon-europe.svg";
 import northAmerica from "../img/icons/continents/icon-north-america.svg";
 import southAmerica from "../img/icons/continents/icon-south-america.svg";
@@ -19,7 +22,6 @@ import datawheelLogo from "../img/icons/logos/datawheel.png";
 import mitLogo from "../img/icons/logos/mit.png";
 import connectLogo from "../img/icons/logos/connectAmericasLogo.png";
 import {CardHome} from "./Card.jsx";
-
 
 class Home extends React.Component {
   constructor(props) {
@@ -37,9 +39,9 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-
     this.props.fetchCountries();
     this.props.fetchProducts();
+    this.props.fetchCompanies();
   }
 
   selectDropDown = item => {
@@ -51,7 +53,7 @@ class Home extends React.Component {
     this.setState({suggestionsVisible: true});
     this.setState({keyword: e.target.value});
     const length = e.target.value.length;
-    if (length && this.props.countries) {
+    if (length && this.props.countries && this.props.products && this.props.companies) {
       Object.keys(this.props.countries).map(continent => {
         this.props.countries[continent].values.map(country => {
           if (country.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
@@ -59,7 +61,26 @@ class Home extends React.Component {
           }
         })
       });
+      this.props.products[e.target.value.toLowerCase().substring(0, 1)].values.map(product => {
+        if (product.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
+          suggestions.push({type: "Product", name: product.name});
+        }
+      });
+      this.props.companies.map(company => {
+        if (company.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
+          suggestions.push({type: "Company", name: company.name});
+        }
+      })
     }
+    suggestions.sort(function(name1, name2) {
+      const a = name1.name.toLowerCase();
+      const b = name2.name.toLowerCase();
+      if (a < b)
+        return -1;
+      if (a > b)
+        return 1;
+      return 0;
+    });
     this.setState({suggestions});
   }
 
@@ -95,7 +116,11 @@ class Home extends React.Component {
                 ? <ul className="suggestions-wrapper">
                     {this.state.suggestions.map(suggestion => {
                       return <li onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                        <img className="icon" src={placeYellow}/>
+                        <img className="icon" src={suggestion.type === "Country"
+                          ? placeYellow
+                          : suggestion.type === "Product"
+                            ? productYellow
+                            : companyYellow}/>
                         <p>{`${suggestion.name}  |
                         ${suggestion.type}`}</p>
                       </li>;
@@ -140,10 +165,11 @@ class Home extends React.Component {
           <div className="logos-wrapper">
             <p>Created in Collaboration</p>
             <div className="img-wrapper">
-            <img className="connect" src={connectLogo}></img>
-            <img className="mit" src={mitLogo}></img>
-            <img className="datawheel" src={datawheelLogo}></img>
-          </div></div>
+              <img className="connect" src={connectLogo}></img>
+              <img className="mit" src={mitLogo}></img>
+              <img className="datawheel" src={datawheelLogo}></img>
+            </div>
+          </div>
           <div className="grid-wrapper">
             <div className="countries row">
               <h3>Countries</h3>
@@ -224,13 +250,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchCountries());
     },
     fetchProducts: () => {
-      dispatch(fetchProducts());
+      dispatch(fetchUnNestedProducts());
+    },
+    fetchCompanies: () => {
+      dispatch(fetchCompanies());
     },
     activateSearch: activeState => {
-      dispatch({
-        type: "ACTIVATE_SEARCH",
-        data: activeState
-      });
+      dispatch({type: "ACTIVATE_SEARCH", data: activeState});
     },
     fetchSearch: () => {
       dispatch(fetchSearch());
@@ -246,6 +272,9 @@ const mapStateToProps = state => {
     countries: state.countries.countries,
     loadingCountries: state.countries.loading,
     errorCountries: state.countries.error,
+    companies: state.companies.companies,
+    loadingCompanies: state.companies.loading,
+    errorCompanies: state.companies.error,
     products: state.products.products,
     loadingProducts: state.products.loading,
     errorProducts: state.products.error,

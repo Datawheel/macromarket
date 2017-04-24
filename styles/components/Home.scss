@@ -136,8 +136,12 @@
             border-top: 1px solid $light-grey;
             padding: 10px 0;
             z-index: 10;
+            height: 200px;
         }
-
+        ul.suggestions-wrapper {
+          height: 300px;
+          overflow: scroll;
+        }
         .search-button {
             width: 15%;
             background-color: black;

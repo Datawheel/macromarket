@@ -12,7 +12,6 @@ export default (state = {
       };
 
     case `${ACTION_TYPE}_FULFILLED`:
-    console.log(action);
       return {
         loading: false,
         product: action.data

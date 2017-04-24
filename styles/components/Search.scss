@@ -6,9 +6,10 @@
     bottom: 0;
     z-index: 100;
     background: $dark-grey;
+
     .overlay-inner {
-      height: 100%;
-      overflow: scroll;
+        height: 100%;
+        overflow: scroll;
     }
 }
 
@@ -79,8 +80,6 @@
                 color: black;
                 display: inline-block;
 
-                img {}
-
                 p {
                     margin: 0;
                 }
@@ -105,11 +104,13 @@
 .result-wrapper {
     @include flexbox;
     @include flex-wrap(wrap);
-    padding: 100px 50px;
+    padding: 75px 5%;
+    min-height: 300px;
 
     .card {
-        width: 24%;
-        margin: 5px;
+        width: 22%;
+        margin: 10px;
+        height: 275px;
 
         .text-wrapper {
             position: relative;
@@ -128,6 +129,8 @@
                 text-transform: none;
                 font-weight: 400;
             }
+
+
         }
     }
 }

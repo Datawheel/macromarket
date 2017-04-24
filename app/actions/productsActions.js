@@ -1,6 +1,10 @@
 import axios from "axios";
-import {nest} from "d3-collection";
-import {ascending} from "d3-array";
+import {
+  nest
+} from "d3-collection";
+import {
+  ascending
+} from "d3-array";
 
 function requestProducts() {
   return {
@@ -22,52 +26,69 @@ function productsError(json) {
   };
 }
 
+export function fetchUnNestedProducts() {
+  return function(dispatch) {
+    dispatch(requestProducts());
+    return axios.get("/api/products")
+      .then(response => {
+        const result = {};
+        response.data.map(product => {
+          if(result[product.name.toLowerCase().substring(0,1)]) {
+            result[product.name.toLowerCase().substring(0,1)].values.push(product);
+          }
+          else {
+            result[product.name.toLowerCase().substring(0,1)] = {values :[]};
+          }
+        });
+
+        dispatch(receiveProducts(result));
+      })
+      .catch(response => {
+        dispatch(productsError(response.data));
+      });
+  };
+}
+
 export function fetchProducts() {
   return function(dispatch) {
     dispatch(requestProducts());
     return axios.get("/api/products")
       .then(response => {
-        const deepestOnly = response.data.filter(d => d.id.length === 8)
         const json = nest()
-                      .key(d => d.id.substring(0, 2))
-                      .sortKeys(ascending)
-                      .key(d => d.id.substring(2, 4))
-                      .sortKeys(ascending)
-                      .key(d => d.id.substring(4, 6))
-                      .sortKeys(ascending)
-                      .entries(response.data)
-                      .map(d => {
+          .key(d => d.id.substring(0, 2))
+          .sortKeys(ascending)
+          .key(d => d.id.substring(2, 4))
+          .sortKeys(ascending)
+          .key(d => d.id.substring(4, 6))
+          .sortKeys(ascending)
+          .entries(response.data)
+          .map(d => {
+            const myHs2 = d.values.shift();
+            const myNewValues = d.values.map(dd => {
+              const myHs4 = dd.values.shift();
+              const innerValues = dd.values.map(ddd => {
+                const myHs6 = ddd.values.shift();
+                return {
+                  key: ddd.key,
+                  values: ddd.values,
+                  name: myHs6.name
+                }
+              });
+              return {
+                key: dd.key,
+                values: innerValues,
+                name: myHs4.values[0].name
+              };
+            });
+            const returnData = {
+              key: d.key,
+              values: myNewValues,
+              name: myHs2.values[0].values[0].name
 
-                        const myHs2 = d.values.shift();
+            };
 
-                        const myNewValues = d.values.map(dd => {
-                          const myHs4 = dd.values.shift();
-                          const innerValues = dd.values.map(ddd => {
-                            const myHs6 = ddd.values.shift();
-                            return {
-                              key: ddd.key,
-                              values: ddd.values,
-                              name: myHs6.name
-                            }
-                          });
-
-                          return {
-                            key: dd.key,
-                            values: innerValues,
-                            name: myHs4.values[0].name
-                          };
-
-                        })
-                        const returnData = {
-                          key: d.key,
-                          values: myNewValues,
-                          name: myHs2.values[0].values[0].name
-
-                        };
-
-
-                        return returnData
-                      })
+            return returnData
+          })
 
         dispatch(receiveProducts(json));
       })

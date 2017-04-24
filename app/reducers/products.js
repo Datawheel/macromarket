@@ -4,7 +4,6 @@ export default (state = {
   products: null,
   loading: false
 }, action) => {
-  console.log(action.type);
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
       return {

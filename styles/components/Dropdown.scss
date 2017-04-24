@@ -17,6 +17,10 @@
     }
 
     .selected-wrapper {
+        p {display: inline-block;
+            margin: 0 5px;
+            color: $input-text;
+        }
         padding: 7px 5px;
         text-align: left;
         background: white;
@@ -46,6 +50,8 @@
     }
 
     ul {
+        height: 300px;
+        overflow: scroll;
         text-align: left;
         border: 1px solid $light-grey;
         margin: 0 -1px;

@@ -93,7 +93,7 @@ class Settings extends React.Component {
         </div>
       );
     }
-
+console.log(this.props);
     return (
       <div className="settings">
         <Sidebar>

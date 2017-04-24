@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCompany} from "../actions/companyActions";
-import {fetchProductsByCompany} from "../actions/tradesActions";
+import {fetchTradesByCompany} from "../actions/tradesActions";
 import companyIcon from "../img/icons/icon-company-white.svg";
 import addressIcon from "../img/icons/icon-country-yellow.svg";
 import phoneIcon from "../img/icons/icon-telephone-yellow.svg";
@@ -18,7 +18,7 @@ class CompanyWithId extends React.Component {
   componentWillMount() {
     const id = this.props.params.companyWithId;
     this.props.fetchCompany(id);
-    this.props.fetchProductsByCompany(id);
+    this.props.fetchTradesByCompany(id);
   }
 
   render() {
@@ -119,7 +119,7 @@ class CompanyWithId extends React.Component {
                           {Object.keys(trades.countries).map((country, index) => {
                             console.log(trades.countries[country]);
                             const continentId = country.slice(0, 2);
-                            const colorName = `${trades.countries[country].continent.toLowerCase().replace(" ", "-")}-color`;
+                            const colorName = `color-${trades.countries[country].continent.toLowerCase().replace(" ", "-")}`;
                             return (
                               <Link key={index} to={`/country/${country}`}>
                                 <div className="product-wrapper">
@@ -184,8 +184,8 @@ const mapDispatchToProps = dispatch => {
     fetchCompany: id => {
       dispatch(fetchCompany(id))
     },
-    fetchProductsByCompany: id => {
-      dispatch(fetchProductsByCompany(id));
+    fetchTradesByCompany: id => {
+      dispatch(fetchTradesByCompany(id));
     }
   };
 };

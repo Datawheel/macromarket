@@ -7,10 +7,10 @@ import oecLogo from "../img/icons/white-oec-logo.svg";
 import marketLogo from "../img/icons/black-market-logo.svg";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
 
-
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
+
     browserHistory.listen(location => {
       if (this.props.searchActive) {
         this.props.activateSearch();
@@ -20,9 +20,11 @@ class NavBar extends React.Component {
 
   componentWillMount() {
     if (this.props.token) {
-      //this.props.authenticateAndFetchCompany(this.props.token);
+      this.props.authenticateAndFetchCompany(this.props.token);
     }
   }
+
+
 
   render() {
     const {activateSearch, searchActive, loading, company} = this.props;
@@ -35,32 +37,38 @@ class NavBar extends React.Component {
           <ul className="nav-bar">
             <li className="logo nav-bar-element">
               {this.props.location.pathname !== '/'
-                ? <Link to="/">
+                ? <Link to="/"><span>
                     <div className="logo-wrapper"><img src={oecLogo}/></div>
                     <div className="logo-wrapper">
-                      <img src={marketLogo}/></div>
+                      <img src={marketLogo}/></div></span>
                   </Link>
                 : null}
             </li>
             <li className="nav-bar-element">
-              <Link to="/company">Company</Link>
+              <Link to="/company"><span>Company</span></Link>
             </li>
             <li className="nav-bar-element">
-              <Link to="/country">Country</Link>
+              <Link to="/country"><span>Country</span></Link>
             </li>
             <li className="nav-bar-element">
-              <Link to="/product">Product</Link>
+              <Link to="/product"><span>Product</span></Link>
             </li>
             {this.props.location.pathname === '/'
               ? null
               : <li className="nav-bar-element">
-                <button onClick={() => activateSearch()}>Search</button>
+                <button onClick={() => activateSearch()}><span>Search</span></button>
               </li>}
+            {company
+              ? <li className="nav-bar-element company-name">
+
+                    <div className="profile-image-wrapper" style={{backgroundImage: `url(${company.profile_image})`}}>
 
 
-            <li className="nav-bar-element">
-              <Link to="/login">Log In</Link>
-            </li>
+                    </div><Link to="/login"><span>{company.name}</span></Link>
+                </li>
+              : <li className="nav-bar-element">
+                <Link to="/login">Log In</Link>
+              </li>}
           </ul>
         </div>
         {searchActive
@@ -74,10 +82,7 @@ class NavBar extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     activateSearch: activeState => {
-      dispatch({
-        type: "ACTIVATE_SEARCH",
-        data: activeState
-      });
+      dispatch({type: "ACTIVATE_SEARCH", data: activeState});
     },
     authenticateAndFetchCompany: token => {
       dispatch(authenticateAndFetchCompany(token));
@@ -86,12 +91,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {
-    searchActive: state.searchActive,
-    token: state.authentication.token,
-    company: state.companyProfile.company,
-    loading: state.companyProfile.loading
-  };
+  return {searchActive: state.searchActive, token: state.authentication.token, company: state.companyProfile.authCompany, loading: state.companyProfile.loading};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

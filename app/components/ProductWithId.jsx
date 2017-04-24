@@ -1,38 +1,36 @@
 import React from "react";
-import Dropdown from "./CountryDropdown.jsx";
+import CountryDropdown from "./CountryDropdown.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar.jsx";
+import {Card} from "./Card.jsx";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
+import companyGrey from "../img/icons/icon-company-grey.svg";
+import productGrey from "../img/icons/icon-product-grey.svg";
+import productWhite from "../img/icons/icon-product-white.svg";
+import {fetchTradesByProduct} from "../actions/tradesActions";
 
 class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      from: {name: "Angola", id: "afago"},
-      to: {name: "Angola", id: "afago"}
+      selectedOption: "exports",
+      country: {
+        id: "all",
+        name: "all"
+      }
     };
-
-    this.results = [
-      "Carmon",
-      "Casa Silva",
-      "Conosur",
-      "Concha y Toro",
-      "Emiliana",
-      "Junta",
-      "Casa Silva"
-    ];
   }
 
   componentWillMount() {
     const id = this.props.params.productWithId;
     this.props.fetchProduct(id);
     this.props.fetchCountries();
+    this.props.fetchTradesByProduct(id);
   }
 
   selectFrom = item => {
-
     this.setState({from: item});
   }
 
@@ -40,6 +38,15 @@ class ProductWithId extends React.Component {
     this.setState({to: item});
   }
 
+  handleOptionChange = selectedOption => {
+    this.setState({selectedOption});
+  }
+
+  selectCountry = country => {
+    const selected = {id: country.id, name: country.name}
+    console.log(country, selected);
+    this.setState({country: selected});
+  }
   render() {
     const {
       product,
@@ -47,10 +54,11 @@ class ProductWithId extends React.Component {
       error,
       countriesLoading,
       countriesError,
-      countries
+      countries,
+      trades
     } = this.props;
 
-    if (loading || !product || countriesLoading) {
+    if (loading || !product || countriesLoading || !trades) {
       return (
         <div className="detailed-content-wrapper">
           <div>loading...</div>
@@ -67,20 +75,25 @@ class ProductWithId extends React.Component {
       );
     }
 
-
     const fallbackId = product.id.substring(0, 2);
     const img = product.flickr_link
       ? `/img/product/${product.id}.jpg`
-      : `/img/product/${fallbackId}.jpg`;
+      : product.parent_image ? `/img/product/${product.id.slice(0, -2)}.jpg` :
+      `/img/product/${fallbackId}.jpg`;
 
     return (
       <div className="detailed-content-wrapper product">
         <div className="header">
           <Sidebar>
             <div className="profile-info">
-            <h3>{product.name}</h3>
-            <p>{product.description}
-            </p></div>
+              <div className="header-wrapper">
+                <h2>
+                  <span><img src={productWhite}/></span>{product.name}</h2>
+                <div className="yellow-line"></div>
+              </div>
+              <p>{product.description}
+              </p>
+            </div>
           </Sidebar>
           <div className="center-content">
             <div className="header-image-wrapper">
@@ -89,17 +102,40 @@ class ProductWithId extends React.Component {
               }}></div>
             </div>
           </div>
-          <div className="filter-wrapper">
-            <div className="filter">
-              <h4>From</h4>
-              <Dropdown select={this.selectFrom} selected={this.state.from.id} items={countries}></Dropdown>
-            </div>
-            <div className="filter">
-              <h4>To</h4>
-              <Dropdown select={this.selectTo} selected={this.state.to.id} items={countries}></Dropdown>
-            </div>
-            <button>Go</button>
+        </div>
+        <div className="filter-wrapper">
+          <div className="filter">
+            <label className="label radio-label">
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "exports")} type="radio" value="exports" checked={this.state.selectedOption === "exports"}/>
+              <p>Exports</p>
+            </label>
+            <label className="label radio-label">
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "imports")} type="radio" value="imports" checked={this.state.selectedOption === "imports"}/>
+              <p>Imports</p>
+            </label>
           </div>
+          <div className="filter">
+            <div className="label">
+              <p>Country</p>
+            </div>
+            <CountryDropdown select={this.selectCountry} selected={this.state.country.name} items={countries}/>
+          </div>
+          <button className="go">Go</button>
+        </div>
+        <div>
+          {trades
+            ? <div className="result-wrapper">
+                {trades.map((trade, index) => {
+                  const content = trade.Company;
+                  content.profile_type = "company";
+                  if(trade.trade_flow === this.state.selectedOption && (this.state.country.name === "all" || this.state.country.id === trade.country_id)) {
+                      return <Card key={index} content={content}/>;
+                  }
+                  else {
+                    return null;
+                  }
+                })}</div>
+            : null}
         </div>
       </div>
     );
@@ -113,6 +149,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchCountries: () => {
       dispatch(fetchCountries());
+    },
+    fetchTradesByProduct: id => {
+      dispatch(fetchTradesByProduct(id));
     }
   };
 };
@@ -124,7 +163,10 @@ const mapStateToProps = state => {
     error: state.productProfile.error,
     countries: state.countries.countries,
     countriesLoading: state.countries.loading,
-    countriesError: state.countries.error
+    countriesError: state.countries.error,
+    trades: state.trades.trades,
+    tradesLoading: state.trades.loading,
+    tradesError: state.trades.error
   };
 };
 

@@ -19,7 +19,32 @@ router.get("/search/(:f|:f/:q)", (req, res) => {
   const filter = req.params.f;
   const query = req.params.q;
   models.Search.search(query, filter).then(results => {
-    res.json(results);
+    var inserted = 0;
+    for (var i = 0, len = results.length; i < len; i++) {
+
+      let result = results[i];
+      if (result.id.slice(0, -2).length > 2) {
+        models.Product.find({
+          where: {
+            id: result.id.slice(0, -2)
+          }
+        }).then(parent => {
+
+          if (parent) {
+            if (parent.flickr_link) {
+              result.dataValues.parent_image = parent.flickr_link;
+            }
+          }
+          if (++inserted === results.length) {
+            res.json(results);
+          }
+        });
+      } else {
+        if (++inserted === results.length) {
+          res.json(results);
+        }
+      }
+    }
   });
 });
 
@@ -106,14 +131,22 @@ router.get("/companies", (req, res) => {
   });
 });
 
-router.get("/productsByCompany/:id", (req, res) => {
-  models.Trade.findProductsByCompany(models, req.params.id).then(trades => {
+router.get("/tradesByCompany/:id", (req, res) => {
+  models.Trade.findTradesByCompany(models, req.params.id).then(trades => {
     res.send(trades);
+
   });
 });
 
-router.get("/productsByCountry/:id", (req, res) => {
-  models.Trade.findProductsByCountry(models, req.params.id).then(trades => {
+router.get("/tradesByProduct/:id", (req, res) => {
+  models.Trade.findTradesByProduct(models, req.params.id).then(trades => {
+    res.send(trades);
+
+  });
+});
+
+router.get("/tradesByCountry/:id", (req, res) => {
+  models.Trade.findTradesByCountry(models, req.params.id).then(trades => {
     res.send(trades);
   });
 });
@@ -196,12 +229,28 @@ router.get("/country/:id", (req, res) => {
 });
 
 router.get("/product/:id", (req, res) => {
+  const id = req.params.id;
   models.Product.find({
     where: {
-      id: req.params.id
+      id
     }
   }).then(product => {
-    res.json(product);
+    if (!product.flickr_link && id.slice(0, -2).length > 2) {
+      models.Product.find({
+        where: {
+          id: id.slice(0, -2)
+        }
+      }).then(parent => {
+        if (parent.flickr_link) {
+          product.dataValues.parent_image = parent.flickr_link;
+        }
+        res.json(product);
+      });
+    } else {
+      res.json(product);
+    }
   });
 });
+
+
 module.exports = router;

@@ -7,6 +7,7 @@ class ProductSelection extends React.Component {
     super(props);
     this.state = {
       h2: null,
+      h2Input: "",
       selectedH2: null,
       selectedH4: null,
       h4: null,
@@ -20,11 +21,31 @@ class ProductSelection extends React.Component {
 
   selectH2 = product => {
     this.setState({h2: product.values, h4: null, selectedH4: null, selectedH2: product.key});
-
   }
 
   selectH4 = product => {
     this.setState({h4: product.values, selectedH4: product.key});
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  filter = (product, category) => {
+    const length = category.length;
+    const result = [];
+    product.values.map(product => {
+      const words = product.name.toLowerCase().split(" ");
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].slice(0, category.length) === category.toLowerCase()) {
+          result.push(product);
+          break;
+        }
+      }
+    });
+    return result;
   }
 
   selectProduct = product => {
@@ -36,6 +57,7 @@ class ProductSelection extends React.Component {
         name: product.name
       }
     };
+
     if (!this.props.selectedProducts[product.id]) {
       this.props.addProduct(productObj);
     } else {
@@ -44,7 +66,6 @@ class ProductSelection extends React.Component {
   }
 
   render() {
-
     const {loading, products, error} = this.props;
     if (loading || !products) {
       return (
@@ -68,31 +89,38 @@ class ProductSelection extends React.Component {
       <div>
         <div className="product-selection-wrapper">
           <h3 className="product-label">Categories</h3>
+          <div className="product-input-wrapper">
+            <input onChange={this.handleChange} placeholder="Select a product" value={this.state.h2Input} name="h2Input"/>
+          </div>
           <div className="product-selection">
             {Object.keys(products).map((product, index) => {
+              const suggestion = this.filter(products[product], this.state.h2Input);
               const productId = products[product].key;
-              const values = products[product].values
-              return (
-                <div key={index}>
-                  <div className={"colored-wrapper dropdown-item"}>
-                    <div className={`color-${productId} icon-wrapper`}>
-                      <img src={`/img/product_icon/hs_${productId}.png`}/></div>
-                    <div>
-                      <div className={`color-${productId} darker-color`}></div>
-                      <p className="category-name">{products[product].name}</p>
-                    </div>
-                  </div>
-                  {values.map(product => {
-                    return (
-                      <div className={this.state.selectedH2 === product.key
-                        ? "selectedH2"
-                        : null} key={product.key} onClick={this.selectH2.bind(this, product)}>
-                        <p className="product-name">{`${product.key} - ${product.name}`}</p>
+              const values = suggestion;
+              if (suggestion.length > 0) {
+                return (
+                  <div key={index}>
+                    <div className={"colored-wrapper dropdown-item"}>
+                      <div className={`color-${productId} icon-wrapper`}>
+                        <img src={`/img/product_icon/hs_${productId}.png`}/>
                       </div>
-                    );
-                  })}
-                </div>
-              );
+                      <div>
+                        <div className={`color-${productId} darker-color`}></div>
+                        <p className="category-name">{products[product].name}</p>
+                      </div>
+                    </div>
+                    {values.map(product => {
+                      return (
+                        <div className={this.state.selectedH2 === product.key
+                          ? "selectedH2"
+                          : null} key={product.key} onClick={this.selectH2.bind(this, product)}>
+                          <p className="product-name">{`${product.key} - ${product.name}`}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              }
             })}
           </div>
         </div>
@@ -125,23 +153,20 @@ class ProductSelection extends React.Component {
           ? <div className="product-selection-wrapper">
               <h3 className="product-label">HS6</h3>
               <div className="product-selection">
+                {this.state.h4.map((product, index) => {
+                  const id = product.id.slice(2, 8);
+                  return (
+                    <div key={index} className={this.props.selectedProducts[product.id]
+                      ? "selectedItem product"
+                      : "product"} onClick={this.selectProduct.bind(this, product)}>
 
-                  {this.state.h4.map((product, index) => {
-                    const id = product.id.slice(2, 8);
-                    return (
-                      <div key={index} className={this.props.selectedProducts[product.id]
-                        ? "selectedItem product"
-                        : "product"} onClick={this.selectProduct.bind(this, product)}>
-
-                          <div className="product-id">
-                            <p>{id}</p>
-                          </div>
-                          <p className="product-name hs6">{product.name}</p>
-
+                      <div className="product-id">
+                        <p>{id}</p>
                       </div>
-
-                    );
-                  })}
+                      <p className="product-name hs6">{product.name}</p>
+                    </div>
+                  );
+                })}
 
               </div>
             </div>

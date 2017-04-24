@@ -88,11 +88,11 @@ export function saveTrades(tradesToSave, tradesToDelete) {
         .catch(response => {
           dispatch(saveTradesError(response.data));
         });
-    } else {
+    }
+    else {
       if (tradesToDelete.length > 0) {
         deleteTrades(tradesToDelete)(dispatch);
       }
-
     }
   };
 }
@@ -111,11 +111,9 @@ export function fetchTrades(id) {
 }
 
 export function fetchTradesForSettings(id) {
-
   return function(dispatch) {
     dispatch(requestSettingsTrades());
-
-    return axios.get(`/api/productsByCompany/${id}`)
+    return axios.get(`/api/tradesByCompany/${id}`)
       .then(response => {
         dispatch(receiveSettingsTrades(response.data));
       })
@@ -125,10 +123,36 @@ export function fetchTradesForSettings(id) {
   };
 }
 
-export function fetchProductsByCompany(id) {
+export function fetchTradesByCountry(id) {
   return function(dispatch) {
     dispatch(requestTrades());
-    return axios.get(`/api/productsByCompany/${id}`)
+    return axios.get(`/api/tradesByCountry/${id}`)
+      .then(response => {
+        dispatch(receiveTrades(response.data));
+      })
+      .catch(response => {
+        dispatch(tradesError(response.data));
+      });
+  };
+}
+
+export function fetchTradesByProduct(id) {
+  return function(dispatch) {
+    dispatch(requestTrades());
+    return axios.get(`/api/tradesByProduct/${id}`)
+      .then(response => {
+        dispatch(receiveTrades(response.data));
+      })
+      .catch(response => {
+        dispatch(tradesError(response.data));
+      });
+  };
+}
+
+export function fetchTradesByCompany(id) {
+  return function(dispatch) {
+    dispatch(requestTrades());
+    return axios.get(`/api/tradesByCompany/${id}`)
       .then(response => {
         const json = {
           exports: {},

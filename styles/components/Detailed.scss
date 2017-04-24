@@ -1,6 +1,19 @@
 .detailed-content-wrapper {
+  .radio-label {
+      width: 30%;
+  }
+
+  .radio {
+      margin: 0 20px;
+  }
     p {
         font-size: 14px;
+    }
+
+    h2 {
+        margin: 8px 0;
+        font-size: 1.4rem;
+        font-weight: 400;
     }
 
     .header-image-wrapper {
@@ -21,19 +34,20 @@
                 top: 0;
                 color: white;
                 position: absolute;
-                padding: 20px 0;
+                padding: 15px 5%;
                 width: 100%;
-
-                h2 {
-                    margin: 5px;
-                }
 
                 h4 {
                     letter-spacing: 2px;
-                    margin: 0 5px;
+                    margin: 5px 0;
                     font-size: 12px;
+                    font-weight: 200;
                     text-transform: uppercase;
                 }
+            }
+
+            .section-wrapper {
+                display: inline-block;
             }
         }
 
@@ -63,41 +77,57 @@
     .filter-wrapper {
         text-align: center;
         padding: 40px;
-        background: #212831;
+        background: #2E3437;
         color: white;
+
         .go {
             background: black;
             border-radius: 0;
-                  padding: 10px 12px;
+            padding: 10px 12px;
         }
+
         button {
-          text-transform: uppercase;
-          font-weight: 300;
-          margin: 0;
-          font-size: 14px;
-          color: white;
-          border:none;
-
-
+            text-transform: uppercase;
+            font-weight: 300;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            border: none;
         }
+
         .filter {
-            width: 30%;
+            width: 35%;
             display: inline-block;
 
             .dropdown-container,
             p {
                 display: inline-block;
+                color: $input-text;
+            }
 
+            .label {
+                margin: 0;
+                width: 45%;
+                display: inline-block;
+
+                p {
+                    text-transform: uppercase;
+                    font-weight: 300;
+                    text-align: left;
+                    vertical-align: baseline;
+                    font-size: 12px;
+                    margin: 0;
+                }
+
+                img {
+                    margin: 0 5%;
+                    vertical-align: text-bottom;
+                }
             }
-            p {
-              text-transform: uppercase;
-              font-weight: 300;
-              margin: 0;
-              font-size: 14px;
-            }
+
             .dropdown-container {
-                width: 75%;
-                margin: 15px;
+                width: 46%;
+                margin: 4%;
             }
         }
     }
@@ -105,12 +135,7 @@
     .result-wrapper {
         @include flexbox;
         @include flex-wrap(wrap);
-
-        .result-wrapper {
-            margin: 10px;
-            padding: 35px;
-            background: #f2f2f2;
-        }
+        background: #212831;
     }
 
     .description-wrapper {
@@ -172,21 +197,65 @@
 }
 
 .country {
+    .filter {
+        .dropdown-container {
+            .dropdown-item {
+                margin: 0;
+            }
+        }
+        .chevron.down {
+          float: right;
+          margin-right: 5px;
+        }
+    }
+
     .header-image-wrapper {
         height: 375px;
 
         .image-overlay-wrapper {
-            height: 130px;
+            height: 140px;
 
-            .text-wrapper {
-                padding: 35px;
+            .section-wrapper {
+                vertical-align: text-top;
+                margin: 0 25px;
+                position: relative;
+            }
+
+            .flag {
+                width: 35px;
+                position: absolute;
+            }
+
+            .continent-wrapper {
+                height: 130px;
+                margin-top: -15px;
+                position: relative;
+                width: 120px;
+
+                img {
+                    position: absolute;
+                    top: 50%;
+                    width: 100%;
+                    transform: translateY(-50%);
+                }
             }
         }
     }
 }
 
-.product {
+.product.detailed-content-wrapper {
     .filter-wrapper {
         margin: -5px;
+    }
+
+    .filter {
+        .dropdown-container {
+            width: 55%;
+        }
+
+        .label {
+            width: 20%;
+        }
+
     }
 }

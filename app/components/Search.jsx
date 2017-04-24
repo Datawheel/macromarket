@@ -71,7 +71,7 @@ class Search extends React.Component {
           {results.map(result => <Card key={result.id} content={result} />)}
         </div>
       );
-    } 
+    }
     else {
       return (<p>No results.</p>);
     }

@@ -15,8 +15,11 @@ module.exports = function(sequelize, DataTypes) {
         Trade.belongsTo(models.Country, {
           foreignKey: "country_id"
         });
+        Trade.belongsTo(models.Company, {
+          foreignKey: "company_id"
+        });
       },
-      findProductsByCompany: function(models, companyId) {
+      findTradesByCompany: function(models, companyId) {
         return Trade.findAll({
           where: {
             company_id: companyId
@@ -24,12 +27,20 @@ module.exports = function(sequelize, DataTypes) {
           include: [models.Product, models.Country]
         });
       },
-      findProductsByCountry: function(models, countryId) {
+      findTradesByCountry: function(models, countryId) {
         return Trade.findAll({
           where: {
             country_id: countryId
           },
           include: [models.Product, models.Company]
+        });
+      },
+      findTradesByProduct: function(models, productId) {
+        return Trade.findAll({
+          where: {
+            product_id: productId
+          },
+          include: [models.Country, models.Company]
         });
       }
     }
