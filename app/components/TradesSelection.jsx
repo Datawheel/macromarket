@@ -164,7 +164,6 @@ class TradeSelection extends React.Component {
 
   render() {
     const {trades, loading, error} = this.props;
-        console.log(this.props);
     if (loading || !trades) {
       return (
         <div className="detailed-content-wrapper">

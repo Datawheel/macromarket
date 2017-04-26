@@ -3,6 +3,7 @@ import CountryDropdown from "./CountryDropdown.jsx";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar.jsx";
+import {browserHistory} from "react-router";
 import {Card} from "./Card.jsx";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
@@ -18,9 +19,16 @@ class ProductWithId extends React.Component {
       selectedOption: "exports",
       country: {
         id: "all",
-        name: "all"
+        name: "all",
+
       }
     };
+    // determines if component needs to fetch new data for random product
+    this.shouldUpdate = false;
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
+
   }
 
   componentWillMount() {
@@ -28,6 +36,16 @@ class ProductWithId extends React.Component {
     this.props.fetchProduct(id);
     this.props.fetchCountries();
     this.props.fetchTradesByProduct(id);
+  }
+
+  componentWillUpdate() {
+    if (this.shouldUpdate) {
+      const id = this.props.params.productWithId;
+      this.props.fetchProduct(id);
+      this.props.fetchCountries();
+      this.props.fetchTradesByProduct(id);
+      this.shouldUpdate = false;
+    }
   }
 
   selectFrom = item => {
@@ -43,8 +61,10 @@ class ProductWithId extends React.Component {
   }
 
   selectCountry = country => {
-    const selected = {id: country.id, name: country.name}
-    console.log(country, selected);
+    const selected = {
+      id: country.id,
+      name: country.name
+    }
     this.setState({country: selected});
   }
   render() {
@@ -78,8 +98,9 @@ class ProductWithId extends React.Component {
     const fallbackId = product.id.substring(0, 2);
     const img = product.flickr_link
       ? `/img/product/${product.id}.jpg`
-      : product.parent_image ? `/img/product/${product.id.slice(0, -2)}.jpg` :
-      `/img/product/${fallbackId}.jpg`;
+      : product.parent_image
+        ? `/img/product/${product.id.slice(0, -2)}.jpg`
+        : `/img/product/${fallbackId}.jpg`;
 
     return (
       <div className="detailed-content-wrapper product">
@@ -128,10 +149,9 @@ class ProductWithId extends React.Component {
                 {trades.map((trade, index) => {
                   const content = trade.Company;
                   content.profile_type = "company";
-                  if(trade.trade_flow === this.state.selectedOption && (this.state.country.name === "all" || this.state.country.id === trade.country_id)) {
-                      return <Card key={index} content={content}/>;
-                  }
-                  else {
+                  if (trade.trade_flow === this.state.selectedOption && (this.state.country.name === "all" || this.state.country.id === trade.country_id)) {
+                    return <Card key={index} content={content}/>;
+                  } else {
                     return null;
                   }
                 })}</div>

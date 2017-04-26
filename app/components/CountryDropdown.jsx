@@ -4,7 +4,7 @@ export default class CountryDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible: false
     };
   }
 
@@ -25,7 +25,6 @@ export default class CountryDropdown extends React.Component {
       <ul>
         {Object.keys(this.props.items).map(contient => {
           const continentId = this.props.items[contient].values[0].id.slice(0, 2);
-
           const colorName = `color-${this.props.items[contient].key.toLowerCase().replace(" ", "-")}`;
           return (
             <div key={contient}>
@@ -67,7 +66,6 @@ export default class CountryDropdown extends React.Component {
           : this.renderItems()
         }
       </div>
-
     );
   }
 }
@@ -96,7 +94,6 @@ export class ProductDropdown extends React.Component {
       <ul>
         {Object.keys(this.props.items).map(key => {
           const id = this.props.items[key].key;
-          console.log(id, "ddd");
           const colorName = `color-${this.props.items[key].key.toLowerCase().replace(" ", "-")}`;
           return(
             <div onClick={this.select.bind(this, this.props.items[key])}  key={key}>

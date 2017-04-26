@@ -9,16 +9,31 @@ import addressIcon from "../img/icons/icon-country-yellow.svg";
 import phoneIcon from "../img/icons/icon-telephone-yellow.svg";
 import worldIcon from "../img/icons/icon-world-yellow.svg";
 import getInTouchIcon from "../img/icons/icon-mail.svg";
+import {browserHistory} from "react-router";
 
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
+    this.shouldUpdate = false;
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
   }
 
-  componentWillMount() {
-    const id = this.props.params.companyWithId;
+  componentDidMount() {
+    const id = this.props.params.companyWithId
     this.props.fetchCompany(id);
     this.props.fetchTradesByCompany(id);
+  }
+
+  componentWillUpdate() {
+    if (this.shouldUpdate) {
+      const id = this.props.params.companyWithId
+      this.props.fetchCompany(id);
+      this.props.fetchTradesByCompany(id);
+      this.shouldUpdate = false;
+    }
+
   }
 
   render() {
@@ -117,7 +132,6 @@ class CompanyWithId extends React.Component {
                     {trades.countries
                       ? <div>
                           {Object.keys(trades.countries).map((country, index) => {
-                            console.log(trades.countries[country]);
                             const continentId = country.slice(0, 2);
                             const colorName = `color-${trades.countries[country].continent.toLowerCase().replace(" ", "-")}`;
                             return (

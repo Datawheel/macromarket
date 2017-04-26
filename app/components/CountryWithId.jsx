@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar.jsx";
 import {Link} from "react-router";
 import {Card} from "./Card.jsx";
+import {browserHistory} from "react-router";
 import {connect} from "react-redux";
 import {ProductDropdown} from "./CountryDropdown.jsx";
 import {fetchCountry} from '../actions/countryActions';
@@ -20,15 +21,30 @@ class CountryWithId extends React.Component {
         name: "all"
       },
       companyFilter: null
-    }
+    };
+
+    // determines if component needs to fetch new data for random country
+    this.shouldUpdate = false;
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
   }
 
   componentWillMount() {
     const id = this.props.params.countryWithId;
-    this.props.fetchTradesByCountry(id);
     this.props.fetchCountry(id);
     this.props.fetchProducts();
+    this.props.fetchTradesByCountry(id);
+  }
 
+  componentWillUpdate() {
+    if (this.shouldUpdate) {
+      const id = this.props.params.countryWithId
+      this.props.fetchCountry(id);
+      this.props.fetchProducts();
+      this.props.fetchTradesByCountry(id);
+      this.shouldUpdate = false;
+    }
   }
 
   selectProduct = filter => {
@@ -43,7 +59,7 @@ class CountryWithId extends React.Component {
     const selected = {
       id: product.id,
       name: product.name
-    }
+    };
     this.setState({product: selected});
   }
 
@@ -52,9 +68,7 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    console.log(this.state.product);
     const {country, loading, error, products, trades} = this.props;
-
     if (loading || !country || !products || !trades) {
       return (
         <div className="detailed-content-wrapper">
@@ -81,7 +95,6 @@ class CountryWithId extends React.Component {
           <div className="background-image" style={{
             backgroundImage: `url(${placeImg})`
           }}></div>
-
           <div className="image-overlay-wrapper">
             <div className="image-overlay"></div>
             <div className="text-wrapper">
@@ -122,8 +135,7 @@ class CountryWithId extends React.Component {
               const content = trade.Company;
               content.profile_type = "company";
               const parentId = trade.product_id.slice(0, 2);
-              console.log(this.state.product.id === parentId);
-              console.log(this.state.product.name === "all");
+            
               if (trade.trade_flow === this.state.selectedOption && (this.state.product.name === "all" || this.state.product.id === parentId)) {
                 return <Card key={index} content={content}/>;
               } else {
@@ -135,7 +147,6 @@ class CountryWithId extends React.Component {
       </div>
     );
   }
-
 }
 
 const mapDispatchToProps = dispatch => {

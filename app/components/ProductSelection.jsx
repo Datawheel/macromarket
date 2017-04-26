@@ -33,19 +33,67 @@ class ProductSelection extends React.Component {
     });
   }
 
-  filter = (product, category) => {
-    const length = category.length;
+  // // filter categories based on input
+  // filter = (product, input) => {
+  //   const length = input.length;
+  //   const result = [];
+  //   product.values.map(product => {
+  //     const words = product.name.toLowerCase().split(" ");
+  //     for (let i = 0; i < words.length; i++) {
+  //       if (words[i].slice(0, length) === input.toLowerCase()) {
+  //         result.push(product);
+  //         break;
+  //       } else {
+  //         if (findProduct(product.values, input)) {
+  //           result.push(product);
+  //         }
+  //       }
+  //     }
+  //   });
+  //   return result;
+  // }
+
+
+  filter = (products, input) => {
     const result = [];
-    product.values.map(product => {
-      const words = product.name.toLowerCase().split(" ");
-      for (let i = 0; i < words.length; i++) {
-        if (words[i].slice(0, category.length) === category.toLowerCase()) {
-          result.push(product);
-          break;
-        }
+    products.map(product => {
+      if (this.findProduct([product], input)) {
+        result.push(product);
       }
     });
     return result;
+  }
+
+  // returns true if any of the nested products match the input string
+  findProduct = (products, input) => {
+    let result = false
+    for (let i = 0; i < products.length; i++) {
+      const words = products[i].name.toLowerCase().split(" ");
+      if (this.checkWords(words, input)) {
+        result = true;
+        break;
+      }
+      else {
+        if (products[i].values) {
+          result = this.findProduct(products[i].values, input);
+          if(result) {
+              break;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  // checks if any of the individual words match input string
+  checkWords = (words, input) => {
+    const length = input.length;
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].slice(0, length) === input.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   selectProduct = product => {
@@ -60,7 +108,8 @@ class ProductSelection extends React.Component {
 
     if (!this.props.selectedProducts[product.id]) {
       this.props.addProduct(productObj);
-    } else {
+    }
+    else {
       this.props.deleteProduct(productObj);
     }
   }
@@ -88,16 +137,15 @@ class ProductSelection extends React.Component {
     return (
       <div>
         <div className="product-selection-wrapper">
-          <h3 className="product-label">Categories</h3>
           <div className="product-input-wrapper">
-            <input onChange={this.handleChange} placeholder="Select a product" value={this.state.h2Input} name="h2Input"/>
+            <input onChange={this.handleChange} placeholder="Search a product" value={this.state.h2Input} name="h2Input"/>
           </div>
+          <h3 className="product-label">Categories</h3>
           <div className="product-selection">
             {Object.keys(products).map((product, index) => {
-              const suggestion = this.filter(products[product], this.state.h2Input);
+              const values = this.filter(products[product].values, this.state.h2Input);
               const productId = products[product].key;
-              const values = suggestion;
-              if (suggestion.length > 0) {
+              if (values.length > 0) {
                 return (
                   <div key={index}>
                     <div className={"colored-wrapper dropdown-item"}>
@@ -129,7 +177,7 @@ class ProductSelection extends React.Component {
               <h3 className="product-label">HS4</h3>
               <div className="product-selection">
                 <div>
-                  {this.state.h2.map((product, index) => {
+                  {this.filter(this.state.h2, this.state.h2Input).map((product, index) => {
                     const id = `${this.state.selectedH2}${product.key}`;
                     return (
                       <div className={this.state.selectedH4 === product.key
@@ -153,7 +201,7 @@ class ProductSelection extends React.Component {
           ? <div className="product-selection-wrapper">
               <h3 className="product-label">HS6</h3>
               <div className="product-selection">
-                {this.state.h4.map((product, index) => {
+                {this.filter(this.state.h4, this.state.h2Input).map((product, index) => {
                   const id = product.id.slice(2, 8);
                   return (
                     <div key={index} className={this.props.selectedProducts[product.id]
