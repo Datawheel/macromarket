@@ -20,16 +20,17 @@ router.get("/search/(:f|:f/:q)", (req, res) => {
   const query = req.params.q;
   models.Search.search(query, filter).then(results => {
     var inserted = 0;
+    if (results.length === 0) {
+      res.json(results);
+    }
     for (var i = 0, len = results.length; i < len; i++) {
-
       let result = results[i];
-      if (result.id.slice(0, -2).length > 2) {
+      if (result.id.slice(0, -2).length >= 2) {
         models.Product.find({
           where: {
             id: result.id.slice(0, -2)
           }
         }).then(parent => {
-
           if (parent) {
             if (parent.flickr_link) {
               result.dataValues.parent_image = parent.flickr_link;
@@ -45,6 +46,7 @@ router.get("/search/(:f|:f/:q)", (req, res) => {
         }
       }
     }
+
   });
 });
 

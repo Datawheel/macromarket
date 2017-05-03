@@ -64,7 +64,9 @@ export function fetchProducts() {
           .entries(response.data)
           .map(d => {
             const myHs2 = d.values.shift();
+
             const myNewValues = d.values.map(dd => {
+
               const myHs4 = dd.values.shift();
               const innerValues = dd.values.map(ddd => {
                 const myHs6 = ddd.values.shift();
@@ -84,16 +86,13 @@ export function fetchProducts() {
               key: d.key,
               values: myNewValues,
               name: myHs2.values[0].values[0].name
-
             };
-
             return returnData
-          })
+          });
 
         dispatch(receiveProducts(json));
       })
       .catch(response => {
-        console.log(response);
         dispatch(productsError(response.data));
       });
   };

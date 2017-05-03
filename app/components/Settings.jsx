@@ -12,11 +12,10 @@ class Settings extends React.Component {
     super(props);
     this.state = {
       slide: 0
-    }
+    };
   }
 
   componentWillMount() {
-
     if (this.props.token) {
       this.props.authenticateAndFetchCompany(this.props.token);
     }
@@ -30,23 +29,20 @@ class Settings extends React.Component {
     if (!token) {
       browserHistory.push("/login");
     }
-
     if (deleted) {
       browserHistory.push("/login");
       this.setState({trade: []});
     }
-
   }
 
   nextSlide = () => {
-    window.scrollTo(0,0);
     this.setState({
       slide: this.state.slide + 1
     });
   }
 
   previousSlide = () => {
-    window.scrollTo(0,0);
+
     this.setState({
       slide: this.state.slide - 1
     });
@@ -80,7 +76,7 @@ class Settings extends React.Component {
     // loading company if one exists
     if (user.company_id && !company) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="settings">
           <div>loading...</div>
         </div>
       );
@@ -88,7 +84,7 @@ class Settings extends React.Component {
 
     if (this.props.companyLoading) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="settings">
           <div>Company being saved...</div>
         </div>
       );
@@ -106,7 +102,6 @@ class Settings extends React.Component {
             : <h2>Register</h2>}
           <p>Enter the data of your company or service and you will be able to access this network of exporters and importers of the world</p>
           <div className="back-line"></div>
-
       </Sidebar>
         <div className="center-content form-wrapper">
           {this.state.slide === 0

@@ -1,5 +1,6 @@
 export default (state = {
   trades: null,
+  profileTrades: null,
   loading: false,
   saved: false,
   settingsTrades: null
@@ -12,6 +13,21 @@ export default (state = {
     case "SAVE_TRADES_REJECTED":
       return { ...state,
         saved: false,
+        error: action.data
+      };
+    case "PROFILE_TRADES_PENDING":
+      return { ...state,
+        profileTrades: null,
+        loading: true
+      };
+    case "PROFILE_TRADES_FULFILLED":
+      return { ...state,
+        loading: false,
+        profileTrades: action.data
+      };
+    case "PROFILE_TRADES_REJECTED":
+      return { ...state,
+        loading: false,
         error: action.data
       };
     case "TRADES_PENDING":

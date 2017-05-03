@@ -1,11 +1,12 @@
 .detailed-content-wrapper {
-  .radio-label {
-      width: 30%;
-  }
+    .radio-label {
+        width: 30%;
+    }
 
-  .radio {
-      margin: 0 20px;
-  }
+    .radio {
+        margin: 0 20px;
+    }
+
     p {
         font-size: 14px;
     }
@@ -104,6 +105,18 @@
                 display: inline-block;
                 color: $input-text;
             }
+            .dropdown-container {
+              width: 46%;
+              margin: 4%;
+                .dropdown-item {
+                    margin: 0;
+                }
+            }
+
+            .chevron.down {
+                float: right;
+                margin-right: 7px;
+            }
 
             .label {
                 margin: 0;
@@ -124,18 +137,23 @@
                     vertical-align: text-bottom;
                 }
             }
-
-            .dropdown-container {
-                width: 46%;
-                margin: 4%;
-            }
         }
     }
 
-    .result-wrapper {
-        @include flexbox;
-        @include flex-wrap(wrap);
+    .result-wrapper-outer {
         background: #212831;
+
+        h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .result-wrapper {
+            @include flexbox;
+            @include flex-wrap(wrap);
+        }
     }
 
     .description-wrapper {
@@ -197,18 +215,6 @@
 }
 
 .country {
-    .filter {
-        .dropdown-container {
-            .dropdown-item {
-                margin: 0;
-            }
-        }
-        .chevron.down {
-          float: right;
-          margin-right: 5px;
-        }
-    }
-
     .header-image-wrapper {
         height: 375px;
 
@@ -250,12 +256,11 @@
 
     .filter {
         .dropdown-container {
-            width: 55%;
+            width: 50%;
         }
 
-        .label {
-            width: 20%;
+        .country-dropdown-label {
+            width: 25%;
         }
-
     }
 }

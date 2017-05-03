@@ -22,7 +22,6 @@ class CountrySelection extends React.Component {
       country_id: country.id,
       trade_flow: this.props.trade.trade_flow
     };
-    console.log(trade);
     this.props.addCountry(trade);
     this.setState(state => {
       state.saved = state.saved.concat([{

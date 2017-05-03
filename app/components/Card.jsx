@@ -23,6 +23,9 @@ export class Card extends React.Component {
     let icon = productIcon;
     let img = "";
     let id = this.content.id;
+    if (this.content.profile_type === "country") {
+      icon = countryIcon;
+    }
     if (this.content.profile_type === "company") {
       icon = companyIcon;
       img = this.content.profile_image;
@@ -33,14 +36,20 @@ export class Card extends React.Component {
     else {
       const id = this.content.id;
       const fallbackId = id.substring(0, 2);
-      // img = this.content.flickr_link
-      //   ? `/img/${this.content.profile_type}/${this.content.id}.jpg`
-      //   : `/img/${this.content.profile_type}/${fallbackId}.jpg`;
 
-         img = this.content.flickr_link
-          ? `/img/${this.content.profile_type}/${this.content.id}.jpg`
-          : this.content.parent_image ? `/img/${this.content.profile_type}/${this.content.id.slice(0, -2)}.jpg` :
-          `/img/${this.content.profile_type}/${fallbackId}.jpg`;
+      img = this.content.flickr_link
+        ? `/img/${this.content.profile_type}/${this.content.id}.jpg`
+        : this.content.parent_image
+          ? `/img/${this.content.profile_type}/${this.content.id.slice(0, -2)}.jpg`
+          : `/img/${this.content.profile_type}/${fallbackId}.jpg`;
+    }
+    let productCategory = "";
+    if (this.props.products && this.content.profile_type === "product") {
+      this.props.products.map(product => {
+        if (this.content.id.slice(0, 2) === product.key) {
+          productCategory = product.name;
+        }
+      });
     }
 
     return (
@@ -53,9 +62,11 @@ export class Card extends React.Component {
             <div className="yellow-line"></div>
             <img className="profile_type_icon" src={icon}/>
             <p className="category">
-              {this.content.type === "country"
+              {this.content.profile_type === "country"
                 ? "country"
-                : "category"}</p>
+                : this.content.profile_type === "product"
+                  ? productCategory
+                  : "company"}</p>
             <p className="name">{this.content.name}</p>
           </div>
         </Link>
@@ -74,7 +85,8 @@ export class CardHome extends React.Component {
     let img = ""
     if (this.content.type === "company") {
       img = this.content.logo;
-    } else {
+    }
+    else {
       const id = this.content.id;
       const fallbackId = id.substring(0, 2);
       img = this.content.flickr_link

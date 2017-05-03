@@ -30,7 +30,7 @@ class CountryWithId extends React.Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchCountry(id);
     this.props.fetchProducts();
@@ -71,7 +71,7 @@ class CountryWithId extends React.Component {
     const {country, loading, error, products, trades} = this.props;
     if (loading || !country || !products || !trades) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <div>loading...</div>
         </div>
       );
@@ -79,7 +79,7 @@ class CountryWithId extends React.Component {
 
     if (error) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
         </div>
@@ -129,21 +129,22 @@ class CountryWithId extends React.Component {
           </div>
           <button className="go">Go</button>
         </div>
+          <div className="result-wrapper-outer">
         <div className="result-wrapper">
           {trades
             ? trades.map((trade, index) => {
               const content = trade.Company;
               content.profile_type = "company";
               const parentId = trade.product_id.slice(0, 2);
-            
               if (trade.trade_flow === this.state.selectedOption && (this.state.product.name === "all" || this.state.product.id === parentId)) {
                 return <Card key={index} content={content}/>;
-              } else {
+              }
+              else {
                 return null;
               }
             })
             : null}
-        </div>
+        </div></div>
       </div>
     );
   }

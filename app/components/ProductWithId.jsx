@@ -1,14 +1,12 @@
 import React from "react";
 import CountryDropdown from "./CountryDropdown.jsx";
-import {Link} from "react-router";
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar.jsx";
 import {browserHistory} from "react-router";
 import {Card} from "./Card.jsx";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
-import companyGrey from "../img/icons/icon-company-grey.svg";
-import productGrey from "../img/icons/icon-product-grey.svg";
+import {fetchProducts} from "../actions/productsActions";
 import productWhite from "../img/icons/icon-product-white.svg";
 import {fetchTradesByProduct} from "../actions/tradesActions";
 
@@ -16,57 +14,60 @@ class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: "exports",
-      country: {
+      selectedTrade: "export",
+      selectedCountry: {
         id: "all",
-        name: "all",
-
+        name: "all"
+      },
+      tradeFilter: "export",
+      countryFilter: {
+        id: "all",
+        name: "all"
       }
     };
+
     // determines if component needs to fetch new data for random product
     this.shouldUpdate = false;
     browserHistory.listen(location => {
       this.shouldUpdate = true;
     });
-
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const id = this.props.params.productWithId;
     this.props.fetchProduct(id);
     this.props.fetchCountries();
+    this.props.fetchProducts();
     this.props.fetchTradesByProduct(id);
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     if (this.shouldUpdate) {
       const id = this.props.params.productWithId;
       this.props.fetchProduct(id);
       this.props.fetchCountries();
+      this.props.fetchProducts();
       this.props.fetchTradesByProduct(id);
       this.shouldUpdate = false;
     }
   }
 
-  selectFrom = item => {
-    this.setState({from: item});
-  }
-
-  selectTo = item => {
-    this.setState({to: item});
-  }
-
-  handleOptionChange = selectedOption => {
-    this.setState({selectedOption});
+  handleOptionChange = selectedTrade => {
+    this.setState({selectedTrade});
   }
 
   selectCountry = country => {
     const selected = {
       id: country.id,
       name: country.name
-    }
-    this.setState({country: selected});
+    };
+    this.setState({selectedCountry: selected});
   }
+
+  setFilters = () => {
+    this.setState({countryFilter: this.state.selectedCountry, tradeFilter: this.state.selectedTrade});
+  }
+
   render() {
     const {
       product,
@@ -75,12 +76,13 @@ class ProductWithId extends React.Component {
       countriesLoading,
       countriesError,
       countries,
-      trades
+      trades,
+      products
     } = this.props;
 
-    if (loading || !product || countriesLoading || !trades) {
+    if (loading || !product || countriesLoading || !trades || !products) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <div>loading...</div>
         </div>
       );
@@ -88,11 +90,21 @@ class ProductWithId extends React.Component {
 
     if (error || countriesError) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
         </div>
       );
+    }
+
+    let productCategory = "";
+
+    if(products) {
+      products.map(product => {
+        if (product.key === this.props.params.productWithId.slice(0, 2)) {
+          productCategory = product.name;
+        }
+      });
     }
 
     const fallbackId = product.id.substring(0, 2);
@@ -110,10 +122,9 @@ class ProductWithId extends React.Component {
               <div className="header-wrapper">
                 <h2>
                   <span><img src={productWhite}/></span>{product.name}</h2>
-                <div className="yellow-line"></div>
+                <div className="yellow-line"></div> <p className="product-category">{productCategory}</p>
               </div>
-              <p>{product.description}
-              </p>
+              <p>{product.description}</p>
             </div>
           </Sidebar>
           <div className="center-content">
@@ -127,35 +138,42 @@ class ProductWithId extends React.Component {
         <div className="filter-wrapper">
           <div className="filter">
             <label className="label radio-label">
-              <input className="radio" onChange={this.handleOptionChange.bind(this, "exports")} type="radio" value="exports" checked={this.state.selectedOption === "exports"}/>
-              <p>Exports</p>
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "export")} type="radio" value="export" checked={this.state.selectedTrade === "export"}/>
+              <p>export</p>
             </label>
             <label className="label radio-label">
-              <input className="radio" onChange={this.handleOptionChange.bind(this, "imports")} type="radio" value="imports" checked={this.state.selectedOption === "imports"}/>
-              <p>Imports</p>
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "import")} type="radio" value="import" checked={this.state.selectedTrade === "import"}/>
+              <p>import</p>
             </label>
           </div>
           <div className="filter">
-            <div className="label">
+            <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            <CountryDropdown select={this.selectCountry} selected={this.state.country.name} items={countries}/>
+            <CountryDropdown select={this.selectCountry} selected={this.state.selectedCountry.name} items={countries}/>
           </div>
-          <button className="go">Go</button>
+          <button onClick={this.setFilters} className="go">Go</button>
         </div>
         <div>
-          {trades
-            ? <div className="result-wrapper">
-                {trades.map((trade, index) => {
-                  const content = trade.Company;
-                  content.profile_type = "company";
-                  if (trade.trade_flow === this.state.selectedOption && (this.state.country.name === "all" || this.state.country.id === trade.country_id)) {
-                    return <Card key={index} content={content}/>;
-                  } else {
-                    return null;
-                  }
-                })}</div>
-            : null}
+          <div className="result-wrapper-outer">
+            <h2>{`Companies that ${this.state.tradeFilter} ${this.props.product.name} ${this.state.countryFilter.name === "all"
+                ? ""
+                : `from ${this.state.countryFilter.name}`}`}</h2>
+
+            {trades
+              ? <div className="result-wrapper">
+                  {trades.map((trade, index) => {
+                    const content = trade.Company;
+                    content.profile_type = "company";
+                    if (trade.trade_flow === `${this.state.tradeFilter}s` && (this.state.countryFilter.name === "all" || this.state.countryFilter.id === trade.country_id)) {
+                      return <Card key={index} content={content}/>;
+                    } else {
+                      return null;
+                    }
+                  })}
+                </div>
+              : null}
+          </div>
         </div>
       </div>
     );
@@ -172,6 +190,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchTradesByProduct: id => {
       dispatch(fetchTradesByProduct(id));
+    },
+    fetchProducts: () => {
+      dispatch(fetchProducts());
     }
   };
 };
@@ -186,7 +207,9 @@ const mapStateToProps = state => {
     countriesError: state.countries.error,
     trades: state.trades.trades,
     tradesLoading: state.trades.loading,
-    tradesError: state.trades.error
+    tradesError: state.trades.error,
+    products: state.products.products,
+    productsLoading: state.products.loading
   };
 };
 

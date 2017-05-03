@@ -13,13 +13,6 @@ function receiveSearch(json) {
   };
 }
 
-export function toggleSearch() {
-  console.log("sheaf")
-  return {
-    type: "TOGGLE_SEARCH"
-  };
-}
-
 export function setSearch(json) {
   return {
     type: "SET_SEARCH",

@@ -13,7 +13,7 @@ class NavBar extends React.Component {
 
     browserHistory.listen(location => {
       if (this.props.searchActive) {
-        this.props.activateSearch();
+        this.props.activateSearch(false);
       }
     });
   }

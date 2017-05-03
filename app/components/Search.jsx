@@ -1,5 +1,6 @@
 import React from "react";
 import {fetchSearch} from "../actions/searchActions";
+import {fetchProducts} from "../actions/productsActions";
 import {connect} from "react-redux";
 import {Card} from "./Card.jsx";
 import countryBlack from "../img/icons/icon-country-black.svg";
@@ -53,13 +54,11 @@ class Search extends React.Component {
     this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
   }
 
-  componentWillMount = () => {
+  componentDidMount() {
+    this.props.fetchProducts();
     if (this.props.keyword) {
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
-  }
-
-  componentDidMount() {
     this.refs.search.focus();
   }
 
@@ -68,7 +67,7 @@ class Search extends React.Component {
     if (results.length > 0) {
       return (
         <div className="result-wrapper">
-          {results.map(result => <Card key={result.id} content={result} />)}
+          {results.map(result => <Card products={this.props.products} key={result.id} content={result} />)}
         </div>
       );
     }
@@ -78,6 +77,14 @@ class Search extends React.Component {
   }
 
   render() {
+
+    if (!this.props.products) {
+      return (
+        <div className="content-wrapper overlay">
+          <div>loading...</div>
+        </div>
+      );
+    }
     return (
       <div className="content-wrapper overlay">
         <div className="overlay-inner">
@@ -129,7 +136,7 @@ class Search extends React.Component {
                       ? <img src={transportYellow}/>
                       : <img src={transportBlack}/>}
                   </div>
-                  <div className="filter-icon-wrapper">
+                  <div onClick={this.selectFilter.bind(this, "All")} className="filter-icon-wrapper">
                     <p className={this.state.filter === "All"
                       ? "selected"
                       : null}>all</p>
@@ -151,6 +158,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchSearch: (query, filter) => {
       dispatch(fetchSearch(query, filter));
+    },
+    fetchProducts: () => {
+      dispatch(fetchProducts());
     }
   };
 };
@@ -161,7 +171,8 @@ const mapStateToProps = state => {
     loading: state.search.loading,
     error: state.search.error,
     keyword: state.search.keyword,
-    filter: state.search.filter
+    filter: state.search.filter,
+    products: state.products.products
   };
 };
 

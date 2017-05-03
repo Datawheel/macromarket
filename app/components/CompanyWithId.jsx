@@ -14,6 +14,8 @@ import {browserHistory} from "react-router";
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
+
+    // determines if component needs to fetch new data for random company
     this.shouldUpdate = false;
     browserHistory.listen(location => {
       this.shouldUpdate = true;
@@ -25,6 +27,7 @@ class CompanyWithId extends React.Component {
     this.props.fetchCompany(id);
     this.props.fetchTradesByCompany(id);
   }
+
 
   componentWillUpdate() {
     if (this.shouldUpdate) {
@@ -40,7 +43,7 @@ class CompanyWithId extends React.Component {
     const {company, loading, error, trades} = this.props;
     if (loading || !company) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <div>loading...</div>
         </div>
       );
@@ -48,7 +51,7 @@ class CompanyWithId extends React.Component {
 
     if (error) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
         </div>
@@ -209,7 +212,7 @@ const mapStateToProps = state => {
     company: state.companyProfile.company,
     loading: state.companyProfile.loading,
     error: state.companyProfile.error || null,
-    trades: state.trades.trades,
+    trades: state.trades.profileTrades,
     tradesLoading: state.trades.loading,
     tradesError: state.trades.error
   };

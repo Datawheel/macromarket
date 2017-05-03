@@ -20,6 +20,19 @@ function tradesError(json) {
   };
 }
 
+function requestProfileTrades() {
+  return {
+    type: "PROFILE_TRADES_PENDING"
+  };
+}
+
+function receiveProfileTrades(json) {
+  return {
+    type: "PROFILE_TRADES_FULFILLED",
+    data: json
+  };
+}
+
 function requestSettingsTrades() {
   return {
     type: "SETTINGS_TRADES_PENDING"
@@ -151,7 +164,7 @@ export function fetchTradesByProduct(id) {
 
 export function fetchTradesByCompany(id) {
   return function(dispatch) {
-    dispatch(requestTrades());
+    dispatch(requestProfileTrades());
     return axios.get(`/api/tradesByCompany/${id}`)
       .then(response => {
         const json = {
@@ -174,7 +187,7 @@ export function fetchTradesByCompany(id) {
           }
         });
 
-        dispatch(receiveTrades(json));
+        dispatch(receiveProfileTrades(json));
 
       })
       .catch(response => {

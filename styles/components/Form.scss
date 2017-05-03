@@ -87,6 +87,17 @@
         border: 1px solid $accent-color;
     }
 
+    .error-wrapper {
+        height: 25px;
+
+        p {
+            margin: 0;
+            padding-top: 20px;
+            color: red;
+            font-size: 13px;
+        }
+    }
+
     .listing-button {
         width: 22%;
         max-width: none;
@@ -233,6 +244,7 @@
         }
     }
 
+
     .product-selection {
         background: #fff;
         height: 325px;
@@ -252,6 +264,8 @@
 
         .product {
             position: relative;
+            overflow: hidden;
+            cursor: pointer;
         }
 
         .product-id p,
@@ -274,7 +288,7 @@
 
         .product-id {
             padding: 3px;
-            width: 35px;
+            width: 40px;
             position: absolute;
             height: 100%;
             background: #EBF6AD;
@@ -292,6 +306,11 @@
         }
     }
 
+    .categories-selection {
+      .product-name {
+        width: 85%;
+      }
+    }
     .country-selection-wrapper {
         padding: 20px 0;
 

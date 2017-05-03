@@ -76,6 +76,7 @@
                 position: relative;
                 padding: 5px 2px;
                 width: 40px;
+                cursor: pointer;
                 border-left: 1px solid $light-grey;
                 color: black;
                 display: inline-block;
@@ -104,7 +105,7 @@
 .result-wrapper {
     @include flexbox;
     @include flex-wrap(wrap);
-    padding: 75px 5%;
+    padding: 55px 5%;
     min-height: 300px;
 
     .card {

@@ -17,12 +17,14 @@ class TradeSelection extends React.Component {
       importsToSave: [],
       tradesToSave: [],
       tradesToDelete: [],
+      importError: null,
+      exportError: null,
       saved: false
     };
   }
 
   componentWillMount() {
-    window.scrollTo(0, 0);
+
     if (this.props.companyId) {
       this.props.fetchTradesForSettings(this.props.companyId);
     }
@@ -43,22 +45,33 @@ class TradeSelection extends React.Component {
     this.props.nextSlide();
     if (tradesToSave.length !== 0 || allTradesToDelete.length !== 0) {
       this.props.saveTrades(tradesToSave, allTradesToDelete);
-    } else {
+    }
+    else {
       this.setState({saved: true});
     }
   }
 
   addProduct = product => {
     if (product.trade_flow === "exports") {
-      this.setState(state => {
-        state.exportsToSave = state.exportsToSave.concat([product]);
-        return state;
-      });
-    } else {
-      this.setState(state => {
-        state.importsToSave = state.importsToSave.concat([product]);
-        return state;
-      });
+      if (Object.keys(this.getProducts(this.props.trades, "exports")).length < 5) {
+        this.setState(state => {
+          state.exportsToSave = state.exportsToSave.concat([product]);
+          return state;
+        });
+      }
+      else {
+        this.setState({exportError: "You can only select 5 products to export"})
+      }
+    }
+    else {
+      if (Object.keys(this.getProducts(this.props.trades, "imports")).length < 5) {
+        this.setState(state => {
+          state.importsToSave = state.importsToSave.concat([product]);
+          return state;
+        });
+      } else {
+        this.setState({importError: "You can only select 5 products to import"})
+      }
     }
   }
 
@@ -84,11 +97,17 @@ class TradeSelection extends React.Component {
         found = true;
         break;
       }
-    }
+    };
     return found;
   }
 
   deleteProduct = product => {
+    if(product.trade_flow === "exports") {
+      this.setState({exportError: null});
+    }
+    if(product.trade_flow === "imports") {
+      this.setState({importError: null});
+    }
     if (!product.newProduct) {
       this.setState(state => {
         state.productsToDelete = state.productsToDelete.concat([
@@ -154,7 +173,8 @@ class TradeSelection extends React.Component {
             trade_flow: trade.trade_flow,
             countries
           };
-        } else {
+        }
+        else {
           products[trade.product_id].countries.push({trade_flow: tradeFlow, trade_id: trade.id, country: trade.Country});
         }
       }
@@ -163,11 +183,14 @@ class TradeSelection extends React.Component {
   }
 
   render() {
-    const {trades, loading, error} = this.props;
-    if (loading || !trades) {
+    const {trades, error} = this.props;
+    console.log(trades);
+    if (!trades) {
       return (
         <div className="detailed-content-wrapper">
-          <div>loading...</div>
+          <div className="title-wrapper">Product Selection</div>
+          <div className="form">
+          <div>loading...</div></div>
         </div>
       );
     }
@@ -181,7 +204,10 @@ class TradeSelection extends React.Component {
       );
     }
 
+    console.log("heeeeer");
+
     const exports = this.getProducts(this.props.trades, "exports");
+
     const imports = this.getProducts(this.props.trades, "imports");
 
     return (
@@ -193,10 +219,13 @@ class TradeSelection extends React.Component {
                 <b>Products | Import</b>
                 <p className="description">Select a maximum of 5 products.</p>
                 <ProductSelection tradeFlow={"imports"} addProduct={this.addProduct} deleteProduct={this.deleteProduct} selectedProducts={imports}/>
+                <div className="error-wrapper">{this.state.importError
+                  ? <p>{this.state.importError}</p>
+                  : null}</div>
                 <div className="selected-products-wrapper">
                   {Object.keys(imports).map((product, index) => {
                     return (
-                      <div className="selected-product-wrapper" key={index}>
+                      <div key={index} className="selected-product-wrapper" >
                         <div>
                           <span>{imports[product].product_name}</span>
                           <div className="delete" onClick={this.deleteProduct.bind(this, imports[product])}></div>
@@ -208,6 +237,9 @@ class TradeSelection extends React.Component {
                 <b>Products | Exports</b>
                 <p className="description">Select a maximum of 5 products.</p>
                 <ProductSelection tradeFlow={"exports"} addProduct={this.addProduct} deleteProduct={this.deleteProduct} selectedProducts={exports}/>
+                <div className="error-wrapper">{this.state.exportError
+                  ? <p>{this.state.exportError}</p>
+                  : null}</div>
                 <div className="selected-products-wrapper">
                   {Object.keys(exports).map((product, index) => {
                     return (
