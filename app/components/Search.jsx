@@ -3,6 +3,7 @@ import {fetchSearch} from "../actions/searchActions";
 import {fetchProducts} from "../actions/productsActions";
 import {connect} from "react-redux";
 import {Card} from "./Card.jsx";
+import "./Search.css";
 
 class Search extends React.Component {
   constructor(props) {
@@ -30,8 +31,7 @@ class Search extends React.Component {
     // clear the results but submitting an empty string
     if (event.target.value.length > 2) {
       this.props.fetchSearch(event.target.value, this.state.filter.toLowerCase());
-    }
-    else {
+    } else {
       this.props.fetchSearch("", this.state.filter.toLowerCase());
     }
   }
@@ -50,7 +50,6 @@ class Search extends React.Component {
     if (this.props.keyword) {
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
-    this.refs.search.focus();
   }
 
   displayResults = () => {
@@ -58,31 +57,32 @@ class Search extends React.Component {
     if (results.length > 0) {
       return (
         <div className="result-wrapper">
-          {results.map(result => <Card products={this.props.products} key={result.id} content={result} />)}
+          {results.map(result => <Card products={this.props.products} key={result.id} content={result}/>)}
         </div>
       );
-    }
-    else {
-      return (<p>No results.</p>);
+    } else {
+      return (
+        <p>No results.</p>
+      );
     }
   }
 
   render() {
 
-    if (!this.props.products) {
-      return (
-        <div className="content-wrapper overlay">
-          <div>loading...</div>
-        </div>
-      );
-    }
+    // if (!this.props.products) {
+    //   return (
+    //     <div className="content-wrapper overlay">
+    //       <div>loading...</div>
+    //     </div>
+    //   );
+    // }
     return (
       <div className="content-wrapper overlay">
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
               <input ref="search" placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
-              <img onClick={this.search} className="search-icon" src="/images/icons/icon-search-white.svg" />
+              <img onClick={this.search} className="search-icon" src="/images/icons/icon-search-white.svg"/>
               <div className="filter-wrapper">
                 <p className="label">FILTER</p>
                 <div className="filter-icons-wrapper">
@@ -93,9 +93,9 @@ class Search extends React.Component {
                       <p>place</p>
                     </div>
                     {this.state.filter === "Country"
-                      ? <img src={countryYellow}/>
-                      : <img src={countryBlack}/>
-                    }
+                      ? <img src="/images/icons/icon-country-yellow.svg"/>
+                      : <img src="/images/icons/icon-country-black.svg"/>
+}
                   </div>
                   <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Product")} onClick={this.selectFilter.bind(this, "Product")} className="filter-icon-wrapper">
                     <div className={this.state.hover === "Product"
@@ -104,8 +104,8 @@ class Search extends React.Component {
                       <p>product</p>
                     </div>
                     {this.state.filter === "Product"
-                      ? <img src="/images/icons/icon-product-yellow.svg" />
-                      : <img src="/images/icons/icon-product-black.svg" />}
+                      ? <img src="/images/icons/icon-product-yellow.svg"/>
+                      : <img src="/images/icons/icon-product-black.svg"/>}
                   </div>
                   <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Company")} onClick={this.selectFilter.bind(this, "Company")} className="filter-icon-wrapper">
                     <div className={this.state.hover === "Company"
@@ -114,8 +114,8 @@ class Search extends React.Component {
                       <p>company</p>
                     </div>
                     {this.state.filter === "Company"
-                      ? <img src="/images/icons/icon-country-yellow.svg" />
-                      : <img src="/images/icons/icon-country-black.svg" />}
+                      ? <img src="/images/icons/icon-company-yellow.svg"/>
+                      : <img src="/images/icons/icon-company-black.svg"/>}
                   </div>
                   <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Transport")} onClick={this.selectFilter.bind(this, "Transport")} className="filter-icon-wrapper">
                     <div className={this.state.hover === "Transport"
@@ -124,8 +124,8 @@ class Search extends React.Component {
                       <p>transportation</p>
                     </div>
                     {this.state.filter === "Transport"
-                      ? <img src="/images/icons/icon-transport-yellow.svg" />
-                      : <img src="/images/icons/icon-transport-black.svg" />}
+                      ? <img src="/images/icons/icon-transport-yellow.svg"/>
+                      : <img src="/images/icons/icon-transport-black.svg"/>}
                   </div>
                   <div onClick={this.selectFilter.bind(this, "All")} className="filter-icon-wrapper">
                     <p className={this.state.filter === "All"

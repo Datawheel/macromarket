@@ -1,10 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
-
 import NavBar from "./NavBar.jsx";
 import Search from "./Search.jsx";
 import Footer from "./Footer.jsx";
+import "./App.css";
+
 
 class App extends React.Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router";
+import "./Card.css";
 
 export class Card extends React.Component {
   constructor(props) {
@@ -30,11 +31,12 @@ export class Card extends React.Component {
       const fallbackId = id.substring(0, 2);
 
       img = this.content.flickr_link
-        ? `/img/${this.content.profile_type}/${this.content.id}.jpg`
+        ? `/images/${this.content.profile_type}/${this.content.id}.jpg`
         : this.content.parent_image
-          ? `/img/${this.content.profile_type}/${this.content.id.slice(0, -2)}.jpg`
-          : `/img/${this.content.profile_type}/${fallbackId}.jpg`;
+          ? `/images/${this.content.profile_type}/${this.content.id.slice(0, -2)}.jpg`
+          : `/images/${this.content.profile_type}/${fallbackId}.jpg`;
     }
+
     let productCategory = "";
     if (this.props.products && this.content.profile_type === "product") {
       this.props.products.map(product => {
@@ -82,8 +84,8 @@ export class CardHome extends React.Component {
       const id = this.content.id;
       const fallbackId = id.substring(0, 2);
       img = this.content.flickr_link
-        ? `/img/${this.content.type}/${this.content.id}.jpg`
-        : `/img/${this.content.type}/${fallbackId}.jpg`;
+        ? `/images/${this.content.type}/${this.content.id}.jpg`
+        : `/images/${this.content.type}/${fallbackId}.jpg`;
     }
 
     return (
@@ -95,7 +97,7 @@ export class CardHome extends React.Component {
           <div className="text-wrapper">
             <div className="yellow-line"></div>
             {this.content.type === "country"
-              ? <img className="flag" src={`/img/flags/country_${this.content.id}.png`}/>
+              ? <img className="flag" src={`/images/flags/country_${this.content.id}.png`}/>
               : null}
             <p className="category">
               {this.content.type === "country"

@@ -1,0 +1,115 @@
+@import "../Variables";
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: var(--dark-grey);
+    & .overlay-inner {
+        height: 100%;
+        overflow: scroll;
+    }
+}
+
+.search-container {
+    color: white;
+    text-align: center;
+    & .search-wrapper {
+        padding: 20% 10% 0;
+        & .filter-wrapper, & .search-input {
+            display: inline-block;
+            padding: 0;
+        }
+        & .search-input {
+            background: none;
+            border: none;
+            border-bottom: 1px solid white;
+            color: white;
+            width: 60%;
+            height: 30px;
+        }
+        & .label {
+            display: inline-block;
+            margin: 0 20px;
+        }
+        & .search-icon {
+            margin-left: -12px;
+        }
+        & .tool-tip {
+            border-radius: var(--border-raidus);
+            position: absolute;
+            background: var(--accent-color);
+            padding: 3px 10px;
+            color: white;
+            top: -45px;
+            left: -5px;
+            visibility: hidden;
+        }
+        & .product {
+            left: -15px;
+        }
+        & .company {
+            left: -20px;
+        }
+        & .transport {
+            left: -40px;
+        }
+        & .filter-icons-wrapper {
+            display: inline-block;
+            background: white;
+            border-radius: 10px;
+            & .filter-icon-wrapper {
+                position: relative;
+                padding: 5px 2px;
+                width: 40px;
+                cursor: pointer;
+                border-left: 1px solid var(--light-grey);
+                color: black;
+                display: inline-block;
+                & p {
+                    margin: 0;
+                }
+                & .selected {
+                    color: var(--accent-color);
+                }
+            }
+            & .filter-icon-wrapper:first-child {
+                border: none;
+            }
+            & .filter-icon-wrapper:last-child {
+                vertical-align: top;
+                padding: 9px 0;
+            }
+        }
+    }
+}
+
+.result-wrapper {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    padding: 55px 5%;
+    min-height: 300px;
+    & .card {
+        width: 22%;
+        margin: 10px;
+        height: 275px;
+        & .text-wrapper {
+            position: relative;
+            padding: 40px 15px 10px;
+            & .profile_type_icon {
+                position: absolute;
+                top: 10px;
+            }
+            & .name {
+                color: var(--middle-grey);
+            }
+            & .category {
+                text-transform: none;
+                font-weight: 400;
+            }
+        }
+    }
+}

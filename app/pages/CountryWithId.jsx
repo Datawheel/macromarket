@@ -9,6 +9,7 @@ class CountryWithId extends React.Component {
     super(props);
   }
 
+
   componentWillMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchCountry(id);
@@ -20,7 +21,7 @@ class CountryWithId extends React.Component {
     if (loading || !country) {
       return (
         <div className="detailed-content-wrapper">
-          <div>loading...</div>
+          <div>loading..</div>
         </div>
       );
     }
@@ -67,7 +68,6 @@ class CountryWithId extends React.Component {
       </div>
     );
   }
-
 }
 
 const mapDispatchToProps = dispatch => {
