@@ -1,5 +1,4 @@
-import axios from "axios";
-import receiveCompany from "./companyActions";
+import api from "../api.js";
 
 function requestAuth() {
   return {
@@ -64,12 +63,7 @@ function receiveLogoutError(json) {
 export function authenticate(token) {
   return function(dispatch) {
     dispatch(requestAuth());
-    const config = {
-      headers: {
-        Authorization: `JWT ${token}`
-      }
-    };
-    axios.get("/api/authenticate", config).then(response => {
+    api.get("/api/auth/isAuthenticated").then(response => {
       dispatch(receiveAuth(response.data));
     }, err => {
       dispatch(receiveAuthError(err));
@@ -81,14 +75,13 @@ export function login(email, password) {
   return function(dispatch) {
 
     dispatch(requestLogin());
-    return axios.post("api/login", {
+    return api.post("api/auth/login", {
       email,
       password
     })
     .then(response => {
-      localStorage.setItem("token", response.data.token);
       dispatch(receiveLogin(response.data));
-      authenticate(response.data.token)(dispatch);
+      authenticate()(dispatch);
     })
     .catch(response => {
       dispatch(receiveLoginError(response.data));
@@ -99,12 +92,11 @@ export function login(email, password) {
 export function signup(email, password) {
   return function(dispatch) {
     dispatch(requestLogin());
-    return axios.post("api/signup", {
+    return api.post("api/auth/signup", {
       email,
       password
     })
     .then(response => {
-      localStorage.setItem("token", response.data.token);
       dispatch(receiveLogin(response.data));
       authenticate(response.data.token)(dispatch);
     })
@@ -123,7 +115,7 @@ export function logout(email, password) {
       data: null
     })
     dispatch(requestLogout());
-    return axios.get("api/logout", {
+    return api.get("api/auth/logout", {
       email,
       password
     })

@@ -43,3 +43,8 @@ jspm_packages
 .env
 
 .eslintrc
+
+static/assets
+
+# production build
+/index.js

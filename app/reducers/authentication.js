@@ -1,9 +1,7 @@
-import localForage from "localforage";
-
 export default (state = {
   user: null,
   loading: false,
-  token: localForage.getItem("token"),
+  token: null,
   msg: null,
   error: null
 }, action) => {
@@ -32,7 +30,7 @@ export default (state = {
       return {...state,
         loading: false,
         error: null,
-        user: action.data.user
+        user: action.data
       };
     case "AUTH_REJECTED":
     case "LOG_OUT_REJECTED":
