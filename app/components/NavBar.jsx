@@ -21,19 +21,16 @@ class NavBar extends React.Component {
     //     this.props.activateSearch(false);
     //   }
     // });
-    
+
     this.hideDropDown = this.hideDropDown.bind(this);
   }
+
   componentDidMount() {
     if (this.props.token) {
       this.props.authenticateAndFetchCompany(this.props.token);
     }
     // Hide dropdown block on click outside the block
     window.addEventListener("click", this.hideDropDown, false);
-  }
-
-  componentDidUnmount() {
-    window.removeEventListener("click", this.hideDropDown, false);
   }
 
   hideDropDown = e => {

@@ -34,13 +34,13 @@
         margin: 40px 0;
     }
     & .grid-wrapper {
+        padding: 25px 0;
         & h3 {
-            color: $light-grey;
+            color: var(--light-grey);
             text-transform: uppercase;
             font-size: 14px;
             text-align: center;
         }
-        padding: 25px 0;
         & .row {
             display: inline-block;
             width: 33%;
@@ -48,10 +48,10 @@
         }
     }
     & .dropdown-item {
-        color: $light-grey;
+        color: var(--light-grey);
         font-size: 12px;
         padding: 8px;
-        font-family: $libreFranklin;
+        font-family: var(--libreFranklin);
     }
     & .content-wrapper {
         width: 80%;
@@ -62,10 +62,10 @@
         & .search-wrapper {
             background-color: white;
             border: 1px solid white;
-            border-radius: $border-raidus;
+            border-radius: var(--border-raidus);
             display: inline-block;
             width: 84%;
-            font-family: $libreFranklin;
+            font-family: var(--libreFranklin);
             font-weight: 300;
         }
         & .Select, & .search-button, & .search-input, & .search-input-wrapper, & .selected-wrapper {
@@ -77,10 +77,13 @@
         }
         & .Select {
             width: 25%;
+            right: -3px;
             border-left: 1px solid var(--light-grey);
             color: var(--middle-grey);
             & .Select-control {
                 height: 60px;
+                cursor: pointer;
+                box-shadow: none;
                 border: none;
                 & .Select-value-label {
                     position: absolute;
@@ -89,6 +92,12 @@
                 }
             }
         }
+
+        & .Select-menu-outer {
+            width: 100%;
+            border: 1px solid #fff;
+        }
+
         & .search-input-wrapper {
             position: relative;
             margin: 0 -1px;
@@ -98,9 +107,10 @@
                 background: none;
                 width: 100%;
                 margin-left: 10px;
-                color: $middle-grey;
+                color: var(--middle-grey);
             }
         }
+
         & .filter-dropdown-container {
             & .selected-wrapper {
                 height: 60px;
@@ -119,22 +129,25 @@
                 }
             }
         }
+
         & ul {
-            border-top: 1px solid $light-grey;
+            border-top: 1px solid var(--light-grey);
             padding: 10px 0;
             z-index: 10;
             height: 200px;
         }
+
         & ul.suggestions-wrapper {
             height: 300px;
             overflow: scroll;
         }
+
         & .search-button {
             width: 15%;
             background-color: black;
             color: white;
             text-transform: uppercase;
-            border-radius: $border-raidus;
+            border-radius: var(--border-raidus);
         }
         & .suggestions-wrapper {
             background: white;
@@ -156,7 +169,9 @@
             }
         }
     }
+
     & .cta-buttons-wrapper {
+        cursor: pointer;
         margin-top: 65px;
         margin-right: 2%;
         display: -webkit-box;
@@ -166,14 +181,20 @@
         flex-wrap: wrap;
         & .cta-button {
             border: 1px solid var(--accent-color);
-            border-radius: $border-raidus;
+            border-radius: var(--border-raidus);
             width: 31%;
             margin-left: 2%;
             background-color: var(--accent-color);
             & .text-wrapper {
                 position: relative;
                 padding: 10% 0;
-                font-size: 12px;
+                    height: 60px;
+                & h2  {
+                  font-size: 16px;
+                }
+                & p {
+                    font-size: 14px;
+                }
                 & .chevron {
                     right: 10%;
                 }
@@ -194,9 +215,9 @@
                     width: 50%;
                 }
                 & .chevron:before {
-                    height: 1em;
-                    width: 1em;
-                    border-width: 0.15em 0.15em 0 0;
+                    height: .9em;
+                    width: .9em;
+                    border-width: 0.13em 0.13em 0 0;
                 }
                 & h2, & p {
                     margin: 5px;

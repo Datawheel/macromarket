@@ -1,6 +1,12 @@
+
+@import "../Variables";
+@import 'react-select/dist/react-select.css';
 body {
     margin: 0;
+    font-family: var(--libreFranklin);
 }
+
+
 
 .main-content {
     padding-top: 90px;
@@ -10,7 +16,6 @@ body {
 .dropdown-list {
     display: none;
 }
-
 .hide {
     display: none;
 }
@@ -81,7 +86,7 @@ ul {
 
 .arrow-box {
     position: relative;
-    background: $accent-color;
+    background: var(--accent-color);
 }
 
 .arrow-box:after {
@@ -94,7 +99,7 @@ ul {
     position: absolute;
     pointer-events: none;
     border-color: rgba(136, 183, 213, 0);
-    border-top-color: $accent-color;
+    border-top-color: var(--accent-color);
     border-width: 8px;
     margin-left: -8px;
 }
@@ -105,8 +110,9 @@ ul {
 
 input,
 p {
-    font-family: $libreFranklin;
+    font-family: var(--libreFranklin);
     font-weight: 300;
+        font-size: 16px;
 }
 
 a {
@@ -115,8 +121,8 @@ a {
 
 button {
     cursor: pointer;
-    border-radius: $border-raidus;
-    font-family: $libreFranklin;
+    border-radius: var(--border-raidus);
+    font-family: var(--libreFranklin);
 }
 
 

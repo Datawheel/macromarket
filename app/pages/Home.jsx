@@ -8,17 +8,15 @@ import {CardHome} from "../components/Card.jsx";
 import "./Home.css"
 import Select from 'react-select';
 
-// Be sure to include styles at some point, probably during your bootstrapping
-import 'react-select/dist/react-select.css';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: [
-        "All", "Country", "Product", "Company", "Transporter"
-      ],
-      selected: "All",
+      selected: {
+        value: 'all',
+        label: 'All'
+      },
       keyword: "",
       suggestions: [],
       suggestionsVisible: true,
@@ -30,10 +28,6 @@ class Home extends React.Component {
     this.props.fetchCountries();
     this.props.fetchProductsForSearch();
     this.props.fetchCompanies();
-  }
-
-  selectDropDown = item => {
-    this.setState({selected: item});
   }
 
   handleChange = e => {
@@ -58,8 +52,9 @@ class Home extends React.Component {
         if (company.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
           suggestions.push({type: "Company", name: company.name});
         }
-      })
+      });
     }
+
     suggestions.sort(function(name1, name2) {
       const a = name1.name.toLowerCase();
       const b = name2.name.toLowerCase();
@@ -86,8 +81,8 @@ class Home extends React.Component {
     this.setState({active: button});
   }
 
-  logChange = (val) => {
-    console.log("Selected: " + val.value);
+  selectDropDown = item => {
+    this.setState({selected: item.value});
   }
 
   arrowRenderer = () => {
@@ -100,11 +95,18 @@ class Home extends React.Component {
 
     var options = [
       {
-        value: 'one',
-        label: 'One'
+        value: 'all',
+        label: 'All'
       }, {
-        value: 'two',
-        label: 'Two'
+        value: 'companies',
+        label: 'Companies'
+      }, {
+        value: 'countries',
+        label: 'Countries'
+      }
+      , {
+        value: 'products',
+        label: 'Products'
       }
     ];
 
@@ -136,7 +138,7 @@ class Home extends React.Component {
                     })}
                   </ul>
                 : null}</div>
-              <Select arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value="one" options={options} onChange={this.logChange}/>
+              <Select arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected} options={options} onChange={this.selectDropDown}/>
           </div>
           <button onClick={this.search} className="search-button">Search</button >
           <div className="cta-buttons-wrapper">
