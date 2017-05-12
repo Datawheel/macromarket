@@ -1,0 +1,90 @@
+.company {
+    & .sidebar {
+        min-height: 100vh;
+        background: var(--middle-blue);
+    }
+}
+
+.detailed-content-wrapper.product {
+    & .sidebar-wrapper {
+        background: var(--dark-blue);
+    }
+    .profile-info {
+        & .yellow-line {
+            border-bottom: 4px solid var(--accent-color);
+            width: 10%;
+            max-width: 20px;
+            padding-top: 3px;
+            display: inline-block;
+        }
+        & .product-category {
+            margin: 0;
+            color: var(--accent-color);
+            display: inline-block;
+            padding-left: 5px;
+            vertical-align: bottom;
+            font-size: 13px;
+        }
+    }
+    & h2 {
+        padding-top: 30px;
+        & img {
+            padding-right: 10px;
+            width: 20px;
+            vertical-align: top;
+        }
+    }
+}
+
+.sidebar-wrapper {
+    display: inline-block;
+    width: 27%;
+    vertical-align: top;
+    & .sidebar-inner {
+        & .profile-image-wrapper {
+            width: 200px;
+            margin: 0 auto;
+            height: 200px;
+            padding: 30px 0;
+        }
+        & .profile-info {
+            padding: 0 40px;
+            height: 442px;
+            color: white;
+        }
+        & .icon {
+            width: 25px;
+            padding: 10px;
+        }
+        & h3 {
+            display: inline-block;
+            vertical-align: text-bottom;
+        }
+        & button {
+            color: white;
+            border: 1px solid white;
+            background: black;
+            padding: 15px 10%;
+            margin: 30px 0;
+        }
+    }
+    & .section-wrapper {
+        position: relative;
+        padding-bottom: 30px;
+        & .yellow-line {
+            position: absolute;
+            background: var(--accent-color);
+            width: 15px;
+            top: 18px;
+            height: 5px;
+        }
+    }
+    & .products {
+        color: white;
+        padding: 40px;
+        & a {
+            display: block;
+            color: white;
+        }
+    }
+}

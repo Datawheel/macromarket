@@ -1,12 +1,9 @@
-
 @import "../Variables";
 @import 'react-select/dist/react-select.css';
 body {
     margin: 0;
     font-family: var(--libreFranklin);
 }
-
-
 
 .main-content {
     padding-top: 90px;
@@ -16,6 +13,7 @@ body {
 .dropdown-list {
     display: none;
 }
+
 .hide {
     display: none;
 }
@@ -108,11 +106,31 @@ ul {
     visibility: visible!important;
 }
 
-input,
-p {
+.Select, .Select-control {
+    box-shadow: none !important;
+    border: none;
+}
+
+.Select {
+    background: white;
+    font-family: var(--libreFranklin);
+    color: var(--input-text);
+    font-weight: 300;
+    text-align: left;
+    & input {
+        color: var(--input-text);
+    }
+}
+
+.Select-menu-outer {
+    border-top: 1px solid var(--light-grey);
+    border-radius: 0px;
+}
+
+input, p {
     font-family: var(--libreFranklin);
     font-weight: 300;
-        font-size: 16px;
+    font-size: 16px;
 }
 
 a {
@@ -125,28 +143,24 @@ button {
     font-family: var(--libreFranklin);
 }
 
-
 .colored-wrapper {
     display: inline-block;
     vertical-align: top;
     height: 32px;
     width: 100%;
     position: relative;
-
     & .category-name {
         margin-left: 40px;
         padding: 0;
         color: white;
         font-size: 12px;
     }
-
     & .darker-color {
         @include filter(brightness, 80%) position: absolute;
         height: 100%;
         width: 100%;
         top: 0;
     }
-
     & p {
         margin: 0;
         position: absolute;
@@ -167,8 +181,7 @@ button {
     position: relative;
     text-align: center;
     display: inline-block;
-
-  & img {
+    & img {
         position: absolute;
         top: 50%;
         left: 10%;

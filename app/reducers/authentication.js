@@ -1,7 +1,6 @@
 export default (state = {
   user: null,
   loading: false,
-  token: null,
   msg: null,
   error: null
 }, action) => {
@@ -20,10 +19,11 @@ export default (state = {
       };
     case "SIGN_UP_FULFILLED":
     case "LOG_IN_FULFILLED":
+    console.log(action.data, "LOG IN REDUCER");
       return {...state,
         loading: false,
         error: null,
-        token: action.data.token
+        user: action.data
       };
 
     case "AUTH_FULFILLED":
@@ -38,7 +38,6 @@ export default (state = {
     case "LOG_IN_REJECTED":
       return {... state,
         loading: false,
-        token: null,
         user: null,
         error: action.data.message
       };
@@ -48,7 +47,6 @@ export default (state = {
         loading: false,
         error: null,
         msg: action.data,
-        token: null,
         user: null
       };
     default:

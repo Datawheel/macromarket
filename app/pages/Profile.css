@@ -1,0 +1,38 @@
+.profile {
+    padding: 50px 10%;
+    height: 100%;
+    background: var(--dark-grey);
+    color: #fff;
+    & .inner-content {
+        padding: 20px;
+        & h3 {
+            margin: 0;
+        }
+        & li {
+            color: #fff;
+            font-weight: 400;
+        }
+    }
+    .form {
+        margin-top: 40px;
+        padding-top: 50px;
+        height: 500px;
+        background: #EBEBEB;
+        & .button-back {
+            background: black;
+            border: 1px solid black;
+            color: white;
+            padding: 7px 25px;
+            margin: 25px 10px;
+        }
+        & h3 {
+            padding-bottom: 20px;
+        }
+        & .input-wrapper label, & h3 {
+            color: var(--input-text);
+        }
+        & .input-wrapper {
+            width: 60%;
+        }
+    }
+}

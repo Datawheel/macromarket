@@ -9,6 +9,7 @@ import "./Home.css"
 import Select from 'react-select';
 
 
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -82,7 +83,8 @@ class Home extends React.Component {
   }
 
   selectDropDown = item => {
-    this.setState({selected: item.value});
+    console.log(item);
+    this.setState({selected: item});
   }
 
   arrowRenderer = () => {
@@ -138,7 +140,7 @@ class Home extends React.Component {
                     })}
                   </ul>
                 : null}</div>
-              <Select arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected} options={options} onChange={this.selectDropDown}/>
+              <Select arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
           </div>
           <button onClick={this.search} className="search-button">Search</button >
           <div className="cta-buttons-wrapper">

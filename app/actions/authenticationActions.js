@@ -64,7 +64,12 @@ export function authenticate(token) {
   return function(dispatch) {
     dispatch(requestAuth());
     api.get("/api/auth/isAuthenticated").then(response => {
-      dispatch(receiveAuth(response.data));
+      console.log(response.data, "HDHDHDHDH");
+      if (response.data.msg) {
+        dispatch(receiveAuthError(response.data.msg));
+      } else {
+        dispatch(receiveAuth(response.data));
+      }
     }, err => {
       dispatch(receiveAuthError(err));
     });
@@ -73,19 +78,26 @@ export function authenticate(token) {
 
 export function login(email, password) {
   return function(dispatch) {
+    const config = {
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      }
+    }
 
     dispatch(requestLogin());
     return api.post("api/auth/login", {
-      email,
-      password
-    })
-    .then(response => {
-      dispatch(receiveLogin(response.data));
-      authenticate()(dispatch);
-    })
-    .catch(response => {
-      dispatch(receiveLoginError(response.data));
-    });
+        email,
+        password
+      }, config)
+      .then(response => {
+        console.log(response.data, "LOGIN");
+        dispatch(receiveLogin(response.data));
+        // authenticate()(dispatch);
+      })
+      .catch(response => {
+        console.log(response.data, "LOGIN ERRROR");
+        dispatch(receiveLoginError(response.data));
+      });
   };
 }
 
@@ -93,17 +105,17 @@ export function signup(email, password) {
   return function(dispatch) {
     dispatch(requestLogin());
     return api.post("api/auth/signup", {
-      email,
-      password
-    })
-    .then(response => {
-      dispatch(receiveLogin(response.data));
-      authenticate(response.data.token)(dispatch);
-    })
-    .catch(response => {
-      console.log(response.response.data.message);
-      dispatch(receiveLoginError(response.response.data));
-    });
+        email,
+        password
+      })
+      .then(response => {
+        dispatch(receiveLogin(response.data));
+        // authenticate(response.data.token)(dispatch);
+      })
+      .catch(response => {
+        console.log(response.response.data.message);
+        dispatch(receiveLoginError(response.response.data));
+      });
   };
 }
 
@@ -116,14 +128,14 @@ export function logout(email, password) {
     })
     dispatch(requestLogout());
     return api.get("api/auth/logout", {
-      email,
-      password
-    })
-    .then(response => {
-      dispatch(receiveLogout(response.data));
-    })
-    .catch(response => {
-      dispatch(receiveLogoutError(response.data));
-    });
+        email,
+        password
+      })
+      .then(response => {
+        dispatch(receiveLogout(response.data));
+      })
+      .catch(response => {
+        dispatch(receiveLogoutError(response.data));
+      });
   };
 }

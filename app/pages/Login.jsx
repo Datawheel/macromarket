@@ -14,20 +14,17 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
-    const {token} = this.props;
-    if (token) {
-      this.props.authenticate(this.props.token);
-    }
+    // this.props.authenticate();
   }
 
   componentDidUpdate() {
-    const {token, user} = this.props;
-    if (user) {
-      browserHistory.push("/profile");
-    }
-    if (token) {
-      this.props.authenticate(this.props.token);
-    }
+    // const {token, user} = this.props;
+    // if (user) {
+    //   browserHistory.push("/profile");
+    // }
+    // if (token) {
+    //   this.props.authenticate(this.props.token);
+    // }
   }
 
   handlePasswordChange = event => {
@@ -56,7 +53,9 @@ class Login extends React.Component {
 
     return (
       <div>
-        { error ? <div className="err">error</div> : null }
+        {error
+          ? <div className="err">error</div>
+          : null}
         <h2>login</h2>
         <div className="login-form-wrapper">
           <form>

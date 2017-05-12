@@ -26,11 +26,11 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.token) {
-      this.props.authenticateAndFetchCompany(this.props.token);
-    }
+    // if (this.props.token) {
+    //   this.props.authenticateAndFetchCompany(this.props.token);
+    // }
     // Hide dropdown block on click outside the block
-    window.addEventListener("click", this.hideDropDown, false);
+    // window.addEventListener("click", this.hideDropDown, false);
   }
 
   hideDropDown = e => {
@@ -59,7 +59,7 @@ class NavBar extends React.Component {
           <li onClick={this.props.logout}>Log out</li>
         </ul>
       </div>
-    )
+    );
   }
 
   render() {
