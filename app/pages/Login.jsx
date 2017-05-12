@@ -1,3 +1,4 @@
+import api from "../api.js";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
@@ -15,6 +16,14 @@ class Login extends React.Component {
 
   componentWillMount() {
     // this.props.authenticate();
+  }
+
+  componentDidMount() {
+    api.get("/api/auth/isAuthenticated").then(response => {
+      console.log("/api/auth/isAuthenticated", response.data);
+    }, err => {
+      console.log("ERROR!", err);
+    });
   }
 
   componentDidUpdate() {

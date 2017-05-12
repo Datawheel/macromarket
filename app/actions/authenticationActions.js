@@ -78,11 +78,7 @@ export function authenticate(token) {
 
 export function login(email, password) {
   return function(dispatch) {
-    const config = {
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      }
-    }
+    const config = {}
 
     dispatch(requestLogin());
     return api.post("api/auth/login", {
