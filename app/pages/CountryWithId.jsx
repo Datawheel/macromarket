@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {fetchCountry} from '../actions/countryActions';
 import "./Detailed.css";
 import Select from 'react-select';
+import {browserHistory} from "react-router";
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -17,11 +18,24 @@ class CountryWithId extends React.Component {
       },
       companyFilter: null
     };
+    this.shouldUpdate = false;
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
+
   }
 
   componentWillMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchCountry(id);
+  }
+
+  componentWillUpdate() {
+    if (this.shouldUpdate) {
+      const id = this.props.params.countryWithId
+      this.props.fetchCountry(id);
+      this.shouldUpdate = false;
+    }
   }
 
   handleOptionChange = selectedOption => {
