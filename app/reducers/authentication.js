@@ -17,16 +17,9 @@ export default (state = {
         user: null,
         loading: true
       };
+    case "AUTH_FULFILLED":
     case "SIGN_UP_FULFILLED":
     case "LOG_IN_FULFILLED":
-    console.log(action.data, "LOG IN REDUCER");
-      return {...state,
-        loading: false,
-        error: null,
-        user: action.data
-      };
-
-    case "AUTH_FULFILLED":
       return {...state,
         loading: false,
         error: null,
@@ -42,7 +35,6 @@ export default (state = {
         error: action.data.message
       };
     case "LOG_OUT_FULFILLED":
-    console.log("logged out");
       return {... state,
         loading: false,
         error: null,

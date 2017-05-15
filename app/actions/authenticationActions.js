@@ -60,14 +60,14 @@ function receiveLogoutError(json) {
   };
 }
 
-export function authenticate(token) {
+export function isAuthenticated() {
   return function(dispatch) {
     dispatch(requestAuth());
-    api.get("/api/auth/isAuthenticated").then(response => {
-      console.log(response.data, "HDHDHDHDH");
+    api.get("/api/auth/isAuthenticated", {withCredentials: true}).then(response => {
       if (response.data.msg) {
         dispatch(receiveAuthError(response.data.msg));
-      } else {
+      }
+      else {
         dispatch(receiveAuth(response.data));
       }
     }, err => {
@@ -78,13 +78,11 @@ export function authenticate(token) {
 
 export function login(email, password) {
   return function(dispatch) {
-    const config = {}
+    // required for sending receiving cookies
+    const config = {withCredentials: true};
 
     dispatch(requestLogin());
-    return api.post("api/auth/login", {
-        email,
-        password
-      }, config)
+    return api.post("api/auth/login", {email, password}, config)
       .then(response => {
         console.log(response.data, "LOGIN");
         dispatch(receiveLogin(response.data));
@@ -99,11 +97,11 @@ export function login(email, password) {
 
 export function signup(email, password) {
   return function(dispatch) {
+    // required for sending receiving cookies
+    const config = {withCredentials: true};
+
     dispatch(requestLogin());
-    return api.post("api/auth/signup", {
-        email,
-        password
-      })
+    return api.post("api/auth/signup", {email, password}, config)
       .then(response => {
         dispatch(receiveLogin(response.data));
         // authenticate(response.data.token)(dispatch);
@@ -117,16 +115,12 @@ export function signup(email, password) {
 
 export function logout(email, password) {
   return function(dispatch) {
-    localStorage.removeItem("token");
     dispatch({
       type: "COMPANY_FULFILLED",
       data: null
-    })
+    });
     dispatch(requestLogout());
-    return api.get("api/auth/logout", {
-        email,
-        password
-      })
+    return api.get("api/auth/logout", {email, password})
       .then(response => {
         dispatch(receiveLogout(response.data));
       })

@@ -19,11 +19,6 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    api.get("/api/auth/isAuthenticated").then(response => {
-      console.log("/api/auth/isAuthenticated", response.data);
-    }, err => {
-      console.log("ERROR!", err);
-    });
   }
 
   componentDidUpdate() {
@@ -50,12 +45,24 @@ class Login extends React.Component {
   }
 
   render() {
-    const {loading, error} = this.props;
+    const {loading, error, user} = this.props;
 
     if (loading) {
       return (
         <div className="detailed-content-wrapper">
           <div>loading...</div>
+        </div>
+      );
+    }
+
+    if (user) {
+      return (
+        <div>
+          <h2>login</h2>
+          <div className="login-form-wrapper">
+            <h3>Already logged in.</h3>
+            <p>Go to your <a href="/profile">profile</a>.</p>
+          </div>
         </div>
       );
     }
@@ -102,8 +109,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticate: token => {
-      dispatch(authenticate(token));
+    isAuthenticated: () => {
+      dispatch(isAuthenticated());
     },
     login: (email, password) => {
       dispatch(login(email, password));
