@@ -211,8 +211,7 @@
     }
     & .Select-menu-outer {
         border: none;
-        z-index: 1000;
-        border-top: 1px solid var(--light-grey);
+
         & p {
             margin-left: 20px;
         }

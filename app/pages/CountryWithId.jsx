@@ -19,15 +19,14 @@ class CountryWithId extends React.Component {
       companyFilter: null
     };
     this.shouldUpdate = false;
+  }
+
+  componentDidMount() {
+    const id = this.props.params.countryWithId;
+    this.props.fetchCountry(id);
     browserHistory.listen(location => {
       this.shouldUpdate = true;
     });
-
-  }
-
-  componentWillMount() {
-    const id = this.props.params.countryWithId;
-    this.props.fetchCountry(id);
   }
 
   componentWillUpdate() {

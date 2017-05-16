@@ -14,12 +14,10 @@ class Login extends React.Component {
     };
   }
 
-  componentWillMount() {
-    // this.props.authenticate();
+  componentDidMount() {
+  // this.props.isAuthenticated();
   }
 
-  componentDidMount() {
-  }
 
   componentDidUpdate() {
     // const {token, user} = this.props;

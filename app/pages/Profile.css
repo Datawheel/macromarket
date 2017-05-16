@@ -1,3 +1,4 @@
+@import "../Variables";
 .profile {
     padding: 50px 10%;
     height: 100%;
@@ -13,7 +14,7 @@
             font-weight: 400;
         }
     }
-    .form {
+      & .form {
         margin-top: 40px;
         padding-top: 50px;
         height: 500px;

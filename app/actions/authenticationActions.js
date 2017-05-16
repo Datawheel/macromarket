@@ -80,7 +80,6 @@ export function login(email, password) {
   return function(dispatch) {
     // required for sending receiving cookies
     const config = {withCredentials: true};
-
     dispatch(requestLogin());
     return api.post("api/auth/login", {email, password}, config)
       .then(response => {
@@ -99,12 +98,10 @@ export function signup(email, password) {
   return function(dispatch) {
     // required for sending receiving cookies
     const config = {withCredentials: true};
-
     dispatch(requestLogin());
     return api.post("api/auth/signup", {email, password}, config)
       .then(response => {
         dispatch(receiveLogin(response.data));
-        // authenticate(response.data.token)(dispatch);
       })
       .catch(response => {
         console.log(response.response.data.message);

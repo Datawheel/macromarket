@@ -15,10 +15,10 @@ class Settings extends React.Component {
     }
   }
 
-  componentWillMount() {
-    if (this.props.token) {
-      this.props.authenticateAndFetchCompany(this.props.token);
-    }
+  componentDidMount() {
+
+    //  this.props.authenticateAndFetchCompany(this.props.token);
+
     if (!this.props.token) {
       browserHistory.push("/login");
     }

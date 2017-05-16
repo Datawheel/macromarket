@@ -5,7 +5,7 @@ import {fetchCompanies} from "../actions/companiesActions";
 import {fetchUnNestedProducts} from "../actions/productsActions";
 import {fetchSearch, setSearch} from "../actions/searchActions";
 import {CardHome} from "../components/Card.jsx";
-import "./Home.css"
+import "./Home.css";
 import Select from 'react-select';
 
 

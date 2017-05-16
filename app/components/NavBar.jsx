@@ -26,6 +26,7 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
+    
     // if (this.props.token) {
     //   this.props.authenticateAndFetchCompany(this.props.token);
     // }

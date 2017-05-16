@@ -1,5 +1,6 @@
+@import "../Variables";
 .settings {
-    background-image: url("../app/img/settings-bg.png");
+    background-image: url("/images/settings-bg.png");
     padding: 60px 0;
     min-height: 100%;
     background-size: cover;
@@ -304,7 +305,7 @@
         display: inline-block;
         width: 29%;
         margin-right: 25px;
-        
+
         & .product-name {
             color: var(--input-text);
         }
