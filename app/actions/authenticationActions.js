@@ -110,14 +110,14 @@ export function signup(email, password) {
   };
 }
 
-export function logout(email, password) {
+export function logout() {
   return function(dispatch) {
     dispatch({
       type: "COMPANY_FULFILLED",
       data: null
     });
     dispatch(requestLogout());
-    return api.get("api/auth/logout", {email, password})
+    return api.get("api/auth/logout", {withCredentials: true})
       .then(response => {
         dispatch(receiveLogout(response.data));
       })
