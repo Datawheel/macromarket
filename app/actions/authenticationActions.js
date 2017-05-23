@@ -60,6 +60,7 @@ function receiveLogoutError(json) {
   };
 }
 
+
 export function isAuthenticated() {
   return function(dispatch) {
     dispatch(requestAuth());
@@ -88,7 +89,6 @@ export function login(email, password) {
         // authenticate()(dispatch);
       })
       .catch(response => {
-        console.log(response.data, "LOGIN ERRROR");
         dispatch(receiveLoginError(response.data));
       });
   };

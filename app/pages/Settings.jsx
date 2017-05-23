@@ -6,6 +6,7 @@ import {authenticateAndFetchCompany} from "../actions/companyActions";
 import Sidebar from "components/Sidebar";
 import CompanyDataForm from "components/CompanyDataForm.jsx";
 import TradesSelection from "components/TradesSelection.jsx";
+import "../components/Form.css";
 
 class Settings extends React.Component {
   constructor(props) {
@@ -16,33 +17,32 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
-
-    //  this.props.authenticateAndFetchCompany(this.props.token);
-
-    if (!this.props.token) {
-      browserHistory.push("/login");
-    }
+    this.props.authenticateAndFetchCompany();
   }
 
-  componentDidUpdate = () => {
-    const {token, deleted} = this.props;
-    if (!token) {
+  componentDidUpdate() {
+    if (!this.props.user && !this.props.loading) {
       browserHistory.push("/login");
     }
-
-    if (deleted) {
+    if (this.props.deleted) {
       browserHistory.push("/login");
       this.setState({trade: []});
     }
-
   }
+
 
   nextSlide = () => {
     this.setState({
       slide: this.state.slide + 1
     });
-
   }
+
+  previousSlide = () => {
+  this.setState({
+    slide: this.state.slide - 1
+  });
+}
+
 
   deleteCompany = () => {
     this.props.deleteCompany(this.props.user.company_id);
@@ -50,6 +50,7 @@ class Settings extends React.Component {
 
   render() {
     const {user, loading, error, company} = this.props;
+    console.log(this.props.company);
 
     if (error) {
       return (
@@ -72,7 +73,7 @@ class Settings extends React.Component {
     // loading company if one exists
     if (user.company_id && !company) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="settings">
           <div>loading...</div>
         </div>
       );
@@ -80,7 +81,7 @@ class Settings extends React.Component {
 
     if (this.props.companyLoading) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="settings">
           <div>Company being saved...</div>
         </div>
       );
@@ -111,7 +112,7 @@ class Settings extends React.Component {
             : null}
           {this.state.slide !== 0
             ? <div>
-                <TradesSelection slide={this.state.slide} nextSlide={this.nextSlide} companyId={this.props.companySaved}/>
+                <TradesSelection slide={this.state.slide} previousSlide={this.previousSlide} nextSlide={this.nextSlide} companyId={this.props.companySaved ? this.props.companySaved.id : this.props.company.id}/>
               </div>
             : null}
         </div>
@@ -125,8 +126,8 @@ const mapDispatchToProps = dispatch => {
     saveCompany: (company, imagesToUpload) => {
       dispatch(uploadImage(company, imagesToUpload));
     },
-    authenticateAndFetchCompany: token => {
-      dispatch(authenticateAndFetchCompany(token));
+    authenticateAndFetchCompany: () => {
+      dispatch(authenticateAndFetchCompany());
     },
     deleteCompany: id => {
       dispatch(deleteCompany(id));
@@ -142,7 +143,6 @@ const mapStateToProps = state => {
     deleted: state.companyProfile.deleted,
     loading: state.authentication.loading || state.companyProfile.loading,
     error: state.authentication.error,
-    token: state.authentication.token,
     company: state.companyProfile.authCompany
   }
 }

@@ -3,8 +3,9 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {isAuthenticated, logout} from "../actions/authenticationActions";
+import {updateUser} from "../actions/userActions";
 import "./Profile.css";
-import "../components/Form.css"
+import "../components/Form.css";
 
 class userWithId extends React.Component {
   constructor(props) {
@@ -14,23 +15,18 @@ class userWithId extends React.Component {
       password2: "",
       error: ""
     }
-
   }
 
   componentDidMount() {
-
     this.props.isAuthenticated();
-
-    // if (!this.props.token) {
-    //   browserHistory.push("/login");
-    // }
   }
 
   componentDidUpdate() {
-    // if (!this.props.token) {
-    //   browserHistory.push("/login");
-    // }
+    if (!this.props.user && !this.props.loading) {
+      browserHistory.push("/login");
+    }
   }
+
   handleChange = e => {
     e.target.value
     this.setState({
@@ -39,19 +35,20 @@ class userWithId extends React.Component {
   }
 
   save = () => {
-    // console.log(this.props.user.id);
-    // if (this.state.password1.length < 5 || this.state.password2.length < 5) {
-    //   this.setState({error: "Password must be longer than 5 characters"});
-    // }
-    // if (this.state.password1 !== this.state.password2) {
-    //   this.setState({error: "Passwords must match"});
-    // } else {
-    //   this.props.updateUser(this.props.user.id, this.props.user.email, this.state.password1);
-    // }
+    console.log(this.props.user.id);
+    if (this.state.password1.length < 5 || this.state.password2.length < 5) {
+      this.setState({error: "Password must be longer than 5 characters"});
+    }
+    if (this.state.password1 !== this.state.password2) {
+      this.setState({error: "Passwords must match"});
+    } else {
+      this.props.updateUser(this.props.user.id, this.props.user.email, this.state.password1);
+    }
   }
 
   render() {
     const {user, loading, error} = this.props;
+    console.log(user, "DF");
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -118,6 +115,9 @@ const mapDispatchToProps = dispatch => {
     },
     logout: () => {
       dispatch(logout())
+    },
+    updateUser : (id, email, password) => {
+      dispatch(updateUser(id, email, password));
     }
   };
 };

@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
-// import {browserHistory} from "react-router";
+import {browserHistory} from "react-router";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
 import {logout} from "../actions/authenticationActions";
 import ReactDOM from "react-dom";
@@ -15,23 +15,17 @@ class NavBar extends React.Component {
       dropdownVisible: false
     }
 
-    // browserHistory.listen(location => {
-    //   this.setState({dropdownVisible: false})
-    //   if (this.props.searchActive) {
-    //     this.props.activateSearch(false);
-    //   }
-    // });
-
     this.hideDropDown = this.hideDropDown.bind(this);
   }
 
   componentDidMount() {
-    
-    // if (this.props.token) {
-    //   this.props.authenticateAndFetchCompany(this.props.token);
-    // }
-    // Hide dropdown block on click outside the block
-    // window.addEventListener("click", this.hideDropDown, false);
+      this.props.authenticateAndFetchCompany();
+      browserHistory.listen(location => {
+        if (this.props.searchActive) {
+          this.props.activateSearch(false);
+        }
+          this.setState({dropdownVisible: false})
+      });
   }
 
   hideDropDown = e => {

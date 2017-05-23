@@ -1,7 +1,8 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
+import Select from 'react-select';
 import {fetchCountries} from "../actions/countriesActions";
+import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class CountrySelection extends React.Component {
   constructor(props) {
@@ -17,30 +18,27 @@ class CountrySelection extends React.Component {
   }
 
   addCountry = country => {
-    const trade = {
-      product_id: this.props.trade.product_id,
-      country_id: country.id,
-      trade_flow: this.props.trade.trade_flow
-    };
-    console.log(trade);
-    this.props.addCountry(trade);
-    this.setState(state => {
-      state.saved = state.saved.concat([{
-          country
-        }]);
-      return state;
-    });
+    if (!this.props.trade.countries.includes(country)) {
+      this.props.createTrade(this.props.trade.product_id, country.value, this.props.tradeFlow);
+      country.name = country.label;
+      this.setState(state => {
+        state.saved = state.saved.concat([
+            country
+          ]);
+        return state;
+      });
+    }
   }
 
   deleteCountry = country => {
+    console.log(country, "DELETE COUNTrY");
     if (this.props.trade.countries.includes(country)) {
       this.setState(state => {
         state.deleted = state.deleted.concat([country.trade_id]);
         return state;
       });
-      this.props.deleteCountry(country);
-    }
-    else {
+      this.props.deleteTrade(this.props.trade.product_id, country.id, this.props.tradeFlow);
+    } else {
       const index = this.state.saved.indexOf(country);
       this.setState(state => {
         state.saved = state.saved.filter(country => {
@@ -52,7 +50,9 @@ class CountrySelection extends React.Component {
   }
 
   render() {
+
     const {countries, loading, error} = this.props;
+    console.log(this.props, "ASDFSDFSDF");
     if (loading || !countries) {
       return (
         <div className="detailed-content-wrapper">
@@ -70,18 +70,33 @@ class CountrySelection extends React.Component {
       );
     }
 
+    const dropDownCountries = [];
+    countries.map(continent => {
+      let first = true;
+      continent.values.map(country => {
+        dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
+        first = false;
+      });
+    });
+
+    console.log(this.props.trade, ":SDFKJD");
     const allCountries = this.props.trade.countries.concat(this.state.saved);
+    console.log(allCountries, "SDFSDJKFHSLDHFILUESUU&&&&&");
+
     return (
       <div className="country-selection">
-        <Dropdown select={this.addCountry} selected={""} items={this.props.countries}/>
+        <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" options={dropDownCountries} onChange={this.addCountry}/>
         <div className="selected-countries-wrapper">
           {allCountries.map((trade, index) => {
             return (
-              <div className="selected-country" key={index}>
+              <div className="selected-country-outter">
                 {!this.state.deleted.includes(trade.trade_id)
-                  ? <div>
-                      <span>{trade.country.name} </span>
-                      <div className="delete" onClick={this.deleteCountry.bind(this, trade)}></div>
+                  ?  <div className="selected-country" key={index}>
+                      <div>
+                        <span>{trade.name}
+                        </span>
+                        <div className="delete" onClick={this.deleteCountry.bind(this, trade)}></div>
+                      </div>
                     </div>
                   : null}
               </div>

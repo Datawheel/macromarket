@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 
 function requestProduct() {
   return {
@@ -23,7 +23,7 @@ function productError(json) {
 export function fetchProduct(id) {
   return function(dispatch) {
     dispatch(requestProduct());
-    return axios.get(`/api/product/${id}`)
+    return api.get(`/api/products/${id}`)
     .then(response => {
       dispatch(receiveProduct(response.data));
     })

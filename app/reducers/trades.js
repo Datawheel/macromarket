@@ -6,15 +6,24 @@ export default (state = {
   settingsTrades: null
 }, action) => {
   switch (action.type) {
-    case "SAVE_TRADES_FULFILLED":
+    case "CREATE_TRADE_FULFILLED":
       return { ...state,
         saved: true
       };
-    case "SAVE_TRADES_REJECTED":
+    case "CREATE_TRADE_REJECTED":
       return { ...state,
         saved: false,
         error: action.data
       };
+      case "DELETE_TRADE_FULFILLED":
+        return { ...state,
+          saved: true
+        };
+      case "DELETE_TRADE_REJECTED":
+        return { ...state,
+          saved: false,
+          error: action.data
+        };
     case "PROFILE_TRADES_PENDING":
       return { ...state,
         profileTrades: null,

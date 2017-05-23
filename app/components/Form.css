@@ -25,6 +25,10 @@
             height: 4px;
         }
     }
+    & button {
+      font-size: 13px;
+      font-weight: 300;
+    }
 }
 
 .form-wrapper {
@@ -47,8 +51,8 @@
     }
     & .button {
         position: relative;
-        padding: 8px;
-        width: 20%;
+        padding: 10px;
+        width: 50%;
         max-width: 125px;
         margin: 3px;
         & .right {
@@ -133,8 +137,11 @@
         padding: 10px;
     }
     & .content-wrapper {
-        @include flexbox;
-        @include flex-wrap(wrap);
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
     }
     & .col {
         width: 46%;
@@ -161,8 +168,8 @@
     }
     & .delete:after {
         position: absolute;
-        font-size: 22px;
-        top: -8px;
+        font-size: 18px;
+        top: -7px;
         content: '×';
         font-weight: 200;
         color: var(--middle-grey);
@@ -182,8 +189,11 @@
         }
     }
     & .profile-image-wrapper {
-        @include flexbox;
-        @include flex-wrap(wrap);
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
         & .image-preview-wrapper {
             width: 15vw;
             height: 15vw;
@@ -218,7 +228,7 @@
             width: 65%;
             padding: 8px 5px 8px 15px;
         }
-        &.product-name.hs4, & .product-name.hs6 {
+        & .product-name.hs4, & .product-name.hs6 {
             padding: 8px 5px 8px 55px;
         }
         & .product {
@@ -285,8 +295,12 @@
                     position: absolute;
                 }
             }
+            & .Select {
+              width: 40%;
+              vertical-align: top;
+            }
             & .selected-countries-wrapper {
-                width: 60%;
+                width: 50%;
                 margin-left: 25px;
                 display: inline-block;
                 border: 1px solid var(--input-grey);
@@ -305,7 +319,6 @@
         display: inline-block;
         width: 29%;
         margin-right: 25px;
-
         & .product-name {
             color: var(--input-text);
         }

@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 
 function requestSave() {
   return {
@@ -16,6 +16,26 @@ function receiveSave(json) {
 function saveError(json) {
   return {
     type: "SAVE_REJECTED",
+    data: json
+  };
+}
+
+function requestSaveUser() {
+  return {
+    type: "SAVE_USER_PENDING"
+  };
+}
+
+function receiveSaveUser(json) {
+  return {
+    type: "SAVE_USER_FULFILLED",
+    data: json
+  };
+}
+
+function saveUserError(json) {
+  return {
+    type: "SAVE_USER_REJECTED",
     data: json
   };
 }
@@ -48,7 +68,7 @@ export function uploadImage(company, imagesToUpload) {
   return function(dispatch) {
     dispatch(requestSave());
     if (imagesToUpload.profile_image || imagesToUpload.cover_image) {
-      return axios.post("api/upload", formData)
+      return api.post("api/upload", formData)
         .then(response => {
           if (response.data.profile) {
             company.profile_image = response.data.profile;
@@ -70,7 +90,7 @@ export function uploadImage(company, imagesToUpload) {
 export function saveCompany(company) {
   return function(dispatch) {
     if (company.id) {
-      return axios.put(`api/company/${company.id}`, company)
+      return api.put(`api/companies/${company.id}`, company)
         .then(response => {
           dispatch(receiveSave(response.data));
         })
@@ -78,7 +98,7 @@ export function saveCompany(company) {
           dispatch(saveError(response.data));
         });
     } else {
-      return axios.post("api/registerCompany", company)
+      return api.post("api/companies", company)
         .then(response => {
           dispatch(receiveSave(response.data));
         })
@@ -90,11 +110,27 @@ export function saveCompany(company) {
   };
 }
 
+export function updateUser(id, email, password) {
+  return function(dispatch) {
+    dispatch(requestSaveUser());
+    return api.post(`/api/updateUser/${id}`, {
+      email,
+      password
+    })
+    .then(response => {
+      dispatch(receiveSaveUser(response.data));
+    })
+    .catch(response => {
+      dispatch(saveUserError(response.data));
+    });
+  };
+}
+
 
 export function deleteCompany(id) {
   return function(dispatch) {
     dispatch(requestDelete());
-    return axios.delete(`api/company/${id}`)
+    return api.delete(`api/companies/${id}`)
       .then(response => {
         dispatch({
           type: "TRADES_FULFILLED",

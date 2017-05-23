@@ -3,9 +3,13 @@ import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCountry} from '../actions/countryActions';
+import {fetchProducts} from '../actions/productsActions';
+import {fetchTradesByCountry} from "../actions/tradesActions";
 import "./Detailed.css";
+import "../components/Dropdown.css";
 import Select from 'react-select';
 import {browserHistory} from "react-router";
+import {arrowRenderer, productOptionRenderer, productValueRenderer} from "../components/Dropdown"
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -15,8 +19,7 @@ class CountryWithId extends React.Component {
       product: {
         label: "All",
         value: "all"
-      },
-      companyFilter: null
+      }
     };
     this.shouldUpdate = false;
   }
@@ -24,6 +27,8 @@ class CountryWithId extends React.Component {
   componentDidMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchCountry(id);
+    this.props.fetchProducts();
+    this.props.fetchTradesByCountry(id);
     browserHistory.listen(location => {
       this.shouldUpdate = true;
     });
@@ -33,6 +38,8 @@ class CountryWithId extends React.Component {
     if (this.shouldUpdate) {
       const id = this.props.params.countryWithId
       this.props.fetchCountry(id);
+      this.props.fetchProducts();
+      this.props.fetchTradesByCountry(id);
       this.shouldUpdate = false;
     }
   }
@@ -40,75 +47,25 @@ class CountryWithId extends React.Component {
   handleOptionChange = selectedOption => {
     this.setState({selectedOption});
   }
+
   selectDropDown = item => {
     this.setState({product: item});
   }
-  arrowRenderer = () => {
-    return (
-      <span className="chevron bottom"></span>
-    );
-  }
-
-  optionRenderer = (option) => {
-    if (option.value === "all") {
-      return (
-        <div>
-          <div className={`colored-wrapper`}>
-            <p className="all">{option.label}</p>
-          </div>
-        </div>
-      )
-    }
-    const id = option.value;
-    const colorName = `color-${id}`;
-
-    return (
-      <div>
-        <div className={`colored-wrapper`}>
-          <div className={`${colorName} icon-wrapper`}>
-            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
-          </div>
-          <div>
-            <p>{option.label}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  valueRenderer = (value) => {
-    return (
-      <div>
-        <p>{value.label}</p>
-      </div>
-    )
-  }
 
   render() {
-    var options = [
-      {
-        value: 'all',
-        label: 'All'
-      }, {
-        value: '01',
-        label: 'Animal Products'
-      }, {
-        value: '02',
-        label: 'Vegetable Products'
-      }, {
-        value: '03',
-        label: 'Animal and Vegetable Bi-Products'
-      }
-    ];
-
-    const {country, loading, error} = this.props;
-    if (loading || !country) {
+    const {country, loading, error, products, trades} = this.props;
+    if (loading || !country || !products || !trades) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="detailed-content-wrapper blue-loading">
           <div>loading..</div>
         </div>
       );
     }
+
+    const dropDownProducts = products.map(product => {
+      return {value: product.key, label: product.name}
+    });
+
 
     if (error) {
       return (
@@ -160,9 +117,8 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Select valueRenderer={this.optionRenderer} optionClassName={"dropdown-option"} optionRenderer={this.optionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={options} onChange={this.selectDropDown}/>
+            <Select valueRenderer={productOptionRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.product} options={dropDownProducts} onChange={this.selectDropDown}/>
           </div>
-          <button className="go">Go</button>
         </div>
         <div className="result-wrapper-outer">
           <div className="result-wrapper"></div>
@@ -176,6 +132,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCountry: id => {
       dispatch(fetchCountry(id))
+    },
+    fetchProducts: () => {
+      dispatch(fetchProducts());
+    },
+    fetchTradesByCountry: id => {
+      dispatch(fetchTradesByCountry(id));
     }
   };
 }
@@ -184,7 +146,11 @@ const mapStateToProps = state => {
   return {
     country: state.countryProfile.country,
     loading: state.countryProfile.loading,
-    error: state.countryProfile.error || null
+    error: state.countryProfile.error || null,
+    products: state.products.products,
+    trades: state.trades.trades,
+    tradesLoading: state.trades.loading,
+    tradesError: state.trades.error
   };
 }
 

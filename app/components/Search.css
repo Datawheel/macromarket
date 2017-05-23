@@ -88,8 +88,11 @@
 }
 
 .result-wrapper {
-    @include flexbox;
-    @include flex-wrap(wrap);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
     padding: 55px 5%;
     min-height: 300px;
     & .card {

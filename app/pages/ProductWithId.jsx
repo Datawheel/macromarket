@@ -1,42 +1,59 @@
 import React from "react";
-import Dropdown from "components/DropDown";
-import {Link} from "react-router";
 import {connect} from "react-redux";
-import Sidebar from "components/Sidebar";
+import Select from 'react-select';
+import Sidebar from "../components/Sidebar.jsx";
+import {browserHistory} from "react-router";
+import {Card} from "../components/Card.jsx";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
+import {fetchProducts} from "../actions/productsActions";
+import {fetchTradesByProduct} from "../actions/tradesActions";
+import "./Detailed.css";
+import "../components/Dropdown.css";
+import {countryInputChange, arrowRenderer,countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      from: {name: "Angola", id: "afago"},
-      to: {name: "Angola", id: "afago"}
+      selectedOption: "exports",
+      country: {
+        label: "All",
+        value: "all"
+      }
     };
-
-    this.results = [
-      "Carmon",
-      "Casa Silva",
-      "Conosur",
-      "Concha y Toro",
-      "Emiliana",
-      "Junta",
-      "Casa Silva"
-    ];
+    this.shouldUpdate = false;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const id = this.props.params.productWithId;
     this.props.fetchProduct(id);
     this.props.fetchCountries();
+    this.props.fetchProducts();
+    this.props.fetchTradesByProduct(id);
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
   }
 
-  selectFrom(item) {
-    this.setState({from: item});
+  componentDidUpdate() {
+    if (this.shouldUpdate) {
+      const id = this.props.params.productWithId;
+      this.props.fetchProduct(id);
+      this.props.fetchCountries();
+      this.props.fetchProducts();
+      this.props.fetchTradesByProduct(id);
+      this.shouldUpdate = false;
+    }
   }
 
-  selectTo(item) {
-    this.setState({to: item});
+  handleOptionChange = selectedOption => {
+    this.setState({selectedOption});
+  }
+
+  selectDropDown = country => {
+    console.log(country);
+    this.setState({country});
   }
 
   render() {
@@ -46,12 +63,14 @@ class ProductWithId extends React.Component {
       error,
       countriesLoading,
       countriesError,
-      countries
+      countries,
+      trades,
+      products
     } = this.props;
 
-    if (loading || !product || countriesLoading) {
+    if (loading || !product || !countries || !trades || !products) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <div>loading...</div>
         </div>
       );
@@ -59,27 +78,51 @@ class ProductWithId extends React.Component {
 
     if (error || countriesError) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="blue-loading">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
         </div>
       );
     }
 
+    const dropDownCountries = [];
+    countries.map(continent => {
+      let first = true;
+      continent.values.map(country => {
+        dropDownCountries.push({continent:continent.key, value: country.id, label: country.name, first});
+        first = false;
+      });
+    });
+
+    let productCategory = "";
+    if (products) {
+      products.map(product => {
+        if (product.key === this.props.params.productWithId.slice(0, 2)) {
+          productCategory = product.name;
+        }
+      });
+    }
 
     const fallbackId = product.id.substring(0, 2);
     const img = product.flickr_link
-      ? `/img/product/${product.id}.jpg`
-      : `/img/product/${fallbackId}.jpg`;
+      ? `/images/product/${product.id}.jpg`
+      : product.parent_image
+        ? `/images/product/${product.id.slice(0, -2)}.jpg`
+        : `/images/product/${fallbackId}.jpg`;
 
     return (
       <div className="detailed-content-wrapper product">
         <div className="header">
           <Sidebar>
             <div className="profile-info">
-            <h3>{product.name}</h3>
-            <p>{product.description}
-            </p></div>
+              <div className="header-wrapper">
+                <h2>
+                  <span><img src={"/images/icons/icon-product-white.svg"}/></span>{product.name}</h2>
+                <div className="yellow-line"></div>
+                <p className="product-category">{productCategory}</p>
+              </div>
+              <p>{product.description}</p>
+            </div>
           </Sidebar>
           <div className="center-content">
             <div className="header-image-wrapper">
@@ -88,32 +131,44 @@ class ProductWithId extends React.Component {
               }}></div>
             </div>
           </div>
-          <div className="filter-wrapper">
-            <div className="filter">
-              <h4>From</h4>
-              <Dropdown select={this.selectFrom} selected={this.state.from.id} items={countries}></Dropdown>
-            </div>
-            <div className="filter">
-              <h4>To</h4>
-              <Dropdown select={this.selectTo} selected={this.state.to.id} items={countries}></Dropdown>
-            </div>
-            <button>Go</button>
+        </div>
+        <div className="filter-wrapper">
+          <div className="filter">
+            <label className="label radio-label">
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "export")} type="radio" value="export" checked={this.state.selectedOption === "export"}/>
+              <p>export</p>
+            </label>
+            <label className="label radio-label">
+              <input className="radio" onChange={this.handleOptionChange.bind(this, "import")} type="radio" value="import" checked={this.state.selectedOption === "import"}/>
+              <p>import</p>
+            </label>
           </div>
-          <h2>{`Exports from ${this.state.from.name}
-            to ${this.state.to.name}`}</h2>
-          <div className="result-wrapper">
-            {this.results.map((result, i) => {
-              return (
-                <Link key={i} to="/company/555">
-                  <div className="result-wrapper">
-                    <div className="result">
-                      <p>{result}</p>
-                      <p>Chilean Wine</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="filter">
+            <div className="label country-dropdown-label">
+              <p>Country</p>
+            </div>
+            <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.country.value} options={dropDownCountries} onChange={this.selectDropDown}/>
+          </div>
+        </div>
+        <div>
+          <div className="result-wrapper-outer">
+            <h2>{`Companies that ${this.state.tradeFilter} ${this.props.product.name} ${this.state.country.value === "all"
+                ? ""
+                : `from ${this.state.country.label}`}`}</h2>
+
+            {trades
+              ? <div className="result-wrapper">
+                  {trades.map((trade, index) => {
+                    const content = trade.Company;
+                    content.profile_type = "company";
+                    if (trade.trade_flow === `${this.state.tradeFilter}s` && (this.state.countryFilter.name === "all" || this.state.countryFilter.id === trade.country_id)) {
+                      return <Card key={index} content={content}/>;
+                    } else {
+                      return null;
+                    }
+                  })}
+                </div>
+              : null}
           </div>
         </div>
       </div>
@@ -128,6 +183,12 @@ const mapDispatchToProps = dispatch => {
     },
     fetchCountries: () => {
       dispatch(fetchCountries());
+    },
+    fetchTradesByProduct: id => {
+      dispatch(fetchTradesByProduct(id));
+    },
+    fetchProducts: () => {
+      dispatch(fetchProducts());
     }
   };
 };
@@ -139,7 +200,12 @@ const mapStateToProps = state => {
     error: state.productProfile.error,
     countries: state.countries.countries,
     countriesLoading: state.countries.loading,
-    countriesError: state.countries.error
+    countriesError: state.countries.error,
+    trades: state.trades.trades,
+    tradesLoading: state.trades.loading,
+    tradesError: state.trades.error,
+    products: state.products.products,
+    productsLoading: state.products.loading
   };
 };
 

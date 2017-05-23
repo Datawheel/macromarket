@@ -11,7 +11,7 @@
     }
     & h2 {
         margin: 8px 0;
-        font-size: 1.4rem;
+        font-size: 1.4em;
         font-weight: 400;
     }
     & .header-image-wrapper {
@@ -128,7 +128,7 @@
     }
 }
 
-& .company {
+.company {
     & .button-icon, & .section-wrapper img {
         margin: 0 10px -3px 0;
         display: inline-block;
@@ -163,7 +163,7 @@
             & button {
                 color: white;
                 padding: 15px 10%;
-                background: $red;
+                background: var(--red);
                 border: none;
             }
         }
@@ -177,56 +177,7 @@
     }
 }
 
-.country {
-    & .Select {
-        display: inline-block;
-        width: 55%;
-        margin: 0px 15px;
-        vertical-align: middle;
-        & p {
-            color: var(--input-text);
-        }
-        & .Select-control {
-            border-radius: 0px;
-            height: 32px;
-        }
-        & .Select-value {
-            height: 34px;
-            padding: 0px;
-            & p {
-                margin: 0;
-                margin-left: 20px;
-                width: 55%;
-                overflow: hidden;
-            }
-            & .all {
-                padding: 0px;
-                margin-left: 10px;
-            }
-        }
-        & .icon-wrapper {
-            width: 34px;
-            height: 34px;
-        }
-    }
-    & .Select-menu-outer {
-        border: none;
-
-        & p {
-            margin-left: 20px;
-        }
-        & .dropdown-option {
-            padding: 0px;
-            margin: 0px;
-        }
-        & .dropdown-option:hover {
-            background: white;
-        }
-    }
-    & .Select-arrow-zone {
-        border-left: 1px solid var(--light-grey);
-        padding: 0 10px;
-    }
+.country, {
     & .header-image-wrapper {
         height: 375px;
         & .image-overlay-wrapper {
@@ -257,14 +208,14 @@
 }
 
 .product.detailed-content-wrapper {
-    .filter-wrapper {
+    & .filter-wrapper {
         margin: -5px;
     }
-    .filter {
-        .dropdown-container {
+    & .filter {
+        & .dropdown-container {
             width: 50%;
         }
-        .country-dropdown-label {
+        & .country-dropdown-label {
             width: 25%;
         }
     }

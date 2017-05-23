@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 //import receiveAuth from "./authenticationActions";
 
 function requestCompany() {
@@ -50,7 +50,7 @@ function requestAuth() {
 export function fetchCompany(id) {
   return function(dispatch) {
     dispatch(requestCompany());
-    return axios.get(`/api/company/${id}`)
+    return api.get(`/api/companies/${id}`)
       .then(response => {
         dispatch(receiveCompany(response.data));
       })
@@ -60,23 +60,25 @@ export function fetchCompany(id) {
   };
 }
 
-export function authenticateAndFetchCompany(token) {
+export function authenticateAndFetchCompany() {
   return function(dispatch) {
     dispatch(requestAuth());
-    const config = {
-      headers: {
-        Authorization: `JWT ${token}`
-      }
-    };
-    axios.get("/api/authenticate", config).then(response => {
-      dispatch(receiveAuth(response.data));
-      const {
-        user
-      } = response.data;
-      if (user.company_id) {
-        return axios.get(`/api/company/${user.company_id}`).then(companyResponse => {
-          dispatch(receiveAuthCompany(companyResponse.data));
-        });
+    api.get("/api/auth/isAuthenticated", {
+      withCredentials: true
+    }).then(response => {
+      if (response.data.msg) {
+        dispatch(receiveAuthError(response.data.msg));
+      } else {
+        const user = response.data;
+
+        if (user.company_id) {
+          return api.get(`/api/companies/${user.company_id}`).then(companyResponse => {
+            dispatch(receiveAuthCompany(companyResponse.data));
+          }).then(() => {
+            dispatch(receiveAuth(response.data));
+          });
+        }
+        dispatch(receiveAuth(response.data));
       }
     }, err => {
       dispatch(receiveAuthError(err));

@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import api from "../api.js";
 function requestSearch() {
   return {
     type: "SEARCH_PENDING"
@@ -24,7 +23,7 @@ export function setSearch(json) {
 export function fetchSearch(query, filter) {
   return function(dispatch) {
     dispatch(requestSearch());
-    return axios.get(`/api/search/${filter}/${query}`)
+    return api.get(`/api/search/${filter}/${query}`)
     .then(response => {
       dispatch(receiveSearch(response.data));
     })

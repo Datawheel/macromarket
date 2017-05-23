@@ -3,17 +3,35 @@ import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchCompany} from "../actions/companyActions";
-import {fetchProductsByCompany} from "../actions/tradesActions";
+import {fetchProfileTradesByCompany} from "../actions/tradesActions";
+import {browserHistory} from "react-router";
+import "./Detailed.css";
+
+
 
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
+      this.shouldUpdate = false;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const id = this.props.params.companyWithId;
     this.props.fetchCompany(id);
-    this.props.fetchProductsByCompany(id);
+    this.props.fetchProfileTradesByCompany(id);
+    browserHistory.listen(location => {
+      this.shouldUpdate = true;
+    });
+  }
+
+  componentDidUpdate() {
+
+    if (this.shouldUpdate) {
+    const id = this.props.params.companyWithId
+      this.props.fetchCompany(id);
+      this.props.fetchProfileTradesByCompany(id);
+      this.shouldUpdate = false;
+    }
   }
 
   render() {
@@ -50,7 +68,7 @@ class CompanyWithId extends React.Component {
             <div className="profile-image-wrapper">
               <div className="background-image" style={profileImage}></div>
             </div>
-            <img className="icon" src="/images/icons/icon-company-white.svg" />
+            <img className="icon" src="/images/icons/icon-company-white.svg"/>
             <h3>{company.name}</h3>
           </div>
           {this.props.trades
@@ -59,49 +77,71 @@ class CompanyWithId extends React.Component {
                   <div className="section-wrapper">
                     <h5>Products | Imports</h5>
                     <div className="yellow-line"></div>
-                    {trades.imports
-                      ? <div>{Object.keys(trades.imports).map((trade, index) => {
-                            return (
-                              <Link key={index} to={`/product/${trade}`}>
-                                <div className="product-wrapper">
-                                  <p>{trades.imports[trade].name}</p>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      : null}
+                      {trades.imports
+                  ? <div>{Object.keys(trades.imports).map((trade, index) => {
+                        const id = trades.imports[trade].id.slice(0, 2);
+                        return (
+                          <Link key={index} to={`/product/${trade}`}>
+                            <div className="product-wrapper">
+                              <div className={`icon-wrapper color-${id}`}>
+                                <img src={`/images/product_icon/hs_${id}.png`}></img>
+                              </div>
+                              <div className="colored-wrapper">
+                                <div className={`darker-color color-${id}`}></div>
+                                <p>{trades.imports[trade].name}</p>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  : null}
                   </div>
                 </div>
                 <div className="exports">
                   <div className="section-wrapper">
                     <h5>Products | Exports</h5>
                     <div className="yellow-line"></div>
-                    {trades.exports
-                      ? <div>{Object.keys(trades.exports).map((trade, index) => {
-                            return (
-                              <Link key={index} to={`/product/${trade}`}>
-                                <div className="product-wrapper">
-                                  <p>{trades.exports[trade].name}</p>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      : null}
+                      {trades.exports
+                  ? <div>{Object.keys(trades.exports).map((trade, index) => {
+                        const id = trades.exports[trade].id.slice(0, 2);
+                        return (
+                          <Link key={index} to={`/product/${trade}`}>
+                            <div className="product-wrapper">
+                              <div className={`icon-wrapper color-${id}`}>
+                                <img src={`/images/product_icon/hs_${id}.png`}></img>
+                              </div>
+                              <div className="colored-wrapper">
+                                <div className={`darker-color color-${id}`}></div>
+                                <p>{trades.exports[trade].name}</p>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  : null}
                   </div>
                 </div>
                 <div className="coverage">
                   <div className="section-wrapper">
                     <h5>Coverage Area</h5>
                     <div className="yellow-line"></div>
-                    {trades.countries
+                      {trades.countries
                       ? <div>
                           {Object.keys(trades.countries).map((country, index) => {
+                            const continentId = country.slice(0, 2);
+                            const colorName = `color-${trades.countries[country].continent.toLowerCase().replace(" ", "-")}`;
                             return (
                               <Link key={index} to={`/country/${country}`}>
                                 <div className="product-wrapper">
-                                  <p>{trades.countries[country].name}</p>
+                                  <div className={`icon-wrapper ${colorName}`}>
+                                    <img src={`/images/flags/country_${continentId}.png`}></img>
+                                  </div>
+                                  <div className="colored-wrapper">
+                                    <div className={`darker-color ${colorName}`}></div>
+                                    <p>{trades.countries[country].name}</p>
+                                  </div>
                                 </div>
                               </Link>
                             );
@@ -110,7 +150,7 @@ class CompanyWithId extends React.Component {
                   </div>
                 </div>
                 <button>
-                  <img className="button-icon" src="/images/icons/icon-mail.svg" />
+                  <img className="button-icon" src="/images/icons/icon-mail.svg"/>
                   Get In Touch
                 </button>
               </div>
@@ -123,19 +163,19 @@ class CompanyWithId extends React.Component {
                 <div className="image-overlay"></div>
                 <div className="text-wrapper">
                   <div className="section-wrapper">
-                    <img src="/images/icons/icon-country-yellow.svg" />
+                    <img src="/images/icons/icon-country-yellow.svg"/>
                     <p>{company.address}</p>
                   </div>
                   <div className="section-wrapper">
-                    <img src="/images/icons/icon-telephone-yellow.svg" />
+                    <img src="/images/icons/icon-telephone-yellow.svg"/>
                     <p>{company.phone_number}</p>
                   </div>
                   <div className="section-wrapper">
-                    <img src="/images/icons/icon-world-yellow.svg" />
+                    <img src="/images/icons/icon-world-yellow.svg"/>
                     <a rel="external" href={`http://${company.website}`}>{company.website}</a>
                   </div>
                   <div className="section-wrapper">
-                    <button><img className="button-icon" src="/images/icons/icon-mail.svg" />Get in Touch</button>
+                    <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
                   </div>
                 </div>
               </div>
@@ -155,8 +195,8 @@ const mapDispatchToProps = dispatch => ({
   fetchCompany: id => {
     dispatch(fetchCompany(id));
   },
-  fetchProductsByCompany: id => {
-    dispatch(fetchProductsByCompany(id));
+  fetchProfileTradesByCompany: id => {
+    dispatch(fetchProfileTradesByCompany(id));
   }
 });
 
@@ -164,7 +204,7 @@ const mapStateToProps = state => ({
   company: state.companyProfile.company,
   loading: state.companyProfile.loading,
   error: state.companyProfile.error || null,
-  trades: state.trades.trades,
+  trades: state.trades.profileTrades,
   tradesLoading: state.trades.loading,
   tradesError: state.trades.error
 });

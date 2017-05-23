@@ -2,6 +2,7 @@ import React from "react";
 import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
+import "./Form.css";
 
 class CompanyDataForm extends React.Component {
   constructor(props) {
@@ -124,7 +125,7 @@ class CompanyDataForm extends React.Component {
   }
 
   render() {
-    const {loading, error, countries} = this.props;
+    const {loading, error} = this.props;
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -144,64 +145,61 @@ class CompanyDataForm extends React.Component {
     const {company, previewStyles} = this.state;
     return (
       <div>
-        <div className="title-wrapper">{this.props.title}</div>
-        <div className="form">
-          <div className="content-wrapper">
-            <div className="col">
-              <div className="input-wrapper">
-                <label>User</label>
-                <input checked={company.importerExporter} onChange={this.handleChange} type="checkbox" name="importerExporter"/>
-                Exporter/Importer
+      <div className="title-wrapper">{this.props.title}</div>
+      <div className="form">
+        <div className="content-wrapper">
+          <div className="col">
 
-                <input checked={company.transporter} onChange={this.handleChange} type="checkbox" name="transporter"/>
-                Transporter</div>
-
-              <div className="input-wrapper">
-                <label>Company Name</label>
-                <input onChange={this.handleChange} value={company.name} name="name"/>
-              </div>
-
-              <div className="input-wrapper">
-                <label>Country</label>
-                <Dropdown select={this.selectDropDown} selected={company.country_id} items={countries}></Dropdown>
-              </div>
-
-              <div className="input-wrapper">
-                <label>Address</label>
-                <input onChange={this.handleChange} value={company.address} name="address"/>
-              </div>
-
-              <div className="input-wrapper">
-                <label>Phone</label>
-                <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
-              </div>
-
-              <div className="input-wrapper">
-                <label>Website</label>
-                <input onChange={this.handleChange} value={company.website} name="website"/>
-              </div>
+            <div className="input-wrapper">
+              <label>Company Name</label>
+              <input onChange={this.handleChange} value={company.name} name="name"/>
             </div>
-            <div className="col">
-              <label>Description</label>
-              <textarea rows="5" onChange={this.handleChange} value={company.description} name="description"/>
-              <div className="profile-image-wrapper input-wrapper">
-                <div className="image-preview-wrapper">
-                  {previewStyles.profile_image
-                    ? <div className="image-preview" style={previewStyles.profile_image}></div>
-                    : null}
-                </div>
+
+            <div className="input-wrapper">
+              <label>Address</label>
+              <input onChange={this.handleChange} value={company.address} name="address"/>
+            </div>
+
+            <div className="input-wrapper">
+              <label>Phone</label>
+              <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
+            </div>
+
+            <div className="input-wrapper">
+              <label>Website</label>
+              <input onChange={this.handleChange} value={company.website} name="website"/>
+            </div>
+          </div>
+          <div className="col">
+            <label>Description</label>
+            <textarea rows="5" onChange={this.handleChange} value={company.description} name="description"/>
+            <div className="profile-image-wrapper input-wrapper">
+              <div className="image-preview-wrapper">
+                {previewStyles.profile_image
+                  ? <div className="image-preview" style={previewStyles.profile_image}></div>
+                  : null}
+              </div>
+              <div className="image-upload">
+                <p>Upload a photo</p>
                 <input name="profile_image" onChange={this.handleImageChange} type="file"/>
               </div>
-              <div className="cover-image-wrapper input-wrapper">
-                <div className="image-preview-wrapper">
-                  {previewStyles.cover_image
-                    ? <div className="image-preview" style={previewStyles.cover_image}></div>
-                    : null}
-                </div>
+            </div>
+            <div className="cover-image-wrapper input-wrapper">
+              <div className="image-preview-wrapper">
+                {previewStyles.cover_image
+                  ? <div className="image-preview" style={previewStyles.cover_image}></div>
+                  : null}
+              </div>
+              <div className="image-upload">
+                <p>Upload a photo</p>
                 <input name="cover_image" onChange={this.handleImageChange} type="file"/>
               </div>
-              <div>
-                <button onClick={this.saveCompany}>Save</button>
+            </div>
+
+
+              <div className="button-wrapper">
+                <button className=" button button-next" onClick={this.saveCompany}>Next<span className="chevron right"></span>
+                </button>
               </div>
             </div>
           </div>
