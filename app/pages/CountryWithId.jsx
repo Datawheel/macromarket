@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {fetchCountry} from '../actions/countryActions';
 import {fetchProducts} from '../actions/productsActions';
 import {fetchTradesByCountry} from "../actions/tradesActions";
+import {Card} from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from 'react-select';
@@ -15,7 +16,7 @@ class CountryWithId extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: "exports",
+      selectedOption: "all",
       product: {
         label: "All",
         value: "all"
@@ -36,6 +37,7 @@ class CountryWithId extends React.Component {
 
   componentWillUpdate() {
     if (this.shouldUpdate) {
+
       const id = this.props.params.countryWithId
       this.props.fetchCountry(id);
       this.props.fetchProducts();
@@ -54,7 +56,7 @@ class CountryWithId extends React.Component {
 
   render() {
     const {country, loading, error, products, trades} = this.props;
-    if (loading || !country || !products || !trades) {
+    if (!country || !products) {
       return (
         <div className="detailed-content-wrapper blue-loading">
           <div>loading..</div>
@@ -121,7 +123,21 @@ class CountryWithId extends React.Component {
           </div>
         </div>
         <div className="result-wrapper-outer">
-          <div className="result-wrapper"></div>
+          {trades
+            ? <div className="result-wrapper">
+                {trades.map((trade, index) => {
+                  const content = trade.Company;
+                  content.profile_type = "company";
+                  console.log(trade.trade_flow);
+                  console.log(this.state.selectedOption);
+                  if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
+                    return <Card key={index} content={content}/>;
+                  } else {
+                    return null;
+                  }
+                })}
+              </div>
+            : null}
         </div>
       </div>
     );

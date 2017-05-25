@@ -1,25 +1,39 @@
-const ACTION_TYPE = "PRODUCTS";
-
 export default (state = {
   products: null,
+  productsForSearch: null,
   loading: false
 }, action) => {
   switch (action.type) {
-    case `${ACTION_TYPE}_PENDING`:
-      return {
+    case "PRODUCTS_PENDING":
+      return {...state,
         products: null,
         loading: true
       };
-
-    case `${ACTION_TYPE}_FULFILLED`:
-      return {
+    case "SEARCH_PRODUCTS_PENDING":
+      return {...state,
+        productsForSearch: null,
+        loading: true
+      };
+    case "PRODUCTS_FULFILLED":
+      return {...state,
         loading: false,
         products: action.data
       };
-    case `${ACTION_TYPE}_REJECTED`:
-      return {
+    case "SEARCH_PRODUCTS_FULFILLED":
+      return {...state,
+        productsForSearch: action.data,
+        loading: false
+      };
+    case "PRODUCTS_REJECTED":
+      return {...state,
         loading: false,
         products: null,
+        error: action.data
+      };
+    case "SEARCH_PRODUCTS_REJECTED":
+      return {...state,
+        productsForSearch: null,
+        loading: false,
         error: action.data
       };
     default:

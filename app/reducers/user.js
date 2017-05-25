@@ -1,41 +1,43 @@
 export default (state = {
   company: null,
   loading: false,
-  deletedd: false
+  deleted: false,
+  error: null
 }, action) => {
   switch (action.type) {
     case "SAVE_PENDING":
-      return {
+      return { ...state,
         company: null,
         loading: true,
         deleted: false
       };
     case "SAVE_FULFILLED":
-      return {
+      return { ...state,
         loading: false,
         company: action.data,
         deleted: false
       };
     case "SAVE_REJECTED":
-      return {
+      return { ...state,
         loading: false,
         company: null,
-        deleted: false
+        deleted: false,
+        error: action.data
       };
     case "DELETE_PENDING":
-      return {
+      return { ...state,
         company: action.data,
         loading: true,
         deleted: false
       };
     case "DELETE_FULFILLED":
-      return {
+      return { ...state,
         loading: false,
         company: null,
         deleted: true
       };
     case "DELETE_REJECTED":
-      return {
+      return { ...state,
         loading: false,
         error: action.data,
         deleted: false

@@ -1,5 +1,4 @@
 @import "../Variables";
-
 .overlay {
     position: fixed;
     top: 0;
@@ -11,6 +10,15 @@
     & .overlay-inner {
         height: 100%;
         overflow: scroll;
+    }
+}
+
+.search-no-results {
+    text-align: center;
+    padding-top: 100px;
+    color: white;
+    & p {
+        font-size: 18px;
     }
 }
 
@@ -88,16 +96,16 @@
 }
 
 .result-wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
     padding: 55px 5%;
     min-height: 300px;
     & .card {
-        width: 22%;
-        margin: 10px;
+        width: 23%;
+        margin: 1%;
         height: 275px;
         & .text-wrapper {
             position: relative;

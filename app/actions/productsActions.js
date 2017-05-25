@@ -1,11 +1,6 @@
 import api from "../api.js";
-import {
-  nest
-} from "d3-collection";
-import {
-  ascending
-} from "d3-array";
-
+import {nest} from "d3-collection";
+import {ascending} from "d3-array";
 function requestProducts() {
   return {
     type: "PRODUCTS_PENDING"
@@ -26,25 +21,47 @@ function productsError(json) {
   };
 }
 
+function requestSearchProducts() {
+  return {
+    type: "SEARCH_PRODUCTS_PENDING"
+  };
+}
+
+function receiveSearchProducts(json) {
+  return {
+    type: "SEARCH_PRODUCTS_FULFILLED",
+    data: json
+  };
+}
+
+function searchProductsError(json) {
+  return {
+    type: "SEARCH_PRODUCTS_REJECTED",
+    data: json
+  };
+}
+
 export function fetchUnNestedProducts() {
   return function(dispatch) {
-    dispatch(requestProducts());
+    dispatch(requestSearchProducts());
     return api.get("/api/products")
       .then(response => {
         const result = {};
         response.data.map(product => {
-          if(result[product.name.toLowerCase().substring(0,1)]) {
-            result[product.name.toLowerCase().substring(0,1)].values.push(product);
+          if (result[product.name.toLowerCase().substring(0, 1)]) {
+            result[product.name.toLowerCase().substring(0, 1)].values.push(product);
           }
           else {
-            result[product.name.toLowerCase().substring(0,1)] = {values :[]};
+            result[product.name.toLowerCase().substring(0, 1)] = {
+              values: []
+            };
           }
         });
 
-        dispatch(receiveProducts(result));
+        dispatch(receiveSearchProducts(result));
       })
       .catch(response => {
-        dispatch(productsError(response.data));
+        dispatch(searchProductsError(response.data));
       });
   };
 }
@@ -93,7 +110,6 @@ export function fetchProducts() {
         dispatch(receiveProducts(json));
       })
       .catch(response => {
-        console.log(response);
         dispatch(productsError(response.data));
       });
   };

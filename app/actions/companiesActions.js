@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 
 function requestCompanies() {
   return {
@@ -23,7 +23,7 @@ function companiesError(json) {
 export function fetchCompanies() {
   return function(dispatch) {
     dispatch(requestCompanies());
-    return axios.get(`/api/companies`)
+    return  api.get(`/api/companies`)
     .then(response => {
       dispatch(receiveCompanies(response.data));
 

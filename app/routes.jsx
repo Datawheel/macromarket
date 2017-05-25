@@ -15,40 +15,32 @@ import Profile from "pages/Profile";
 import Settings from "pages/Settings";
 import Inbox from "pages/Inbox";
 
-
 function genRandId(path) {
   let candidates;
   if (path.includes("country")) {
     candidates = [
-      "ocnzl",
+      "afcod",
+      "afegy",
+      "astjk",
+      "saper",
       "saarg",
       "nagtm",
-      "afdji",
-      "afeth",
-      "eurou",
-      "nablz",
-      "saury",
-      "natto",
-      "ocaus"
+      "eusun",
+      "eultu",
+      "euksv"
     ];
-  }
-  else if (path.includes("product")) {
+
+  } else if (path.includes("product")) {
     candidates = [
-      "010302",
-      "021001",
-      "0212",
-      "031507",
-      "115402",
-      "14",
-      "147102",
-      "168427",
-      "168443",
-      "168534",
-      "01010120",
-      "01010599"
+      "01010111",
+      "01041000",
+      "02070690",
+      "02071332",
+      "02080710",
+      "16848350",
+      "06284210"
     ];
-  }
-  else if (path.includes("company")) {
+  } else if (path.includes("company")) {
     candidates = ["164", "1", "3", "2"];
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
@@ -65,23 +57,21 @@ function checkForId(nextState, replace) {
       : `${reqestedUrl}/${randId}`;
 
     return replace({pathname: nextUrl});
-  }
-  else {
+  } else {
     // make sure it's legal
     return <NotFound/>;
   }
 }
 
-
 export default function RouteCreate() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRoute component={Home}/>
       <Route path="/country" component={Country} onEnter={checkForId}/>
       <Route path="/country/:countryWithId" component={CountryWithId}/>
       <Route path="/company" component={Company} onEnter={checkForId}/>
       <Route path="/company/:companyWithId" component={CompanyWithId}/>
-      <Route path="/product" component={Product}  onEnter={checkForId}/>
+      <Route path="/product" component={Product} onEnter={checkForId}/>
       <Route path="/product/:productWithId" component={ProductWithId}/>
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>

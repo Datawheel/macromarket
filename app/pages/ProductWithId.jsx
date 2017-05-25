@@ -16,7 +16,7 @@ class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: "exports",
+      selectedOption: "all",
       country: {
         label: "All",
         value: "all"
@@ -75,6 +75,7 @@ class ProductWithId extends React.Component {
         </div>
       );
     }
+    console.log(trades, "TRADDDDD");
 
     if (error || countriesError) {
       return (
@@ -159,9 +160,10 @@ class ProductWithId extends React.Component {
             {trades
               ? <div className="result-wrapper">
                   {trades.map((trade, index) => {
+                    console.log(trade, "SDFDJJDJJDJJ");
                     const content = trade.Company;
                     content.profile_type = "company";
-                    if (trade.trade_flow === `${this.state.tradeFilter}s` && (this.state.countryFilter.name === "all" || this.state.countryFilter.id === trade.country_id)) {
+                    if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {
                       return <Card key={index} content={content}/>;
                     } else {
                       return null;

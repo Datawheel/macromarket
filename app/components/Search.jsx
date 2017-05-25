@@ -46,8 +46,11 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProducts();
+    // this.props.fetchProducts();
     if (this.props.keyword) {
+      console.log(this.props.keyword, "KEYWORD");
+      console.log(this.state.filter, "FILTER");
+
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
   }
@@ -62,20 +65,12 @@ class Search extends React.Component {
       );
     } else {
       return (
-        <p>No results.</p>
+        <div className="search-no-results"><p>No results.</p></div>
       );
     }
   }
 
   render() {
-
-    // if (!this.props.products) {
-    //   return (
-    //     <div className="content-wrapper overlay">
-    //       <div>loading...</div>
-    //     </div>
-    //   );
-    // }
     return (
       <div className="content-wrapper overlay">
         <div className="overlay-inner">

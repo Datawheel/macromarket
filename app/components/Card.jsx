@@ -6,10 +6,6 @@ export class Card extends React.Component {
   constructor(props) {
     super(props);
     this.content = this.props.content;
-    this.state = {
-      to: "anywhere",
-      from: "anywhere"
-    }
   }
 
   render() {
@@ -17,24 +13,21 @@ export class Card extends React.Component {
     let img = "";
     let id = this.content.id;
     if (this.content.profile_type === "country") {
+      console.log(this.content, "countyr");
       icon = "/images/icons/icon-country-yellow.svg";
+      const countryImage = this.content.image ? this.content.id : this.content.id.slice(0,2)
+      img = `/images/${this.content.profile_type}/${countryImage}.jpg`;
     }
     if (this.content.profile_type === "company") {
       icon = "/images/icons/icon-company-yellow.svg";
-      img = this.content.profile_image;
+      img = this.content.image || this.content.profile_image;
       if (id.toString().includes("company")) {
         id = id.replace("company", "");
       }
     }
-    else {
+    if (this.content.profile_type === "product") {
       const id = this.content.id;
-      const fallbackId = id.substring(0, 2);
-
-      img = this.content.flickr_link
-        ? `/images/${this.content.profile_type}/${this.content.id}.jpg`
-        : this.content.parent_image
-          ? `/images/${this.content.profile_type}/${this.content.id.slice(0, -2)}.jpg`
-          : `/images/${this.content.profile_type}/${fallbackId}.jpg`;
+      img = `/images/${this.content.profile_type}/${this.content.image}.jpg`
     }
 
     let productCategory = "";

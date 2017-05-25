@@ -1,5 +1,24 @@
 import api from "../api.js";
 
+function requestSaveUser() {
+  return {
+    type: "SAVE_USER_PENDING"
+  };
+}
+
+function receiveSaveUser(json) {
+  return {
+    type: "SAVE_USER_FULFILLED",
+    data: json
+  };
+}
+
+function saveUserError(json) {
+  return {
+    type: "SAVE_USER_REJECTED",
+    data: json
+  };
+}
 function requestAuth() {
   return {
     type: "AUTH_PENDING"
@@ -91,6 +110,22 @@ export function login(email, password) {
       .catch(response => {
         dispatch(receiveLoginError(response.data));
       });
+  };
+}
+
+export function updateUser(id, email, password) {
+  return function(dispatch) {
+    dispatch(requestSaveUser());
+    return api.post(`/api/auth/updateUser/${id}`, {
+      email,
+      password
+    })
+    .then(response => {
+      dispatch(receiveSaveUser(response.data));
+    })
+    .catch(response => {
+      dispatch(saveUserError(response.data));
+    });
   };
 }
 

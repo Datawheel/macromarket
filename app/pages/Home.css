@@ -1,4 +1,8 @@
 @import "../Variables";
+.home-background {
+  background: 202020;
+  min-height: 100%;
+}
 .home {
     background-image: url("/images/background-body.png");
     width: 100%;
@@ -90,12 +94,21 @@
                 }
             }
         }
-
         & .Select-menu-outer {
             width: 100%;
             border: 1px solid #fff;
-        }
+            border-top: 1px solid var(--light-grey);
+          & .dropdown-option {
+            color: var(--light-grey);
+            font-weight: 200;
+            font-size: 14px;
+            padding: 12px 10px;
+          }
 
+            & .Select-option.is-selected {
+              display: none;
+            }
+        }
         & .search-input-wrapper {
             position: relative;
             margin: 0 -1px;
@@ -108,7 +121,6 @@
                 color: var(--middle-grey);
             }
         }
-
         & .filter-dropdown-container {
             & .selected-wrapper {
                 height: 60px;
@@ -127,19 +139,16 @@
                 }
             }
         }
-
         & ul {
             border-top: 1px solid var(--light-grey);
             padding: 10px 0;
             z-index: 10;
             height: 200px;
         }
-
         & ul.suggestions-wrapper {
             height: 300px;
             overflow: scroll;
         }
-
         & .search-button {
             width: 15%;
             background-color: black;
@@ -152,6 +161,7 @@
             width: 100%;
             margin: 0;
             position: absolute;
+            cursor: pointer;
             .icon {
                 padding: 0 10px;
             }
@@ -162,12 +172,13 @@
                     display: inline-block;
                     position: absolute;
                     top: 50%;
+                    font-size: 13px;
+                    padding-left: 10px;
                     transform: translateY(-50%);
                 }
             }
         }
     }
-
     & .cta-buttons-wrapper {
         cursor: pointer;
         margin-top: 65px;
@@ -186,9 +197,9 @@
             & .text-wrapper {
                 position: relative;
                 padding: 10% 0;
-                    height: 60px;
-                & h2  {
-                  font-size: 16px;
+                height: 60px;
+                & h2 {
+                    font-size: 16px;
                 }
                 & p {
                     font-size: 14px;

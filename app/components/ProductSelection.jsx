@@ -32,7 +32,6 @@ class ProductSelection extends React.Component {
   }
 
   selectProduct = product => {
-
     const productObj = {
       product_id: product.id,
       trade_flow: this.props.tradeFlow,
@@ -71,7 +70,6 @@ class ProductSelection extends React.Component {
           <h3 className="product-label">Categories</h3>
           <div className="product-selection">
             {Object.keys(products).map((product, index) => {
-
               const productId = products[product].key;
               const values = products[product].values;
               if (values.length > 0) {

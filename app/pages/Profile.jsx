@@ -2,8 +2,7 @@ import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import {isAuthenticated, logout} from "../actions/authenticationActions";
-import {updateUser} from "../actions/userActions";
+import {isAuthenticated, logout, updateUser} from "../actions/authenticationActions";
 import "./Profile.css";
 import "../components/Form.css";
 
@@ -35,7 +34,6 @@ class userWithId extends React.Component {
   }
 
   save = () => {
-    console.log(this.props.user.id);
     if (this.state.password1.length < 5 || this.state.password2.length < 5) {
       this.setState({error: "Password must be longer than 5 characters"});
     }
@@ -47,8 +45,7 @@ class userWithId extends React.Component {
   }
 
   render() {
-    const {user, loading, error} = this.props;
-    console.log(user, "DF");
+    const {updatedUser, user, loading, error} = this.props;
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -93,6 +90,7 @@ class userWithId extends React.Component {
               </div>
               <div className="password error-wrapper">
                 <p>{this.state.error}</p>
+                {updatedUser ? <p>New password Saved!</p> : null}
               </div>
               <div className="button-wrapper">
                 <button className="button-back" onClick={this.save}>Save</button>
@@ -123,7 +121,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error, token: state.authentication.token};
+  return {updatedUser: state.authentication.updatedUser, user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error, token: state.authentication.token};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(userWithId);

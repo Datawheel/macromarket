@@ -20,26 +20,6 @@ function saveError(json) {
   };
 }
 
-function requestSaveUser() {
-  return {
-    type: "SAVE_USER_PENDING"
-  };
-}
-
-function receiveSaveUser(json) {
-  return {
-    type: "SAVE_USER_FULFILLED",
-    data: json
-  };
-}
-
-function saveUserError(json) {
-  return {
-    type: "SAVE_USER_REJECTED",
-    data: json
-  };
-}
-
 function requestDelete() {
   return {
     type: "DELETE_PENDING"
@@ -107,22 +87,6 @@ export function saveCompany(company) {
           dispatch(saveError(response.data));
         });
     }
-  };
-}
-
-export function updateUser(id, email, password) {
-  return function(dispatch) {
-    dispatch(requestSaveUser());
-    return api.post(`/api/updateUser/${id}`, {
-      email,
-      password
-    })
-    .then(response => {
-      dispatch(receiveSaveUser(response.data));
-    })
-    .catch(response => {
-      dispatch(saveUserError(response.data));
-    });
   };
 }
 
