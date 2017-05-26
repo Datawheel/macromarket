@@ -5,6 +5,32 @@ export function arrowRenderer() {
     <span className="chevron bottom"></span>
   );
 }
+export function productValueRenderer(value) {
+  const id = value.value;
+  const colorName = `color-${id}`;
+
+  if (value.value === "all") {
+    return (
+      <div>
+        <div className={`colored-wrapper`}>
+          <p className="all">{value.label}</p>
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div>
+      <div className={`colored-wrapper`}>
+        <div className={`${colorName} product-selected-wrapper icon-wrapper`}>
+          <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
+        </div>
+        <div>
+          <p className="product-selected">{value.label}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function productOptionRenderer(option) {
   if (option.value === "all") {
@@ -22,7 +48,7 @@ export function productOptionRenderer(option) {
 
   return (
     <div>
-      <div className={`colored-wrapper product-selected-wrapper`}>
+      <div className={`colored-wrapper`}>
         <div className={`${colorName} icon-wrapper`}>
           <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
         </div>
@@ -82,7 +108,6 @@ export function countryOptionRenderer(option, i, x) {
   )
 }
 export function countryValueRenderer(value) {
-
   const id = value.value;
   const continentId = value.value.slice(0,2);
     const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;

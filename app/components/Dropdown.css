@@ -8,10 +8,11 @@
         }
     }
     & .is-open {
-        & .continent-selected-wrapper{
+
+        & .continent-selected-wrapper, & .product-selected-wrapper{
             display: none !important;
         }
-        & .country-selected-wrapper {
+        & .country-selected-wrapper, & .product-selected {
             left: 0px !important;
         }
     }
@@ -32,7 +33,7 @@
             padding: 0px;
             & p {
                 margin: 0;
-                margin-left: 20px;
+                left: 20px;
                 width: 55%;
                 overflow: hidden;
             }

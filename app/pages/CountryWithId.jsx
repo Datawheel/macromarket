@@ -114,7 +114,7 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Select valueRenderer={productOptionRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.product} options={dropDownProducts} onChange={this.selectDropDown}/>
+            <Select valueRenderer={productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.product} options={dropDownProducts} onChange={this.selectDropDown}/>
           </div>
         </div>
         <div className="result-wrapper-outer">
