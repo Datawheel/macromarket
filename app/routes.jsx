@@ -2,7 +2,7 @@ import React from "react";
 import {Route, IndexRoute} from "react-router";
 import App from "components/App";
 import Home from "pages/Home";
-// import NotFound from "pages/NotFound";
+import NotFound from "pages/NotFound";
 import Country from "pages/Country";
 import CountryWithId from "pages/CountryWithId";
 import Company from "pages/Company";
@@ -59,7 +59,7 @@ function checkForId(nextState, replace) {
     return replace({pathname: nextUrl});
   } else {
     // make sure it's legal
-    // return <NotFound/>;
+    return <NotFound/>;
   }
 }
 
