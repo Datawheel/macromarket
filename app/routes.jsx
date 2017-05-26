@@ -1,6 +1,5 @@
 import React from "react";
 import {Route, IndexRoute} from "react-router";
-
 import App from "components/App";
 import Home from "pages/Home";
 import NotFound from "pages/NotFound";
@@ -60,7 +59,7 @@ function checkForId(nextState, replace) {
     return replace({pathname: nextUrl});
   } else {
     // make sure it's legal
-    return <NotFound/>;
+    // return <NotFound/>;
   }
 }
 
