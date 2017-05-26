@@ -32,8 +32,8 @@
                 top: 0;
                 color: white;
                 position: absolute;
-                padding: 15px 5%;
-                width: 100%;
+                margin: 15px 0;
+                padding-left: 4%;
                 & h4 {
                     letter-spacing: 2px;
                     margin: 5px 0;
@@ -132,6 +132,9 @@
 }
 
 .company {
+    & button {
+        font-size: 14px;
+    }
     & .background-image {
         opacity: 1;
     }
@@ -149,35 +152,39 @@
             max-width: 165px;
         }
     }
-    & .text-wrapper {
-        & .section-wrapper {
-            vertical-align: top;
-            display: inline-block;
-            width: 20%;
-            padding: 15px;
-            text-align: center;
-            & .img-wrapper {
-                display: inline-block;
+    & .image-overlay-wrapper {
+        & .text-wrapper {
+            width: 100%;
+            padding-left: 0 !important;
+            & .section-wrapper {
                 vertical-align: top;
-            }
-            & p {
-                margin: 0;
-                max-width: 85%;
-                text-align: left;
                 display: inline-block;
+                width: 20%;
+                padding: 15px;
+                text-align: center;
+                & .img-wrapper {
+                    display: inline-block;
+                    vertical-align: top;
+                }
+                & p {
+                    margin: 0;
+                    max-width: 85%;
+                    text-align: left;
+                    display: inline-block;
+                }
+                & button {
+                    color: white;
+                    padding: 15px 10%;
+                    background: var(--red);
+                    border: none;
+                }
             }
-            & button {
-                color: white;
-                padding: 15px 10%;
-                background: var(--red);
-                border: none;
-            }
-        }
-        & .section-wrapper:nth-child(2) {
-            border-left: 1px solid white;
-            border-right: 1px solid white;
-            & p {
-                margin-bottom: 30px;
+            & .section-wrapper:nth-child(2) {
+                border-left: 1px solid white;
+                border-right: 1px solid white;
+                & p {
+                    margin-bottom: 30px;
+                }
             }
         }
     }
@@ -197,6 +204,7 @@
                 width: 35px;
                 position: absolute;
             }
+        
             & .continent-wrapper {
                 height: 130px;
                 margin-top: -15px;
@@ -215,7 +223,7 @@
 
 .product.detailed-content-wrapper {
     & .filter-wrapper {
-        margin: -5px;
+        margin: -5px 0px;
     }
     & .filter {
         & .dropdown-container {

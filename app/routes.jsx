@@ -3,6 +3,7 @@ import {Route, IndexRoute} from "react-router";
 
 import App from "components/App";
 import Home from "pages/Home";
+import NotFound from "pages/NotFound";
 import Country from "pages/Country";
 import CountryWithId from "pages/CountryWithId";
 import Company from "pages/Company";
@@ -41,7 +42,7 @@ function genRandId(path) {
       "06284210"
     ];
   } else if (path.includes("company")) {
-    candidates = ["164", "1", "3", "2"];
+    candidates = ["14", "1", "3", "2", "34", "12", "55"];
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
 }

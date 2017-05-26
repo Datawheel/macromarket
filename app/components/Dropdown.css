@@ -4,10 +4,17 @@
         & p {
             width: 400px;
             font-size: 12px;
-            padding-left:20px;
+            padding-left: 20px;
         }
     }
-
+    & .is-open {
+        & .continent-selected-wrapper{
+            display: none !important;
+        }
+        & .country-selected-wrapper {
+            left: 0px !important;
+        }
+    }
     & .Select {
         display: inline-block;
         width: 55%;
@@ -48,6 +55,14 @@
                 }
             }
         }
+        & .continent-selected-wrapper {
+            width: 34px;
+        }
+        & .country-selected-wrapper {
+            position: absolute;
+            top: 0;
+            left: 35px;
+        }
     }
     & .Select-menu-outer {
         border: none;
@@ -85,8 +100,7 @@
 }
 
 .settings {
-  & .chevron::before {
-    left: .1em;
-  }
-
+    & .chevron::before {
+        left: .1em;
+    }
 }

@@ -6,8 +6,7 @@ export function arrowRenderer() {
   );
 }
 
-
-export function productOptionRenderer (option) {
+export function productOptionRenderer(option) {
   if (option.value === "all") {
     return (
       <div>
@@ -23,7 +22,7 @@ export function productOptionRenderer (option) {
 
   return (
     <div>
-      <div className={`colored-wrapper`}>
+      <div className={`colored-wrapper product-selected-wrapper`}>
         <div className={`${colorName} icon-wrapper`}>
           <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
         </div>
@@ -37,10 +36,12 @@ export function productOptionRenderer (option) {
 
 let continents = true;
 export function countryInputChange(inputValue) {
-  continents = inputValue && inputValue.length ? false : true;
+  continents = inputValue && inputValue.length
+    ? false
+    : true;
 }
 
-export function countryOptionRenderer (option, i, x) {
+export function countryOptionRenderer(option, i, x) {
   if (option.value === "all") {
     return (
       <div>
@@ -57,7 +58,8 @@ export function countryOptionRenderer (option, i, x) {
 
   return (
     <div className="country-dropdown">
-      { continents && option.first ? <div className={`${option.continent.toLowerCase()}-wrapper continent-wrapper`}>
+      {continents && option.first
+        ? <div className={`${option.continent.toLowerCase()}-wrapper continent-wrapper`}>
             <div className={`${colorName} colored-wrapper dropdown-item`}>
               <div className={`${colorName} icon-wrapper`}>
                 <div className={`${colorName} darker-color`}></div>
@@ -65,7 +67,9 @@ export function countryOptionRenderer (option, i, x) {
               <div className="continent-name">
                 <p>{option.continent}</p>
               </div>
-            </div></div> : null }
+            </div>
+          </div>
+        : null}
       <div className={`colored-wrapper`}>
         <div className={`icon-wrapper`}>
           <img className="product_icon" src={`/images/flags/country_${id}.png`}></img>
@@ -77,14 +81,24 @@ export function countryOptionRenderer (option, i, x) {
     </div>
   )
 }
-export function countryValueRenderer (value) {
-  console.log(value);
-    const id = value.value;
-  return (
-    <div className={`colored-wrapper`}>
+export function countryValueRenderer(value) {
 
-      <div>
-        <p>{value.label}</p>
+  const id = value.value;
+  const continentId = value.value.slice(0,2);
+    const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;
+  return (
+    <div>
+        <div className={`${value.continent.toLowerCase()}-wrapper continent-selected-wrapper`}>
+            <div className={`${colorName} colored-wrapper dropdown-item`}>
+              <div className={`${colorName} icon-wrapper`}>
+                <div className={`${colorName}`}></div>
+                <img src={`/images/flags/country_${continentId}.png`}/></div>
+            </div>
+          </div>
+      <div className={`country-selected-wrapper colored-wrapper`}>
+        <div>
+          <p>{value.label}</p>
+        </div>
       </div>
     </div>
   )

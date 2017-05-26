@@ -9,7 +9,6 @@ import {Card} from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from 'react-select';
-import {browserHistory} from "react-router";
 import {arrowRenderer, productOptionRenderer, productValueRenderer} from "../components/Dropdown"
 
 class CountryWithId extends React.Component {
@@ -22,7 +21,7 @@ class CountryWithId extends React.Component {
         value: "all"
       }
     };
-    this.shouldUpdate = false;
+
   }
 
   componentDidMount() {
@@ -30,19 +29,15 @@ class CountryWithId extends React.Component {
     this.props.fetchCountry(id);
     this.props.fetchProducts();
     this.props.fetchTradesByCountry(id);
-    browserHistory.listen(location => {
-      this.shouldUpdate = true;
-    });
+
   }
 
-  componentWillUpdate() {
-    if (this.shouldUpdate) {
-
-      const id = this.props.params.countryWithId
+  componentWillReceiveProps(newProps) {
+    if (newProps.params.countryWithId !== this.props.params.countryWithId ) {
+      const id = newProps.params.countryWithId
       this.props.fetchCountry(id);
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
-      this.shouldUpdate = false;
     }
   }
 
@@ -128,8 +123,6 @@ class CountryWithId extends React.Component {
                 {trades.map((trade, index) => {
                   const content = trade.Company;
                   content.profile_type = "company";
-                  console.log(trade.trade_flow);
-                  console.log(this.state.selectedOption);
                   if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
                     return <Card key={index} content={content}/>;
                   } else {

@@ -22,7 +22,6 @@ class ProductWithId extends React.Component {
         value: "all"
       }
     };
-    this.shouldUpdate = false;
   }
 
   componentDidMount() {
@@ -31,19 +30,15 @@ class ProductWithId extends React.Component {
     this.props.fetchCountries();
     this.props.fetchProducts();
     this.props.fetchTradesByProduct(id);
-    browserHistory.listen(location => {
-      this.shouldUpdate = true;
-    });
   }
 
-  componentDidUpdate() {
-    if (this.shouldUpdate) {
-      const id = this.props.params.productWithId;
+    componentWillReceiveProps(newProps) {
+    if (this.props.params.productWithId !== newProps.params.productWithId) {
+      const id = newProps.params.productWithId;
       this.props.fetchProduct(id);
       this.props.fetchCountries();
       this.props.fetchProducts();
       this.props.fetchTradesByProduct(id);
-      this.shouldUpdate = false;
     }
   }
 
@@ -52,7 +47,6 @@ class ProductWithId extends React.Component {
   }
 
   selectDropDown = country => {
-    console.log(country);
     this.setState({country});
   }
 
@@ -75,8 +69,6 @@ class ProductWithId extends React.Component {
         </div>
       );
     }
-    console.log(trades, "TRADDDDD");
-
     if (error || countriesError) {
       return (
         <div className="blue-loading">
@@ -160,7 +152,6 @@ class ProductWithId extends React.Component {
             {trades
               ? <div className="result-wrapper">
                   {trades.map((trade, index) => {
-                    console.log(trade, "SDFDJJDJJDJJ");
                     const content = trade.Company;
                     content.profile_type = "company";
                     if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {

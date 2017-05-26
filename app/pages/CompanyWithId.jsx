@@ -12,22 +12,18 @@ import "./Detailed.css";
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
-      this.shouldUpdate = false;
   }
 
   componentDidMount() {
     const id = this.props.params.companyWithId;
     this.props.fetchCompany(id);
     this.props.fetchProfileTradesByCompany(id);
-    browserHistory.listen(location => {
-      this.shouldUpdate = true;
-    });
   }
 
-  componentDidUpdate() {
+  componentWillReceiveProps(newProps) {
 
-    if (this.shouldUpdate) {
-    const id = this.props.params.companyWithId
+    if (this.props.params.companyWithId !== newProps.params.companyWithId) {
+    const id =  newProps.params.companyWithId;
       this.props.fetchCompany(id);
       this.props.fetchProfileTradesByCompany(id);
       this.shouldUpdate = false;
