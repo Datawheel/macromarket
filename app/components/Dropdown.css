@@ -4,12 +4,11 @@
         & p {
             width: 400px;
             font-size: 12px;
-            padding-left: 20px;
+            padding-left: 12px;
         }
     }
     & .is-open {
-
-        & .continent-selected-wrapper, & .product-selected-wrapper{
+        & .continent-selected-wrapper, & .product-selected-wrapper {
             display: none !important;
         }
         & .country-selected-wrapper, & .product-selected {
@@ -33,13 +32,14 @@
             padding: 0px;
             & p {
                 margin: 0;
-                left: 20px;
+                left: 30px;
+                padding: 12px;
                 width: 55%;
                 overflow: hidden;
             }
             & .all {
+                left: 15px;
                 padding: 0px;
-                margin-left: 10px;
             }
         }
         & .icon-wrapper {
@@ -95,7 +95,7 @@
     & .Select {
         & .Select-value p {
             margin-left: 0px;
-            padding: 10px;
+            padding: 0px;
         }
     }
 }

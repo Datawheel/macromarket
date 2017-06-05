@@ -7,6 +7,7 @@ import {fetchSearch, setSearch} from "../actions/searchActions";
 import {CardHome} from "../components/Card.jsx";
 import "./Home.css";
 import Select from 'react-select';
+import {browserHistory} from "react-router";
 
 class Home extends React.Component {
   constructor(props) {
@@ -34,25 +35,22 @@ class Home extends React.Component {
     this.setState({suggestionsVisible: true});
     this.setState({keyword: e.target.value});
     const length = e.target.value.length;
-    console.log(this.props.products, "PRODUCTS");
-    console.log(this.props.countries, "COMPANIES");
-    console.log(this.props.companies, "COMPANIES");
     if (length && this.props.countries && this.props.products && this.props.companies) {
       Object.keys(this.props.countries).map(continent => {
         this.props.countries[continent].values.map(country => {
           if (country.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-            suggestions.push({type: "Country", name: country.name});
+            suggestions.push({type: "Country", name: country.name, id: country.id});
           }
         })
       });
       this.props.products[e.target.value.toLowerCase().substring(0, 1)].values.map(product => {
         if (product.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-          suggestions.push({type: "Product", name: product.name});
+          suggestions.push({type: "Product", name: product.name, id: product.id});
         }
       });
       this.props.companies.map(company => {
         if (company.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-          suggestions.push({type: "Company", name: company.name});
+          suggestions.push({type: "Company", name: company.name, id: company.id});
         }
       });
     }
@@ -70,8 +68,8 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
-    this.setState({keyword: suggestion.name});
-    this.setState({suggestionsVisible: false});
+
+      browserHistory.push(`/${suggestion.type.toLowerCase()}/${suggestion.id}`);
   }
 
   search = () => {

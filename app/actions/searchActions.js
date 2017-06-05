@@ -19,7 +19,6 @@ export function setSearch(json) {
   };
 }
 
-
 export function fetchSearch(query, filter) {
   return function(dispatch) {
     dispatch(requestSearch());

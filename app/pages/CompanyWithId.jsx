@@ -16,8 +16,15 @@ class CompanyWithId extends React.Component {
 
   componentDidMount() {
     const id = this.props.params.companyWithId;
-    this.props.fetchCompany(id);
-    this.props.fetchProfileTradesByCompany(id);
+    if(id.slice(0, 3)=== "ca_") {
+      this.props.fetchCompany(id);
+
+    }
+    else {
+      this.props.fetchCompany(id);
+      this.props.fetchProfileTradesByCompany(id);
+    }
+
   }
 
   componentWillReceiveProps(newProps) {
@@ -32,6 +39,7 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error, trades} = this.props;
+    console.log(company);
     if (loading || !company) {
       return (
         <div className="detailed-content-wrapper">

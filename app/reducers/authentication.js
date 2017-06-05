@@ -38,6 +38,7 @@ export default (state = {
     case "LOG_OUT_REJECTED":
     case "SIGN_UP_REJECTED":
     case "LOG_IN_REJECTED":
+    console.log("HERE ");
       return { ...state,
         loading: false,
         user: null,

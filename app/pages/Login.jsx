@@ -4,6 +4,8 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {authenticate, login} from "../actions/authenticationActions";
+import Sidebar from "components/Sidebar";
+import "../components/Form.css";
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,18 +17,17 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-  // this.props.isAuthenticated();
+    const {user} = this.props;
+    if (user) {
+      browserHistory.push("/profile");
+    }
   }
 
-
   componentDidUpdate() {
-    // const {token, user} = this.props;
-    // if (user) {
-    //   browserHistory.push("/profile");
-    // }
-    // if (token) {
-    //   this.props.authenticate(this.props.token);
-    // }
+    const {user} = this.props;
+    if (user) {
+      browserHistory.push("/profile");
+    }
   }
 
   handlePasswordChange = event => {
@@ -40,56 +41,44 @@ class Login extends React.Component {
   logIn = e => {
     e.preventDefault();
     this.props.login(this.state.email, this.state.password);
+
   }
 
   render() {
     const {loading, error, user} = this.props;
 
-    if (loading) {
-      return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
-        </div>
-      );
-    }
-
-    if (user) {
-      return (
-        <div>
-          <h2>login</h2>
-          <div className="login-form-wrapper">
-            <h3>Already logged in.</h3>
-            <p>Go to your <a href="/profile">profile</a>.</p>
-          </div>
-        </div>
-      );
-    }
-
     return (
-      <div>
-        {error
-          ? <div className="err">error</div>
-          : null}
-        <h2>login</h2>
-        <div className="login-form-wrapper">
-          <form>
-            <div>
-              <label>Email:</label>
-              <input onChange={this.handleEmailChange} value={this.state.email} type="text" name="email"/>
+      <div className="login">
+        <div className="inner-content-wrapper">
+          <Sidebar></Sidebar>
+          <div className="center-content form-wrapper">
+            <div className="title-wrapper">Login</div>
+            <div className="form">
+              <div className="content-wrapper">
+                <div className="password error-wrapper">
+                  {error
+                    ? <p>{error}</p>
+                    : null}</div>
+              </div>
+              <div className="input-wrapper">
+                <label>Email</label>
+                <input onChange={this.handleEmailChange} value={this.state.email} type="text" name="email"/>
+              </div>
+              <div className="input-wrapper">
+                <label>Password</label>
+                <input onChange={this.handlePasswordChange} value={this.state.password} type="password" name="password"/>
+              </div>
+              <div className="login-wrapper">
+                <button onClick={this.logIn}>Login</button>
+              </div>
             </div>
-            <div>
-              <label>Password:</label>
-              <input onChange={this.handlePasswordChange} value={this.state.password} type="password" name="password"/>
+            <div className="text-wrapper">
+              <p>Don't have an account?
+                <Link to="/signup"> Sign up</Link>
+              </p>
+              <p>Forgot Password?</p>
             </div>
-            <div>
-              <button onClick={this.logIn}>Login</button>
-            </div>
-          </form>
-
-          <p>Don't have an account?
-            <Link to="/signup">Sign up</Link>
-          </p>
-          <p>Forgot Password?</p>
+          </div>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 @import "../Variables";
-.settings {
+.settings, .login, .signup {
     background-image: url("/images/settings-bg.png");
     padding: 60px 0;
     min-height: 100%;
@@ -26,14 +26,83 @@
         }
     }
     & button {
-      font-size: 13px;
-      font-weight: 300;
+        font-size: 13px;
+        font-weight: 300;
+    }
+}
+
+.settings {
+    & .content-wrapper {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.login, .signup {
+    text-align: center;
+    & .form-wrapper {
+        & .title-wrapper {
+            width: 15%;
+            text-align: center;
+            max-width: 140px;
+            padding: 1.5% 0px;
+            min-width: 100px;
+        }
+        & .form {
+            & .error-wrapper p {
+                padding: 2px 0px;
+            }
+        }
+    }
+    & .center-content {
+        text-align: left;
+    }
+    & .form {
+        & .input-wrapper {
+            padding: 10px 0px;
+            text-align: left;
+            & label {
+                padding: 7px 0px;
+                color: var(--middle-grey);
+            }
+        }
+    }
+    & .text-wrapper {
+        text-align: center;
+    }
+    & p {
+        color: var(--middle-grey);
+        margin: 5px;
+        font-size: 14px;
+    }
+    & .form {
+        padding: 6% 20%;
+        padding-bottom: 0px;
+    }
+    & .login-wrapper, & .signup-wrapper {
+        text-align: center;
+        padding: 25px 0px;
+        & button {
+            background: var(--accent-color);
+            color: white;
+            border: 0px;
+            width: 110px;
+            padding: 10px;
+            width: 38%;
+            max-width: 155px;
+        }
     }
 }
 
 .form-wrapper {
     min-height: 600px;
     background: #EBEBEB;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
+    box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
     & .title-wrapper {
         background-color: black;
         color: white;
@@ -135,13 +204,6 @@
     }
     & .input-wrapper {
         padding: 10px;
-    }
-    & .content-wrapper {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
     }
     & .col {
         width: 46%;
@@ -296,8 +358,8 @@
                 }
             }
             & .Select {
-              width: 40%;
-              vertical-align: top;
+                width: 40%;
+                vertical-align: top;
             }
             & .selected-countries-wrapper {
                 width: 50%;

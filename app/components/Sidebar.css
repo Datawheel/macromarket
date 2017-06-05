@@ -1,11 +1,4 @@
 @import "../Variables";
-.company {
-    & .sidebar {
-        min-height: 100vh;
-        background: var(--middle-blue);
-    }
-}
-
 .detailed-content-wrapper.product {
     & .sidebar-wrapper {
         background: var(--dark-blue);
@@ -50,7 +43,7 @@
             padding: 30px 0;
         }
         & .profile-info {
-            padding: 0 40px;
+            padding: 0 40px; 
             height: 442px;
             color: white;
         }
@@ -88,5 +81,20 @@
             display: block;
             color: white;
         }
+    }
+}
+
+.company {
+    & .sidebar {
+        min-height: 100vh;
+        background: var(--dark-blue);
+    }
+    & .sidebar-inner {
+        & .profile-info {
+            height: 448px;
+        }
+    }
+    & .products {
+       background: var(--middle-blue);
     }
 }

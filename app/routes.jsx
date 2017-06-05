@@ -19,7 +19,17 @@ function genRandId(path) {
   let candidates;
   if (path.includes("country")) {
     candidates = [
+      "naspm",
+      "nacuw",
+      "napri",
+      "nadom",
+      "natca",
       "afcod",
+      "asyem",
+      "eualb",
+      "namex",
+      "nalca",
+      "euhrv",
       "afegy",
       "astjk",
       "saper",
@@ -27,21 +37,64 @@ function genRandId(path) {
       "nagtm",
       "eusun",
       "eultu",
-      "euksv"
+      "euksv",
+      "nacan",
+      "nabrb",
+      "nabes",
+      "naaia",
+      "eusun",
+      "euscg",
+      "eurus",
+      "eumco",
+      "euisl"
     ];
 
   } else if (path.includes("product")) {
     candidates = [
-      "01010111",
-      "01041000",
-      "02070690",
+      "010104",
+      "14710410",
+      "11540232",
+      "15730210",
+      "115512",
+      "11570292",
+      "115903",
+      "02080540",
+      "041601",
+      "042306",
+      "020804",
+      "01010420",
+      "01020649",
+      "01020750",
+      "01030614",
+      "010406",
+      "02070960",
+      "02071220",
+      "020713",
+      "15820220",
+      "15830120",
+      "15830610",
       "02071332",
       "02080710",
+      "15731520",
+      "157414",
       "16848350",
-      "06284210"
+      "06284210",
+      "16842541",
+      "168427",
+      "18902111",
+      "14710420",
+      "168425"
     ];
   } else if (path.includes("company")) {
-    candidates = ["14", "1", "3", "2", "34", "12", "55"];
+    candidates = [
+      "14",
+      "1",
+      "3",
+      "2",
+      "34",
+      "12",
+      "55"
+    ];
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
 }

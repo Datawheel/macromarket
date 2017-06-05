@@ -39,7 +39,8 @@ class userWithId extends React.Component {
     }
     if (this.state.password1 !== this.state.password2) {
       this.setState({error: "Passwords must match"});
-    } else {
+    } 
+    else {
       this.props.updateUser(this.props.user.id, this.props.user.email, this.state.password1);
     }
   }
@@ -55,18 +56,10 @@ class userWithId extends React.Component {
       );
     }
 
-    if (loading || !user) {
-      return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
-        </div>
-      );
-    }
-
     return (
       <div className="profile">
         <div className="inner-content">
-          <h3>{user.email}</h3>
+          <h3>{user ? user.email : null}</h3>
           <ul>
             <Link to="/inbox">
               <li>Inbox</li>
@@ -90,7 +83,9 @@ class userWithId extends React.Component {
               </div>
               <div className="password error-wrapper">
                 <p>{this.state.error}</p>
-                {updatedUser ? <p>New password Saved!</p> : null}
+                {updatedUser
+                  ? <p>New password Saved!</p>
+                  : null}
               </div>
               <div className="button-wrapper">
                 <button className="button-back" onClick={this.save}>Save</button>
@@ -114,7 +109,7 @@ const mapDispatchToProps = dispatch => {
     logout: () => {
       dispatch(logout())
     },
-    updateUser : (id, email, password) => {
+    updateUser: (id, email, password) => {
       dispatch(updateUser(id, email, password));
     }
   };

@@ -19,6 +19,7 @@ function saveUserError(json) {
     data: json
   };
 }
+
 function requestAuth() {
   return {
     type: "AUTH_PENDING"
@@ -83,11 +84,12 @@ function receiveLogoutError(json) {
 export function isAuthenticated() {
   return function(dispatch) {
     dispatch(requestAuth());
-    api.get("/api/auth/isAuthenticated", {withCredentials: true}).then(response => {
-      if (response.data.msg) {
-        dispatch(receiveAuthError(response.data.msg));
-      }
-      else {
+    api.get("/api/auth/isAuthenticated", {
+      withCredentials: true
+    }).then(response => {
+      if (response.data.message) {
+        dispatch(receiveAuthError(response.data.message));
+      } else {
         dispatch(receiveAuth(response.data));
       }
     }, err => {
@@ -99,13 +101,21 @@ export function isAuthenticated() {
 export function login(email, password) {
   return function(dispatch) {
     // required for sending receiving cookies
-    const config = {withCredentials: true};
+    const config = {
+      withCredentials: true
+    };
     dispatch(requestLogin());
-    return api.post("api/auth/login", {email, password}, config)
+    return api.post("api/auth/login", {
+        email,
+        password
+      }, config)
       .then(response => {
-        console.log(response.data, "LOGIN");
-        dispatch(receiveLogin(response.data));
-        // authenticate()(dispatch);
+        if (response.data.message) {
+            dispatch(receiveLoginError(response.data));
+        }
+        else {
+          dispatch(receiveLogin(response.data));
+        }
       })
       .catch(response => {
         dispatch(receiveLoginError(response.data));
@@ -117,24 +127,29 @@ export function updateUser(id, email, password) {
   return function(dispatch) {
     dispatch(requestSaveUser());
     return api.post(`/api/auth/updateUser/${id}`, {
-      email,
-      password
-    })
-    .then(response => {
-      dispatch(receiveSaveUser(response.data));
-    })
-    .catch(response => {
-      dispatch(saveUserError(response.data));
-    });
+        email,
+        password
+      })
+      .then(response => {
+        dispatch(receiveSaveUser(response.data));
+      })
+      .catch(response => {
+        dispatch(saveUserError(response.data));
+      });
   };
 }
 
 export function signup(email, password) {
   return function(dispatch) {
     // required for sending receiving cookies
-    const config = {withCredentials: true};
+    const config = {
+      withCredentials: true
+    };
     dispatch(requestLogin());
-    return api.post("api/auth/signup", {email, password}, config)
+    return api.post("api/auth/signup", {
+        email,
+        password
+      }, config)
       .then(response => {
         dispatch(receiveLogin(response.data));
       })
@@ -152,7 +167,9 @@ export function logout() {
       data: null
     });
     dispatch(requestLogout());
-    return api.get("api/auth/logout", {withCredentials: true})
+    return api.get("api/auth/logout", {
+        withCredentials: true
+      })
       .then(response => {
         dispatch(receiveLogout(response.data));
       })

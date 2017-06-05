@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {signup} from "../actions/authenticationActions";
+import Sidebar from "components/Sidebar";
+import "../components/Form.css";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -17,7 +19,6 @@ class SignUp extends React.Component {
     if (!nextProps.loading && nextProps.user) {
       browserHistory.push("/profile");
     }
-
   }
 
   onChange = e => {
@@ -31,12 +32,12 @@ class SignUp extends React.Component {
     const {email, password, passwordRepeat} = this.state;
 
     if (!email || !password || !passwordRepeat) {
-      this.setState({error: "Please set all fields."});
+      this.setState({error: "Missing Credentials"});
       return;
     }
 
     if (password !== passwordRepeat) {
-      this.setState({error: "Password fields don't match."});
+      this.setState({error: "Password fields don't match"});
       return;
     }
 
@@ -47,26 +48,38 @@ class SignUp extends React.Component {
   render() {
 
     return (
-      <div>
-        <form>
-          <h2 className="form-signin-heading">Create an account</h2>
-          {this.state.error
-            ? <div className="error">{this.state.error}</div>
-            : null}
-          {this.props.error
-            ? <div className="error">{this.props.error}</div>
-            : null}
-          <label>Email</label>
-          <input type="text" name="email" onChange={this.onChange} value={this.state.email} placeholder="Email"></input>
-          <label>Password</label>
-          <input onChange={this.onChange} value={this.state.password} type="password" name="password" placeholder="Password"></input>
-          <label>
-            Repeat Password</label>
-          <input onChange={this.onChange} value={this.state.passwordRepeat} type="password" name="passwordRepeat" placeholder="Repeat Password"></input>
-          <div>
-            <button onClick={this.signup}>Sign Up</button>
+      <div className="signup">
+        <div className="inner-content-wrapper">
+          <Sidebar></Sidebar>
+          <div className="center-content form-wrapper">
+            <div className="title-wrapper">Sign Up</div>
+            <div className="form">
+              <div className="content-wrapper">
+                <div className="password error-wrapper">
+                  {this.state.error
+                    ? <p>{this.state.error}</p>
+                    : null}</div>
+                <div className="input-wrapper">
+                  <label>Email</label>
+                  <input type="text" name="email" onChange={this.onChange} value={this.state.email}></input>
+                </div>
+                <div className="input-wrapper">
+                  <label>Password</label>
+                  <input onChange={this.onChange} value={this.state.password} type="password" name="password"></input>
+                </div>
+                <div className="input-wrapper">
+                  <label>
+                    Repeat Password</label>
+                  <input onChange={this.onChange} value={this.state.passwordRepeat} type="password" name="passwordRepeat"></input>
+                  <div></div>
+                  <div className="signup-wrapper">
+                    <button onClick={this.signup}>Register</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

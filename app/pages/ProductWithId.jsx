@@ -145,10 +145,6 @@ class ProductWithId extends React.Component {
         </div>
         <div>
           <div className="result-wrapper-outer">
-            <h2>{`Companies that ${this.state.tradeFilter} ${this.props.product.name} ${this.state.country.value === "all"
-                ? ""
-                : `from ${this.state.country.label}`}`}</h2>
-
             {trades
               ? <div className="result-wrapper">
                   {trades.map((trade, index) => {
