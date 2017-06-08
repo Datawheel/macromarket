@@ -6,6 +6,9 @@
     color: #fff;
     & .inner-content {
         padding: 20px;
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
         & h3 {
             margin: 0;
         }
@@ -14,7 +17,7 @@
             font-weight: 400;
         }
     }
-      & .form {
+    & .form {
         margin-top: 40px;
         padding-top: 50px;
         height: 500px;

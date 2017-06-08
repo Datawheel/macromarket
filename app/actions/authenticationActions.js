@@ -98,6 +98,7 @@ export function isAuthenticated() {
   };
 }
 
+// logs user in and fetches the user's company if one exits
 export function login(email, password) {
   return function(dispatch) {
     // required for sending receiving cookies
@@ -114,6 +115,16 @@ export function login(email, password) {
             dispatch(receiveLoginError(response.data));
         }
         else {
+          if (response.data.company_id) {
+            return api.get(`/api/companies/${response.data.company_id}`).then(companyResponse => {
+              dispatch({
+                type: "COMPANY_AUTH_FULFILLED",
+                data: companyResponse.data
+              });
+            }).then(() => {
+              dispatch(receiveLogin(response.data));
+            });
+          }
           dispatch(receiveLogin(response.data));
         }
       })
@@ -164,6 +175,10 @@ export function logout() {
   return function(dispatch) {
     dispatch({
       type: "COMPANY_FULFILLED",
+      data: null
+    });
+    dispatch({
+      type: "COMPANY_AUTH_FULFILLED",
       data: null
     });
     dispatch(requestLogout());

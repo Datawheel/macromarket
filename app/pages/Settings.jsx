@@ -30,7 +30,6 @@ class Settings extends React.Component {
     }
   }
 
-
   nextSlide = () => {
     this.setState({
       slide: this.state.slide + 1
@@ -38,11 +37,10 @@ class Settings extends React.Component {
   }
 
   previousSlide = () => {
-  this.setState({
-    slide: this.state.slide - 1
-  });
-}
-
+    this.setState({
+      slide: this.state.slide - 1
+    });
+  }
 
   deleteCompany = () => {
     this.props.deleteCompany(this.props.user.company_id);
@@ -64,8 +62,11 @@ class Settings extends React.Component {
     //  loading user
     if (loading || !user) {
       return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
+        <div className="settings">
+          <Sidebar></Sidebar>
+          <div className="center-content form-wrapper">
+            <div>loading...</div>
+          </div>
         </div>
       );
     }
@@ -74,7 +75,10 @@ class Settings extends React.Component {
     if (user.company_id && !company) {
       return (
         <div className="settings">
-          <div>loading...</div>
+          <Sidebar></Sidebar>
+          <div className="center-content form-wrapper">
+            <div>loading...</div>
+          </div>
         </div>
       );
     }
@@ -92,7 +96,7 @@ class Settings extends React.Component {
         <Sidebar>
           {user.company_id
             ? <div>
-              <h2>Edit Company</h2>
+                <h2>Edit Company</h2>
                 <div onClick={() => {
                   this.deleteCompany();
                 }}>
@@ -112,7 +116,9 @@ class Settings extends React.Component {
             : null}
           {this.state.slide !== 0
             ? <div>
-                <TradesSelection slide={this.state.slide} previousSlide={this.previousSlide} nextSlide={this.nextSlide} companyId={this.props.companySaved ? this.props.companySaved.id : this.props.company.id}/>
+                <TradesSelection slide={this.state.slide} previousSlide={this.previousSlide} nextSlide={this.nextSlide} companyId={this.props.companySaved
+                  ? this.props.companySaved.id
+                  : this.props.company.id}/>
               </div>
             : null}
         </div>

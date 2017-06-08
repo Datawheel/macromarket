@@ -15,6 +15,11 @@ class SignUp extends React.Component {
     };
   }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.user) {
       browserHistory.push("/profile");
@@ -33,6 +38,11 @@ class SignUp extends React.Component {
 
     if (!email || !password || !passwordRepeat) {
       this.setState({error: "Missing Credentials"});
+      return;
+    }
+
+    if (!this.validateEmail(email)) {
+      this.setState({error: "Please enter a valid email address."});
       return;
     }
 

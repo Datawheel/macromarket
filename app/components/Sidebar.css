@@ -34,16 +34,18 @@
 .sidebar-wrapper {
     display: inline-block;
     width: 27%;
+    position: relative;
     vertical-align: top;
+    z-index: 10;
     & .sidebar-inner {
         & .profile-image-wrapper {
-            width: 200px;
+            width: 16vw;
             margin: 0 auto;
-            height: 200px;
+            height: 16vw;
             padding: 30px 0;
         }
         & .profile-info {
-            padding: 0 40px; 
+            padding: 0 40px;
             height: 442px;
             color: white;
         }
@@ -95,6 +97,6 @@
         }
     }
     & .products {
-       background: var(--middle-blue);
+        background: var(--middle-blue);
     }
 }

@@ -68,7 +68,6 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
-
       browserHistory.push(`/${suggestion.type.toLowerCase()}/${suggestion.id}`);
   }
 

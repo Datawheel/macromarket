@@ -12,20 +12,23 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdownVisible: false
+      dropdownVisible: false,
+      shouldUpdate: false
     }
-
     this.hideDropDown = this.hideDropDown.bind(this);
   }
 
   componentDidMount() {
-      this.props.authenticateAndFetchCompany();
-      browserHistory.listen(location => {
-        if (this.props.searchActive) {
-          this.props.activateSearch(false);
-        }
-          this.setState({dropdownVisible: false})
-      });
+    this.props.authenticateAndFetchCompany();
+    browserHistory.listen(location => {
+      this.setState({dropdownVisible: false})
+      if (this.props.searchActive) {
+        this.props.activateSearch(false);
+
+      }
+    });
+    // Hide dropdown block on click outside the block
+    window.addEventListener("click", this.hideDropDown, false);
   }
 
   hideDropDown = e => {
@@ -59,7 +62,6 @@ class NavBar extends React.Component {
 
   render() {
     const {activateSearch, searchActive, loading, company} = this.props;
-
     return (
       <div>
         <div className={this.props.location.pathname === '/'
@@ -111,7 +113,6 @@ class NavBar extends React.Component {
                     <div onClick={this.handleDropdown} className="arrow-down"></div>
                   </span>
                 </li>
-
               : <li className="nav-bar-element">
                 <Link to="/login">Log In</Link>
               </li>}

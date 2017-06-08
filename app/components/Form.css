@@ -4,6 +4,12 @@
     padding: 60px 0;
     min-height: 100%;
     background-size: cover;
+    & .Select {
+        width: 100%;
+        margin: 0;
+        padding: 0px 2%;
+        border: 1px solid var(--input-grey);
+    }
     & .center-content {
         display: inline-block;
         width: 67%;
@@ -26,7 +32,10 @@
         }
     }
     & button {
-        font-size: 13px;
+        & span {
+            font-size: 14px;
+        }
+        font-size: 1em;
         font-weight: 300;
     }
 }
@@ -66,6 +75,7 @@
             text-align: left;
             & label {
                 padding: 7px 0px;
+                font-weight: 300;
                 color: var(--middle-grey);
             }
         }
@@ -89,6 +99,7 @@
             background: var(--accent-color);
             color: white;
             border: 0px;
+            font-size: 16px;
             width: 110px;
             padding: 10px;
             width: 38%;
@@ -100,9 +111,9 @@
 .form-wrapper {
     min-height: 600px;
     background: #EBEBEB;
-    -webkit-box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
-    -moz-box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
-    box-shadow: 0px 0px 8px 0px rgba(112,112,112,0.35);
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
+    box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
     & .title-wrapper {
         background-color: black;
         color: white;
@@ -171,8 +182,8 @@
 .form {
     padding: 30px;
     & input, & textarea {
-        width: 100%;
-        padding: 4px;
+        width: 96%;
+        padding: 7px 2%;
         font-weight: 200;
         border: 1px solid var(--input-grey);
         border-radius: var(--border-raidus);
@@ -217,8 +228,11 @@
         }
     }
     & label {
-        padding: 10px 0;
+        color: var(--middle-grey);
+        font-size: 15px;
+        padding: 8px 0;
         display: block;
+        font-weight: 300;
     }
     & .delete {
         width: 7px;

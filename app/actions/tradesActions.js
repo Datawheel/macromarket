@@ -108,7 +108,6 @@ function deleteTrades(trades) {
 
 
 export function createTrade(companyId, productId, countryId, tradeFlow) {
-
   return function(dispatch) {
     dispatch(requestCreateTrade());
     return api.post(`api/trades/company/${companyId}/product/${productId}/country/${countryId}/${tradeFlow}`)
@@ -135,7 +134,6 @@ export function deleteTradeByProduct(companyId, productId, tradeFlow) {
 }
 
 export function deleteTradeByCountry(companyId, productId, countryId, tradeFlow) {
-  console.log("Hfasdaflsdasdflkkkkhere");
   return function(dispatch) {
     dispatch(requestDeleteTrade());
     return api.delete(`api/trades/company/${companyId}/product/${productId}/country/${countryId}/${tradeFlow}`)

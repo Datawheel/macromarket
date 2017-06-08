@@ -29,11 +29,10 @@ class CountryWithId extends React.Component {
     this.props.fetchCountry(id);
     this.props.fetchProducts();
     this.props.fetchTradesByCountry(id);
-
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.params.countryWithId !== this.props.params.countryWithId ) {
+    if (newProps.params.countryWithId !== this.props.params.countryWithId) {
       const id = newProps.params.countryWithId
       this.props.fetchCountry(id);
       this.props.fetchProducts();
@@ -50,7 +49,15 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {country, loading, error, products, trades} = this.props;
+    const {
+      country,
+      loading,
+      error,
+      products,
+      trades,
+      caTrades
+    } = this.props;
+
     if (!country || !products) {
       return (
         <div className="detailed-content-wrapper blue-loading">
@@ -63,7 +70,6 @@ class CountryWithId extends React.Component {
       return {value: product.key, label: product.name}
     });
 
-
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -71,6 +77,12 @@ class CountryWithId extends React.Component {
           <p>Please refresh the page.</p>
         </div>
       );
+    }
+
+    let allTrades = [];
+
+    if (caTrades && trades) {
+      allTrades = caTrades.concat(trades);
     }
 
     const continentId = country.id.substring(0, 2);
@@ -114,25 +126,28 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Select valueRenderer={productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.product} options={dropDownProducts} onChange={this.selectDropDown}/>
+            <Select valueRenderer={productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={dropDownProducts} onChange={this.selectDropDown}/>
           </div>
         </div>
         <div className="result-wrapper-outer">
-          {trades
-            ? <div className="result-wrapper">
-                {trades.map((trade, index) => {
+        {allTrades
+          ? <div className="result-wrapper">
+              {allTrades.map((trade, index) => {
+                if (!trade.profile_type) {
                   const content = trade.Company;
                   content.profile_type = "company";
                   if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
                     return <Card key={index} content={content}/>;
-                  } else {
-                    return null;
                   }
-                })}
-              </div>
-            : null}
-        </div>
-      </div>
+                } else {
+                  if (this.state.selectedOption === "all" && this.state.product.value === "all" ) {
+                    return <Card key={index} content={trade}/>;
+                  }
+                }
+              })}
+            </div>
+          : <p>Loading</p>}
+      </div></div>
     );
   }
 }
@@ -147,6 +162,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchTradesByCountry: id => {
       dispatch(fetchTradesByCountry(id));
+    },
+    fetchCaTradesByCountry: id => {
+      dispatch(fetchCaTradesByCountry(id));
     }
   };
 }
@@ -159,6 +177,8 @@ const mapStateToProps = state => {
     products: state.products.products,
     trades: state.trades.trades,
     tradesLoading: state.trades.loading,
+    caTrades: state.trades.caTrades,
+    caTradesLoading: state.trades.loading,
     tradesError: state.trades.error
   };
 }

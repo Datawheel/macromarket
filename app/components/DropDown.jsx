@@ -8,16 +8,6 @@ export function arrowRenderer() {
 export function productValueRenderer(value) {
   const id = value.value;
   const colorName = `color-${id}`;
-
-  if (value.value === "all") {
-    return (
-      <div>
-        <div className={`colored-wrapper`}>
-          <p className="all">{value.label}</p>
-        </div>
-      </div>
-    )
-  }
   return (
     <div>
       <div className={`colored-wrapper`}>
@@ -120,11 +110,9 @@ export function countryValueRenderer(value) {
                 <img src={`/images/flags/country_${continentId}.png`}/></div>
             </div>
           </div>
-      <div className={`country-selected-wrapper colored-wrapper`}>
         <div>
-          <p>{value.label}</p>
+          <p className="product-selected">{value.label}</p>
         </div>
-      </div>
     </div>
   )
 }

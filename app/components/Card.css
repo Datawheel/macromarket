@@ -1,68 +1,63 @@
 @import "../Variables";
-
 .card {
     background: white;
     position: relative;
     font-family: $montserrat;
     font-weight: 500;
     margin: 8px 4px;
-
     & .flag {
         position: absolute;
         right: 10px;
         width: 25px;
     }
-
     & .image-wrapper {
         position: relative;
-        background: #fafafa;
-        background-size: cover;
+        background: #f4f4f4;
         height: 150px;
         background-position: center;
-
-      & .icon-wrapper {
+        background-size: cover;
+        & .image {
+            background-size: cover;
+            height: 150px;
+            opacity: .5;
+            filter: blur(1px);
+            background-position: center;
+        }
+        & .icon-wrapper {
             position: absolute;
             bottom: 0;
             width: 22px;
             height: 22px;
             padding: 5px;
             text-align: center;
-
             & img {
                 height: 22px;
             }
         }
-
         & .sa-icon-wrapper {
             background: #00923F;
         }
-
         & .na-icon-wrapper {
             background: #0B1097;
         }
-
         & .e-icon-wrapper {
             background: #752277;
         }
     }
-
     & .text-wrapper {
         padding: 25px 15px;
-
-      & .category {
+        & .category {
             text-transform: uppercase;
             margin: 0;
             font-weight: 500;
             font-size: 12px;
             color: var(--middle-grey);
         }
-
         & .name {
             color: var(--accent-color);
             font-weight: 500;
             margin: 10px 0;
         }
-
         & .yellow-line {
             left: 0;
             background: var(--accent-color);

@@ -17,7 +17,7 @@ class userWithId extends React.Component {
   }
 
   componentDidMount() {
-    this.props.isAuthenticated();
+    // this.props.isAuthenticated();
   }
 
   componentDidUpdate() {
@@ -39,7 +39,7 @@ class userWithId extends React.Component {
     }
     if (this.state.password1 !== this.state.password2) {
       this.setState({error: "Passwords must match"});
-    } 
+    }
     else {
       this.props.updateUser(this.props.user.id, this.props.user.email, this.state.password1);
     }
@@ -47,12 +47,15 @@ class userWithId extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-    if (error) {
+        console.log(user, "ADFDFD");
+    if (!user || error) {
       return (
-        <div className="detailed-content-wrapper">
+        <div className="profile">
+          <div className="inner-content">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
         </div>
+      </div>
       );
     }
 
@@ -65,14 +68,14 @@ class userWithId extends React.Component {
               <li>Inbox</li>
             </Link>
             <Link to="/settings">
-              {this.props.user.company_id
+              {user.company_id
                 ? <li>Settings</li>
                 : <li>Register a Company</li>}
             </Link>
           </ul>
           <div className="form-wrapper">
             <div className="form">
-              <h3>Update User Information</h3>
+
               <div className="input-wrapper">
                 <label>New Password</label>
                 <input type="password" onChange={this.handleChange} name="password1"/>

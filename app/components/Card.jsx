@@ -13,7 +13,6 @@ export class Card extends React.Component {
     let img = "";
     let id = this.content.id;
     if (this.content.profile_type === "country") {
-      console.log(this.content, "countyr");
       icon = "/images/icons/icon-country-yellow.svg";
       const countryImage = this.content.image ? this.content.id : this.content.id.slice(0,2)
       img = `/images/${this.content.profile_type}/${countryImage}.jpg`;
@@ -30,6 +29,10 @@ export class Card extends React.Component {
       img = `/images/${this.content.profile_type}/${this.content.image}.jpg`
     }
 
+    if (this.content.profile_type === "connectamericas") {
+      img = this.content.image;
+    }
+
     let productCategory = "";
     if (this.props.products && this.content.profile_type === "product") {
       this.props.products.map(product => {
@@ -41,10 +44,10 @@ export class Card extends React.Component {
 
     return (
       <div className="card">
-        <Link to={`/${this.content.profile_type}/${id}`}>
-          <div style={{
+        <Link to={`/${this.content.profile_type=== "connectamericas" ? "company" : this.content.profile_type}/${id}`}>
+          <div className="image-wrapper"><div style={{
             backgroundImage: `url(${img})`
-          }} className="image-wrapper"></div>
+          }} className="image"></div></div>
           <div className="text-wrapper">
             <div className="yellow-line"></div>
             <img className="profile_type_icon" src={icon}/>

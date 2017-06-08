@@ -89,7 +89,7 @@ class Search extends React.Component {
                     {this.state.filter === "Country"
                       ? <img src="/images/icons/icon-country-yellow.svg"/>
                       : <img src="/images/icons/icon-country-black.svg"/>
-}
+                    }
                   </div>
                   <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Product")} onClick={this.selectFilter.bind(this, "Product")} className="filter-icon-wrapper">
                     <div className={this.state.hover === "Product"

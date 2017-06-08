@@ -7,8 +7,6 @@ import {fetchProfileTradesByCompany} from "../actions/tradesActions";
 import {browserHistory} from "react-router";
 import "./Detailed.css";
 
-
-
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -16,11 +14,11 @@ class CompanyWithId extends React.Component {
 
   componentDidMount() {
     const id = this.props.params.companyWithId;
-    if(id.slice(0, 3)=== "ca_") {
+    if (id.slice(0, 3) === "ca_") {
       this.props.fetchCompany(id);
+      this.props.fetchProfileTradesByCompany(id);
 
-    }
-    else {
+    } else {
       this.props.fetchCompany(id);
       this.props.fetchProfileTradesByCompany(id);
     }
@@ -30,7 +28,7 @@ class CompanyWithId extends React.Component {
   componentWillReceiveProps(newProps) {
 
     if (this.props.params.companyWithId !== newProps.params.companyWithId) {
-    const id =  newProps.params.companyWithId;
+      const id = newProps.params.companyWithId;
       this.props.fetchCompany(id);
       this.props.fetchProfileTradesByCompany(id);
       this.shouldUpdate = false;
@@ -42,8 +40,18 @@ class CompanyWithId extends React.Component {
     console.log(company);
     if (loading || !company) {
       return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
+        <div className="detailed-content-wrapper company">
+          <Sidebar></Sidebar>
+          <div className="center-content">
+            <div className="header-image-wrapper">
+              <div className="background-image">
+                <div className="image-overlay-wrapper">
+                  <div className="image-overlay"></div>
+                  <div className="text-wrapper"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
@@ -56,14 +64,15 @@ class CompanyWithId extends React.Component {
         </div>
       );
     }
-
     const coverImage = {
       backgroundImage: `url(${company.cover_image})`
     };
 
     const profileImage = {
-      backgroundImage: `url(${company.profile_image})`
+      backgroundImage: `url(${company.profile_image})`,
+      opacity:1
     };
+    const connectamericas = this.props.params.companyWithId.slice(0, 3) === "ca_";
 
     return (
       <div className="detailed-content-wrapper company">
@@ -81,57 +90,57 @@ class CompanyWithId extends React.Component {
                   <div className="section-wrapper">
                     <h5>Products | Imports</h5>
                     <div className="yellow-line"></div>
-                      {trades.imports
-                  ? <div>{Object.keys(trades.imports).map((trade, index) => {
-                        const id = trades.imports[trade].id.slice(0, 2);
-                        return (
-                          <Link key={index} to={`/product/${trade}`}>
-                            <div className="product-wrapper">
-                              <div className={`icon-wrapper color-${id}`}>
-                                <img src={`/images/product_icon/hs_${id}.png`}></img>
-                              </div>
-                              <div className="colored-wrapper">
-                                <div className={`darker-color color-${id}`}></div>
-                                <p>{trades.imports[trade].name}</p>
-                              </div>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  : null}
+                    {trades.imports
+                      ? <div>{Object.keys(trades.imports).map((trade, index) => {
+                            const id = trades.imports[trade].id.slice(0, 2);
+                            return (
+                              <Link key={index} to={`/product/${trade}`}>
+                                <div className="product-wrapper">
+                                  <div className={`icon-wrapper color-${id}`}>
+                                    <img src={`/images/product_icon/hs_${id}.png`}></img>
+                                  </div>
+                                  <div className="colored-wrapper">
+                                    <div className={`darker-color color-${id}`}></div>
+                                    <p>{trades.imports[trade].name}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      : null}
                   </div>
                 </div>
                 <div className="exports">
                   <div className="section-wrapper">
                     <h5>Products | Exports</h5>
                     <div className="yellow-line"></div>
-                      {trades.exports
-                  ? <div>{Object.keys(trades.exports).map((trade, index) => {
-                        const id = trades.exports[trade].id.slice(0, 2);
-                        return (
-                          <Link key={index} to={`/product/${trade}`}>
-                            <div className="product-wrapper">
-                              <div className={`icon-wrapper color-${id}`}>
-                                <img src={`/images/product_icon/hs_${id}.png`}></img>
-                              </div>
-                              <div className="colored-wrapper">
-                                <div className={`darker-color color-${id}`}></div>
-                                <p>{trades.exports[trade].name}</p>
-                              </div>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  : null}
+                    {trades.exports
+                      ? <div>{Object.keys(trades.exports).map((trade, index) => {
+                            const id = trades.exports[trade].id.slice(0, 2);
+                            return (
+                              <Link key={index} to={`/product/${trade}`}>
+                                <div className="product-wrapper">
+                                  <div className={`icon-wrapper color-${id}`}>
+                                    <img src={`/images/product_icon/hs_${id}.png`}></img>
+                                  </div>
+                                  <div className="colored-wrapper">
+                                    <div className={`darker-color color-${id}`}></div>
+                                    <p>{trades.exports[trade].name}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      : null}
                   </div>
                 </div>
                 <div className="coverage">
                   <div className="section-wrapper">
                     <h5>Coverage Area</h5>
                     <div className="yellow-line"></div>
-                      {trades.countries
+                    {trades.countries
                       ? <div>
                           {Object.keys(trades.countries).map((country, index) => {
                             const continentId = country.slice(0, 2);
@@ -162,25 +171,37 @@ class CompanyWithId extends React.Component {
         </Sidebar>
         <div className="center-content">
           <div className="header-image-wrapper">
-            <div className="background-image" style={coverImage}>
-              <div className="image-overlay-wrapper">
-                <div className="image-overlay"></div>
-                <div className="text-wrapper">
-                  <div className="section-wrapper">
-                    <img src="/images/icons/icon-country-yellow.svg"/>
-                    <p>{company.address}</p>
-                  </div>
-                  <div className="section-wrapper">
-                    <img src="/images/icons/icon-telephone-yellow.svg"/>
-                    <p>{company.phone_number}</p>
-                  </div>
-                  <div className="section-wrapper">
-                    <img src="/images/icons/icon-world-yellow.svg"/>
-                    <a rel="external" href={`http://${company.website}`}>{company.website}</a>
-                  </div>
-                  <div className="section-wrapper">
-                    <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
-                  </div>
+            <div className={connectamericas ? "background-image ca-background-image" : "background-image" } style={connectamericas
+              ? profileImage
+              : coverImage}></div>
+            <div className="image-overlay-wrapper">
+              <div className="image-overlay"></div>
+              <div className="text-wrapper">
+                <div className="section-wrapper">
+                  {company.address
+                    ? <div><img src="/images/icons/icon-country-yellow.svg"/>
+                        <p>{company.address}</p>
+                      </div>
+                    : null}
+                </div>
+                <div className="section-wrapper">
+                  {company.phone_number
+                    ? <div>
+                        <img src="/images/icons/icon-telephone-yellow.svg"/>
+                        <p>{company.phone_number}</p>
+                      </div>
+                    : null}
+                </div>
+                <div className="section-wrapper">
+                  {company.website
+                    ? <div>
+                        <img src="/images/icons/icon-world-yellow.svg"/>
+                        <a rel="external" href={`http://${company.website}`}><p>{company.website}</p></a>
+                      </div>
+                    : null}
+                </div>
+                <div className="section-wrapper">
+                  <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
                 </div>
               </div>
             </div>
