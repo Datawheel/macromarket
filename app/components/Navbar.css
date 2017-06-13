@@ -1,8 +1,10 @@
 @import "../Variables";
-
 .nav-bar-dropdown {
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
+    box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
     z-index: 2000;
-    position: absolute;
+    position: fixed;
     top: 80px;
     right: 4%;
     background: #EBEBEB;
@@ -14,8 +16,9 @@
         cursor: pointer;
         font-size: 13px;
         padding: 7px 5px;
+        font-weight: 300;
     }
-    & a, &  a:visited {
+    & a, & a:visited {
         color: black;
     }
 }
@@ -48,7 +51,6 @@
     background: var(--accent-color);
     margin: 0;
     padding: 32px 5%;
-
     & .profile-image-wrapper {
         margin-left: 10px;
         display: inline-block;
@@ -62,13 +64,11 @@
         border-radius: 120px;
         overflow: hidden;
     }
-
     & .nav-bar-element {
         display: inline-block;
         & .profile-img-wrapper {
             width: 25px;
         }
-
         & a, & a:visited, & button {
             padding: 8px 40px;
             color: black;
@@ -77,18 +77,15 @@
             font-weight: 200;
             text-transform: uppercase;
         }
-
         & button {
             background: transparent;
             border: none;
         }
     }
-
     & .nav-bar-element.company-name a {
         padding-left: 15px;
         padding-right: 7px;
     }
-
     & .logo-wrapper {
         width: 80px;
         & img {
@@ -195,12 +192,10 @@
             border: none;
         }
     }
-
     & .nav-bar-element.company-name a {
         padding-left: 15px;
         padding-right: 7px;
     }
-
     & .logo-wrapper {
         width: 80px;
         & img {
@@ -208,7 +203,6 @@
             width: 100%;
         }
     }
-
     &.logo {
         float: left;
         position: absolute;

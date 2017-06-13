@@ -3,11 +3,13 @@ import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import "./Form.css";
+import {browserHistory} from "react-router";
 import Select from 'react-select';
 import "../components/Dropdown.css";
+import {uploadImage, deleteCompany} from "../actions/userActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
-class CompanyDataForm extends React.Component {
+class CompanyData extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,6 +62,7 @@ class CompanyDataForm extends React.Component {
   }
   componentWillMount() {
     this.props.fetchCountries();
+
   }
 
   handleChange = e => {
@@ -117,10 +120,8 @@ class CompanyDataForm extends React.Component {
   }
 
   saveCompany = () => {
-    this.props.nextSlide();
     let company = this.state.company;
     company.country = this.state.country;
-    console.log(company);
     this.props.saveCompany(company, this.state.imagesToUpload);
   }
 
@@ -134,7 +135,7 @@ class CompanyDataForm extends React.Component {
         </div>
       );
     }
-    console.log(this.state.country, "COUNTRY");
+
     if (loading || !countries) {
       return (
         <div className="detailed-content-wrapper">
@@ -149,80 +150,83 @@ class CompanyDataForm extends React.Component {
         dropDownCountries.push({label: country.name});
       });
     });
-
-    console.log(this.state.country, "EHER");
     const {company, previewStyles} = this.state;
     return (
-      <div className="company-data-form">
-        <div className="title-wrapper">{this.props.title}</div>
-        <div className="form">
-          <div className="content-wrapper">
-            <div className="col">
-              <div className="input-wrapper">
-                <label>Company Name</label>
-                <input onChange={this.handleChange} value={company.name} name="name"/>
-              </div>
+      <div>
+        {this.props.company
+          ? <div><b>Edit Your Company</b>
 
-              <div className="input-wrapper">
-                <label>Address</label>
-                <input onChange={this.handleChange} value={company.address} name="address"/>
-              </div>
+          </div>
+          : <div><b>Register a Company</b></div>}
+        <div className="content-wrapper">
+          <div className="col">
+            <div className="input-wrapper">
+              <label>Company Name</label>
+              <input onChange={this.handleChange} value={company.name} name="name"/>
+            </div>
 
-              <div className="input-wrapper">
-                <label>City</label>
-                <input onChange={this.handleChange} value={company.city} name="city"/>
-              </div>
+            <div className="input-wrapper">
+              <label>Address</label>
+              <input onChange={this.handleChange} value={company.address} name="address"/>
+            </div>
 
-              <div className="input-wrapper">
-                <label>State/Provience/Region</label>
-                <input onChange={this.handleChange} value={company.region} name="region"/>
-              </div>
+            <div className="input-wrapper">
+              <label>City</label>
+              <input onChange={this.handleChange} value={company.city} name="city"/>
+            </div>
 
-              <div className="input-wrapper">
-                <label>Country</label>
-                <Select onInputChange={countryInputChange} optionClassName={"dropdown-option"} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={{value:this.state.country, label:this.state.country}} options={dropDownCountries} onChange={this.selectDropDown}/>
-              </div>
+            <div className="input-wrapper">
+              <label>State/Provience/Region</label>
+              <input onChange={this.handleChange} value={company.region} name="region"/>
+            </div>
 
-              <div className="input-wrapper">
-                <label>Phone</label>
-                <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
-              </div>
+            <div className="input-wrapper">
+              <label>Country</label>
+              <Select onInputChange={countryInputChange} optionClassName={"dropdown-option"} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={{
+                value: this.state.country,
+                label: this.state.country
+              }} options={dropDownCountries} onChange={this.selectDropDown}/>
+            </div>
 
-              <div className="input-wrapper">
-                <label>Website</label>
-                <input onChange={this.handleChange} value={company.website} name="website"/>
+            <div className="input-wrapper">
+              <label>Phone</label>
+              <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
+            </div>
+
+            <div className="input-wrapper">
+              <label>Website</label>
+              <input onChange={this.handleChange} value={company.website} name="website"/>
+            </div>
+          </div>
+          <div className="col">
+            <label>Description</label>
+            <textarea rows="8" onChange={this.handleChange} value={company.description} name="description"/>
+            <div className="profile-image-wrapper input-wrapper">
+              <div className="image-preview-wrapper">
+                {previewStyles.profile_image
+                  ? <div className="image-preview" style={previewStyles.profile_image}></div>
+                  : null}
+              </div>
+              <div className="image-upload">
+                <p>Upload a photo</p>
+                <input name="profile_image" onChange={this.handleImageChange} type="file"/>
               </div>
             </div>
-            <div className="col">
-              <label>Description</label>
-              <textarea rows="8" onChange={this.handleChange} value={company.description} name="description"/>
-              <div className="profile-image-wrapper input-wrapper">
-                <div className="image-preview-wrapper">
-                  {previewStyles.profile_image
-                    ? <div className="image-preview" style={previewStyles.profile_image}></div>
-                    : null}
-                </div>
-                <div className="image-upload">
-                  <p>Upload a photo</p>
-                  <input name="profile_image" onChange={this.handleImageChange} type="file"/>
-                </div>
+            <div className="cover-image-wrapper input-wrapper">
+              <div className="image-preview-wrapper">
+                {previewStyles.cover_image
+                  ? <div className="image-preview" style={previewStyles.cover_image}></div>
+                  : null}
               </div>
-              <div className="cover-image-wrapper input-wrapper">
-                <div className="image-preview-wrapper">
-                  {previewStyles.cover_image
-                    ? <div className="image-preview" style={previewStyles.cover_image}></div>
-                    : null}
-                </div>
-                <div className="image-upload">
-                  <p>Upload a photo</p>
-                  <input name="cover_image" onChange={this.handleImageChange} type="file"/>
-                </div>
+              <div className="image-upload">
+                <p>Upload a photo</p>
+                <input name="cover_image" onChange={this.handleImageChange} type="file"/>
               </div>
+            </div>
 
-              <div className="button-wrapper">
-                <button className=" button button-next" onClick={this.saveCompany}>Next<span className="chevron right"></span>
-                </button>
-              </div>
+            <div className="button-wrapper">
+              <button className=" button button-next" onClick={this.saveCompany}>Save
+              </button>
             </div>
           </div>
         </div>
@@ -235,16 +239,24 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCountries: () => {
       dispatch(fetchCountries());
+    },
+    saveCompany: (company, imagesToUpload) => {
+      dispatch(uploadImage(company, imagesToUpload));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
+    company: state.companyProfile.authCompany,
+    user: state.authentication.user,
+    companyLoading: state.user.loading,
+    companySaved: state.user.company,
+    deleted: state.companyProfile.deleted,
     countries: state.countries.countries,
     loading: state.countries.loading,
     error: state.countries.error || null
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompanyDataForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyData);

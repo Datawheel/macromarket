@@ -129,7 +129,10 @@ export default function RouteCreate() {
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/profile" component={Profile}/>
-      <Route path="/settings" component={Settings}></Route>
+      <Route path="/settings/user" component={Settings}></Route>
+      <Route path="/settings/company" component={Settings}></Route>
+      <Route path="/settings/product" component={Settings}></Route>
+      <Route path="/settings/country" component={Settings}></Route>
       <Route path="/inbox" component={Inbox}></Route>
     </Route>
   );

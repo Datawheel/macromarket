@@ -93,20 +93,6 @@ function deleteTradeError(json) {
   };
 }
 
-function deleteTrades(trades) {
-  return function(dispatch) {
-    dispatch(requestDeleteTrade());
-    return api.delete("api/deleteTrades", trades)
-      .then(response => {
-        dispatch(receiveDeleteTrade(response.data));
-      })
-      .catch(response => {
-        dispatch(deleteTradeError(response.data));
-      });
-  };
-}
-
-
 export function createTrade(companyId, productId, countryId, tradeFlow) {
   return function(dispatch) {
     dispatch(requestCreateTrade());
@@ -120,6 +106,21 @@ export function createTrade(companyId, productId, countryId, tradeFlow) {
       });
   };
 }
+
+export function createTradeForProduct(companyId, productId,tradeFlow) {
+  return function(dispatch) {
+    dispatch(requestCreateTrade());
+    return api.post(`api/trades/company/${companyId}/product/${productId}/${tradeFlow}`)
+      .then(response => {
+        console.log(response, "response");
+        dispatch(receiveCreateTrade(response.data));
+      })
+      .catch(response => {
+        dispatch(createTradeError(response.data));
+      });
+  };
+}
+
 export function deleteTradeByProduct(companyId, productId, tradeFlow) {
   return function(dispatch) {
     dispatch(requestDeleteTrade());
@@ -169,16 +170,15 @@ export function saveTrades(tradesToSave, tradesToDelete) {
   };
 }
 
+
 export function fetchSettingsTradesByCompany(companyId) {
   return function(dispatch) {
     dispatch(requestSettingsTrades());
     return api.get(`/api/trades/company/${companyId}`)
       .then(response => {
-        console.log(response.data, "sdafsdfds");
         dispatch(receiveSettingsTrades(response.data));
       })
       .catch(response => {
-          console.log(response.data, "sdafsdfds");
         dispatch(settingsTradesError(response.data));
       });
   };

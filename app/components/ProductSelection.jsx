@@ -1,147 +1,59 @@
+import api from "../api.js";
 import React from "react";
-import Dropdown from "./DropDown.jsx";
-import {fetchProducts} from "../actions/productsActions";
+import {Link} from "react-router";
 import {connect} from "react-redux";
-import "./Dropdown.css";
-
-
+import {browserHistory} from "react-router";
+import {authenticateAndFetchCompany} from "../actions/companyActions";
+import Sidebar from "components/Sidebar";
+import "./Form.css";
+import {createTradeForProduct} from "../actions/tradesActions";
+import Selection from "./ProductSelectionForm";
+import SelectedProduct from "./selectedProduct";
 
 class ProductSelection extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      h2: null,
-      selectedH2: null,
-      selectedH4: null,
-      h4: null,
-      h6: null
-    };
+    this.state = {}
   }
 
-  componentDidMount() {
-    this.props.fetchProducts();
-  }
-
-  selectH2 = product => {
-    this.setState({h2: product.values, h4: null, selectedH4: null, selectedH2: product.key});
-
-  }
-
-  selectH4 = product => {
-    this.setState({h4: product.values, selectedH4: product.key});
-  }
-
-  selectProduct = product => {
-    const productObj = {
-      product_id: product.id,
-      trade_flow: this.props.tradeFlow,
-      Product: {
-        name: product.name
-      }
-    };
-    if (!this.props.selectedProducts[product.id]) {
-      this.props.addProduct(productObj);
-    } else {
-      this.props.deleteProduct(productObj, this.props.tradeFlow);
-    }
+  selectProduct = (companyId, productId, tradeFlow) => {
+    this.props.createTradeForProduct(companyId, productId, tradeFlow);
   }
 
   render() {
-    const {loading, products, error} = this.props;
-    if (loading || !products) {
+    const {company, products} = this.props;
+    console.log(this.props.company, "COMPANY IasdfasdfasdfadsaD");
+    if (!company) {
       return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
+        <div>
+          <p>You must register a company before adding products</p>
+
+          <Link to="/settings/company"><button className=" button button-next">Register a Company</button></Link>
         </div>
-      );
+      )
     }
 
-    if (error) {
-      return (
-        <div className="detailed-content-wrapper">
-          <h2>Error</h2>
-          <p>Please refresh the page.</p>
-        </div>
-      );
-    }
     return (
       <div>
-        <div className="product-selection-wrapper">
-          <h3 className="product-label">Categories</h3>
-          <div className="product-selection">
-            {Object.keys(products).map((product, index) => {
-              const productId = products[product].key;
-              const values = products[product].values;
-              if (values.length > 0) {
-                return (
-                  <div key={index}>
-                    <div className={"colored-wrapper dropdown-item"}>
-                      <div className={`color-${productId} icon-wrapper`}>
-                        <img src={`/images/product_icon/hs_${productId}.png`}/>
-                      </div>
-                      <div>
-                        <div className={`color-${productId} darker-color`}></div>
-                        <p className="category-name">{products[product].name}</p>
-                      </div>
-                    </div>
-                    {values.map(product => {
-                      return (
-                        <div className={this.state.selectedH2 === product.key
-                          ? "selectedH2 product"
-                          : "product"} key={product.key} onClick={this.selectH2.bind(this, product)}>
-                          <p className="product-name">{`${product.key} - ${product.name}`}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              }
-            })}
-          </div>
+        <div>
+          <b>Products | Import</b>
+          <p className="description">Select a maximum of 5 products.</p>
+          <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"imports"}></Selection>
+          <SelectedProduct companyId={company.id} tradeFlow={"imports"}></SelectedProduct>
         </div>
-        <div className="product-selection-wrapper">
-          {this.state.h2
-            ? <div>
-                <h3 className="product-label">HS4</h3>
-                <div className="product-selection">{this.state.h2.map((product, index) => {
-                    const id = `${this.state.selectedH2}${product.key}`;
-                    return (
-                      <div className={this.state.selectedH4 === product.key
-                        ? "selectedH4 product"
-                        : "product"} key={index} onClick={this.selectH4.bind(this, product)}>
-                        <div>
-                          <div className="product-id">
-                            <p>{id}</p>
-                          </div>
-                          <p className="product-name hs4">{product.name}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            : null}
+        <div>
+          <b>Products | Export</b>
+          <p className="description">Select a maximum of 5 products.</p>
+
+          <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"exports"} products={products}></Selection>
+          <SelectedProduct companyId={company.id} tradeFlow={"exports"}></SelectedProduct>
+
         </div>
-        <div className="product-selection-wrapper">
-          {this.state.h4
-            ? <div>
-                <h3 className="product-label">HS6</h3>
-                <div className="product-selection">
-                  {this.state.h4.map((product, index) => {
-                    const id = product.id.slice(2, 8);
-                    return (
-                      <div key={index} className={this.props.selectedProducts[product.id]
-                        ? "selectedItem product"
-                        : "product"} onClick={this.selectProduct.bind(this, product)}>
-                        <div className="product-id">
-                          <p>{id}</p>
-                        </div>
-                        <p className="product-name hs6">{product.name}</p>
-                      </div>
-                    );
-                  })}</div>
-              </div>
-            : null}
+        <div className="button-wrapper">
+          <Link to="/settings/country">
+            <button className=" button button-next">Next<span className="chevron right"></span>
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -149,16 +61,19 @@ class ProductSelection extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    }
-  };
+const mapStateToProps = state => {
+  return {company: state.companyProfile.authCompany};
 };
 
-const mapStateToProps = state => {
-  return {products: state.products.products, loading: state.products.loading, error: state.products.error};
+const mapDispatchToProps = dispatch => {
+  return {
+    authenticateAndFetchCompany: () => {
+      dispatch(authenticateAndFetchCompany());
+    },
+    createTradeForProduct: (companyId, productId, tradeFlow) => {
+      dispatch(createTradeForProduct(companyId, productId, tradeFlow));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSelection);

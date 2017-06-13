@@ -2,13 +2,15 @@
 .settings, .login, .signup {
     background-image: url("/images/settings-bg.png");
     padding: 60px 0;
-    min-height: 100%;
+    min-height: 100vh;
     background-size: cover;
     & .Select {
         width: 100%;
         margin: 0;
-        padding: 0px 2%;
         border: 1px solid var(--input-grey);
+        & .Select-value {
+            padding: 0px 2%;
+        }
     }
     & .center-content {
         display: inline-block;
@@ -41,6 +43,16 @@
 }
 
 .settings {
+    & .sidebar {
+        & h2 {
+            margin-bottom: 0px;
+        }
+        & .user-email {
+            margin: 7px 0px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+    }
     & .content-wrapper {
         display: -webkit-box;
         display: -webkit-flex;
@@ -110,6 +122,8 @@
 
 .form-wrapper {
     min-height: 600px;
+    position: relative;
+    margin-top: 40px;
     background: #EBEBEB;
     -webkit-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
     -moz-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
@@ -119,6 +133,42 @@
         color: white;
         display: inline-block;
         padding: 2% 4%;
+    }
+    & .toggle-wrapper {
+        top: -42px;
+        position: absolute;
+        & a {
+            color: black;
+        }
+        & .toggle {
+            opacity: .8;
+            cursor: pointer;
+            -webkit-box-shadow: -3px 0px 1px -2px rgba(112, 112, 112, .35);
+            -moz-box-shadow: -3px 0px 1px -2px rgba(112, 112, 112, .35);
+            box-shadow: -3px 0px 1px -2px rgba(112, 112, 112, .35);
+            width: 140px;
+            border-radius: 2px;
+            display: inline-block;
+            font-weight: 200;
+            padding: 12px 7px;
+            text-align: center;
+            margin-right: 2px;
+            background: #d3d3d3;
+            ;
+            font-family: var(--montserrat);
+        }
+        & .toggle.selected {
+            opacity: 1;
+            color: black;
+            -webkit-box-shadow: -2px -1px 4px -1px rgba(112, 112, 112, .35);
+            -moz-box-shadow: -2px -1px 4px-1px rgba(112, 112, 112, .35);
+            box-shadow: -2px -1px 4px -1px rgba(112, 112, 112, .35);
+            background: #EBEBEB;
+        }
+    }
+    & .description {
+        margin: 7px;
+        font-size: 15px;
     }
     & .completed-slide {
         padding-top: 90px;
@@ -165,6 +215,14 @@
             font-size: 13px;
         }
     }
+    & .countries-error {
+        position: absolute;
+        right: 25px;
+        & p {
+            margin: -25px 0px;
+            padding-top: 0px;
+        }
+    }
     & .password.error-wrapper {
         & p {
             padding: 10px;
@@ -180,7 +238,7 @@
 }
 
 .form {
-    padding: 30px;
+    padding: 40px 30px;
     & input, & textarea {
         width: 96%;
         padding: 7px 2%;
@@ -212,6 +270,7 @@
     }
     & .description {
         margin: 7px 0;
+        padding-bottom: 20px;
     }
     & .input-wrapper {
         padding: 10px;
@@ -249,6 +308,9 @@
         content: '×';
         font-weight: 200;
         color: var(--middle-grey);
+    }
+    & .selection-wrapper {
+        padding: 0px 25px;
     }
     & .selected-country, & .selected-product-wrapper {
         display: inline-block;
@@ -295,8 +357,8 @@
         }
     }
     & .product-selection {
-        background: #fff;
-        height: 325px;
+        background: white;
+        height: 255px;
         overflow: scroll;
         border: 1px solid var(--input-grey);
         vertical-align: text-top;
@@ -359,7 +421,8 @@
         }
         & .country-selection {
             vertical-align: top;
-            width: 70%;
+            width: 73%;
+            position: relative;
             display: inline-block;
             margin-left: 25px;
             & .dropdown-container {
@@ -391,6 +454,7 @@
             }
         }
     }
+
     & .product-selection-wrapper {
         display: inline-block;
         width: 29%;
@@ -402,8 +466,16 @@
     & .product-label {
         text-transform: uppercase;
         font-size: 12px;
-        margin-top: 30px;
+        margin-top: 25px;
+        color: var(--middle-grey);
     }
+
+    & .product-selection-wrapper.selected {
+      & .product-label {
+        color: black;
+      }
+    }
+
     & .selected-products-wrapper {
         border: 1px solid var(--input-grey);
         padding: 5px;
@@ -411,6 +483,7 @@
         height: 110px;
         margin: 20px 0 35px;
     }
+
     & .import-wrapper {
         min-height: 285px;
     }

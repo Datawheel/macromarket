@@ -1,108 +1,103 @@
 import React from "react";
 import {connect} from "react-redux";
 import Select from 'react-select';
-import {fetchCountries} from "../actions/countriesActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
+import {fetchCountries} from "../actions/countriesActions";
+import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
+import SelectedCountries from "./SelectedCountries";
 
 class CountrySelection extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      deleted: [],
-      saved: []
-    }
   }
 
   componentWillMount() {
-    this.props.fetchCountries();
+    this.props.fetchSettingsTradesByCompany(this.props.user.company_id);
   }
 
-  addCountry = country => {
-    if (!this.props.trade.countries.includes(country)) {
-      this.props.createTrade(this.props.trade.product_id, country.value, this.props.tradeFlow);
-      country.name = country.label;
-      this.setState(state => {
-        state.saved = state.saved.concat([
-            country
-          ]);
-        return state;
-      });
-    }
-  }
-
-  deleteCountry = country => {
-    console.log(country, "DELETE COUNTrY");
-    if (this.props.trade.countries.includes(country)) {
-      this.setState(state => {
-        state.deleted = state.deleted.concat([country.trade_id]);
-        return state;
-      });
-      this.props.deleteTrade(this.props.trade.product_id, country.id, this.props.tradeFlow);
-    } else {
-      const index = this.state.saved.indexOf(country);
-      this.setState(state => {
-        state.saved = state.saved.filter(country => {
-          return state.saved.indexOf(country) !== index;
-        });
-        return state;
-      });
-    }
+  getProducts = (tradeFlow, trades) => {
+    const products = {};
+    trades.map( (trade, index) => {
+      if (trade.trade_flow === tradeFlow) {
+        if (products[trade.product_id]) {
+          if (trade.Country) {
+            products[trade.product_id].countries.push(trade.Country);
+          }
+        } else {
+          const product = {
+            name: trade.Product.name,
+            countries: []
+          }
+          if (trade.Country !== null) {
+            product.countries.push(trade.Country);
+          }
+          products[trade.product_id] = product;
+        }
+      }
+    });
+    return products;
   }
 
   render() {
 
-    const {countries, loading, error} = this.props;
-    console.log(this.props, "ASDFSDFSDF");
-    if (loading || !countries) {
-      return (
-        <div className="detailed-content-wrapper">
-          <div>loading...</div>
-        </div>
-      );
+    const {trades} = this.props;
+    console.log(this.props.trades, "herer");
+    if (!trades) {
+      return <div></div>
     }
 
-    if (error) {
-      return (
-        <div className="detailed-content-wrapper">
-          <h2>Error</h2>
-          <p>Please refresh the page.</p>
-        </div>
-      );
-    }
 
-    const dropDownCountries = [];
-    countries.map(continent => {
-      let first = true;
-      continent.values.map(country => {
-        dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
-        first = false;
-      });
-    });
-
-    console.log(this.props.trade, ":SDFKJD");
-    const allCountries = this.props.trade.countries.concat(this.state.saved);
-    console.log(allCountries, "SDFSDJKFHSLDHFILUESUU&&&&&");
+    const imports = this.getProducts("imports", trades);
+    const exports = this.getProducts("exports", trades);
 
     return (
-      <div className="country-selection">
-        <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" options={dropDownCountries} onChange={this.addCountry}/>
-        <div className="selected-countries-wrapper">
-          {allCountries.map((trade, index) => {
-            return (
-              <div className="selected-country-outter">
-                {!this.state.deleted.includes(trade.trade_id)
-                  ?  <div className="selected-country" key={index}>
-                      <div>
-                        <span>{trade.name}
-                        </span>
-                        <div className="delete" onClick={this.deleteCountry.bind(this, trade)}></div>
-                      </div>
-                    </div>
-                  : null}
-              </div>
-            );
-          })}
+      <div>
+        <div>
+          <b>Country | Imports</b>
+          <p className="description">Select a maximum of 5 countries per product</p>
         </div>
+        {Object.keys(imports).map((product, index) => {
+          const id = product.slice(0, 2);
+          return (
+            <div key={index} className="country-selection-wrapper">
+              <div className="selection-wrapper">
+                <div className={`icon-wrapper color-${id}`}>
+                  <img src={`/images/product_icon/hs_${id}.png`}></img>
+                </div>
+                <div className="colored-wrapper">
+                  <div className={`darker-color color-${id}`}></div>
+                  <p className="product">{imports[product].name}</p>
+                </div>
+                <div className="country-selection">
+                  <SelectedCountries tradeFlow={"imports"} productId={product} companyId={this.props.user.company_id} selectedCountries={imports[product].countries}/>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div>
+          <b>Country | Exports</b>
+          <p className="description">Select a maximum of 5 countries per product</p>
+        </div>
+        {Object.keys(exports).map((product, index) => {
+          const id = product.slice(0, 2);
+          return (
+            <div key={index} className="country-selection-wrapper">
+              <div className="selection-wrapper">
+                <div className={`icon-wrapper color-${id}`}>
+                  <img src={`/images/product_icon/hs_${id}.png`}></img>
+                </div>
+                <div className="colored-wrapper">
+                  <div className={`darker-color color-${id}`}></div>
+                  <p className="product">{exports[product].name}</p>
+                </div>
+                <div className="country-selection">
+                  <SelectedCountries tradeFlow={"exports"} productId={product} companyId={this.props.companyId} selectedCountries={exports[product].countries}/>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -110,17 +105,21 @@ class CountrySelection extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCountries: () => {
-      dispatch(fetchCountries());
+    fetchSettingsTradesByCompany: id => {
+      dispatch(fetchSettingsTradesByCompany(id));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
+    company: state.companyProfile.authCompany,
     countries: state.countries.countries,
     loading: state.countries.loading,
-    error: state.countries.error || null
+    error: state.countries.error || null,
+    trades: state.trades.settingsTrades,
+    tradesLoading: state.trades.loading,
+    tradesError: state.trades.error
   };
 };
 

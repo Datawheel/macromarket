@@ -3,13 +3,12 @@ export default (state = {
   caTrades: null,
   profileTrades: null,
   loading: false,
-  saved: false,
-  settingsTrades: null
+  settingsTrades: []
 }, action) => {
   switch (action.type) {
     case "CREATE_TRADE_FULFILLED":
       return { ...state,
-        saved: true
+        settingsTrades: state.settingsTrades.concat([action.data])
       };
     case "CREATE_TRADE_REJECTED":
       return { ...state,
@@ -18,7 +17,7 @@ export default (state = {
       };
       case "DELETE_TRADE_FULFILLED":
         return { ...state,
-          saved: true
+          settingsTrades: action.data
         };
       case "DELETE_TRADE_REJECTED":
         return { ...state,

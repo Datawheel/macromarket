@@ -74,6 +74,12 @@
         background-size: cover;
         background-position: center center;
     }
+
+    & .profile-image {
+      background-size: contain;
+      background-color: transparent;
+      background-repeat: no-repeat;
+    }
     & .filter-wrapper {
         text-align: center;
         padding: 40px;

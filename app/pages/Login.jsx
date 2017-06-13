@@ -18,15 +18,16 @@ class Login extends React.Component {
 
   componentDidMount() {
     const {user} = this.props;
+
     if (user) {
-      browserHistory.push("/profile");
+      browserHistory.push("/settings/user");
     }
   }
 
   componentDidUpdate() {
     const {user} = this.props;
     if (user) {
-      browserHistory.push("/profile");
+      browserHistory.push("/settings/user");
     }
   }
 
@@ -74,7 +75,8 @@ class Login extends React.Component {
             </div>
             <div className="text-wrapper">
               <p>Don't have an account?
-                <Link to="/signup"> Sign up</Link>
+                <Link to="/signup">
+                  Sign up</Link>
               </p>
               <p>Forgot Password?</p>
             </div>

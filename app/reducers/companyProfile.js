@@ -3,7 +3,7 @@ const ACTION_TYPE = "COMPANY";
 export default (state = {
   company: null,
   loading: false,
-  authComapny: null,
+  authCompany: null,
 }, action) => {
   switch (action.type) {
     case "COMPANY_PENDING":

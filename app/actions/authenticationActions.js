@@ -87,8 +87,8 @@ export function isAuthenticated() {
     api.get("/api/auth/isAuthenticated", {
       withCredentials: true
     }).then(response => {
-      if (response.data.message) {
-        dispatch(receiveAuthError(response.data.message));
+      if (response.data.msg) {
+        dispatch(receiveAuthError(response.data.msg));
       } else {
         dispatch(receiveAuth(response.data));
       }

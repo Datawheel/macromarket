@@ -79,7 +79,7 @@ class CompanyWithId extends React.Component {
         <Sidebar>
           <div className="profile-info">
             <div className="profile-image-wrapper">
-              <div className="background-image" style={profileImage}></div>
+              <div className="profile-image background-image" style={profileImage}></div>
             </div>
             <img className="icon" src="/images/icons/icon-company-white.svg"/>
             <h3>{company.name}</h3>
