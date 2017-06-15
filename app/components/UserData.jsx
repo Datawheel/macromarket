@@ -12,22 +12,14 @@ class UserData extends React.Component {
     this.state = {
       password1: "",
       password2: "",
-      error: ""
+      error: "",
+      oldPassword: ""
     }
   }
 
-  // componentDidMount() {
-  //   // this.props.isAuthenticated();
-  // }
-  //
-  // componentDidUpdate() {
-  //   if (!this.props.user && !this.props.loading) {
-  //     browserHistory.push("/login");
-  //   }
-  //   if (this.props.deleted) {
-  //     browserHistory.push("/login");
-  //   }
-  // }
+  componentWillMount () {
+    this.props.clearUser();
+  }
 
   handleChange = e => {
     e.target.value
@@ -38,12 +30,13 @@ class UserData extends React.Component {
 
   save = () => {
     if (this.state.password1.length < 5 || this.state.password2.length < 5) {
-      this.setState({error: "Password must be longer than 5 characters"});
+      this.setState({error: "Password must be longer than 5 characters."});
     }
     else if (this.state.password1 !== this.state.password2) {
-      this.setState({error: "Passwords must match"});
+      this.setState({error: "Passwords must match."});
     } else {
-      this.props.updateUser(this.props.user.id, this.props.user.email, this.state.password1);
+      this.setState({error: null});
+      this.props.updateUser(this.props.user.id, this.props.user.email, this.state.oldPassword, this.state.password1);
     }
   }
 
@@ -54,46 +47,35 @@ class UserData extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-
-    if (!user || error) {
-      return (
-        <div className="settings">
-          <div className="inner-content">
-            <h2>Error</h2>
-            <p>Please refresh the page.</p>
-          </div>
-        </div>
-      );
-    }
-
-
+    console.log(this.state);
     return (
       <div>
+          <b>Update Your Password</b>
+        <div className="input-wrapper">
+          <label>Old Password</label>
+          <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
+        </div>
         <div className="input-wrapper">
           <label>New Password</label>
-          <input type="password" onChange={this.handleChange} name="password1"/>
+          <input type="password" value={this.state.password1}  onChange={this.handleChange} name="password1"/>
         </div>
         <div className="input-wrapper">
           <label>Comfirm Password</label>
-          <input type="password" onChange={this.handleChange} name="password2"/>
+          <input type="password" value={this.state.password2} onChange={this.handleChange} name="password2"/>
         </div>
         <div className="password error-wrapper">
-          <p>{this.state.error}</p>
+
           {updatedUser
-            ? <p>New password Saved!</p>
-            : null}
+            ? <p>New password saved!</p>
+            : <p>{this.props.error ? this.props.error : this.state.error}</p>}
         </div>
         <div className="button-wrapper">
-          <button className="button-back" onClick={this.save}>Save</button>
+        <button className="button button-next" onClick={this.save}>Save</button>
         </div>
         <div className="button-wrapper">
-          <button className="button-back" onClick={this.deleteCompany}>Delete Company</button>
-        </div>
-        <div className="button-wrapper">
-          <button className="button-back" onClick={this.props.logout}>Log Out</button>
+          <button className="button button-next" onClick={this.deleteCompany}>Delete Company</button>
         </div>
       </div>
-
     );
   }
 }
@@ -103,8 +85,11 @@ const mapDispatchToProps = dispatch => {
     deleteCompany: id => {
       dispatch(deleteCompany(id));
     },
-    updateUser: (id, email, password) => {
-      dispatch(updateUser(id, email, password));
+    updateUser: (id, email, oldPassword, password) => {
+      dispatch(updateUser(id, email, oldPassword, password));
+    },
+    clearUser:() => {
+      dispatch({type: "SAVE_USER_FULFILLED", date: null})
     },
     isAuthenticated: () => {
       dispatch(isAuthenticated());

@@ -29,7 +29,12 @@ class CompanyData extends React.Component {
             backgroundImage: `url(${this.props.company.cover_image})`
           }
         },
-        slide: 0
+        websiteError: null,
+        nameError: null,
+        addressError: null,
+        cityError: null,
+        regionError: null,
+        phoneError: null
       };
     } else {
       this.state = {
@@ -56,13 +61,23 @@ class CompanyData extends React.Component {
           profile_image: null,
           cover_image: null
         },
-        slide: 0
+        websiteError: null,
+        nameError: null,
+        addressError: null,
+        cityError: null,
+        regionError: null,
+        phoneError: null
       };
     }
   }
   componentWillMount() {
+    this.props.updateSave();
     this.props.fetchCountries();
+  }
 
+  validateWebsite = (url) => {
+    var re = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+    return re.test(url);
   }
 
   handleChange = e => {
@@ -121,12 +136,35 @@ class CompanyData extends React.Component {
 
   saveCompany = () => {
     let company = this.state.company;
-    company.country = this.state.country;
-    this.props.saveCompany(company, this.state.imagesToUpload);
+      this.setState({websiteError: null});
+      this.setState({nameError: null});
+      this.setState({addressError: null});
+      this.setState({cityError: null});
+      this.setState({regionError: null});
+      this.setState({phoneError: null});
+    if (!this.validateWebsite(this.state.company.website)) {
+      this.setState({websiteError: "Must be fewer than 255 characters."});
+    } else if (company.name.length > 255) {
+      this.setState({nameError: "Must be fewer than 255 characters."});
+    } else if (company.website.length > 255) {
+      this.setState({websiteError: "Must be fewer than 255 characters."});
+    } else if (company.address.length > 255) {
+      this.setState({addressError: "Must be fewer than 255 characters."});
+    } else if (company.city.length > 255) {
+      this.setState({cityError: "Must be fewer than 255 characters."});
+    } else if (company.region.length > 255) {
+      this.setState({regionError: "Must be fewer than 255 characters."});
+    } else if (company.phone_number.length > 255) {
+      this.setState({phoneError: "Must be fewer than 255 characters."});
+    } else {
+      company.country = this.state.country;
+      this.props.saveCompany(company, this.state.imagesToUpload);
+    }
   }
 
   render() {
     const {loading, error, countries} = this.props;
+
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -150,52 +188,72 @@ class CompanyData extends React.Component {
         dropDownCountries.push({label: country.name});
       });
     });
+
     const {company, previewStyles} = this.state;
     return (
-      <div>
+      <div className="section-wrapper company-data">
+        {this.props.companySaved ?
+        <div className="saved">Saved</div> : null}
         {this.props.company
-          ? <div><b>Edit Your Company</b>
+          ? <div>
+              <b>Edit Your Company</b>
 
-          </div>
-          : <div><b>Register a Company</b></div>}
+            </div>
+          : <div>
+            <b>Register a Company</b>
+          </div>}
         <div className="content-wrapper">
+
           <div className="col">
             <div className="input-wrapper">
               <label>Company Name</label>
               <input onChange={this.handleChange} value={company.name} name="name"/>
+              <div className="error-wrapper">
+                <p>{this.state.nameError}</p>
+              </div>
             </div>
-
             <div className="input-wrapper">
               <label>Address</label>
               <input onChange={this.handleChange} value={company.address} name="address"/>
+              <div className="error-wrapper">
+                <p>
+                  {this.state.addressError}</p>
+              </div>
             </div>
-
             <div className="input-wrapper">
               <label>City</label>
               <input onChange={this.handleChange} value={company.city} name="city"/>
+                <div className="error-wrapper">
+                  <p>{this.state.cityError}</p>
+                </div>
             </div>
-
             <div className="input-wrapper">
               <label>State/Provience/Region</label>
               <input onChange={this.handleChange} value={company.region} name="region"/>
+                <div className="error-wrapper">
+                  <p>{this.state.regionError}</p>
+                </div>
             </div>
-
             <div className="input-wrapper">
               <label>Country</label>
-              <Select onInputChange={countryInputChange} optionClassName={"dropdown-option"} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={{
+              <Select onInputChange={countryInputChange} optionClassName={"dropdown-item"} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={{
                 value: this.state.country,
                 label: this.state.country
               }} options={dropDownCountries} onChange={this.selectDropDown}/>
             </div>
-
             <div className="input-wrapper">
               <label>Phone</label>
               <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
+                <div className="error-wrapper">
+                  <p>{this.state.phoneError}</p>
+                </div>
             </div>
-
             <div className="input-wrapper">
               <label>Website</label>
               <input onChange={this.handleChange} value={company.website} name="website"/>
+                <div className="error-wrapper">
+                  <p>{this.state.websiteError}</p>
+                </div>
             </div>
           </div>
           <div className="col">
@@ -242,6 +300,9 @@ const mapDispatchToProps = dispatch => {
     },
     saveCompany: (company, imagesToUpload) => {
       dispatch(uploadImage(company, imagesToUpload));
+    },
+    updateSave: () => {
+      dispatch({type: "SAVE_FULFILLED", data: null});
     }
   };
 };

@@ -5,7 +5,7 @@ import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRe
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
 import SelectedCountries from "./SelectedCountries";
-
+import {Link} from "react-router";
 class CountrySelection extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ class CountrySelection extends React.Component {
 
   getProducts = (tradeFlow, trades) => {
     const products = {};
-    trades.map( (trade, index) => {
+    trades.map((trade, index) => {
       if (trade.trade_flow === tradeFlow) {
         if (products[trade.product_id]) {
           if (trade.Country) {
@@ -46,58 +46,67 @@ class CountrySelection extends React.Component {
       return <div></div>
     }
 
-
     const imports = this.getProducts("imports", trades);
     const exports = this.getProducts("exports", trades);
 
     return (
       <div>
-        <div>
-          <b>Country | Imports</b>
-          <p className="description">Select a maximum of 5 countries per product</p>
-        </div>
-        {Object.keys(imports).map((product, index) => {
-          const id = product.slice(0, 2);
-          return (
-            <div key={index} className="country-selection-wrapper">
-              <div className="selection-wrapper">
-                <div className={`icon-wrapper color-${id}`}>
-                  <img src={`/images/product_icon/hs_${id}.png`}></img>
-                </div>
-                <div className="colored-wrapper">
-                  <div className={`darker-color color-${id}`}></div>
-                  <p className="product">{imports[product].name}</p>
-                </div>
-                <div className="country-selection">
-                  <SelectedCountries tradeFlow={"imports"} productId={product} companyId={this.props.user.company_id} selectedCountries={imports[product].countries}/>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-        <div>
-          <b>Country | Exports</b>
-          <p className="description">Select a maximum of 5 countries per product</p>
-        </div>
-        {Object.keys(exports).map((product, index) => {
-          const id = product.slice(0, 2);
-          return (
-            <div key={index} className="country-selection-wrapper">
-              <div className="selection-wrapper">
-                <div className={`icon-wrapper color-${id}`}>
-                  <img src={`/images/product_icon/hs_${id}.png`}></img>
-                </div>
-                <div className="colored-wrapper">
-                  <div className={`darker-color color-${id}`}></div>
-                  <p className="product">{exports[product].name}</p>
-                </div>
-                <div className="country-selection">
-                  <SelectedCountries tradeFlow={"exports"} productId={product} companyId={this.props.companyId} selectedCountries={exports[product].countries}/>
+        <div className="section-wrapper">
+          <div>
+            <b>Imports</b>
+            <p className="description">Select a maximum of 5 countries per product</p>
+          </div>
+          {Object.keys(imports).map((product, index) => {
+            const id = product.slice(0, 2);
+            return (
+              <div key={index} className="country-selection-wrapper">
+                <div className="selection-wrapper">
+                  <div className={`icon-wrapper color-${id}`}>
+                    <img src={`/images/product_icon/hs_${id}.png`}></img>
+                  </div>
+                  <div className="colored-wrapper">
+                    <div className={`darker-color color-${id}`}></div>
+                    <p className="product">{imports[product].name}</p>
+                  </div>
+                  <div className="country-selection">
+                    <SelectedCountries tradeFlow={"imports"} productId={product} companyId={this.props.user.company_id} selectedCountries={imports[product].countries}/>
+                  </div>
                 </div>
               </div>
+            );
+          })}</div>
+        <div className="section-wrapper">
+          <div>
+            <b>Exports</b>
+            <p className="description">Select a maximum of 5 countries per product</p>
+          </div>
+          {Object.keys(exports).map((product, index) => {
+            const id = product.slice(0, 2);
+            return (
+              <div key={index} className="country-selection-wrapper">
+                <div className="selection-wrapper">
+                  <div className={`icon-wrapper color-${id}`}>
+                    <img src={`/images/product_icon/hs_${id}.png`}></img>
+                  </div>
+                  <div className="colored-wrapper">
+                    <div className={`darker-color color-${id}`}></div>
+                    <p className="product">{exports[product].name}</p>
+                  </div>
+                  <div className="country-selection">
+                    <SelectedCountries tradeFlow={"exports"} productId={product} companyId={this.props.user.company_id} selectedCountries={exports[product].countries}/>
+                  </div>
+                </div>
+              </div>
+            );
+          })}</div>
+        <div className="button-wrapper">
+          <Link to={`/company/${this.props.user.company_id}`}>
+            <div>
+              <button className="button listing-button button-next">See My Listing<span className="chevron right"></span>
+              </button>
             </div>
-          );
-        })}
+          </Link>
+        </div>
       </div>
     );
   }

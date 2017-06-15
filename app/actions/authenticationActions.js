@@ -134,18 +134,24 @@ export function login(email, password) {
   };
 }
 
-export function updateUser(id, email, password) {
+export function updateUser(id, email, password, newPassword) {
+  // required for sending receiving cookies
+  const config = {
+    withCredentials: true
+  };
   return function(dispatch) {
     dispatch(requestSaveUser());
     return api.post(`/api/auth/updateUser/${id}`, {
         email,
-        password
-      })
+        password,
+        newPassword
+      }, config)
       .then(response => {
         dispatch(receiveSaveUser(response.data));
       })
       .catch(response => {
-        dispatch(saveUserError(response.data));
+        console.log(response, "HERERE")
+        dispatch(saveUserError("The password you entered is incorect."));
       });
   };
 }

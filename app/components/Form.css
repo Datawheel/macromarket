@@ -128,6 +128,16 @@
     -webkit-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
     -moz-box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
     box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, 0.35);
+    & .section-wrapper {
+        padding-top: 10px;
+        border-bottom: 1px solid #dadada;
+    }
+    & .section-wrapper:first-child {
+        margin-bottom: 30px;
+    }
+    & .company-data.section-wrapper {
+        border: none;
+    }
     & .title-wrapper {
         background-color: black;
         color: white;
@@ -177,7 +187,7 @@
     & .button-wrapper {
         width: 100%;
         text-align: right;
-        padding-top: 20px;
+        padding-top: 35px;
     }
     & .button {
         position: relative;
@@ -212,6 +222,7 @@
             margin: 0;
             padding-top: 20px;
             color: red;
+            text-align: left;
             font-size: 13px;
         }
     }
@@ -238,7 +249,7 @@
 }
 
 .form {
-    padding: 40px 30px;
+    padding: 30px;
     & input, & textarea {
         width: 96%;
         padding: 7px 2%;
@@ -270,10 +281,19 @@
     }
     & .description {
         margin: 7px 0;
-        padding-bottom: 20px;
+        padding-bottom: 5px;
     }
     & .input-wrapper {
-        padding: 10px;
+        padding: 15px 10px;
+        & .error-wrapper {
+            height: 0;
+            & p {
+                padding-top: 5px;
+            }
+        }
+    }
+    & .input-wrapper:first-child {
+        padding-top: 0px
     }
     & .col {
         width: 46%;
@@ -311,6 +331,7 @@
     }
     & .selection-wrapper {
         padding: 0px 25px;
+        text-align: center;
     }
     & .selected-country, & .selected-product-wrapper {
         display: inline-block;
@@ -411,7 +432,8 @@
         }
     }
     & .country-selection-wrapper {
-        padding: 20px 0;
+        padding-top: 20px;
+        height: 100px;
         & .name {
             color: var(--input-text);
             font-weight: 200;
@@ -441,10 +463,11 @@
             & .selected-countries-wrapper {
                 width: 50%;
                 margin-left: 25px;
+                text-align: left;
                 display: inline-block;
                 border: 1px solid var(--input-grey);
                 background: #fff;
-                height: 110px;
+                min-height: 34px;
                 & .selected-country-outter {
                     display: inline-block;
                 }
@@ -454,10 +477,10 @@
             }
         }
     }
-
     & .product-selection-wrapper {
         display: inline-block;
         width: 29%;
+        text-align: left;
         margin-right: 25px;
         & .product-name {
             color: var(--input-text);
@@ -469,21 +492,19 @@
         margin-top: 25px;
         color: var(--middle-grey);
     }
-
     & .product-selection-wrapper.selected {
-      & .product-label {
-        color: black;
-      }
+        & .product-label {
+            color: black;
+        }
     }
-
     & .selected-products-wrapper {
         border: 1px solid var(--input-grey);
         padding: 5px;
         background: #fff;
         height: 110px;
+        text-align: left;
         margin: 20px 0 35px;
     }
-
     & .import-wrapper {
         min-height: 285px;
     }

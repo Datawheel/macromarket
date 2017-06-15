@@ -59,17 +59,6 @@ class Settings extends React.Component {
   render() {
     const {updatedUser, user, loading, error} = this.props;
 
-    if (!user || error) {
-      return (
-        <div className="settings">
-          <div className="inner-content">
-            <h2>Error</h2>
-            <p>Please refresh the page.</p>
-          </div>
-        </div>
-      );
-    }
-
     if (loading || !user) {
       return (
         <div className="settings">

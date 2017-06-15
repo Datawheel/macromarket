@@ -28,21 +28,23 @@ class ProductSelection extends React.Component {
         <div>
           <p>You must register a company before adding products</p>
 
-          <Link to="/settings/company"><button className=" button button-next">Register a Company</button></Link>
+          <Link to="/settings/company">
+            <button className=" button button-next">Register a Company</button>
+          </Link>
         </div>
       )
     }
 
     return (
       <div>
-        <div>
-          <b>Products | Import</b>
+        <div className="section-wrapper">
+          <b>Imports</b>
           <p className="description">Select a maximum of 5 products.</p>
           <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"imports"}></Selection>
           <SelectedProduct companyId={company.id} tradeFlow={"imports"}></SelectedProduct>
         </div>
-        <div>
-          <b>Products | Export</b>
+        <div className="section-wrapper">
+          <b>Exports</b>
           <p className="description">Select a maximum of 5 products.</p>
 
           <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"exports"} products={products}></Selection>

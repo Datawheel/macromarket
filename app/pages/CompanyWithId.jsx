@@ -17,16 +17,13 @@ class CompanyWithId extends React.Component {
     if (id.slice(0, 3) === "ca_") {
       this.props.fetchCompany(id);
       this.props.fetchProfileTradesByCompany(id);
-
     } else {
       this.props.fetchCompany(id);
       this.props.fetchProfileTradesByCompany(id);
     }
-
   }
 
   componentWillReceiveProps(newProps) {
-
     if (this.props.params.companyWithId !== newProps.params.companyWithId) {
       const id = newProps.params.companyWithId;
       this.props.fetchCompany(id);
@@ -37,7 +34,7 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error, trades} = this.props;
-    console.log(company);
+
     if (loading || !company) {
       return (
         <div className="detailed-content-wrapper company">
@@ -64,9 +61,22 @@ class CompanyWithId extends React.Component {
         </div>
       );
     }
-    const coverImage = {
+
+    let coverImage = {
       backgroundImage: `url(${company.cover_image})`
     };
+    if(!company.cover_image) {
+      const country = company.Country
+        console.log(country , "cc")
+      if(country) {
+        const countryId = country.flickr_link ? country.id : country.id.slice(0,2);
+        console.log(countryId , "ID");
+        coverImage = {
+          backgroundImage: `url(/images/country/${countryId}.jpg)`
+        };
+      }
+    }
+    console.log(coverImage, "COVER IMAGE")
 
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`,
