@@ -121,9 +121,10 @@ class NavBar extends React.Component {
         {this.state.dropdownVisible
           ? this.dropdown()
           : null}
-        {searchActive
-          ? <Search></Search>
-          : null}
+          <div className={searchActive ? "search-visible" : "search-hidden"}>
+            <Search></Search>
+          </div>
+
       </div>
     );
   }

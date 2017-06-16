@@ -3,6 +3,7 @@ import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import "./Form.css";
+import {Link} from "react-router";
 import {browserHistory} from "react-router";
 import Select from 'react-select';
 import "../components/Dropdown.css";
@@ -20,7 +21,10 @@ class CompanyData extends React.Component {
           profile_image: null,
           cover_image: null
         },
-        country: this.props.company.country,
+        country: {
+          value: this.props.company.Country ? this.props.company.Country.id : null,
+          label: this.props.company.Country ? this.props.company.Country.name : null
+        },
         previewStyles: {
           profile_image: {
             backgroundImage: `url(${this.props.company.profile_image})`
@@ -39,8 +43,6 @@ class CompanyData extends React.Component {
     } else {
       this.state = {
         company: {
-          importerExporter: false,
-          transporter: false,
           name: "",
           address: "",
           city: "",
@@ -52,7 +54,7 @@ class CompanyData extends React.Component {
           profile_image: "",
           user_id: this.props.user.id
         },
-        country: null,
+        country: {value: null, label: null},
         previewStyles: {
           profile_image: null,
           cover_image: null
@@ -117,34 +119,36 @@ class CompanyData extends React.Component {
   }
 
   selectDropDown = country => {
-    this.setState({country: country.label});
-  }
-
-  addTrade = trade => {
-    this.setState(state => {
-      state.trades = state.trades.concat([trade]);
-      return state;
-    });
-  }
-
-  deleteTrade = trade => {
-    this.setState(state => {
-      state.tradesToDelete = state.tradesToDelete.concat([trade]);
-      return state;
-    });
+    this.setState({country : {value: country.value, label : country.label}});
   }
 
   saveCompany = () => {
-    let company = this.state.company;
-      this.setState({websiteError: null});
-      this.setState({nameError: null});
-      this.setState({addressError: null});
-      this.setState({cityError: null});
-      this.setState({regionError: null});
-      this.setState({phoneError: null});
-    if (!this.validateWebsite(this.state.company.website)) {
-      this.setState({websiteError: "Must be fewer than 255 characters."});
-    } else if (company.name.length > 255) {
+    let company = {
+        name: this.state.company.name,
+        address:  this.state.company.address,
+        city:  this.state.company.city,
+        region:  this.state.company.name,
+        phone_number:  this.state.company.phone_number,
+        website:  this.state.company.website,
+        description:  this.state.company.description,
+        cover_image:  this.state.company.cover_image,
+        profile_image:  this.state.company.profile_image,
+        user_id: this.props.user.id
+    };
+
+    company.country_id = this.state.country.value;
+    this.setState({websiteError: null});
+    this.setState({nameError: null});
+    this.setState({addressError: null});
+    this.setState({cityError: null});
+    this.setState({regionError: null});
+    this.setState({phoneError: null});
+    if (company.name.length === 0) {
+      this.setState({nameError: "Company name is required."});}
+    else if (!this.validateWebsite(this.state.company.website)) {
+      this.setState({websiteError: "Must enter a valid website."});
+    }
+     else if (company.name.length > 255) {
       this.setState({nameError: "Must be fewer than 255 characters."});
     } else if (company.website.length > 255) {
       this.setState({websiteError: "Must be fewer than 255 characters."});
@@ -159,12 +163,13 @@ class CompanyData extends React.Component {
     } else {
       company.country = this.state.country;
       this.props.saveCompany(company, this.state.imagesToUpload);
+        window.scrollTo(0, 0);
     }
+
   }
 
   render() {
     const {loading, error, countries} = this.props;
-
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -182,28 +187,41 @@ class CompanyData extends React.Component {
       );
     }
 
+    if(this.props.companySaved) {
+      return(
+        <div className="register-company">
+          <img src="/images/icons/icon-registration.svg"></img>
+          <p>Your Company was Saved Sucessfully!</p>
+
+          <Link to={`/company/${this.props.companySaved}`}>
+            <button className=" button button-next">View Listing</button>
+          </Link>
+        </div>
+      )
+    }
+
     const dropDownCountries = [];
     countries.map(continent => {
+      let first = true;
       continent.values.map(country => {
-        dropDownCountries.push({label: country.name});
+        dropDownCountries.push({continent:continent.key, value: country.id, label: country.name, first});
+        first = false;
       });
     });
 
     const {company, previewStyles} = this.state;
+
+
     return (
       <div className="section-wrapper company-data">
-        {this.props.companySaved ?
-        <div className="saved">Saved</div> : null}
         {this.props.company
           ? <div>
               <b>Edit Your Company</b>
-
             </div>
           : <div>
             <b>Register a Company</b>
           </div>}
         <div className="content-wrapper">
-
           <div className="col">
             <div className="input-wrapper">
               <label>Company Name</label>
@@ -223,37 +241,36 @@ class CompanyData extends React.Component {
             <div className="input-wrapper">
               <label>City</label>
               <input onChange={this.handleChange} value={company.city} name="city"/>
-                <div className="error-wrapper">
-                  <p>{this.state.cityError}</p>
-                </div>
+              <div className="error-wrapper">
+                <p>{this.state.cityError}</p>
+              </div>
             </div>
             <div className="input-wrapper">
               <label>State/Provience/Region</label>
               <input onChange={this.handleChange} value={company.region} name="region"/>
-                <div className="error-wrapper">
-                  <p>{this.state.regionError}</p>
-                </div>
+              <div className="error-wrapper">
+                <p>{this.state.regionError}</p>
+              </div>
             </div>
             <div className="input-wrapper">
               <label>Country</label>
-              <Select onInputChange={countryInputChange} optionClassName={"dropdown-item"} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={{
-                value: this.state.country,
-                label: this.state.country
-              }} options={dropDownCountries} onChange={this.selectDropDown}/>
+              <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"}
+                optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false}
+                name="form-field-name" value={this.state.country.value} options={dropDownCountries} onChange={this.selectDropDown}/>
             </div>
             <div className="input-wrapper">
               <label>Phone</label>
               <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
-                <div className="error-wrapper">
-                  <p>{this.state.phoneError}</p>
-                </div>
+              <div className="error-wrapper">
+                <p>{this.state.phoneError}</p>
+              </div>
             </div>
             <div className="input-wrapper">
               <label>Website</label>
               <input onChange={this.handleChange} value={company.website} name="website"/>
-                <div className="error-wrapper">
-                  <p>{this.state.websiteError}</p>
-                </div>
+              <div className="error-wrapper">
+                <p>{this.state.websiteError}</p>
+              </div>
             </div>
           </div>
           <div className="col">
@@ -285,6 +302,12 @@ class CompanyData extends React.Component {
             <div className="button-wrapper">
               <button className=" button button-next" onClick={this.saveCompany}>Save
               </button>
+              {this.props.companySaved
+                ?
+                <div className="error-wrapper">
+                  <p>Company Saved Sucessfully!</p>
+                </div>
+                : null}
             </div>
           </div>
         </div>

@@ -11,6 +11,14 @@
         & .Select-value {
             padding: 0px 2%;
         }
+        & p.product-selected {
+            padding: 0px 4px;
+            width: 100%;
+            color: black;
+        }
+        & .continent-selected-wrapper {
+            display: none;
+        }
     }
     & .center-content {
         display: inline-block;
@@ -37,7 +45,7 @@
         & span {
             font-size: 14px;
         }
-        font-size: 1em;
+        font-size: .9em;
         font-weight: 300;
     }
 }
@@ -191,7 +199,7 @@
     }
     & .button {
         position: relative;
-        padding: 10px;
+        padding: 12px;
         width: 50%;
         max-width: 125px;
         margin: 3px;
@@ -237,6 +245,7 @@
     & .password.error-wrapper {
         & p {
             padding: 10px;
+            padding-left: 28px;
         }
     }
     & .listing-button {
@@ -510,5 +519,54 @@
     }
     & .selectedH2, & .selectedH4 {
         background: #FEEFD8;
+    }
+    & .register-company {
+        text-align: center;
+        padding-top: 12%;
+        & button {
+            max-width: 225px;
+        }
+        & img {
+            width: 30px;
+        }
+        & p {
+            padding-bottom: 15px;
+        }
+    }
+}
+
+.user-data {
+    & .listing.section-wrapper {
+        border-bottom: none;
+        & .button-wrapper {
+            text-align: left;
+        }
+    }
+    & .company-name {
+        padding: 15px 20px 10px;
+    }
+    & .delete-company, & .view-listing {
+        cursor: pointer;
+        & p {
+            border-top: 1px solid #dadada;
+            margin: 0px;
+            padding: 10px 20px;
+        }
+    }
+    & .delete-company {
+        border-bottom: 1px solid #dadada;
+    }
+    & .input-wrapper:first-of-type {
+        padding: 25px 25px 5px;
+    }
+    & .input-wrapper.company-wrapper {
+        padding: 15px 30px 0px;
+    }
+    & .input-wrapper {
+        padding: 5px 25px;
+    }
+    & .button-wrapper {
+        padding-top: 0px;
+        padding-bottom: 25px;
     }
 }

@@ -17,7 +17,7 @@ class UserData extends React.Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.props.clearUser();
   }
 
@@ -31,8 +31,7 @@ class UserData extends React.Component {
   save = () => {
     if (this.state.password1.length < 5 || this.state.password2.length < 5) {
       this.setState({error: "Password must be longer than 5 characters."});
-    }
-    else if (this.state.password1 !== this.state.password2) {
+    } else if (this.state.password1 !== this.state.password2) {
       this.setState({error: "Passwords must match."});
     } else {
       this.setState({error: null});
@@ -41,39 +40,49 @@ class UserData extends React.Component {
   }
 
   deleteCompany = () => {
-    console.log(this.props.user.company_id, "DELTET COMPANY ID")
     this.props.deleteCompany(this.props.user.company_id);
   }
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-    console.log(this.state);
     return (
-      <div>
+      <div className="user-data">
+        <div className="section-wrapper listing">
+          <b>Your Listing</b>
+          <div className="input-wrapper company-wrapper">
+            <div className="company-name">CompanyName</div>
+            <div className="view-listing">
+              <p>View Company</p>
+            </div>
+            <div className="delete-company">
+              <p>Delete Company</p>
+            </div>
+          </div>
+        </div>
+        <div>
           <b>Update Your Password</b>
-        <div className="input-wrapper">
-          <label>Old Password</label>
-          <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
-        </div>
-        <div className="input-wrapper">
-          <label>New Password</label>
-          <input type="password" value={this.state.password1}  onChange={this.handleChange} name="password1"/>
-        </div>
-        <div className="input-wrapper">
-          <label>Comfirm Password</label>
-          <input type="password" value={this.state.password2} onChange={this.handleChange} name="password2"/>
-        </div>
-        <div className="password error-wrapper">
-
-          {updatedUser
-            ? <p>New password saved!</p>
-            : <p>{this.props.error ? this.props.error : this.state.error}</p>}
-        </div>
-        <div className="button-wrapper">
-        <button className="button button-next" onClick={this.save}>Save</button>
-        </div>
-        <div className="button-wrapper">
-          <button className="button button-next" onClick={this.deleteCompany}>Delete Company</button>
+          <div className="input-wrapper">
+            <label>Old Password</label>
+            <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
+          </div>
+          <div className="input-wrapper">
+            <label>New Password</label>
+            <input type="password" value={this.state.password1} onChange={this.handleChange} name="password1"/>
+          </div>
+          <div className="input-wrapper">
+            <label>Comfirm Password</label>
+            <input type="password" value={this.state.password2} onChange={this.handleChange} name="password2"/>
+          </div>
+          <div className="password error-wrapper">
+            {updatedUser
+              ? <p>New password saved!</p>
+              : <p>{this.props.error
+                  ? this.props.error
+                  : this.state.error}</p>}
+          </div>
+          <div className="button-wrapper">
+            <button className="button button-next" onClick={this.save}>Save</button>
+          </div>
         </div>
       </div>
     );
@@ -88,7 +97,7 @@ const mapDispatchToProps = dispatch => {
     updateUser: (id, email, oldPassword, password) => {
       dispatch(updateUser(id, email, oldPassword, password));
     },
-    clearUser:() => {
+    clearUser: () => {
       dispatch({type: "SAVE_USER_FULFILLED", date: null})
     },
     isAuthenticated: () => {

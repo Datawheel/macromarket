@@ -107,7 +107,7 @@ export function createTrade(companyId, productId, countryId, tradeFlow) {
   };
 }
 
-export function createTradeForProduct(companyId, productId,tradeFlow) {
+export function createTradeForProduct(companyId, productId, tradeFlow) {
   return function(dispatch) {
     dispatch(requestCreateTrade());
     return api.post(`api/trades/company/${companyId}/product/${productId}/${tradeFlow}`)
@@ -220,18 +220,20 @@ export function fetchProfileTradesByCompany(companyId) {
           imports: {},
           countries: {}
         };
-
+        console.log(response.data, "TRADESS")
         response.data.map(product => {
-          if (!json.countries[product.Country.id]) {
-            json.countries[product.Country.id] = product.Country;
-          }
+          if (product.Country) {
+            if (!json.countries[product.Country.id]) {
+              json.countries[product.Country.id] = product.Country;
+            }
 
-          if (product.trade_flow === "exports" && !json.exports[product.Product.id]) {
-            json.exports[product.Product.id] = product.Product;
-          }
+            if (product.trade_flow === "exports" && !json.exports[product.Product.id]) {
+              json.exports[product.Product.id] = product.Product;
+            }
 
-          if (product.trade_flow === "imports" && !json.imports[product.Product.id]) {
-            json.imports[product.Product.id] = product.Product;
+            if (product.trade_flow === "imports" && !json.imports[product.Product.id]) {
+              json.imports[product.Product.id] = product.Product;
+            }
           }
         });
 

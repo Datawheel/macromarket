@@ -39,18 +39,41 @@ class CountrySelection extends React.Component {
   }
 
   render() {
-
     const {trades} = this.props;
-    console.log(this.props.trades, "herer");
+
+    if (!this.props.user.company_id) {
+      return (
+        <div className="register-company">
+          <img src="/images/icons/icon-registration.svg"></img>
+          <p>Register a company before adding countries.</p>
+
+          <Link to="/settings/company">
+            <button className="button button-next">Register a Company</button>
+          </Link>
+        </div>
+      )
+    }
+
     if (!trades) {
       return <div></div>
     }
 
+    if (trades.length === 0) {
+      return (
+        <div className="register-company">
+          <img src="/images/icons/icon-product-black.svg"></img>
+          <p>Select some products before adding countries.</p>
+          <Link to="/settings/product">
+            <button className=" button button-next">Add Products</button>
+          </Link>
+        </div>
+      )
+    }
     const imports = this.getProducts("imports", trades);
     const exports = this.getProducts("exports", trades);
-
     return (
       <div>
+        {Object.keys(imports).length > 0 ?
         <div className="section-wrapper">
           <div>
             <b>Imports</b>
@@ -74,8 +97,8 @@ class CountrySelection extends React.Component {
                 </div>
               </div>
             );
-          })}</div>
-        <div className="section-wrapper">
+          })}</div> : null}
+        {Object.keys(exports).length > 0 ? <div className="section-wrapper">
           <div>
             <b>Exports</b>
             <p className="description">Select a maximum of 5 countries per product</p>
@@ -98,7 +121,7 @@ class CountrySelection extends React.Component {
                 </div>
               </div>
             );
-          })}</div>
+          })}</div> : null }
         <div className="button-wrapper">
           <Link to={`/company/${this.props.user.company_id}`}>
             <div>

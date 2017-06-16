@@ -52,6 +52,7 @@ class Search extends React.Component {
       console.log(this.state.filter, "FILTER");
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
+    console.log(this.props.searchActive);
   }
 
   displayResults = () => {
@@ -71,7 +72,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div className="content-wrapper overlay">
+      <div className={this.props.searchActive ? "search-visible content-wrapper overlay" : "content-wrapper overlay" }>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">

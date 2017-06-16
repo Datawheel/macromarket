@@ -76,12 +76,12 @@ class CompanyWithId extends React.Component {
         };
       }
     }
-    console.log(coverImage, "COVER IMAGE")
 
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`,
       opacity:1
     };
+    console.log(this.props.trades, "TRADDDESS");
     const connectamericas = this.props.params.companyWithId.slice(0, 3) === "ca_";
 
     return (

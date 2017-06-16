@@ -76,9 +76,8 @@ class Settings extends React.Component {
         <Sidebar>
 
           <h2>Settings</h2>
-
           <p className="user-email">{user.email}</p>
-          <p>Enter the data of your company or service and you will be able to access this network of exporters and importers of the world</p>
+
         </Sidebar>
         <div className="center-content form-wrapper">
           <div className="toggle-wrapper">

@@ -22,11 +22,12 @@ class ProductSelection extends React.Component {
 
   render() {
     const {company, products} = this.props;
-    console.log(this.props.company, "COMPANY IasdfasdfasdfadsaD");
+
     if (!company) {
       return (
-        <div>
-          <p>You must register a company before adding products</p>
+        <div className="register-company">
+          <img src="/images/icons/icon-registration.svg"></img>
+          <p>Register a company before adding products.</p>
 
           <Link to="/settings/company">
             <button className=" button button-next">Register a Company</button>

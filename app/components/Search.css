@@ -6,10 +6,24 @@
     right: 0;
     bottom: 0;
     z-index: 15;
+    -webkit-transition: opacity .5s;
+    transition: opacity  .5s;
+    opacity: 0;
     background: var(--dark-grey);
     & .overlay-inner {
         height: 100%;
         overflow: scroll;
+    }
+}
+
+
+.search-visible {
+
+    & .overlay {
+      -webkit-transition: opacity  .5s;
+      /* Safari */
+      transition: opacity  .5s;
+      opacity: 1;
     }
 }
 
