@@ -22,7 +22,7 @@ class SignUp extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.user) {
-      browserHistory.push("/profile");
+      browserHistory.push("/settings/user");
     }
   }
 

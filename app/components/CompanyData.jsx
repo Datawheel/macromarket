@@ -7,82 +7,72 @@ import {Link} from "react-router";
 import {browserHistory} from "react-router";
 import Select from 'react-select';
 import "../components/Dropdown.css";
-import {uploadImage, deleteCompany} from "../actions/userActions";
+import {uploadImage, saveCompany2, deleteCompany} from "../actions/userActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class CompanyData extends React.Component {
   constructor(props) {
     super(props);
-
-    if (this.props.company) {
-      this.state = {
-        company: this.props.company,
-        imagesToUpload: {
-          profile_image: null,
-          cover_image: null
-        },
-        country: {
-          value: this.props.company.Country ? this.props.company.Country.id : null,
-          label: this.props.company.Country ? this.props.company.Country.name : null
-        },
-        previewStyles: {
-          profile_image: {
-            backgroundImage: `url(${this.props.company.profile_image})`
-          },
-          cover_image: {
-            backgroundImage: `url(${this.props.company.cover_image})`
-          }
-        },
-        websiteError: null,
-        nameError: null,
-        addressError: null,
-        cityError: null,
-        regionError: null,
-        phoneError: null
-      };
-    } else {
-      this.state = {
-        company: {
-          name: "",
-          address: "",
-          city: "",
-          region: "",
-          phone_number: "",
-          website: "",
-          description: "",
-          cover_image: "",
-          profile_image: "",
-          user_id: this.props.user.id
-        },
-        country: {value: null, label: null},
-        previewStyles: {
-          profile_image: null,
-          cover_image: null
-        },
-        imagesToUpload: {
-          profile_image: null,
-          cover_image: null
-        },
-        websiteError: null,
-        nameError: null,
-        addressError: null,
-        cityError: null,
-        regionError: null,
-        phoneError: null
-      };
+    const defaultCompany =  {
+      profile_image: null,
+      cover_image: null,
+      name: "",
+      address: "",
+      city: "",
+      region: "",
+      phone_number: "",
+      website: "",
+      description: "",
+      user_id: this.props.user.id
     }
+    let country = {value: null, label: null};
+    if(this.props.company) {
+      if(this.props.company.Country) {
+        country = {
+          value: this.props.company.Country.id, label: this.props.company.Country.name
+        };
+      }
+    }
+
+    let profileImage = null;
+    if(this.props.company) {
+      if(this.props.company.profile_image) {
+        profileImage = `url(${this.props.company.profile_image})`;
+      }
+    }
+
+    let coverImage = null;
+    if(this.props.company) {
+      if(this.props.company.cover_image) {
+        coverImage = `url(${this.props.company.cover_image})`;
+      }
+    }
+
+    this.state = Object.assign(this.props.company || defaultCompany, {
+      country,
+      profileImage,
+      coverImage,
+      websiteError: null,
+      nameError: null,
+      addressError: null,
+      cityError: null,
+      regionError: null,
+      phoneError: null
+    });
+
   }
+
   componentWillMount() {
     this.props.updateSave();
     this.props.fetchCountries();
   }
 
-  validateWebsite = (url) => {
+  validateWebsite(url) {
     var re = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
     return re.test(url);
   }
 
-  handleChange = e => {
+  handleChange(e) {
     const value = e.target.type === "checkbox"
       ? e.target.checked
       : e.target.value;
@@ -95,27 +85,19 @@ class CompanyData extends React.Component {
   }
 
   handleImageChange = e => {
-    e.persist();
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        previewStyles: {
-          ...this.state.previewStyles,
-          [e.target.name]: {
-            backgroundImage: `url(${reader.result})`
-          }
-        }
-      });
-      this.setState({
-        imagesToUpload: {
-          ...this.state.imagesToUpload,
-          [e.target.name]: file
-        }
-      });
-    };
-    reader.readAsDataURL(file);
+    // e.persist();
+    // const reader = new FileReader();
+    // const file = e.target.files[0];
+    //
+    // reader.onloadend = () => {
+    //   this.setState({
+    //     [e.target.name]:
+    //          `url(${reader.result})`
+    //     },
+    //     [e.target.name]: file
+    //   });
+    // };
+    // reader.readAsDataURL(file);
   }
 
   selectDropDown = country => {
@@ -124,6 +106,7 @@ class CompanyData extends React.Component {
 
   saveCompany = () => {
     let company = {
+        id: this.state.company.id,
         name: this.state.company.name,
         address:  this.state.company.address,
         city:  this.state.company.city,
@@ -162,10 +145,9 @@ class CompanyData extends React.Component {
       this.setState({phoneError: "Must be fewer than 255 characters."});
     } else {
       company.country = this.state.country;
-      this.props.saveCompany(company, this.state.imagesToUpload);
+      this.props.saveCompany(company, this.state.profile_image, this.state.cover_image);
         window.scrollTo(0, 0);
     }
-
   }
 
   render() {
@@ -192,7 +174,6 @@ class CompanyData extends React.Component {
         <div className="register-company">
           <img src="/images/icons/icon-registration.svg"></img>
           <p>Your Company was Saved Sucessfully!</p>
-
           <Link to={`/company/${this.props.companySaved}`}>
             <button className=" button button-next">View Listing</button>
           </Link>
@@ -209,7 +190,7 @@ class CompanyData extends React.Component {
       });
     });
 
-    const {company, previewStyles} = this.state;
+    const {name, address, city, region, phone_number, website, description, profileImage, coverImage} = this.state;
 
 
     return (
@@ -225,14 +206,14 @@ class CompanyData extends React.Component {
           <div className="col">
             <div className="input-wrapper">
               <label>Company Name</label>
-              <input onChange={this.handleChange} value={company.name} name="name"/>
+              <input onChange={this.handleChange} value={name} name="name"/>
               <div className="error-wrapper">
                 <p>{this.state.nameError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>Address</label>
-              <input onChange={this.handleChange} value={company.address} name="address"/>
+              <input onChange={this.handleChange} value={address} name="address"/>
               <div className="error-wrapper">
                 <p>
                   {this.state.addressError}</p>
@@ -240,14 +221,14 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>City</label>
-              <input onChange={this.handleChange} value={company.city} name="city"/>
+              <input onChange={this.handleChange} value={city} name="city"/>
               <div className="error-wrapper">
                 <p>{this.state.cityError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>State/Provience/Region</label>
-              <input onChange={this.handleChange} value={company.region} name="region"/>
+              <input onChange={this.handleChange} value={region} name="region"/>
               <div className="error-wrapper">
                 <p>{this.state.regionError}</p>
               </div>
@@ -260,14 +241,14 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>Phone</label>
-              <input onChange={this.handleChange} value={company.phone_number} name="phone_number"/>
+              <input onChange={this.handleChange} value={phone_number} name="phone_number"/>
               <div className="error-wrapper">
                 <p>{this.state.phoneError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>Website</label>
-              <input onChange={this.handleChange} value={company.website} name="website"/>
+              <input onChange={this.handleChange} value={website} name="website"/>
               <div className="error-wrapper">
                 <p>{this.state.websiteError}</p>
               </div>
@@ -275,11 +256,11 @@ class CompanyData extends React.Component {
           </div>
           <div className="col">
             <label>Description</label>
-            <textarea rows="8" onChange={this.handleChange} value={company.description} name="description"/>
+            <textarea rows="8" onChange={this.handleChange} value={description} name="description"/>
             <div className="profile-image-wrapper input-wrapper">
               <div className="image-preview-wrapper">
-                {previewStyles.profile_image
-                  ? <div className="image-preview" style={previewStyles.profile_image}></div>
+                {profileImage
+                  ? <div className="image-preview" style={{backgroundImage: profileImage}}></div>
                   : null}
               </div>
               <div className="image-upload">
@@ -289,8 +270,8 @@ class CompanyData extends React.Component {
             </div>
             <div className="cover-image-wrapper input-wrapper">
               <div className="image-preview-wrapper">
-                {previewStyles.cover_image
-                  ? <div className="image-preview" style={previewStyles.cover_image}></div>
+                {coverImage
+                  ? <div className="image-preview" style={{backgroundImage: coverImage}}></div>
                   : null}
               </div>
               <div className="image-upload">
@@ -321,8 +302,8 @@ const mapDispatchToProps = dispatch => {
     fetchCountries: () => {
       dispatch(fetchCountries());
     },
-    saveCompany: (company, imagesToUpload) => {
-      dispatch(uploadImage(company, imagesToUpload));
+    saveCompany: (company, profileImage, coverImage) => {
+      dispatch(saveCompany2(company, profileImage, coverImage));
     },
     updateSave: () => {
       dispatch({type: "SAVE_FULFILLED", data: null});

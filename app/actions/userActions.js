@@ -1,4 +1,5 @@
 import api from "../api.js";
+import {spread} from "axios";
 
 function requestSave() {
   return {
@@ -45,7 +46,7 @@ export function uploadImage(company, imagesToUpload) {
   formData.append("profile_pic", imagesToUpload.profile_image);
   formData.append("cover_pic", imagesToUpload.cover_image);
 
-  return function(dispatch) {
+  return dispatch => {
     dispatch(requestSave());
     if (imagesToUpload.profile_image || imagesToUpload.cover_image) {
       return api.post("api/upload", formData)
@@ -56,13 +57,14 @@ export function uploadImage(company, imagesToUpload) {
           if (response.data.cover) {
             company.cover_image = response.data.cover;
           }
-          saveCompany(company)(dispatch);
+          return saveCompany(company)(dispatch);
         })
         .catch(response => {
           dispatch(saveError(response.data));
         });
-    } else {
-      saveCompany(company)(dispatch);
+    }
+    else {
+      return saveCompany(company)(dispatch);
     }
   };
 }
@@ -77,7 +79,8 @@ export function saveCompany(company) {
         .catch(response => {
           dispatch(saveError(response.data));
         });
-    } else {
+    }
+    else {
       return api.post("api/companies", company)
         .then(response => {
           dispatch(receiveSave(response.data));
@@ -87,6 +90,40 @@ export function saveCompany(company) {
           dispatch(saveError(response.data));
         });
     }
+  };
+}
+
+export function saveCompany2(company, profileImage = null, coverImage = null) {
+
+  const config = {
+    header: {
+      "content-type": "multipart/form-data"
+    }
+  };
+
+  return dispatch => {
+    const apiCall = company.id
+      ? api.put(`api/companies/${company.id}`, company)
+      : api.post("api/companies", company);
+    return apiCall
+      .then(response => {
+        const dataProfile = new FormData();
+        dataProfile.append("image", profileImage);
+        const dataCover = new FormData();
+        dataCover.append("image", coverImage);
+
+        const imageUploadUrl = `api/companies/${response.data.id}/image?type=`;
+
+        const promises = [
+          api.post(`${imageUploadUrl}profile`, dataProfile, config),
+          api.post(`${imageUploadUrl}cover`, dataCover,  config)
+        ];
+        api.all(promises).then(() => dispatch(receiveSave(response.data.id)));
+      })
+      .catch(response => {
+        console.log("\n\n\n ERROR!", response)
+        dispatch(saveError(response.data));
+      });
   };
 }
 

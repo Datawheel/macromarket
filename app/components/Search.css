@@ -16,7 +16,9 @@
     }
 }
 
-
+.search-hidden {
+  display: none;
+}
 .search-visible {
 
     & .overlay {
