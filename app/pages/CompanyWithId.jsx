@@ -65,12 +65,13 @@ class CompanyWithId extends React.Component {
     let coverImage = {
       backgroundImage: `url(${company.cover_image})`
     };
-    if(!company.cover_image) {
+
+    if (!company.cover_image) {
       const country = company.Country
-        console.log(country , "cc")
-      if(country) {
-        const countryId = country.flickr_link ? country.id : country.id.slice(0,2);
-        console.log(countryId , "ID");
+      if (country) {
+        const countryId = country.flickr_link
+          ? country.id
+          : country.id.slice(0, 2);
         coverImage = {
           backgroundImage: `url(/images/country/${countryId}.jpg)`
         };
@@ -79,8 +80,9 @@ class CompanyWithId extends React.Component {
 
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`,
-      opacity:1
+      opacity: 1
     };
+
     console.log(this.props.trades, "TRADDDESS");
     const connectamericas = this.props.params.companyWithId.slice(0, 3) === "ca_";
 
@@ -181,7 +183,9 @@ class CompanyWithId extends React.Component {
         </Sidebar>
         <div className="center-content">
           <div className="header-image-wrapper">
-            <div className={connectamericas ? "background-image ca-background-image" : "background-image" } style={connectamericas
+            <div className={connectamericas
+              ? "background-image ca-background-image"
+              : "background-image"} style={connectamericas
               ? profileImage
               : coverImage}></div>
             <div className="image-overlay-wrapper">
@@ -189,8 +193,12 @@ class CompanyWithId extends React.Component {
               <div className="text-wrapper">
                 <div className="section-wrapper">
                   {company.address
-                    ? <div><img src="/images/icons/icon-country-yellow.svg"/>
-                        <p>{company.address}</p>
+                    ? <div ><img src="/images/icons/icon-country-yellow.svg"/>
+                        <div className="address-wrapper">
+                          <p>{company.address}</p>
+                          <p>{`${company.city},${company.region}`}</p>
+                          <p>{company.Country.name}</p>
+                        </div>
                       </div>
                     : null}
                 </div>
@@ -206,7 +214,9 @@ class CompanyWithId extends React.Component {
                   {company.website
                     ? <div>
                         <img src="/images/icons/icon-world-yellow.svg"/>
-                        <a rel="external" href={`http://${company.website}`}><p>{company.website}</p></a>
+                        <a rel="external" href={`http://${company.website}`}>
+                          <p>{company.website}</p>
+                        </a>
                       </div>
                     : null}
                 </div>

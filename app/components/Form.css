@@ -540,7 +540,6 @@
         border-bottom: none;
     }
     & .listing.section-wrapper {
-
         & .button-wrapper {
             text-align: left;
         }
@@ -561,6 +560,7 @@
         opacity: .7;
         color: var(--middle-grey);
         padding: 12px 10%;
+        margin: 0px -2px;
     }
     & .chevron::before {
         height: .6em;
@@ -600,7 +600,7 @@
         padding: 25px 25px 5px;
     }
     & .input-wrapper.company-wrapper {
-      color: var(--middle-grey);
+        color: var(--middle-grey);
         padding: 15px 20px 10px;
     }
     & .input-wrapper {
