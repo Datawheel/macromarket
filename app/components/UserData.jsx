@@ -50,9 +50,8 @@ class UserData extends React.Component {
       <div className="user-data">
         {this.props.company
           ? <div className="section-wrapper no-border listing">
-              <b>Your Listing</b>
+              <b>Your Listing: {this.props.company.name}</b>
               <div className="input-wrapper company-wrapper">
-                <div className="company-name"><div>{this.props.company.name}</div></div>
                 <Link to={`/company/${this.props.company.id}`}>
                 <div className="view-listing">
                   <p>View Company</p><span className="chevron right"></span>

@@ -22,6 +22,7 @@ class NavBar extends React.Component {
     this.props.authenticateAndFetchCompany();
     browserHistory.listen(location => {
       this.setState({dropdownVisible: false})
+      this.props.authenticateAndFetchCompany();
       if (this.props.searchActive) {
         this.props.activateSearch(false);
 
@@ -48,11 +49,11 @@ class NavBar extends React.Component {
     return (
       <div className="nav-bar-dropdown">
         <ul>
-          <Link to="/profile">
-            <li>Edit Profile</li>
-          </Link>
-          <Link to="/settings">
+          <Link to="/settings/user">
             <li>Settings</li>
+          </Link>
+          <Link to="/settings/company">
+            <li>Company</li>
           </Link>
           <li onClick={this.props.logout}>Log out</li>
         </ul>
@@ -61,7 +62,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {activateSearch, searchActive, loading, company} = this.props;
+    const {activateSearch, searchActive, loading, company, user} = this.props;
     return (
       <div>
         <div className={this.props.location.pathname === '/'
@@ -113,7 +114,13 @@ class NavBar extends React.Component {
                     <div onClick={this.handleDropdown} className="arrow-down"></div>
                   </span>
                 </li>
-              : <li className="nav-bar-element">
+              : user ? <li className="nav-bar-element">
+                <Link to="/settings/user">Settings</Link>
+                  <span>
+                    <div onClick={this.handleDropdown} className="arrow-down"></div>
+                  </span>
+              </li> :
+              <li className="nav-bar-element">
                 <Link to="/login">Log In</Link>
               </li>}
           </ul>
@@ -145,7 +152,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {searchActive: state.searchActive, token: state.authentication.token, company: state.companyProfile.authCompany, loading: state.companyProfile.loading};
+  return {user: state.authentication.user, searchActive: state.searchActive, token: state.authentication.token, company: state.companyProfile.authCompany, loading: state.companyProfile.loading};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

@@ -544,7 +544,7 @@
             text-align: left;
         }
         & .register-company {
-            padding: 20px 5px 40px;
+            padding: 25px 5px 60px;
             & p {
                 padding: 12px;
                 margin: 0;
@@ -560,15 +560,13 @@
         opacity: .7;
         color: var(--middle-grey);
         padding: 12px 10%;
-        margin: 0px -2px;
+        margin: 5px -2px;
     }
     & .chevron::before {
         height: .6em;
         width: .6em;
     }
-    & .company-name {
-        padding: 15px 20px 10px;
-    }
+
     & .view-listing {
         border-top: 1px solid #dadada;
         border-bottom: 1px solid #dadada;
@@ -578,7 +576,7 @@
         & p {
             display: inline-block;
             margin: 0px;
-            padding: 10px 20px;
+            padding: 14px 20px;
         }
     }
     & .delete-company {
@@ -593,7 +591,7 @@
         }
         & .delete:after {
             font-size: 25px;
-            top: -8px;
+            top: -3px;
         }
     }
     & .input-wrapper:first-of-type {
@@ -601,7 +599,7 @@
     }
     & .input-wrapper.company-wrapper {
         color: var(--middle-grey);
-        padding: 15px 20px 10px;
+        padding: 30px 20px 10px;
     }
     & .input-wrapper {
         padding: 5px 25px;
