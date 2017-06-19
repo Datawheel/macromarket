@@ -69,9 +69,11 @@ class SignUp extends React.Component {
             <div className="form">
               <div className="content-wrapper">
                 <div className="password error-wrapper">
-                  {this.state.error
-                    ? <p>{this.state.error}</p>
-                    : null}</div>
+                  {this.props.error
+                    ? <p>{this.props.error}</p>
+                    : this.state.error
+                      ? <p>{this.state.error}</p>
+                      : null}</div>
                 <div className="input-wrapper">
                   <label>Email</label>
                   <input type="text" name="email" onChange={this.onChange} value={this.state.email}></input>

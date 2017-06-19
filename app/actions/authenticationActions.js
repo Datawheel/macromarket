@@ -150,7 +150,6 @@ export function updateUser(id, email, password, newPassword) {
         dispatch(receiveSaveUser(response.data));
       })
       .catch(response => {
-        console.log(response, "HERERE")
         dispatch(saveUserError("The password you entered is incorect."));
       });
   };
@@ -171,7 +170,6 @@ export function signup(email, password) {
         dispatch(receiveLogin(response.data));
       })
       .catch(response => {
-        console.log(response.response.data.message);
         dispatch(receiveLoginError(response.response.data));
       });
   };
