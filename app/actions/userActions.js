@@ -103,6 +103,7 @@ export function saveCompany2(company, profileImage = null, coverImage = null) {
   };
 
   return dispatch => {
+    dispatch(requestSave());
     const apiCall = company.id ?
       api.put(`api/companies/${company.id}`, company) :
       api.post("api/companies", company);

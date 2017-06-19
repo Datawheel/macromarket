@@ -196,8 +196,8 @@ class CompanyWithId extends React.Component {
                     ? <div ><img src="/images/icons/icon-country-yellow.svg"/>
                         <div className="address-wrapper">
                           <p>{company.address}</p>
-                          <p>{`${company.city},${company.region}`}</p>
-                          <p>{company.Country.name}</p>
+                          <p>{company.city && company.region ? `${company.city},${company.region}` : null}</p>
+                          <p>{company.Country ? company.Country.name : null}</p>
                         </div>
                       </div>
                     : null}

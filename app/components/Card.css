@@ -19,8 +19,7 @@
         & .image {
             background-size: cover;
             height: 150px;
-            opacity: .5;
-            filter: blur(1px);
+            opacity: .6;
             background-position: center;
         }
         & .icon-wrapper {

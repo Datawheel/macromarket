@@ -146,7 +146,7 @@ class CompanyData extends React.Component {
   }
 
   render() {
-    const {loading, error, countries} = this.props;
+    const {loading, error, countries, companyLoading} = this.props;
     console.log(this.state, "State");
     if (error) {
       return (
@@ -164,9 +164,15 @@ class CompanyData extends React.Component {
         </div>
       );
     }
-    console.log(this.props.companySaved, "SAVe");
+    console.log(companyLoading,"heeeellloooooo" );
+    if(companyLoading) {
+      return(
+        <div>LOADING</div>
+      )
+    }
+
     if(this.props.companySaved) {
-      console.log("here");
+
       return(
         <div className="register-company">
           <img src="/images/icons/icon-registration.svg"></img>

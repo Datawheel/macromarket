@@ -5,10 +5,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 15;
-    -webkit-transition: opacity .5s;
-    transition: opacity  .5s;
     opacity: 0;
+    z-index: -10;
+    /*-webkit-transition: opacity .5s;
+    transition: opacity .5s;*/
     background: var(--dark-grey);
     & .overlay-inner {
         height: 100%;
@@ -16,16 +16,12 @@
     }
 }
 
-.search-hidden {
-  display: none;
-}
 .search-visible {
-
     & .overlay {
-      -webkit-transition: opacity  .5s;
-      /* Safari */
-      transition: opacity  .5s;
-      opacity: 1;
+        z-index: 150;
+        -webkit-transition: opacity .5s;
+        transition: opacity .5s;
+        opacity: 1;
     }
 }
 
