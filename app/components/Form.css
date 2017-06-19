@@ -524,7 +524,7 @@
         text-align: center;
         padding-top: 12%;
         & button {
-            max-width: 225px;
+            max-width: 210px;
         }
         & img {
             width: 30px;
@@ -536,26 +536,30 @@
 }
 
 .user-data {
-    & .listing.section-wrapper {
+    & .no-border {
         border-bottom: none;
+    }
+    & .listing.section-wrapper {
+
         & .button-wrapper {
             text-align: left;
         }
         & .register-company {
-            padding-top: 0px;
+            padding: 20px 5px 40px;
             & p {
-                padding: 10px;
+                padding: 12px;
                 margin: 0;
+                color: var(--middle-grey);
             }
         }
     }
     & a {
-        color: black;
+        color: var(--middle-grey);
     }
     & .chevron {
         float: right;
         opacity: .7;
-        color: #717171;
+        color: var(--middle-grey);
         padding: 12px 10%;
     }
     & .chevron::before {
@@ -596,7 +600,8 @@
         padding: 25px 25px 5px;
     }
     & .input-wrapper.company-wrapper {
-        padding: 15px 20px 0px;
+      color: var(--middle-grey);
+        padding: 15px 20px 10px;
     }
     & .input-wrapper {
         padding: 5px 25px;

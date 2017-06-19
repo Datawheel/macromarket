@@ -49,10 +49,10 @@ class UserData extends React.Component {
     return (
       <div className="user-data">
         {this.props.company
-          ? <div className="section-wrapper listing">
+          ? <div className="section-wrapper no-border listing">
               <b>Your Listing</b>
               <div className="input-wrapper company-wrapper">
-                <div className="company-name">{this.props.company.name}</div>
+                <div className="company-name"><div>{this.props.company.name}</div></div>
                 <Link to={`/company/${this.props.company.id}`}>
                 <div className="view-listing">
                   <p>View Company</p><span className="chevron right"></span>
@@ -64,9 +64,9 @@ class UserData extends React.Component {
               </div>
             </div>
           : <div className="section-wrapper listing">
+            <b>Your Listing</b>
           <div className="register-company">
-            <img src="/images/icons/icon-product-black.svg"></img>
-            <p>Select some products before adding countries.</p>
+            <p>You do not have a company registered.</p>
             <Link to="/settings/company">
               <button className=" button button-next">Register a Company</button>
             </Link>
