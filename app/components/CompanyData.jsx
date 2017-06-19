@@ -59,7 +59,6 @@ class CompanyData extends React.Component {
       regionError: null,
       phoneError: null
     });
-
   }
 
   componentWillMount() {
@@ -77,27 +76,23 @@ class CompanyData extends React.Component {
       ? e.target.checked
       : e.target.value;
     this.setState({
-      company: {
-        ...this.state.company,
-        [e.target.name]: value
-      }
+      [e.target.name]: value
     });
   }
 
-  handleImageChange = e => {
-    // e.persist();
-    // const reader = new FileReader();
-    // const file = e.target.files[0];
-    //
-    // reader.onloadend = () => {
-    //   this.setState({
-    //     [e.target.name]:
-    //          `url(${reader.result})`
-    //     },
-    //     [e.target.name]: file
-    //   });
-    // };
-    // reader.readAsDataURL(file);
+  handleImageChange(e) {
+    e.persist();
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    const fileName = e.target.name === "profileImage" ? "profile_image" : "cover_image";
+
+    reader.onloadend = () => {
+      this.setState({
+        [e.target.name]:`url(${reader.result})`,
+        [fileName] : file
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   selectDropDown = country => {
@@ -106,19 +101,16 @@ class CompanyData extends React.Component {
 
   saveCompany = () => {
     let company = {
-        id: this.state.company.id,
-        name: this.state.company.name,
-        address:  this.state.company.address,
-        city:  this.state.company.city,
-        region:  this.state.company.name,
-        phone_number:  this.state.company.phone_number,
-        website:  this.state.company.website,
-        description:  this.state.company.description,
-        cover_image:  this.state.company.cover_image,
-        profile_image:  this.state.company.profile_image,
+        id: this.state.id,
+        name: this.state.name,
+        address:  this.state.address,
+        city:  this.state.city,
+        region:  this.state.name,
+        phone_number:  this.state.phone_number,
+        website:  this.state.website,
+        description:  this.state.description,
         user_id: this.props.user.id
     };
-
     company.country_id = this.state.country.value;
     this.setState({websiteError: null});
     this.setState({nameError: null});
@@ -126,32 +118,36 @@ class CompanyData extends React.Component {
     this.setState({cityError: null});
     this.setState({regionError: null});
     this.setState({phoneError: null});
-    if (company.name.length === 0) {
+    if (this.state.name.length === 0) {
       this.setState({nameError: "Company name is required."});}
-    else if (!this.validateWebsite(this.state.company.website)) {
+    else if (!this.validateWebsite(this.state.website)) {
       this.setState({websiteError: "Must enter a valid website."});
     }
-     else if (company.name.length > 255) {
+     else if (this.state.name.length > 255) {
       this.setState({nameError: "Must be fewer than 255 characters."});
-    } else if (company.website.length > 255) {
+    } else if (this.state.website.length > 255) {
       this.setState({websiteError: "Must be fewer than 255 characters."});
-    } else if (company.address.length > 255) {
+    } else if (this.state.address.length > 255) {
       this.setState({addressError: "Must be fewer than 255 characters."});
-    } else if (company.city.length > 255) {
+    } else if (this.state.city.length > 255) {
       this.setState({cityError: "Must be fewer than 255 characters."});
-    } else if (company.region.length > 255) {
+    } else if (this.state.region.length > 255) {
       this.setState({regionError: "Must be fewer than 255 characters."});
-    } else if (company.phone_number.length > 255) {
+    } else if (this.state.phone_number.length > 255) {
       this.setState({phoneError: "Must be fewer than 255 characters."});
     } else {
       company.country = this.state.country;
-      this.props.saveCompany(company, this.state.profile_image, this.state.cover_image);
-        window.scrollTo(0, 0);
+
+      const profile_image = this.state.profile_image ? typeof this.state.profile_image.name == 'string' ? this.state.profile_image : null : null;
+      const cover_image = this.state.cover_image  ? typeof this.state.cover_image.name == 'string' ? this.state.cover_image : null : null;
+      this.props.saveCompany(company, profile_image, cover_image);
+      window.scrollTo(0, 0);
     }
   }
 
   render() {
     const {loading, error, countries} = this.props;
+    console.log(this.state, "State");
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -168,8 +164,9 @@ class CompanyData extends React.Component {
         </div>
       );
     }
-
+    console.log(this.props.companySaved, "SAVe");
     if(this.props.companySaved) {
+      console.log("here");
       return(
         <div className="register-company">
           <img src="/images/icons/icon-registration.svg"></img>
@@ -206,14 +203,14 @@ class CompanyData extends React.Component {
           <div className="col">
             <div className="input-wrapper">
               <label>Company Name</label>
-              <input onChange={this.handleChange} value={name} name="name"/>
+              <input onChange={this.handleChange.bind(this)} value={name} name="name"/>
               <div className="error-wrapper">
                 <p>{this.state.nameError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>Address</label>
-              <input onChange={this.handleChange} value={address} name="address"/>
+              <input onChange={this.handleChange.bind(this)} value={address} name="address"/>
               <div className="error-wrapper">
                 <p>
                   {this.state.addressError}</p>
@@ -221,14 +218,14 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>City</label>
-              <input onChange={this.handleChange} value={city} name="city"/>
+              <input onChange={this.handleChange.bind(this)} value={city} name="city"/>
               <div className="error-wrapper">
                 <p>{this.state.cityError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>State/Provience/Region</label>
-              <input onChange={this.handleChange} value={region} name="region"/>
+              <input onChange={this.handleChange.bind(this)} value={region} name="region"/>
               <div className="error-wrapper">
                 <p>{this.state.regionError}</p>
               </div>
@@ -241,14 +238,14 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>Phone</label>
-              <input onChange={this.handleChange} value={phone_number} name="phone_number"/>
+              <input onChange={this.handleChange.bind(this)} value={phone_number} name="phone_number"/>
               <div className="error-wrapper">
                 <p>{this.state.phoneError}</p>
               </div>
             </div>
             <div className="input-wrapper">
               <label>Website</label>
-              <input onChange={this.handleChange} value={website} name="website"/>
+              <input onChange={this.handleChange.bind(this)} value={website} name="website"/>
               <div className="error-wrapper">
                 <p>{this.state.websiteError}</p>
               </div>
@@ -256,7 +253,7 @@ class CompanyData extends React.Component {
           </div>
           <div className="col">
             <label>Description</label>
-            <textarea rows="8" onChange={this.handleChange} value={description} name="description"/>
+            <textarea rows="8" onChange={this.handleChange.bind(this)} value={description} name="description"/>
             <div className="profile-image-wrapper input-wrapper">
               <div className="image-preview-wrapper">
                 {profileImage
@@ -265,7 +262,7 @@ class CompanyData extends React.Component {
               </div>
               <div className="image-upload">
                 <p>Upload a photo</p>
-                <input name="profile_image" onChange={this.handleImageChange} type="file"/>
+                <input name="profileImage" onChange={this.handleImageChange.bind(this)} type="file"/>
               </div>
             </div>
             <div className="cover-image-wrapper input-wrapper">
@@ -276,7 +273,7 @@ class CompanyData extends React.Component {
               </div>
               <div className="image-upload">
                 <p>Upload a photo</p>
-                <input name="cover_image" onChange={this.handleImageChange} type="file"/>
+                <input name="coverImage" onChange={this.handleImageChange.bind(this)} type="file"/>
               </div>
             </div>
 

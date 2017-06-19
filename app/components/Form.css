@@ -541,26 +541,62 @@
         & .button-wrapper {
             text-align: left;
         }
+        & .register-company {
+            padding-top: 0px;
+            & p {
+                padding: 10px;
+                margin: 0;
+            }
+        }
+    }
+    & a {
+        color: black;
+    }
+    & .chevron {
+        float: right;
+        opacity: .7;
+        color: #717171;
+        padding: 12px 10%;
+    }
+    & .chevron::before {
+        height: .6em;
+        width: .6em;
     }
     & .company-name {
         padding: 15px 20px 10px;
     }
+    & .view-listing {
+        border-top: 1px solid #dadada;
+        border-bottom: 1px solid #dadada;
+    }
     & .delete-company, & .view-listing {
         cursor: pointer;
         & p {
-            border-top: 1px solid #dadada;
+            display: inline-block;
             margin: 0px;
             padding: 10px 20px;
         }
     }
     & .delete-company {
+        position: relative;
         border-bottom: 1px solid #dadada;
+        & .delete {
+            position: absolute;
+            float: right;
+            top: 10px;
+            right: 10%;
+            opacity: .7;
+        }
+        & .delete:after {
+            font-size: 25px;
+            top: -8px;
+        }
     }
     & .input-wrapper:first-of-type {
         padding: 25px 25px 5px;
     }
     & .input-wrapper.company-wrapper {
-        padding: 15px 30px 0px;
+        padding: 15px 20px 0px;
     }
     & .input-wrapper {
         padding: 5px 25px;

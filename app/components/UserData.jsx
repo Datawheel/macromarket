@@ -45,20 +45,33 @@ class UserData extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
+
     return (
       <div className="user-data">
-        <div className="section-wrapper listing">
-          <b>Your Listing</b>
-          <div className="input-wrapper company-wrapper">
-            <div className="company-name">CompanyName</div>
-            <div className="view-listing">
-              <p>View Company</p>
+        {this.props.company
+          ? <div className="section-wrapper listing">
+              <b>Your Listing</b>
+              <div className="input-wrapper company-wrapper">
+                <div className="company-name">{this.props.company.name}</div>
+                <Link to={`/company/${this.props.company.id}`}>
+                <div className="view-listing">
+                  <p>View Company</p><span className="chevron right"></span>
+                </div></Link>
+              <div className="delete-company" onClick={this.deleteCompany}>
+                  <p>Delete Company</p>
+                  <span className="delete"></span>
+                </div>
+              </div>
             </div>
-            <div className="delete-company">
-              <p>Delete Company</p>
-            </div>
+          : <div className="section-wrapper listing">
+          <div className="register-company">
+            <img src="/images/icons/icon-product-black.svg"></img>
+            <p>Select some products before adding countries.</p>
+            <Link to="/settings/company">
+              <button className=" button button-next">Register a Company</button>
+            </Link>
           </div>
-        </div>
+          </div>}
         <div>
           <b>Update Your Password</b>
           <div className="input-wrapper">
@@ -107,6 +120,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return {updatedUser: state.authentication.updatedUser, user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error}
+  return {updatedUser: state.authentication.updatedUser, company: state.companyProfile.authCompany, user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserData);

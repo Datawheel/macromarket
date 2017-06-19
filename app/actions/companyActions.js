@@ -66,13 +66,16 @@ export function authenticateAndFetchCompany() {
     api.get("/api/auth/isAuthenticated", {
       withCredentials: true
     }).then(response => {
+
       if (response.data.msg) {
         dispatch(receiveAuthError(response.data.msg));
-      } else {
+      }
+      else {
         const user = response.data;
-
+        console.log(user.company_id, "ID");
         if (user.company_id) {
           return api.get(`/api/companies/${user.company_id}`).then(companyResponse => {
+              console.log(companyResponse, "RESPOSNE WHYYYYYYY")
             dispatch(receiveAuthCompany(companyResponse.data));
           }).then(() => {
             dispatch(receiveAuth(response.data));

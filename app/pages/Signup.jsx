@@ -45,7 +45,10 @@ class SignUp extends React.Component {
       this.setState({error: "Please enter a valid email address."});
       return;
     }
-
+    if (password.length < 5) {
+      this.setState({error: "Password must be at least 5 characters"});
+      return;
+    }
     if (password !== passwordRepeat) {
       this.setState({error: "Password fields don't match"});
       return;

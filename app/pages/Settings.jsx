@@ -58,7 +58,7 @@ class Settings extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-
+    console.log(this.props, "here");
     if (loading || !user) {
       return (
         <div className="settings">

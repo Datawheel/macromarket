@@ -1,5 +1,7 @@
 import api from "../api.js";
-import {spread} from "axios";
+import {
+  spread
+} from "axios";
 
 function requestSave() {
   return {
@@ -8,6 +10,7 @@ function requestSave() {
 }
 
 function receiveSave(json) {
+  console.log(json, "JSON HERE")
   return {
     type: "SAVE_FULFILLED",
     data: json
@@ -79,8 +82,7 @@ export function saveCompany(company) {
         .catch(response => {
           dispatch(saveError(response.data));
         });
-    }
-    else {
+    } else {
       return api.post("api/companies", company)
         .then(response => {
           dispatch(receiveSave(response.data));
@@ -94,7 +96,6 @@ export function saveCompany(company) {
 }
 
 export function saveCompany2(company, profileImage = null, coverImage = null) {
-
   const config = {
     header: {
       "content-type": "multipart/form-data"
@@ -102,23 +103,38 @@ export function saveCompany2(company, profileImage = null, coverImage = null) {
   };
 
   return dispatch => {
-    const apiCall = company.id
-      ? api.put(`api/companies/${company.id}`, company)
-      : api.post("api/companies", company);
+    const apiCall = company.id ?
+      api.put(`api/companies/${company.id}`, company) :
+      api.post("api/companies", company);
     return apiCall
       .then(response => {
-        const dataProfile = new FormData();
-        dataProfile.append("image", profileImage);
-        const dataCover = new FormData();
-        dataCover.append("image", coverImage);
+        if (profileImage || coverImage) {
+          const dataProfile = new FormData();
+          dataProfile.append("image", profileImage);
+          const dataCover = new FormData();
+          dataCover.append("image", coverImage);
 
-        const imageUploadUrl = `api/companies/${response.data.id}/image?type=`;
+          const imageUploadUrl = `api/companies/${response.data.id}/image?type=`;
+          const promises = [];
 
-        const promises = [
-          api.post(`${imageUploadUrl}profile`, dataProfile, config),
-          api.post(`${imageUploadUrl}cover`, dataCover,  config)
-        ];
-        api.all(promises).then(() => dispatch(receiveSave(response.data.id)));
+          if (profileImage) {
+            console.log("profile Image");
+            const profile = api.post(`${imageUploadUrl}profile`, dataProfile, config);
+            promises.push(profile);
+          }
+
+          if (coverImage) {
+            console.log(coverImage, "cover Image");
+            const cover = api.post(`${imageUploadUrl}cover`, dataCover, config)
+            promises.push(cover);
+          }
+
+          Promise.all(promises).then(() => dispatch(receiveSave(response.data.id)));
+        }
+        else {
+          console.log("here", response.data.id);
+          dispatch(receiveSave(response.data.id));
+        }
       })
       .catch(response => {
         console.log("\n\n\n ERROR!", response)
