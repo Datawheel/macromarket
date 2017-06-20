@@ -13,7 +13,6 @@ import SelectedProduct from "./SelectedProduct";
 class ProductSelection extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
   }
 
   selectProduct = (companyId, productId, tradeFlow) => {

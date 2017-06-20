@@ -38,7 +38,10 @@ class NavBar extends React.Component {
       this.setState({dropdownVisible: false})
     }
   }
-
+  logout = () => {
+    this.handleDropdown();
+    this.props.logout();
+  }
   handleDropdown = () => {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
@@ -55,7 +58,7 @@ class NavBar extends React.Component {
           <Link to="/settings/company">
             <li>Company</li>
           </Link>
-          <li onClick={this.props.logout}>Log out</li>
+          <li onClick={this.logout}>Log out</li>
         </ul>
       </div>
     );
