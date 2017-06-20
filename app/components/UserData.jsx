@@ -13,7 +13,8 @@ class UserData extends React.Component {
       password1: "",
       password2: "",
       error: "",
-      oldPassword: ""
+      oldPassword: "",
+      deleteVisible:false
     }
   }
 
@@ -40,13 +41,18 @@ class UserData extends React.Component {
   }
 
   deleteCompany = () => {
-    this.props.deleteCompany(this.props.user.company_id);
+    this.setState({deleteVisible: true});
+    // this.props.deleteCompany(this.props.user.company_id);
   }
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
 
     return (
+      <div className={this.state.deleteVisible ? "user-data-opacity" : "user-data-wrapper"}>
+      <div className="delete-popup">
+        Are you sure you want to delte
+      </div>
       <div className="user-data">
         {this.props.company
           ? <div className="section-wrapper no-border listing">
@@ -96,6 +102,7 @@ class UserData extends React.Component {
             <button className="button button-next" onClick={this.save}>Save</button>
           </div>
         </div>
+      </div>
       </div>
     );
   }

@@ -8,7 +8,7 @@ import {fetchTradesByCountry} from "../actions/tradesActions";
 import {Card} from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
-import Select from 'react-select';
+import Select from "react-select";
 import {arrowRenderer, productOptionRenderer, productValueRenderer} from "../components/Dropdown"
 
 class CountryWithId extends React.Component {

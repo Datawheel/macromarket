@@ -6,10 +6,12 @@
     right: 0;
     bottom: 0;
     opacity: 0;
-    z-index: -10;
-    /*-webkit-transition: opacity .5s;
-    transition: opacity .5s;*/
+
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+
     background: var(--dark-grey);
+        z-index: -10;
     & .overlay-inner {
         height: 100%;
         overflow: scroll;
@@ -18,7 +20,7 @@
 
 .search-visible {
     & .overlay {
-        z-index: 150;
+        z-index: 100;
         -webkit-transition: opacity .5s;
         transition: opacity .5s;
         opacity: 1;
