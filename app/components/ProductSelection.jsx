@@ -8,7 +8,7 @@ import Sidebar from "components/Sidebar";
 import "./Form.css";
 import {createTradeForProduct} from "../actions/tradesActions";
 import Selection from "./ProductSelectionForm";
-import SelectedProduct from "./selectedProduct";
+import SelectedProduct from "./SelectedProduct";
 
 class ProductSelection extends React.Component {
   constructor(props) {
