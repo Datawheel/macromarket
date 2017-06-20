@@ -11,7 +11,7 @@ import Product from "pages/Product";
 import ProductWithId from "pages/ProductWithId";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
-import Profile from "pages/Profile";
+
 import Settings from "pages/Settings";
 import Inbox from "pages/Inbox";
 
@@ -128,7 +128,6 @@ export default function RouteCreate() {
       <Route path="/product/:productWithId" component={ProductWithId}/>
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>
-      <Route path="/profile" component={Profile}/>
       <Route path="/settings/user" component={Settings}></Route>
       <Route path="/settings/company" component={Settings}></Route>
       <Route path="/settings/product" component={Settings}></Route>
