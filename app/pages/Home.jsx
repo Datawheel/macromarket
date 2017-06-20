@@ -140,7 +140,7 @@ class Home extends React.Component {
               <Select optionClassName={"dropdown-option"}  arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
             </div>
             <button onClick={this.search} className="search-button">Search</button >
-            <div className="cta-buttons-wrapper">
+            {/*<div className="cta-buttons-wrapper">
               <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
                 <div className="text-wrapper">
                   <img className="icon" src="/images/icons/icon-import.svg"/>
@@ -171,7 +171,7 @@ class Home extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>*/}
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>
               <div className="img-wrapper">

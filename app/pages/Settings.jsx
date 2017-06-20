@@ -76,7 +76,7 @@ class Settings extends React.Component {
         <Sidebar>
 
           <h2>Settings</h2>
-          <p className="user-email">{user.email}</p>
+          <p className="user-email">{`Email: ${user.email}`}</p>
 
         </Sidebar>
         <div className="center-content form-wrapper">
