@@ -50,6 +50,50 @@ class CountryWithId extends React.Component {
     );
   }
 
+
+  productValueRenderer(value) {
+    const id = value.value;
+    const colorName = `color-${id}`;
+    return (
+      <div>
+        <div className={`colored-wrapper`}>
+          <div className={`${colorName} product-selected-wrapper icon-wrapper`}>
+            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
+          </div>
+          <div>
+            <p className="product-selected">{value.label}</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  productOptionRenderer(option) {
+    if (option.value === "all") {
+      return (
+        <div>
+          <div className={`colored-wrapper`}>
+            <p className="all">{option.label}</p>
+          </div>
+        </div>
+      );
+    }
+    const id = option.value;
+    const colorName = `color-${id}`;
+    return (
+      <div>
+        <div className={`colored-wrapper`}>
+          <div className={`${colorName} icon-wrapper`}>
+            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
+          </div>
+          <div>
+            <p>{option.label}</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   selectDropDown = item => {
     this.setState({product: item});
   }
@@ -132,7 +176,7 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Select valueRenderer={productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={productOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={dropDownProducts} onChange={this.selectDropDown}/>
+            <Select valueRenderer={this.productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.productOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={dropDownProducts} onChange={this.selectDropDown}/>
           </div>
         </div>
         <div className="result-wrapper-outer">
