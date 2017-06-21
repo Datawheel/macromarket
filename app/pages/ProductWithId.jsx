@@ -140,7 +140,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-              <Dropdown type={"countries"} select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+              // <Dropdown type={"countries"} select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
           </div>
         </div>
         <div>
