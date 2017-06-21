@@ -115,7 +115,7 @@ export default class Dropdown extends React.Component {
             <p className="product-selected">{value.label}</p>
           </div>
       </div>
-    )
+    );
   }
 
 
@@ -123,7 +123,7 @@ export default class Dropdown extends React.Component {
     const options = this.props.options;
     return (
       <div>
-        <Select valueRenderer={this.productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.productOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
+        <Select valueRenderer={this.props.type === "products" ? this.productValueRenderer : this.countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products" ? this.productOptionRenderer : this.countryOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
       </div>
     );
   }
