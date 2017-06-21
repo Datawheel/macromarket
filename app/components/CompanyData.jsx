@@ -1,11 +1,11 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import "./Form.css";
 import {Link} from "react-router";
 import {browserHistory} from "react-router";
 import Select from 'react-select';
+import Dropdown from "../components/Dropdown2";
 import "../components/Dropdown.css";
 import {uploadImage, saveCompany2, deleteCompany} from "../actions/userActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
@@ -238,9 +238,7 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>Country</label>
-              <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"}
-                optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false}
-                name="form-field-name" value={this.state.country.value} options={dropDownCountries} onChange={this.selectDropDown}/>
+              <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
             </div>
             <div className="input-wrapper">
               <label>Phone</label>
