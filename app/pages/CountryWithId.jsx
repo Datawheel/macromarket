@@ -128,7 +128,7 @@ class CountryWithId extends React.Component {
         </div>
       );
     }
-
+// <Dropdown type={"products"} select={this.selectDropDown} value={this.state.product.value}  options={dropDownProducts}></Dropdown>
     let allTrades = [];
 
     if (caTrades && trades) {
@@ -176,7 +176,7 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Dropdown type={"products"} select={this.selectDropDown} value={this.state.product.value}  options={dropDownProducts}></Dropdown>
+
           </div>
         </div>
         <div className="result-wrapper-outer">
