@@ -117,13 +117,13 @@ export default class Dropdown extends React.Component {
       </div>
     )
   }
-// <Select valueRenderer={this.props.type === "products" ? this.productValueRenderer : this.countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products" ? this.productOptionRenderer : this.countryOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
+
   render() {
     const options = this.props.options;
     console.log(this.props.type);
     return (
       <div className="select-wrapper">
-
+        <Select valueRenderer={this.props.type === "products" ? this.productValueRenderer : this.countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products" ? this.productOptionRenderer : this.countryOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
       </div>
     );
   }
