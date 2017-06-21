@@ -10,6 +10,7 @@ import {fetchProducts} from "../actions/productsActions";
 import {fetchTradesByProduct} from "../actions/tradesActions";
 import "./Detailed.css";
 import "../components/Dropdown.css";
+import Dropdown from "../components/Dropdown2";
 // import {countryInputChange, arrowRenderer,countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class ProductWithId extends React.Component {
@@ -140,7 +141,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            
+            <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
           </div>
         </div>
         <div>
