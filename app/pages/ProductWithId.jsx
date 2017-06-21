@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Select from 'react-select';
+import Dropdown from "../components/Dropdown"
 import Sidebar from "../components/Sidebar.jsx";
 import {browserHistory} from "react-router";
 import {Card} from "../components/Card.jsx";
@@ -140,7 +140,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" value={this.state.country.value} options={dropDownCountries} onChange={this.selectDropDown}/>
+              <Dropdown type={"countries"} select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
           </div>
         </div>
         <div>

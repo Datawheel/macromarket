@@ -1,11 +1,10 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import "./Form.css";
 import {Link} from "react-router";
 import {browserHistory} from "react-router";
-import Select from 'react-select';
+import Dropdown from "../components/Dropdown"
 import "../components/Dropdown.css";
 import {uploadImage, saveCompany2, deleteCompany} from "../actions/userActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
@@ -137,7 +136,6 @@ class CompanyData extends React.Component {
       this.setState({phoneError: "Must be fewer than 255 characters."});
     } else {
       company.country = this.state.country;
-
       const profile_image = this.state.profile_image ? typeof this.state.profile_image.name == 'string' ? this.state.profile_image : null : null;
       const cover_image = this.state.cover_image  ? typeof this.state.cover_image.name == 'string' ? this.state.cover_image : null : null;
       this.props.saveCompany(company, profile_image, cover_image);
@@ -147,7 +145,6 @@ class CompanyData extends React.Component {
 
   render() {
     const {loading, error, countries, companyLoading} = this.props;
-    console.log(this.state, "State");
     if (error) {
       return (
         <div className="detailed-content-wrapper">
@@ -238,9 +235,7 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>Country</label>
-              <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"}
-                optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false}
-                name="form-field-name" value={this.state.country.value} options={dropDownCountries} onChange={this.selectDropDown}/>
+              <Dropdown type={"countries"} select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
             </div>
             <div className="input-wrapper">
               <label>Phone</label>

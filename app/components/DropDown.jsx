@@ -1,118 +1,130 @@
 import React from "react";
 import "./Dropdown.css";
-export function arrowRenderer() {
-  return (
-    <span className="chevron bottom"></span>
-  );
-}
-export function productValueRenderer(value) {
-  const id = value.value;
-  const colorName = `color-${id}`;
-  return (
-    <div>
-      <div className={`colored-wrapper`}>
-        <div className={`${colorName} product-selected-wrapper icon-wrapper`}>
-          <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
-        </div>
-        <div>
-          <p className="product-selected">{value.label}</p>
-        </div>
-      </div>
-    </div>
-  )
-}
+import Select from "react-select";
 
-export function productOptionRenderer(option) {
-  if (option.value === "all") {
+export default class Dropdown extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  arrowRenderer() {
+    return (
+      <span className="chevron bottom"></span>
+    );
+  }
+
+  productValueRenderer(value) {
+    const id = value.value;
+    const colorName = `color-${id}`;
     return (
       <div>
-        <div className={`colored-wrapper`}>
-          <p className="all">{option.label}</p>
+        <div className="colored-wrapper">
+          <div className={`${colorName} product-selected-wrapper icon-wrapper`}>
+            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
+          </div>
+          <div>
+            <p className="product-selected">{value.label}</p>
+          </div>
         </div>
       </div>
     )
   }
 
-  const id = option.value;
-  const colorName = `color-${id}`;
-
-  return (
-    <div>
-      <div className={`colored-wrapper`}>
-        <div className={`${colorName} icon-wrapper`}>
-          <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
-        </div>
+  productOptionRenderer(option) {
+    if (option.value === "all") {
+      return (
         <div>
-          <p>{option.label}</p>
+          <div className="colored-wrapper">
+            <p className="all">{option.label}</p>
+          </div>
         </div>
-      </div>
-    </div>
-  )
-}
+      );
+    }
 
-let continents = true;
-export function countryInputChange(inputValue) {
-  continents = inputValue && inputValue.length
-    ? false
-    : true;
-}
+    const id = option.value;
+    const colorName = `color-${id}`;
 
-export function countryOptionRenderer(option, i, x) {
-  if (option.value === "all") {
     return (
       <div>
-        <div className={`colored-wrapper`}>
-          <p className="all">{option.label}</p>
+        <div className="colored-wrapper">
+          <div className={`${colorName} icon-wrapper`}>
+            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
+          </div>
+          <div>
+            <p>{option.label}</p>
+          </div>
         </div>
       </div>
-    )
+    );
   }
 
-  const id = option.value;
-  const continentId = id.slice(0, 2);
-  const colorName = `color-${option.continent.toLowerCase().replace(" ", "-")}`;
+  countryOptionRenderer(option) {
+    if (option.value === "all") {
+      return (
+        <div>
+          <div className="colored-wrapper">
+            <p className="all">{option.label}</p>
+          </div>
+        </div>
+      )
+    }
 
-  return (
-    <div className="country-dropdown">
-      {continents && option.first
-        ? <div className={`${option.continent.toLowerCase()}-wrapper continent-wrapper`}>
-            <div className={`${colorName} colored-wrapper dropdown-item`}>
-              <div className={`${colorName} icon-wrapper`}>
-                <div className={`${colorName} darker-color`}></div>
-                <img src={`/images/flags/country_${continentId}.png`}/></div>
-              <div className="continent-name">
-                <p>{option.continent}</p>
+    const id = option.value;
+    const continentId = id.slice(0, 2);
+    const colorName = `color-${option.continent.toLowerCase().replace(" ", "-")}`;
+
+    return (
+      <div className="country-dropdown">
+        {option.first
+          ? <div className={`${option.continent.toLowerCase()}-wrapper continent-wrapper`}>
+              <div className={`${colorName} colored-wrapper dropdown-item`}>
+                <div className={`${colorName} icon-wrapper`}>
+                  <div className={`${colorName} darker-color`}></div>
+                  <img src={`/images/flags/country_${continentId}.png`}/></div>
+                <div className="continent-name">
+                  <p>{option.continent}</p>
+                </div>
               </div>
             </div>
+          : null}
+        <div className={`colored-wrapper`}>
+          <div className={`icon-wrapper`}>
+            <img className="product_icon" src={`/images/flags/country_${id}.png`}></img>
           </div>
-        : null}
-      <div className={`colored-wrapper`}>
-        <div className={`icon-wrapper`}>
-          <img className="product_icon" src={`/images/flags/country_${id}.png`}></img>
-        </div>
-        <div className="country-name-wrapper">
-          <p>{option.label}</p>
+          <div className="country-name-wrapper">
+            <p>{option.label}</p>
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
-export function countryValueRenderer(value) {
-  const id = value.value;
-  const continentId = value.value.slice(0,2);
-    const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;
-  return (
-    <div>
-        <div className={`${value.continent.toLowerCase()}-wrapper continent-selected-wrapper`}>
-            <div className={`${colorName} colored-wrapper dropdown-item`}>
-              <div className={`${colorName} icon-wrapper`}>
-                <div className={`${colorName}`}></div>
-                <img src={`/images/flags/country_${continentId}.png`}/></div>
+    )
+  }
+  countryValueRenderer(value) {
+    const id = value.value;
+    const continentId = value.value.slice(0,2);
+      const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;
+    return (
+      <div>
+          <div className={`${value.continent.toLowerCase()}-wrapper continent-selected-wrapper`}>
+              <div className={`${colorName} colored-wrapper dropdown-item`}>
+                <div className={`${colorName} icon-wrapper`}>
+                  <div className={`${colorName}`}></div>
+                  <img src={`/images/flags/country_${continentId}.png`}/></div>
+              </div>
             </div>
+          <div>
+            <p className="product-selected">{value.label}</p>
           </div>
-        <div>
-          <p className="product-selected">{value.label}</p>
-        </div>
-    </div>
-  )
+      </div>
+    )
+  }
+
+  render() {
+    const options = this.props.options;
+    console.log(this.props.type);
+    return (
+      <div className="select-wrapper">
+        <Select valueRenderer={this.props.type === "products" ? this.productValueRenderer : this.countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products" ? this.productOptionRenderer : this.countryOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false}  name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
+      </div>
+    );
+  }
 }

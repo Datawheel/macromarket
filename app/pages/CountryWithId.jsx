@@ -9,7 +9,7 @@ import {Card} from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from "react-select";
-import Dropdown from "../components/Dropdown2"
+import Dropdown from "../components/Dropdown"
 import {arrowRenderer, productOptionRenderer, productValueRenderer} from "../components/Dropdown"
 
 class CountryWithId extends React.Component {
@@ -176,8 +176,7 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Dropdown select={this.selectDropDown} value={this.state.product.value}  options={dropDownProducts}></Dropdown>
-            {/* <Select valueRenderer={this.productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.productOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={dropDownProducts} onChange={this.selectDropDown}/>*/}
+            <Dropdown type={"products"} select={this.selectDropDown} value={this.state.product.value}  options={dropDownProducts}></Dropdown>
           </div>
         </div>
         <div className="result-wrapper-outer">

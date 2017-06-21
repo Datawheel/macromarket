@@ -50,7 +50,6 @@ class Search extends React.Component {
     if (this.props.keyword) {
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
-
   }
 
   displayResults = () => {
