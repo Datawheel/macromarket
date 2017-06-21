@@ -1,5 +1,8 @@
 @import "../Variables";
 .country, .product, .settings {
+  & .select-dropdown-wrapper  {
+    display: inline;
+  }
     & .country-name-wrapper {
         & p {
             width: 400px;
