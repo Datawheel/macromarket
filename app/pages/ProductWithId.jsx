@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Dropdown from "../components/Dropdown"
+import Select from 'react-select';
 import Sidebar from "../components/Sidebar.jsx";
 import {browserHistory} from "react-router";
 import {Card} from "../components/Card.jsx";
@@ -10,7 +10,7 @@ import {fetchProducts} from "../actions/productsActions";
 import {fetchTradesByProduct} from "../actions/tradesActions";
 import "./Detailed.css";
 import "../components/Dropdown.css";
-
+// import {countryInputChange, arrowRenderer,countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class ProductWithId extends React.Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-              <Dropdown type={"countries"} select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+            
           </div>
         </div>
         <div>

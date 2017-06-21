@@ -15,10 +15,6 @@
             left: 0px !important;
         }
     }
-    & .select-wrapper {
-          display: inline;
-
-    }
     & .Select {
         display: inline-block;
         width: 55%;
@@ -104,17 +100,10 @@
             position: absolute;
         }
     }
-
-    & .select-wrapper {
-      & .chevron:before {
-        top: 2px;
-      }
-    }
 }
 
 .settings {
     & .chevron::before {
         left: .1em;
-        top: 3px;
     }
 }
