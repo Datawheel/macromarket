@@ -1,5 +1,4 @@
 import React from "react";
-import Dropdown from "./DropDown.jsx";
 import {fetchProducts} from "../actions/productsActions";
 import {connect} from "react-redux";
 import "./Dropdown.css";

@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Select from 'react-select';
+import Dropdown from "../components/Dropdown2";
 import {fetchCountries} from "../actions/countriesActions";
 import {createTrade, deleteTradeByCountry} from "../actions/tradesActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
@@ -62,7 +63,7 @@ class SelectedCountries extends React.Component {
             ? <p>{this.state.error}</p>
             : null}</div>
         <div>
-          <Select onInputChange={countryInputChange} valueRenderer={countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={countryOptionRenderer} arrowRenderer={arrowRenderer} clearable={false} name="form-field-name" options={dropDownCountries} onChange={this.addCountry}/>
+          <Dropdown type="countries" select={this.addCountry} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
           <div className="selected-countries-wrapper">
             {this.props.selectedCountries.map((country, index) => {
               return (
