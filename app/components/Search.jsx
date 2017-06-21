@@ -48,11 +48,9 @@ class Search extends React.Component {
   componentDidMount() {
     // this.props.fetchProducts();
     if (this.props.keyword) {
-      console.log(this.props.keyword, "KEYWORD");
-      console.log(this.state.filter, "FILTER");
       this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
     }
-    console.log(this.props.searchActive);
+
   }
 
   displayResults = () => {
@@ -65,7 +63,8 @@ class Search extends React.Component {
       );
     } else {
       return (
-        <div className="search-no-results"><p>No results.</p></div>
+        <div>
+        {this.state.searchTerm.length < 3 ? null : <div className="search-no-results"><p>No results.</p></div>}</div>
       );
     }
   }

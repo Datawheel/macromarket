@@ -538,18 +538,42 @@
 .user-data-opacity {
     & .user-data {
         opacity: .3;
+        -webkit-transition: opacity .3s;
+        transition: opacity .3s;
     }
     & .delete-popup {
-        padding: 100px;
         position: absolute;
         background: white;
         z-index: 10;
         box-shadow: 0px 0px 8px 0px rgba(112, 112, 112, .35);
         z-index: 100;
-        right: 25%;
-            top: 100px;
+        width: 55%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 100px;
+        height: 230px;
         background: #f2f2f2;
         background-color: white;
+        text-align: center;
+        & .delete {
+            float: right;
+            padding: 20px;
+            top: 9px;
+        }
+        & .delete:after {
+            font-size: 24px;
+        }
+        & .content {
+            padding-top: 65px;
+        }
+          & p {
+            margin: 5px;
+          }
+          & button {
+            margin: 25px auto;
+          display: block;
+        }
     }
 }
 
@@ -560,6 +584,8 @@
 }
 
 .user-data {
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
     & .no-border {
         border-bottom: none;
     }

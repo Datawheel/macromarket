@@ -8,6 +8,7 @@
     background-image: url("/images/background-body.png");
     width: 100%;
     background-size: cover;
+
     & .logos-wrapper {
         text-align: center;
         padding: 55px 0;
