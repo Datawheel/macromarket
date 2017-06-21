@@ -63,7 +63,7 @@ class SelectedCountries extends React.Component {
             ? <p>{this.state.error}</p>
             : null}</div>
         <div>
-          <Dropdown type="countries" select={this.addCountry} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+          <Dropdown type="countries" select={this.addCountry} options={dropDownCountries}></Dropdown>
           <div className="selected-countries-wrapper">
             {this.props.selectedCountries.map((country, index) => {
               return (

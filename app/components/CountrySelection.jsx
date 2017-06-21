@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import Dropdown from "../components/Dropdown2";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
+import Dropdown from "../components/Dropdown2";
 import SelectedCountries from "./SelectedCountries";
 import {Link} from "react-router";
 
