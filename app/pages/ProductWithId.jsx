@@ -10,7 +10,7 @@ import {fetchProducts} from "../actions/productsActions";
 import {fetchTradesByProduct} from "../actions/tradesActions";
 import "./Detailed.css";
 import "../components/Dropdown.css";
-import Dropdown from "../components/Dropdown2";
+import Dropdown from "../components/Dropdown";
 // import {countryInputChange, arrowRenderer,countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
 
 class ProductWithId extends React.Component {

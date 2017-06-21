@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Select from 'react-select';
-import Dropdown from "../components/Dropdown2";
+import Dropdown from "../components/Dropdown";
 import {fetchCountries} from "../actions/countriesActions";
 import {createTrade, deleteTradeByCountry} from "../actions/tradesActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";

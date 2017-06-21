@@ -4,8 +4,7 @@ import {fetchCountries} from "../actions/countriesActions";
 import "./Form.css";
 import {Link} from "react-router";
 import {browserHistory} from "react-router";
-import Select from 'react-select';
-import Dropdown from "../components/Dropdown2";
+import Dropdown from "../components/Dropdown";
 import "../components/Dropdown.css";
 import {uploadImage, saveCompany2, deleteCompany} from "../actions/userActions";
 import {countryInputChange, arrowRenderer, countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
@@ -164,7 +163,7 @@ class CompanyData extends React.Component {
         </div>
       );
     }
-    console.log(companyLoading,"heeeellloooooo" );
+
     if(companyLoading) {
       return(
         <div>LOADING</div>
