@@ -25,6 +25,11 @@ export default class Dropdown extends React.Component {
           <div>
             <p className="product-selected">{value.label}</p>
           </div>
+          {this.props.removeSelection ?
+          <div className="delete-wrapper">
+            <div className="delete-overlay"></div>
+            <div className="delete"></div>
+          </div> : null}
         </div>
       </div>
     )
@@ -53,6 +58,7 @@ export default class Dropdown extends React.Component {
           <div>
             <p>{option.label}</p>
           </div>
+
         </div>
       </div>
     );
@@ -96,34 +102,44 @@ export default class Dropdown extends React.Component {
           </div>
         </div>
       </div>
-    )
-  }
-  countryValueRenderer(value) {
-    const id = value.value;
-    const continentId = value.value.slice(0,2);
-      const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;
-    return (
-      <div>
-          <div className={`${value.continent.toLowerCase()}-wrapper continent-selected-wrapper`}>
-              <div className={`${colorName} colored-wrapper dropdown-item`}>
-                <div className={`${colorName} icon-wrapper`}>
-                  <div className={`${colorName}`}></div>
-                  <img src={`/images/flags/country_${continentId}.png`}/></div>
-              </div>
-            </div>
-          <div>
-            <p className="product-selected">{value.label}</p>
-          </div>
-      </div>
     );
   }
 
+  countryValueRenderer(value) {
+    const id = value.value;
+    const continentId = value.value.slice(0, 2);
+    const colorName = `color-${value.continent.toLowerCase().replace(" ", "-")}`;
+    return (
+      <div>
+        <div className={`${value.continent.toLowerCase()}-wrapper continent-selected-wrapper`}>
+          <div className={`${colorName} colored-wrapper dropdown-item`}>
+            <div className={`${colorName} icon-wrapper`}>
+              <div className={`${colorName}`}></div>
+              <img src={`/images/flags/country_${continentId}.png`}/></div>
+          </div>
+        </div>
+        <div>
+          <p className="product-selected">{value.label}</p>
+        </div>
+        {this.props.removeSelection ?
+        <div className="delete-wrapper">
+          <div className="delete-overlay"></div>
+          <div className="delete"></div>
+        </div> : null}
+      </div>
+    );
+  }
 
   render() {
     const options = this.props.options;
     return (
       <div className="select-dropdown-wrapper">
-        <Select valueRenderer={this.props.type === "products" ? this.productValueRenderer : this.countryValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products" ? this.productOptionRenderer : this.countryOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
+        {this.props.removeSelection ? <button onClick={this.props.removeSelection} className="delete-button"></button> : null}
+        <Select valueRenderer={this.props.type === "products"
+          ? this.productValueRenderer.bind(this)
+          : this.countryValueRenderer.bind(this)} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products"
+          ? this.productOptionRenderer.bind(this)
+          : this.countryOptionRenderer.bind(this)} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.props.value} options={options} onChange={this.props.select}/>
       </div>
     );
   }

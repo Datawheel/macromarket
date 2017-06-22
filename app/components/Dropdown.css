@@ -1,112 +1,159 @@
-@import "../Variables";
-.country, .product, .settings {
-  & .select-dropdown-wrapper  {
-    display: inline;
-  }
-    & .country-name-wrapper {
-        & p {
-            width: 400px;
-            font-size: 12px;
-            padding-left: 22px;
-        }
-    }
-    & .is-open {
-        & .continent-selected-wrapper, & .product-selected-wrapper {
-            display: none !important;
-        }
-        & .country-selected-wrapper, & .product-selected {
-            left: 0px !important;
-        }
-    }
-    & .Select {
-        display: inline-block;
-        width: 55%;
-        margin: 0px 15px;
-        vertical-align: middle;
-        & p {
-            color: var(--input-text);
-        }
-        & .Select-control {
-            border-radius: 0px;
-            height: 32px;
-        }
-        & .Select-value {
-            height: 34px;
-            padding: 0px;
-            & p {
-                margin: 0;
-                left: 30px;
-                padding: 12px;
-                width: 55%;
-                overflow: hidden;
-            }
-            & .all {
-                left: 15px;
-                padding: 0px;
-            }
-        }
-        & .icon-wrapper {
-            width: 34px;
-            height: 34px;
-        }
-        & .continent-wrapper {
-            & .colored-wrapper {
-                width: 100%;
+    @import "../Variables";
+    .country, .product, .settings {
+        & .select-dropdown-wrapper {
+            display: inline;
+            position: relative;
+            & .delete-button {
+                background: transparent;
+                position: absolute;
                 height: 34px;
-                & p {
-                    color: white;
-                    font-size: 13px;
+                right: 45px;
+                top: -7px;
+                width: 36px;
+                opacity: .4;
+                z-index: 100;
+            }
+        }
+        & .country-name-wrapper {
+            & p {
+                width: 400px;
+                font-size: 12px;
+                padding-left: 22px;
+            }
+        }
+        & .is-open {
+            & .continent-selected-wrapper, & .product-selected-wrapper {
+                display: none !important;
+            }
+            & .country-selected-wrapper, & .product-selected {
+                left: 0px !important;
+            }
+          
+        }
+        & .Select {
+            display: inline-block;
+            width: 55%;
+            margin: 0px 15px;
+            vertical-align: middle;
+            & p {
+                color: var(--input-text);
+            }
+            & .delete-wrapper {
+                position: absolute;
+                right: 31px;
+                top: -2px;
+                padding: 12px;
+                height: 100px;
+                padding-right: 23px;
+                padding-left: 12px;
+
+                & .delete-overlay {
+                    top: 0px;
+                    opacity: .7;
+                    width: 100%;
+                    height: 100%;
+                    background: white;
+                    position: absolute;
+                    left: 0px;
+                }
+                & .delete:after {
+                    position: absolute;
+                    z-index: 10;
+                    font-size: 21px;
+                    top: 0px;
+                    content: '\D7';
+                    font-weight: 400;
+                    color: var(--middle-grey);
+                    cursor: pointer;
                 }
             }
+            & .Select-control {
+                border-radius: 0px;
+                height: 32px;
+            }
+            & .Select-value {
+                height: 34px;
+                padding: 0px;
+                & p {
+                    margin: 0;
+                    left: 30px;
+                    padding: 12px;
+                    width: 55%;
+                    overflow: hidden;
+                }
+                & .all {
+                    left: 15px;
+                    padding: 0px;
+                }
+            }
+            & .icon-wrapper {
+                width: 34px;
+                height: 34px;
+            }
+            & .continent-wrapper {
+                & .colored-wrapper {
+                    width: 100%;
+                    height: 34px;
+                    & p {
+                        color: white;
+                        font-size: 13px;
+                    }
+                }
+            }
+            & .continent-selected-wrapper {
+                width: 34px;
+            }
+            & .country-selected-wrapper {
+                position: absolute;
+                top: 0;
+                left: 35px;
+            }
         }
-        & .continent-selected-wrapper {
-            width: 34px;
+        & .Select-menu-outer {
+            border: none;
+            border-top: 1px solid var(--light-grey);
+            & p {
+                margin-left: 20px;
+            }
+            & .dropdown-option {
+                padding: 0px;
+                margin: 0px;
+            }
+            & .dropdown-option:hover {
+                background: white;
+            }
         }
-        & .country-selected-wrapper {
-            position: absolute;
-            top: 0;
-            left: 35px;
+        & .Select-arrow-zone {
+            border-left: 1px solid var(--light-grey);
+            padding: 0 10px;
         }
     }
-    & .Select-menu-outer {
-        border: none;
-        border-top: 1px solid var(--light-grey);
-        & p {
-            margin-left: 20px;
-        }
-        & .dropdown-option {
-            padding: 0px;
-            margin: 0px;
-        }
-        & .dropdown-option:hover {
-            background: white;
-        }
-    }
-    & .Select-arrow-zone {
-        border-left: 1px solid var(--light-grey);
-        padding: 0 10px;
-    }
-}
 
-.product {
-    & .africa-wrapper, &.asia-wrapper, &.north-america-wrapper, & .south-america-wrapper, & .europe-wrapper, & .oceania-wrapper {
-        display: none;
-    }
-    & .africa-wrapper:first-child, &.asia-wrapper:first-child, &.north-america-wrapper:first-child, & .south-america-wrapper:first-child, & .europe-wrapper:first-child, & .oceania-wrapper:first-child {
-        display: block;
-    }
-    & .Select {
-        & .Select-value p {
-            margin-left: 10px;
-            padding: 0px;
-            top: 0px;
-            position: absolute;
+    .product {
+        & .africa-wrapper, &.asia-wrapper, &.north-america-wrapper, & .south-america-wrapper, & .europe-wrapper, & .oceania-wrapper {
+            display: none;
+        }
+        & .africa-wrapper:first-child, &.asia-wrapper:first-child, &.north-america-wrapper:first-child, & .south-america-wrapper:first-child, & .europe-wrapper:first-child, & .oceania-wrapper:first-child {
+            display: block;
+        }
+        & .Select {
+            & .Select-value p {
+                margin-left: 12px;
+                padding: 0px;
+                top: 0px;
+                position: absolute;
+            }
         }
     }
-}
 
-.settings {
-    & .chevron::before {
-        left: .1em;
+    .settings {
+        & .chevron::before {
+            left: .1em;
+        }
     }
-}
+
+    .product {
+        & .chevron:before {
+            top: 2px;
+        }
+    }

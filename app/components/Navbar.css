@@ -6,7 +6,7 @@
     z-index: 2000;
     position: fixed;
     top: 80px;
-    right: 4%;
+    right: 11%;
     background: #EBEBEB;
     font-family: var(--libreFranklin);
     padding: 10px;
@@ -50,7 +50,7 @@
     padding: 20px;
     background: var(--accent-color);
     margin: 0;
-    padding: 32px 5%;
+    padding: 35px 5%;
     & .profile-image-wrapper {
         margin-left: 10px;
         display: inline-block;
@@ -64,6 +64,7 @@
         border-radius: 120px;
         overflow: hidden;
     }
+
     & .nav-bar-element {
         display: inline-block;
         & .profile-img-wrapper {
@@ -99,6 +100,13 @@
         left: 30px;
         top: 8px;
     }
+
+    & .search-icon {
+      position: absolute;
+      top: 32px;
+      width: 22px;
+      right: 50px;
+    }
 }
 
 & .home {
@@ -117,7 +125,7 @@
     z-index: 2000;
     position: absolute;
     top: 80px;
-    right: 4%;
+    right: 11%;
     background: #EBEBEB;
     font-family: var(--libreFranklin);
     padding: 10px;
@@ -176,6 +184,7 @@
     }
     & .nav-bar-element {
         display: inline-block;
+        margin: 0px 15px;
         & .profile-img-wrapper {
             width: 25px;
         }

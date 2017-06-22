@@ -210,19 +210,22 @@ class Home extends React.Component {
                 <CardHome content={{
                   type: "product",
                   name: "Wine",
+                  category: "Foodstuffs",
                   id: "042204",
                   flickr_link: "https://flic.kr/p/a7awbU"
                 }}/>
                 <CardHome content={{
                   type: "product",
-                  name: "Electronic printed circuts",
-                  id: "16853400",
+                  name: "Sheep and Goats",
+                  category: "Animal Products",
+                  id: "010104",
                   flickr_link: null
                 }}/>
                 <CardHome content={{
                   type: "product",
-                  name: "Plastic pipes",
-                  id: "073917",
+                  name: "Fork-Lifts",
+                  category: "Machines",
+                  id: "168427",
                   flickr_link: "https://flic.kr/p/6ybFaY"
                 }}/>
               </div>

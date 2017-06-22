@@ -51,6 +51,15 @@ class ProductWithId extends React.Component {
     this.setState({country});
   }
 
+  removeSelection = () => {
+    this.setState({
+      country: {
+        label: "All",
+        value: "all"
+      }
+    })
+  }
+
   render() {
     const {
       product,
@@ -141,7 +150,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+            <Dropdown removeSelection={this.removeSelection} type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
           </div>
         </div>
         <div>

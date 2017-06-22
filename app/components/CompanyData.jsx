@@ -237,7 +237,7 @@ class CompanyData extends React.Component {
             </div>
             <div className="input-wrapper">
               <label>Country</label>
-              <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+              <Dropdown  type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
             </div>
             <div className="input-wrapper">
               <label>Phone</label>

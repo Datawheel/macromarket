@@ -43,7 +43,7 @@ export class Card extends React.Component {
     }
 
     return (
-      <div className="card">
+      <div className="card  fade-in ">
         <Link to={`/${this.content.profile_type=== "connectamericas" ? "company" : this.content.profile_type}/${id}`}>
           <div className="image-wrapper"><div style={{
             backgroundImage: `url(${img})`
@@ -98,7 +98,7 @@ export class CardHome extends React.Component {
             <p className="category">
               {this.content.type === "country"
                 ? "country - " + this.content.continent
-                : "category"}</p>
+                : this.content.type === "product" ? this.content.category : "company"}</p>
             <p className="name">{this.content.name}</p>
           </div>
         </Link>

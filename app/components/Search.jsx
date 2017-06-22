@@ -57,21 +57,21 @@ class Search extends React.Component {
     const {results} = this.props;
     if (results.length > 0) {
       return (
-        <div className="result-wrapper">
+        <div className="fade-in result-wrapper">
           {results.map(result => <Card products={this.props.products} key={result.id} content={result}/>)}
         </div>
       );
     } else {
       return (
         <div>
-        {this.state.searchTerm.length < 3 ? null : <div className="search-no-results"><p>No results.</p></div>}</div>
+        {this.state.searchTerm.length < 3 ? null : <div className="fade-in search-no-results"><p>No results.</p></div>}</div>
       );
     }
   }
 
   render() {
     return (
-      <div className={this.props.searchActive ? "search-visible content-wrapper overlay" : "content-wrapper overlay" }>
+      <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">

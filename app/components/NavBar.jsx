@@ -34,8 +34,10 @@ class NavBar extends React.Component {
 
   hideDropDown = e => {
     const area = ReactDOM.findDOMNode(this.refs.area);
-    if (!area.contains(e.target) && this.state.dropdownVisible) {
-      this.setState({dropdownVisible: false})
+    if (area) {
+      if (!area.contains(e.target) && this.state.dropdownVisible) {
+        this.setState({dropdownVisible: false})
+      }
     }
   }
   logout = () => {
@@ -98,13 +100,6 @@ class NavBar extends React.Component {
                 <span>Product</span>
               </Link>
             </li>
-            {this.props.location.pathname === '/'
-              ? null
-              : <li className="nav-bar-element">
-                <button onClick={() => activateSearch()}>
-                  <span>Search</span>
-                </button>
-              </li>}
             {company
               ? <li ref="area" className="nav-bar-element company-name">
                   <div className="profile-image-wrapper" style={{
@@ -117,24 +112,29 @@ class NavBar extends React.Component {
                     <div onClick={this.handleDropdown} className="arrow-down"></div>
                   </span>
                 </li>
-              : user ? <li className="nav-bar-element">
-                <Link to="/settings/user">Settings</Link>
-                  <span>
-                    <div onClick={this.handleDropdown} className="arrow-down"></div>
-                  </span>
-              </li> :
-              <li className="nav-bar-element">
-                <Link to="/login">Log In</Link>
-              </li>}
+              : user
+                ? <li className="nav-bar-element">
+                    <Link to="/settings/user">Settings</Link>
+                    <span>
+                      <div onClick={this.handleDropdown} className="arrow-down"></div>
+                    </span>
+                  </li>
+                : <li className="nav-bar-element">
+                  <Link to="/login">Log In</Link>
+                </li>}
+                {this.props.location.pathname === '/'
+                  ? null
+                  : <li className="nav-bar-element search-icon-wrapper">
+                    <button onClick={() => activateSearch()}>
+                      <img className="search-icon" src="/images/icons/icon-search-black.svg"/>
+                    </button>
+                  </li>}
           </ul>
         </div>
         {this.state.dropdownVisible
           ? this.dropdown()
           : null}
-          <div className={searchActive ? "search-visible" : "search-hidden"}>
-            <Search></Search>
-          </div>
-
+        <Search searchActive={searchActive}></Search>
       </div>
     );
   }
