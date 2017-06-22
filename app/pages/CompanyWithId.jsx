@@ -174,10 +174,9 @@ class CompanyWithId extends React.Component {
                       : null}
                   </div>
                 </div>
-                <button>
-                  <img className="button-icon" src="/images/icons/icon-mail.svg"/>
-                  Get In Touch
-                </button>
+                {company.company_email
+                ? <a href={`mailto:${company.company_email}`}>
+                <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button></a> : null}
               </div>
             : null}
         </Sidebar>
@@ -221,7 +220,9 @@ class CompanyWithId extends React.Component {
                     : null}
                 </div>
                 <div className="section-wrapper">
-                  <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
+                  {company.company_email
+                  ? <a href={`mailto:${company.company_email}`}>
+                  <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button></a> : null}
                 </div>
               </div>
             </div>

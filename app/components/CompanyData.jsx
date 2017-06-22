@@ -20,6 +20,7 @@ class CompanyData extends React.Component {
       city: "",
       region: "",
       phone_number: "",
+      company_email: "",
       website: "",
       description: "",
       user_id: this.props.user.id
@@ -56,7 +57,8 @@ class CompanyData extends React.Component {
       addressError: null,
       cityError: null,
       regionError: null,
-      phoneError: null
+      phoneError: null,
+      emailError: null,
     });
   }
 
@@ -106,6 +108,7 @@ class CompanyData extends React.Component {
         city:  this.state.city,
         region:  this.state.name,
         phone_number:  this.state.phone_number,
+        company_email: this.state.company_email,
         website:  this.state.website,
         description:  this.state.description,
         user_id: this.props.user.id
@@ -134,6 +137,8 @@ class CompanyData extends React.Component {
       this.setState({regionError: "Must be fewer than 255 characters."});
     } else if (this.state.phone_number.length > 255) {
       this.setState({phoneError: "Must be fewer than 255 characters."});
+    } else if (this.state.company_email.length > 255) {
+      this.setState({emailError: "Must be fewer than 255 characters."});
     } else {
       company.country = this.state.country;
 
@@ -192,7 +197,7 @@ class CompanyData extends React.Component {
       });
     });
 
-    const {name, address, city, region, phone_number, website, description, profileImage, coverImage} = this.state;
+    const {name, address, city, region, phone_number, website, company_email, description, profileImage, coverImage} = this.state;
 
 
     return (
@@ -244,6 +249,13 @@ class CompanyData extends React.Component {
               <input onChange={this.handleChange.bind(this)} value={phone_number} name="phone_number"/>
               <div className="error-wrapper">
                 <p>{this.state.phoneError}</p>
+              </div>
+            </div>
+            <div className="input-wrapper">
+              <label>Company Email</label>
+              <input onChange={this.handleChange.bind(this)} value={company_email} name="company_email"/>
+              <div className="error-wrapper">
+                <p>{this.state.emailError}</p>
               </div>
             </div>
             <div className="input-wrapper">
