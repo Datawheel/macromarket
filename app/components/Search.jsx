@@ -72,6 +72,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
+        <div onClick={this.props.toggleSearch}className="delete"><img src="/images/icons/icon-close-white.svg"/></div>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">

@@ -50,7 +50,7 @@
     padding: 20px;
     background: var(--accent-color);
     margin: 0;
-    padding: 35px 5%;
+    padding: 36px 5%;
     & .profile-image-wrapper {
         margin-left: 10px;
         display: inline-block;
@@ -100,13 +100,17 @@
         left: 30px;
         top: 8px;
     }
-
-    & .search-icon {
-      position: absolute;
-      top: 32px;
-      width: 22px;
-      right: 50px;
+    & .search-icon-wrapper {
+      & button {
+        top: 26px;
+right: -6px;
+position: absolute;
+      }
+      & .search-icon {
+        width: 20px;
+      }
     }
+
 }
 
 & .home {

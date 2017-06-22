@@ -50,6 +50,10 @@ class NavBar extends React.Component {
     });
   }
 
+  closeSearch = () => {
+      this.props.activateSearch(false);
+  }
+
   dropdown = () => {
     return (
       <div className="nav-bar-dropdown">
@@ -134,7 +138,7 @@ class NavBar extends React.Component {
         {this.state.dropdownVisible
           ? this.dropdown()
           : null}
-        <Search searchActive={searchActive}></Search>
+        <Search toggleSearch={this.closeSearch} searchActive={searchActive}></Search>
       </div>
     );
   }
