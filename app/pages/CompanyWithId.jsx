@@ -100,7 +100,7 @@ class CompanyWithId extends React.Component {
             ? <div className="products">
                 <div className="imports">
                   <div className="section-wrapper">
-                    <h5>Products | Imports</h5>
+                    <h5>Products Imported</h5>
                     <div className="yellow-line"></div>
                     {trades.imports
                       ? <div>{Object.keys(trades.imports).map((trade, index) => {
@@ -125,7 +125,7 @@ class CompanyWithId extends React.Component {
                 </div>
                 <div className="exports">
                   <div className="section-wrapper">
-                    <h5>Products | Exports</h5>
+                    <h5>Products Exported</h5>
                     <div className="yellow-line"></div>
                     {trades.exports
                       ? <div>{Object.keys(trades.exports).map((trade, index) => {

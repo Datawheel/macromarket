@@ -11,7 +11,6 @@ import "../components/Dropdown.css";
 import Select from "react-select";
 import Dropdown from "../components/Dropdown";
 
-
 class CountryWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -37,11 +36,7 @@ class CountryWithId extends React.Component {
       this.props.fetchCountry(id);
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
-      this.setState({  product: {
-          label: "All",
-          value: "all"
-        }, selectedOption: "all"
-      });
+      this.removeSelection();
     }
   }
 
@@ -55,10 +50,14 @@ class CountryWithId extends React.Component {
     );
   }
 
-
   removeSelection = () => {
-    this.setState({product: {label: "All",
-    value: "all"}});
+    this.setState({
+      product: {
+        label: "All",
+        value: "all"
+      },
+      selectedOption: "all"
+    });
   }
 
   selectDropDown = item => {
@@ -128,7 +127,7 @@ class CountryWithId extends React.Component {
           </div>
         </div>
         <div className="filter-wrapper">
-          <div className="filter">
+          <div className="filter export-import">
             <label className="label radio-label">
               <input className="radio" onChange={this.handleOptionChange.bind(this, "exports")} type="radio" value="exports" checked={this.state.selectedOption === "exports"}/>
               <p>Exports</p>
@@ -143,30 +142,36 @@ class CountryWithId extends React.Component {
               <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
-            <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value}  options={dropDownProducts}></Dropdown>
-            {/* <Select valueRenderer={this.productValueRenderer} optionClassName={"dropdown-option"} optionRenderer={this.productOptionRenderer} arrowRenderer={this.arrowRenderer} clearable={false} name="form-field-name" value={this.state.product.value} options={dropDownProducts} onChange={this.selectDropDown}/>*/}
+            <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown>
+          </div>
+          <div className="filter button-wrapper">
+            <button className="clear-filters" onClick={this.removeSelection.bind(this)}><span>
+              <img src="/images/icons/icon-clear-white.svg"/>
+            </span>
+            Clear All Filters</button>
           </div>
         </div>
         <div className="result-wrapper-outer">
 
-        {allTrades
-          ? <div className="result-wrapper">
-              {allTrades.map((trade, index) => {
-                if (!trade.profile_type) {
-                  const content = trade.Company;
-                  content.profile_type = "company";
-                  if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
-                    return <Card key={index} content={content}/>;
+          {allTrades
+            ? <div className="result-wrapper">
+                {allTrades.map((trade, index) => {
+                  if (!trade.profile_type) {
+                    const content = trade.Company;
+                    content.profile_type = "company";
+                    if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
+                      return <Card key={index} content={content}/>;
+                    }
+                  } else {
+                    if (this.state.selectedOption === "all" && this.state.product.value === "all") {
+                      return <Card key={index} content={trade}/>;
+                    }
                   }
-                } else {
-                  if (this.state.selectedOption === "all" && this.state.product.value === "all" ) {
-                    return <Card key={index} content={trade}/>;
-                  }
-                }
-              })}
-            </div>
-          : <p>Loading</p>}
-      </div></div>
+                })}
+              </div>
+            : <p>Loading</p>}
+        </div>
+      </div>
     );
   }
 }

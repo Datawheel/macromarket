@@ -25,11 +25,6 @@ export default class Dropdown extends React.Component {
           <div>
             <p className="product-selected">{value.label}</p>
           </div>
-          {this.props.removeSelection ?
-          <div className="delete-wrapper">
-            <div className="delete-overlay"></div>
-            <div className="delete"></div>
-          </div> : null}
         </div>
       </div>
     )
@@ -121,11 +116,6 @@ export default class Dropdown extends React.Component {
         <div>
           <p className="product-selected">{value.label}</p>
         </div>
-        {this.props.removeSelection ?
-        <div className="delete-wrapper">
-          <div className="delete-overlay"></div>
-          <div className="delete"></div>
-        </div> : null}
       </div>
     );
   }
@@ -134,7 +124,7 @@ export default class Dropdown extends React.Component {
     const options = this.props.options;
     return (
       <div className="select-dropdown-wrapper">
-        {this.props.removeSelection ? <button onClick={this.props.removeSelection} className="delete-button"></button> : null}
+
         <Select valueRenderer={this.props.type === "products"
           ? this.productValueRenderer.bind(this)
           : this.countryValueRenderer.bind(this)} optionClassName={"dropdown-option"} optionRenderer={this.props.type === "products"

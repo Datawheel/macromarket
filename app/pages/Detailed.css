@@ -74,11 +74,10 @@
         background-size: cover;
         background-position: center center;
     }
-
     & .profile-image {
-      background-size: contain;
-      background-color: transparent;
-      background-repeat: no-repeat;
+        background-size: contain;
+        background-color: transparent;
+        background-repeat: no-repeat;
     }
     & .filter-wrapper {
         text-align: center;
@@ -113,11 +112,29 @@
                     font-weight: 300;
                     text-align: left;
                     vertical-align: baseline;
-                    font-size: 12px;
+                    font-size: 13px;
                     margin: 0;
                 }
                 & img {
                     margin: 0 5%;
+                    vertical-align: text-top;
+                }
+            }
+        }
+        & .filter.export-import {
+            width: 30%;
+        }
+        & .filter.button-wrapper {
+            width: 15%;
+            & .clear-filters {
+              font-size: 13px;
+                width: 90%;
+                background: #484848;
+                font-weight: 300;
+                padding: 8px 5px;
+                & img {
+                    margin-right: 10px;
+                    width: 15px;
                     vertical-align: text-top;
                 }
             }
@@ -148,7 +165,6 @@
     & button {
         font-size: 14px;
     }
-
     & .button-icon, & .section-wrapper img {
         margin: 0 10px -3px 0;
         vertical-align: top;
@@ -178,11 +194,10 @@
                     display: inline-block;
                     vertical-align: top;
                 }
-
-                & p , & .address-wrapper {
-                   & p {
-                     max-width: 100%;
-                   }
+                & p, & .address-wrapper {
+                    & p {
+                        max-width: 100%;
+                    }
                     margin: 0;
                     max-width: 85%;
                     text-align: left;

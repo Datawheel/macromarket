@@ -136,7 +136,7 @@ class ProductWithId extends React.Component {
           </div>
         </div>
         <div className="filter-wrapper">
-          <div className="filter">
+          <div className="filter export-import">
             <label className="label radio-label">
               <input className="radio" onChange={this.handleOptionChange.bind(this, "export")} type="radio" value="export" checked={this.state.selectedOption === "export"}/>
               <p>export</p>
@@ -151,6 +151,12 @@ class ProductWithId extends React.Component {
               <p>Country</p>
             </div>
             <Dropdown removeSelection={this.removeSelection} type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+          </div>
+          <div className="filter button-wrapper">
+            <button className="clear-filters" onClick={this.removeSelection.bind(this)}><span>
+              <img src="/images/icons/icon-clear-white.svg"/>
+            </span>
+            Clear All Filters</button>
           </div>
         </div>
         <div>
