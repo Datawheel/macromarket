@@ -56,7 +56,7 @@ class NavBar extends React.Component {
 
   dropdown = () => {
     return (
-      <div className="nav-bar-dropdown">
+      <div  className={this.props.location.pathname !== '/' ? "nav-bar-dropdown" : "home-nav nav-bar-dropdown"}>
         <ul>
           <Link to="/settings/user">
             <li>Settings</li>

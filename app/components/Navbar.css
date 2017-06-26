@@ -6,7 +6,7 @@
     z-index: 2000;
     position: fixed;
     top: 80px;
-    right: 11%;
+      right: 7%;
     background: #EBEBEB;
     font-family: var(--libreFranklin);
     padding: 10px;
@@ -50,7 +50,7 @@
     padding: 20px;
     background: var(--accent-color);
     margin: 0;
-    padding: 36px 5%;
+    padding: 36px 8%;
     & .profile-image-wrapper {
         margin-left: 10px;
         display: inline-block;
@@ -85,7 +85,7 @@
     }
     & .nav-bar-element.company-name a {
         padding-left: 15px;
-        padding-right: 7px;
+        padding-right: 15px;
     }
     & .logo-wrapper {
         width: 80px;
@@ -113,17 +113,7 @@ position: absolute;
 
 }
 
-& .home {
-    & .nav-bar {
-        background: none;
-        position: absolute;
-        & .nav-bar-element {
-            & a, & a:visited {
-                color: var(--accent-color);
-            }
-        }
-    }
-}
+
 
 & .nav-bar-dropdown {
     z-index: 2000;
@@ -234,4 +224,5 @@ position: absolute;
             }
         }
     }
+
 }

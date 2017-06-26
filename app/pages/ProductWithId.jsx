@@ -4,6 +4,7 @@ import Select from 'react-select';
 import Sidebar from "../components/Sidebar.jsx";
 import {browserHistory} from "react-router";
 import {Card} from "../components/Card.jsx";
+import {Link} from "react-router";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
 import {fetchProducts} from "../actions/productsActions";
@@ -56,7 +57,8 @@ class ProductWithId extends React.Component {
       country: {
         label: "All",
         value: "all"
-      }
+      },
+        selectedOption: "all"
     })
   }
 
@@ -87,6 +89,8 @@ class ProductWithId extends React.Component {
         </div>
       );
     }
+
+    console.log(product);
 
     const dropDownCountries = [];
     countries.map(continent => {
@@ -125,6 +129,9 @@ class ProductWithId extends React.Component {
                 <p className="product-category">{productCategory}</p>
               </div>
               <p>{product.description}</p>
+              {product.id_hs92 ?
+              <a href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
+              View on the OEC</a> : null}
             </div>
           </Sidebar>
           <div className="center-content">
@@ -132,6 +139,7 @@ class ProductWithId extends React.Component {
               <div className="background-image" style={{
                 backgroundImage: `url(${img})`
               }}></div>
+            <Link to={"/settings/product"}><button className="list-company">List Your Company</button></Link>
             </div>
           </div>
         </div>

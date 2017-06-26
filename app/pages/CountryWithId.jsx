@@ -82,8 +82,14 @@ class CountryWithId extends React.Component {
       );
     }
 
-    const dropDownProducts = products.map(product => {
-      return {value: product.key, label: product.name}
+    const dropDownProducts = [];
+    products.map(category => {
+      let first = true;
+
+      category.values.map(product => {
+        dropDownProducts.push({categoryId: category.key, name: category.name, value: product.key, label: product.name, first});
+        first = false;
+      });
     });
 
     if (error) {
@@ -109,9 +115,12 @@ class CountryWithId extends React.Component {
     return (
       <div className="detailed-content-wrapper country">
         <div className="header-image-wrapper">
-          <div className="background-image" style={{
+          <div className="fade-in background-image" style={{
             backgroundImage: `url(${placeImg})`
           }}></div>
+          <Link to={"/settings/country"}>
+            <button className="list-company">List Your Company</button>
+          </Link>
           <div className="image-overlay-wrapper">
             <div className="image-overlay"></div>
             <div className="text-wrapper">
@@ -119,9 +128,14 @@ class CountryWithId extends React.Component {
                 <h2>{country.name}</h2>
                 <h4>{country.continent}</h4>
                 <img className="flag" src={`/images/flags/country_${country.id}.png`}></img>
+
               </div>
               <div className="section-wrapper continent-wrapper">
                 <img src={`/images/flags/country_${continentId}.png`}></img>
+              </div>
+              <div className="section-wrapper">
+                <a className="oec-link"href={`http://atlas.media.mit.edu/en/profile/hs92/${country.id}`}>
+                  View on the OEC</a>
               </div>
             </div>
           </div>
@@ -145,10 +159,11 @@ class CountryWithId extends React.Component {
             <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown>
           </div>
           <div className="filter button-wrapper">
-            <button className="clear-filters" onClick={this.removeSelection.bind(this)}><span>
-              <img src="/images/icons/icon-clear-white.svg"/>
-            </span>
-            Clear All Filters</button>
+            <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
+              <span>
+                <img src="/images/icons/icon-clear-white.svg"/>
+              </span>
+              Clear All Filters</button>
           </div>
         </div>
         <div className="result-wrapper-outer">

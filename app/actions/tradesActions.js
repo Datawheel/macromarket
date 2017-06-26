@@ -210,34 +210,99 @@ export function fetchTradesByProduct(productId) {
   };
 }
 
+
+
+function contains(id, array) {
+  let result = false;
+  array.map(item => {
+
+    if (id === item.id) {
+      result = true;
+    }
+  });
+  return result;
+}
+
+function findIndexX(category, name, array, attr) {
+  let index = array.length;
+  for (let i = 0; i < array.length; i++) {
+    const itemCategory = attr === "products" ? array[i].id.slice(0, 2) : array[i][attr];
+    if (category === itemCategory) {
+      index = i + 1;
+      if (name.toLowerCase() < array[i].name.toLowerCase()) {
+        return i;
+      }
+    }
+  }
+  return index;
+}
+
+function compare(a, b) {
+  if (a.continent < b.continent) {
+    return -1;
+  }
+  if (a.continent > b.continent) {
+    return 1;
+  }
+  return 0;
+}
+
 export function fetchProfileTradesByCompany(companyId) {
   return function(dispatch) {
     dispatch(requestProfileTrades());
     return api.get(`/api/trades/company/${companyId}`)
       .then(response => {
-        const json = {
-          exports: {},
-          imports: {},
-          countries: {}
-        };
-        console.log(response.data, "TRADESS")
+        const exports = [];
+        const imports = [];
+        const countries = [];
+
+        console.log(response.data)
         response.data.map(product => {
+
           if (product.Country) {
-            if (!json.countries[product.Country.id]) {
-              json.countries[product.Country.id] = product.Country;
-            }
+            if (!contains(product.Country.id, countries)) {
+              // countries.push(product.Country);
 
-            if (product.trade_flow === "exports" && !json.exports[product.Product.id]) {
-              json.exports[product.Product.id] = product.Product;
+              const index = findIndexX(product.Country.continent, product.Country.name, countries, "continent")
+              countries.splice(index, 0, product.Country);
+              countries.sort(compare);
             }
+            if (product.trade_flow === "exports" && !contains(product.Product.id, exports)) {
 
-            if (product.trade_flow === "imports" && !json.imports[product.Product.id]) {
-              json.imports[product.Product.id] = product.Product;
+              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, exports, "products")
+              exports.splice(index, 0, product.Product);
+            }
+            if (product.trade_flow === "imports" && !contains(product.Product.id, imports)) {
+              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, imports, "products")
+              imports.splice(index, 0, product.Product);
             }
           }
         });
 
-        dispatch(receiveProfileTrades(json));
+        const sortedResponse = {
+          exports,
+          imports,
+          countries
+        }
+
+
+        // response.data.map(product => {
+        //   if (product.Country) {
+        //     if (!json.countries[product.Country.id]) {
+        //       json.countries[product.Country.id] = product.Country;
+        //     }
+        //
+        //     if (product.trade_flow === "exports" && !json.exports[product.Product.id]) {
+        //       json.exports[product.Product.id] = product.Product;
+        //     }
+        //
+        //     if (product.trade_flow === "imports" && !json.imports[product.Product.id]) {
+        //       json.imports[product.Product.id] = product.Product;
+        //     }
+        //   }
+        // });
+
+        dispatch(receiveProfileTrades(sortedResponse));
 
       })
       .catch(response => {

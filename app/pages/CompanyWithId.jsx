@@ -83,7 +83,7 @@ class CompanyWithId extends React.Component {
       opacity: 1
     };
 
-    console.log(this.props.trades, "TRADDDESS");
+
     const connectamericas = this.props.params.companyWithId.slice(0, 3) === "ca_";
 
     return (
@@ -103,24 +103,24 @@ class CompanyWithId extends React.Component {
                     <h5>Products Imported</h5>
                     <div className="yellow-line"></div>
                     {trades.imports
-                      ? <div>{Object.keys(trades.imports).map((trade, index) => {
-                            const id = trades.imports[trade].id.slice(0, 2);
-                            return (
-                              <Link key={index} to={`/product/${trade}`}>
-                                <div className="product-wrapper">
-                                  <div className={`icon-wrapper color-${id}`}>
-                                    <img src={`/images/product_icon/hs_${id}.png`}></img>
-                                  </div>
-                                  <div className="colored-wrapper">
-                                    <div className={`darker-color color-${id}`}></div>
-                                    <p>{trades.imports[trade].name}</p>
-                                  </div>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      : null}
+                      ? <div>{trades.imports.map((trade, index) => {
+                        const id = trade.id.slice(0, 2);
+                        return (
+                          <Link key={index} to={`/product/${trade}`}>
+                            <div className="product-wrapper">
+                              <div className={`icon-wrapper color-${id}`}>
+                                <img src={`/images/product_icon/hs_${id}.png`}></img>
+                              </div>
+                              <div className="colored-wrapper">
+                                <div className={`darker-color color-${id}`}></div>
+                                <p>{trade.name}</p>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  : null}
                   </div>
                 </div>
                 <div className="exports">
@@ -128,24 +128,24 @@ class CompanyWithId extends React.Component {
                     <h5>Products Exported</h5>
                     <div className="yellow-line"></div>
                     {trades.exports
-                      ? <div>{Object.keys(trades.exports).map((trade, index) => {
-                            const id = trades.exports[trade].id.slice(0, 2);
-                            return (
-                              <Link key={index} to={`/product/${trade}`}>
-                                <div className="product-wrapper">
-                                  <div className={`icon-wrapper color-${id}`}>
-                                    <img src={`/images/product_icon/hs_${id}.png`}></img>
-                                  </div>
-                                  <div className="colored-wrapper">
-                                    <div className={`darker-color color-${id}`}></div>
-                                    <p>{trades.exports[trade].name}</p>
-                                  </div>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      : null}
+                      ? <div>{trades.exports.map((trade, index) => {
+                        const id = trade.id.slice(0, 2);
+                        return (
+                          <Link key={index} to={`/product/${trade}`}>
+                            <div className="product-wrapper">
+                              <div className={`icon-wrapper color-${id}`}>
+                                <img src={`/images/product_icon/hs_${id}.png`}></img>
+                              </div>
+                              <div className="colored-wrapper">
+                                <div className={`darker-color color-${id}`}></div>
+                                <p>{trade.name}</p>
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  : null}
                   </div>
                 </div>
                 <div className="coverage">
@@ -154,9 +154,9 @@ class CompanyWithId extends React.Component {
                     <div className="yellow-line"></div>
                     {trades.countries
                       ? <div>
-                          {Object.keys(trades.countries).map((country, index) => {
-                            const continentId = country.slice(0, 2);
-                            const colorName = `color-${trades.countries[country].continent.toLowerCase().replace(" ", "-")}`;
+                          {trades.countries.map((country, index) => {
+                            const continentId = country.id.slice(0, 2);
+                            const colorName = `color-${country.continent.toLowerCase().replace(" ", "-")}`;
                             return (
                               <Link key={index} to={`/country/${country}`}>
                                 <div className="product-wrapper">
@@ -165,7 +165,7 @@ class CompanyWithId extends React.Component {
                                   </div>
                                   <div className="colored-wrapper">
                                     <div className={`darker-color ${colorName}`}></div>
-                                    <p>{trades.countries[country].name}</p>
+                                    <p>{country.name}</p>
                                   </div>
                                 </div>
                               </Link>

@@ -14,7 +14,7 @@ export default class Dropdown extends React.Component {
   }
 
   productValueRenderer(value) {
-    const id = value.value;
+    const id = value.categoryId;
     const colorName = `color-${id}`;
     return (
       <div>
@@ -34,26 +34,36 @@ export default class Dropdown extends React.Component {
     if (option.value === "all") {
       return (
         <div>
-          <div className={`colored-wrapper`}>
+          <div className="colored-wrapper">
             <p className="all">{option.label}</p>
           </div>
         </div>
-      );
+      )
     }
 
     const id = option.value;
-    const colorName = `color-${id}`;
+
+    const categoryId = option.categoryId;
+    const colorName = `color-${categoryId}`;
 
     return (
-      <div>
-        <div className={`colored-wrapper`}>
-          <div className={`${colorName} icon-wrapper`}>
-            <img className="product_icon" src={`/images/product_icon/hs_${id}.png`}></img>
-          </div>
-          <div>
+      <div className="country-dropdown">
+        {option.first
+          ? <div className={`${option.categoryId.toLowerCase()}-wrapper continent-wrapper`}>
+              <div className={`${colorName} colored-wrapper dropdown-item`}>
+                <div className={`${colorName} icon-wrapper`}>
+                  <div className={`${colorName} darker-color`}></div>
+                  <img src={`/images/product_icon/hs_${categoryId}.png`}/></div>
+                <div className="product-name">
+                  <p>{option.name}</p>
+                </div>
+              </div>
+            </div>
+          : null}
+        <div className="colored-wrapper">
+          <div className="country-name-wrapper product-label">
             <p>{option.label}</p>
           </div>
-
         </div>
       </div>
     );
