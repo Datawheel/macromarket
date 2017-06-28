@@ -31,7 +31,6 @@ function genRandId(path) {
       "saper",
       "saarg",
       "nagtm",
-      "eusun",
       "eultu",
       "euksv",
       "nacan",

@@ -230,21 +230,21 @@ class Home extends React.Component {
                 <h3>companies</h3>
                 <CardHome content={{
                   type: "company",
-                  name: "Al - Tayyab Enterprises",
-                  id: "3",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1490390523547.jpg"
+                  name: "Corporacion Stealth Sac.",
+                  id: "ca_66123",
+                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-66123-1498107298.png?itok=-foEqm3s"
                 }}/>
                 <CardHome content={{
                   type: "company",
-                  name: "Salmon and Pork",
-                  id: "1",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1489691935730.jpg"
+                  name: "TFO Canada",
+                  id: "ca_42795",
+                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png?itok=Yoc2G5W"
                 }}/>
                 <CardHome content={{
                   type: "company",
-                  name: "Sabrina's Sheeps",
-                  id: "2",
-                  logo: "https://sabrina-test.s3.amazonaws.com/1489508350507.jpg"
+                  name: "Visión Desarrollo Corporativo",
+                  id: "ca_20576",
+                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-20576-1460152553.png?itok=p3mAe-pg"
                 }}/>
               </div>
             </div>
