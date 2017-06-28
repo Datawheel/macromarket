@@ -123,9 +123,10 @@ class CountryHeader extends React.Component {
                   </div>
                 </div>
               : null}
-            <div className="section-wrapper">
+            <div className="link-wrapper section-wrapper">
+
               <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
-                View on the OEC</a>
+                View on the OEC <span className="chevron right"></span></a>
             </div>
           </div>
         </div>

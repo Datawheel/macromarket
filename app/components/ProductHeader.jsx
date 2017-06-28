@@ -9,17 +9,22 @@ export default class ProductHeader extends React.Component {
     super(props);
   }
 
-  nameLookup = (id, products, name) => {
-    let result = name;
-    const stem = id.slice(0, 2);
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      if (product.key === stem) {
-        result = product.name;
-        if (id.length > 2) {
-          return this.nameLookup(id.slice(2, id.length), product.values, result);
+  nameLookup = (id) => {
+    let result = ""
+    // this.props.countries.map(continent => {
+    //   continent.values.map(country => {
+    //     if(country.id === id) {
+    //       return country.name;
+    //     }
+    //   })
+    // })
+    const countries = this.props.countries;
+    for (let i = 0; i < countries.length; i++) {
+      for (let j = 0; j < countries[i].values.length; j++) {
+        const country = countries[i].values[j];
+        if (country.id === id) {
+          return country.name;
         }
-        return result;
       }
     }
   };
@@ -52,12 +57,22 @@ export default class ProductHeader extends React.Component {
   }
 
   render() {
-    const {product, productCategory, productData} = this.props;
+    const {product, productCategory, productData, countries} = this.props;
     let productValue;
-    console.log(productData);
+    let topExporter;
+    let topImporter;
+    let exportName;
+    let importName;
+    console.log(countries);
     if (productData) {
       productValue = `$${this.abbrNum(productData.export_val, 2)}`;
+      topExporter = productData.top_exporter;
+      topImporter = productData.top_importer;
+      exportName = this.nameLookup(topExporter);
+      importName = this.nameLookup(topImporter);
     }
+
+    console.log(exportName, importName);
 
     const fallbackId = product.id.substring(0, 2);
     const img = product.flickr_link
@@ -85,7 +100,7 @@ export default class ProductHeader extends React.Component {
         </Sidebar>
         <div className="center-content">
           <div className="header-image-wrapper">
-            <div className="background-image" style={{
+            <div className="fade-in background-image" style={{
               backgroundImage: `url(${img})`
             }}></div>
             {productValue
@@ -96,15 +111,20 @@ export default class ProductHeader extends React.Component {
                       <div className="data">
                         <p className="value">{productValue}</p>
                         <h4>Exports</h4>
+                        <img></img>
                         <h4></h4>
                       </div>
                     </div>
                     <div className="section-wrapper top-data">
                       <div className="data">
+                        <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
                         <h4>Top Exporter</h4>
+                        <h4>{exportName}</h4>
                       </div>
                       <div className="data">
+                        <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
                         <h4>Top Exporter</h4>
+                        <h4>{importName}</h4>
                       </div>
                     </div>
                   </div>

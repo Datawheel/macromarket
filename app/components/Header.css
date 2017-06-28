@@ -31,6 +31,7 @@
     }
     & .background-image {
         width: 100%;
+        
         position: relative;
         height: 100%;
         background: #f2f2f2;
@@ -43,7 +44,11 @@
         background-repeat: no-repeat;
     }
     & .icon {
-        height: 23px;
+        height: 22px;
+        top: 35px;
+    }
+    & .flag-icon {
+        height: 35px;
         top: 35px;
     }
     & .text-wrapper {
@@ -52,7 +57,6 @@
         color: white;
         position: absolute;
         margin: 15px 0;
-
         & h2 {
             max-width: 145px;
             margin: 6px 0;
@@ -63,6 +67,9 @@
             font-size: 12px;
             font-weight: 200;
             text-transform: uppercase;
+        }
+        & .link-wrapper {
+              border-left: 1px solid white;
         }
         & .section-wrapper {
             vertical-align: text-top;
@@ -79,9 +86,22 @@
                     text-transform: uppercase;
                 }
             }
+
             & .oec-link {
                 top: 38px;
-                width: 129px;
+                width: 133px;
+                padding-left: 15px;
+                position: absolute;
+                text-transform: uppercase;
+                font-size: 13px;
+                & .chevron::before {
+                    color: white;
+                    left: inherit;
+                    right: 0px;
+                      top: 0px;
+                    font-size: 20px;
+                    position: absolute;
+                }
             }
         }
     }
@@ -193,8 +213,7 @@
         background: #141D23;
     }
     & .top-data {
-      width: 50%;
-
+        width: 50%;
     }
 }
 
