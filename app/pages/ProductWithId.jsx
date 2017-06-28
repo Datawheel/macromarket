@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import Select from 'react-select';
-import Sidebar from "../components/Sidebar.jsx";
 import {browserHistory} from "react-router";
 import {Card} from "../components/Card.jsx";
 import {Link} from "react-router";
@@ -11,8 +10,10 @@ import {fetchProducts} from "../actions/productsActions";
 import {fetchTradesByProduct} from "../actions/tradesActions";
 import "./Detailed.css";
 import "../components/Dropdown.css";
+import ProductHeader from "../components/ProductHeader";
 import Dropdown from "../components/Dropdown";
-// import {countryInputChange, arrowRenderer,countryValueRenderer, countryOptionRenderer} from "../components/Dropdown";
+import {fetchData} from "datawheel-canon";
+import {url} from "../api";
 
 class ProductWithId extends React.Component {
   constructor(props) {
@@ -28,16 +29,15 @@ class ProductWithId extends React.Component {
 
   componentDidMount() {
     const id = this.props.params.productWithId;
-    this.props.fetchProduct(id);
+
     this.props.fetchCountries();
     this.props.fetchProducts();
     this.props.fetchTradesByProduct(id);
   }
 
-    componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps) {
     if (this.props.params.productWithId !== newProps.params.productWithId) {
       const id = newProps.params.productWithId;
-      this.props.fetchProduct(id);
       this.props.fetchCountries();
       this.props.fetchProducts();
       this.props.fetchTradesByProduct(id);
@@ -58,21 +58,22 @@ class ProductWithId extends React.Component {
         label: "All",
         value: "all"
       },
-        selectedOption: "all"
+      selectedOption: "all"
     })
   }
 
   render() {
     const {
-      product,
       loading,
       error,
       countriesLoading,
       countriesError,
       countries,
       trades,
-      products
+      products,
+      data
     } = this.props;
+    const {product, productData} = this.props.data;
 
     if (loading || !product || !countries || !trades || !products) {
       return (
@@ -90,13 +91,11 @@ class ProductWithId extends React.Component {
       );
     }
 
-    console.log(product);
-
     const dropDownCountries = [];
     countries.map(continent => {
       let first = true;
       continent.values.map(country => {
-        dropDownCountries.push({continent:continent.key, value: country.id, label: country.name, first});
+        dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
         first = false;
       });
     });
@@ -110,39 +109,9 @@ class ProductWithId extends React.Component {
       });
     }
 
-    const fallbackId = product.id.substring(0, 2);
-    const img = product.flickr_link
-      ? `/images/product/${product.id}.jpg`
-      : product.parent_image
-        ? `/images/product/${product.id.slice(0, -2)}.jpg`
-        : `/images/product/${fallbackId}.jpg`;
-
     return (
       <div className="detailed-content-wrapper product">
-        <div className="header">
-          <Sidebar>
-            <div className="profile-info">
-              <div className="header-wrapper">
-                <h2>
-                  <span><img src={"/images/icons/icon-product-white.svg"}/></span>{product.name}</h2>
-                <div className="yellow-line"></div>
-                <p className="product-category">{productCategory}</p>
-              </div>
-              <p>{product.description}</p>
-              {product.id_hs92 ?
-              <a href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
-              View on the OEC</a> : null}
-            </div>
-          </Sidebar>
-          <div className="center-content">
-            <div className="header-image-wrapper">
-              <div className="background-image" style={{
-                backgroundImage: `url(${img})`
-              }}></div>
-            <Link to={"/settings/product"}><button className="list-company">List Your Company</button></Link>
-            </div>
-          </div>
-        </div>
+        <ProductHeader countries={countries} productData= {productData} product={product} productCategory={productCategory}/>
         <div className="filter-wrapper">
           <div className="filter export-import">
             <label className="label radio-label">
@@ -158,13 +127,14 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value}  options={dropDownCountries}></Dropdown>
+            <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value} options={dropDownCountries}></Dropdown>
           </div>
           <div className="filter button-wrapper">
-            <button className="clear-filters" onClick={this.removeSelection.bind(this)}><span>
-              <img src="/images/icons/icon-clear-white.svg"/>
-            </span>
-            Clear All Filters</button>
+            <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
+              <span>
+                <img src="/images/icons/icon-clear-white.svg"/>
+              </span>
+              Clear All Filters</button>
           </div>
         </div>
         <div>
@@ -206,8 +176,17 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const productUrl = `${url}/api/products/<productWithId>`;
+
+ProductWithId.preneed = [fetchData("product", productUrl, res => res)];
+
+ProductWithId.need = [fetchData("productData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<product.id_hs92>/", res => res.data[0])];
+
+ProductWithId.postneed = [];
+
 const mapStateToProps = state => {
   return {
+    data: state.data,
     product: state.productProfile.product,
     loading: state.productProfile.loading,
     error: state.productProfile.error,

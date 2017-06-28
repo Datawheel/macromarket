@@ -4,7 +4,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: 20px 15px;
-    height: 80px;
+    height: 90px;
     margin-top: -2px;
 
     & .logo-wrapper {
@@ -12,7 +12,7 @@
         display: inline-block;
 
       & img {
-            width: 70%;
+            width: 100%;
         }
     }
 
@@ -25,14 +25,14 @@
         vertical-align: top;
         line-height: 14px;
         & p {font-size: 10px;
-            margin: 0px;}
+            margin: 15px;}
     }
 
     & .left {
         text-align: right;
         display: inline-block;
         width: 35%;
-
+        vertical-align: super;
         & .connect {
             padding-right: 20px;
             width: 100px;

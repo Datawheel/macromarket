@@ -113,10 +113,7 @@ class Home extends React.Component {
         <div className="home">
           <div className="content-wrapper">
             <div className="header-wrapper">
-              <div className="oec-logo-wrapper">
-                <img src="/images/icons/white-oec-logo.svg"></img>
-              </div>
-              <img src="/images/icons/orange-market-logo.svg"></img>
+              <img className="mm-logo" src="/images/icons/logos/macro-market-home.png"></img>
               <p className="tagline">Market for exported and imported goods.</p>
             </div>
             <div className="search-wrapper">

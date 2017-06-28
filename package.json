@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Datawheel/oecm#readme",
   "dependencies": {
-    "datawheel-canon": "^0.5.3",
+    "datawheel-canon": "^0.6.0",
     "localforage": "^1.5.0",
     "react-select": "^1.0.0-rc.5"
   }

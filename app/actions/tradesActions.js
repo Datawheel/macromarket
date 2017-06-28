@@ -1,5 +1,25 @@
 import api from "../api.js";
 
+function requestCaTrades() {
+  return {
+    type: "CA_TRADES_PENDING"
+  };
+}
+
+function receiveCaTrades(json) {
+  return {
+    type: "CA_TRADES_FULFILLED",
+    data: json
+  };
+}
+
+function caTradesError(json) {
+  return {
+    type: "CA_TRADES_REJECTED",
+    data: json
+  };
+}
+
 function requestTrades() {
   return {
     type: "TRADES_PENDING"
@@ -147,29 +167,6 @@ export function deleteTradeByCountry(companyId, productId, countryId, tradeFlow)
   };
 }
 
-export function saveTrades(tradesToSave, tradesToDelete) {
-  return function(dispatch) {
-    dispatch(requestSaveTrades());
-    if (tradesToSave.length > 0) {
-      return api.post("api/trades", tradesToSave)
-        .then(response => {
-          if (tradesToDelete.length > 0) {
-            deleteTrades(tradesToDelete)(dispatch);
-          } else {
-            dispatch(receiveSaveTrades(response.data));
-          }
-        })
-        .catch(response => {
-          dispatch(saveTradesError(response.data));
-        });
-    } else {
-      if (tradesToDelete.length > 0) {
-        deleteTrades(tradesToDelete)(dispatch);
-      }
-    }
-  };
-}
-
 
 export function fetchSettingsTradesByCompany(companyId) {
   return function(dispatch) {
@@ -183,7 +180,20 @@ export function fetchSettingsTradesByCompany(companyId) {
       });
   };
 }
-
+export function fetchCaTradesByCountry(id) {
+  console.log(id, "HERERERERRE")
+  return function(dispatch) {
+    dispatch(requestCaTrades());
+    return api.get(`/api/trades/ca_country/${id}`)
+      .then(response => {
+        console.log(response, "hereeeee");
+        dispatch(receiveCaTrades(response.data));
+      })
+      .catch(response => {
+        dispatch(caTradesError(response.data));
+      });
+  };
+}
 export function fetchTradesByCountry(countryId) {
   return function(dispatch) {
     dispatch(requestTrades());
@@ -284,23 +294,6 @@ export function fetchProfileTradesByCompany(companyId) {
           imports,
           countries
         }
-
-
-        // response.data.map(product => {
-        //   if (product.Country) {
-        //     if (!json.countries[product.Country.id]) {
-        //       json.countries[product.Country.id] = product.Country;
-        //     }
-        //
-        //     if (product.trade_flow === "exports" && !json.exports[product.Product.id]) {
-        //       json.exports[product.Product.id] = product.Product;
-        //     }
-        //
-        //     if (product.trade_flow === "imports" && !json.imports[product.Product.id]) {
-        //       json.imports[product.Product.id] = product.Product;
-        //     }
-        //   }
-        // });
 
         dispatch(receiveProfileTrades(sortedResponse));
 

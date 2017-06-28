@@ -82,9 +82,8 @@ class NavBar extends React.Component {
               {this.props.location.pathname !== '/'
                 ? <Link to="/">
                     <span>
-                      <div className="logo-wrapper"><img src="/images/icons/white-oec-logo.svg"/></div>
                       <div className="logo-wrapper">
-                        <img src="/images/icons/black-market-logo.svg"/></div>
+                        <img src="/images/icons/logos/macro-market-nav.png"/></div>
                     </span>
                   </Link>
                 : null}

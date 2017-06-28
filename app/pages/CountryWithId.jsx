@@ -5,11 +5,15 @@ import {connect} from "react-redux";
 import {fetchCountry} from '../actions/countryActions';
 import {fetchProducts} from '../actions/productsActions';
 import {fetchTradesByCountry} from "../actions/tradesActions";
+import {fetchCaTradesByCountry} from "../actions/tradesActions";
 import {Card} from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from "react-select";
 import Dropdown from "../components/Dropdown";
+import {fetchData} from "datawheel-canon";
+import {url} from "../api";
+import CountryHeader from "../components/CountryHeader"
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -25,17 +29,19 @@ class CountryWithId extends React.Component {
 
   componentDidMount() {
     const id = this.props.params.countryWithId;
-    this.props.fetchCountry(id);
     this.props.fetchProducts();
     this.props.fetchTradesByCountry(id);
+    if (this.props.data.country) {
+      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
+    }
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.params.countryWithId !== this.props.params.countryWithId) {
       const id = newProps.params.countryWithId
-      this.props.fetchCountry(id);
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
+      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
       this.removeSelection();
     }
   }
@@ -65,14 +71,9 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {
-      country,
-      loading,
-      error,
-      products,
-      trades,
-      caTrades
-    } = this.props;
+    const {loading, error, products, trades, caTrades} = this.props;
+    const {country, countryData, importData, exportData} = this.props.data;
+    console.log(this.props.caTrades);
 
     if (!country || !products) {
       return (
@@ -83,9 +84,9 @@ class CountryWithId extends React.Component {
     }
 
     const dropDownProducts = [];
+
     products.map(category => {
       let first = true;
-
       category.values.map(product => {
         dropDownProducts.push({categoryId: category.key, name: category.name, value: product.key, label: product.name, first});
         first = false;
@@ -102,44 +103,13 @@ class CountryWithId extends React.Component {
     }
 
     let allTrades = [];
-
     if (caTrades && trades) {
       allTrades = caTrades.concat(trades);
     }
 
-    const continentId = country.id.substring(0, 2);
-    const placeImg = country.flickr_link
-      ? `/images/country/${country.id}.jpg`
-      : `/images/country/${continentId}.jpg`;
-
     return (
       <div className="detailed-content-wrapper country">
-        <div className="header-image-wrapper">
-          <div className="fade-in background-image" style={{
-            backgroundImage: `url(${placeImg})`
-          }}></div>
-          <Link to={"/settings/country"}>
-            <button className="list-company">List Your Company</button>
-          </Link>
-          <div className="image-overlay-wrapper">
-            <div className="image-overlay"></div>
-            <div className="text-wrapper">
-              <div className="section-wrapper">
-                <h2>{country.name}</h2>
-                <h4>{country.continent}</h4>
-                <img className="flag" src={`/images/flags/country_${country.id}.png`}></img>
-
-              </div>
-              <div className="section-wrapper continent-wrapper">
-                <img src={`/images/flags/country_${continentId}.png`}></img>
-              </div>
-              <div className="section-wrapper">
-                <a className="oec-link"href={`http://atlas.media.mit.edu/en/profile/hs92/${country.id}`}>
-                  View on the OEC</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData}/>
         <div className="filter-wrapper">
           <div className="filter export-import">
             <label className="label radio-label">
@@ -167,7 +137,6 @@ class CountryWithId extends React.Component {
           </div>
         </div>
         <div className="result-wrapper-outer">
-
           {allTrades
             ? <div className="result-wrapper">
                 {allTrades.map((trade, index) => {
@@ -208,8 +177,29 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
+const countryUrl = `${url}/api/countries/<countryWithId>`;
+
+CountryWithId.preneed = [fetchData("country", countryUrl, res => res)];
+
+CountryWithId.need = [fetchData("countryData", "http://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
+    const response = res.data[0];
+
+    const importId = response.top_export_hs4.slice(2, response.length);
+    const exportId = response.top_import_hs4.slice(2, response.length);
+    response.import = importId;
+    response.export = exportId;
+    return response;
+
+  })];
+
+CountryWithId.postneed = [
+  fetchData("importData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.import>/", res => res.data[0]),
+  fetchData("exportData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.export>/", res => res.data[0])
+];
+
 const mapStateToProps = state => {
   return {
+    data: state.data,
     country: state.countryProfile.country,
     loading: state.countryProfile.loading,
     error: state.countryProfile.error || null,

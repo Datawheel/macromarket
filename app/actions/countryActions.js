@@ -39,17 +39,18 @@ function caTradesError(json) {
   };
 }
 
-//Fetchs country then fetchs connectamericas companies in that coutnry
+
+//Fetch country then fetchs connectamericas companies in that coutnry
 export function fetchCountry(id) {
   return function(dispatch) {
     dispatch(requestCountry());
     return api.get(`/api/countries/${id}`)
     .then(response => {
       dispatch(receiveCountry(response.data));
-        dispatch(requestCaTrades());
+      dispatch(requestCaTrades());
       return api.get(`/api/trades/ca_country/${response.data.id_ca}`)
         .then(response => {
-          console.log(response);
+          console.log(response, "hereeeee");
           dispatch(receiveCaTrades(response.data));
         })
         .catch(response => {
