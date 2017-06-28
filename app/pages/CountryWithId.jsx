@@ -37,11 +37,15 @@ class CountryWithId extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
+
     if (newProps.params.countryWithId !== this.props.params.countryWithId) {
       const id = newProps.params.countryWithId
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
-      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
+
+          if (this.props.data.country) {
+
+      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca); }
       this.removeSelection();
     }
   }
@@ -109,7 +113,7 @@ class CountryWithId extends React.Component {
 
     return (
       <div className="detailed-content-wrapper country">
-        <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData}/>
+        <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
         <div className="filter-wrapper">
           <div className="filter export-import">
             <label className="label radio-label">

@@ -6,7 +6,7 @@ import {fetchCompany} from "../actions/companyActions";
 import {fetchProfileTradesByCompany} from "../actions/tradesActions";
 import {browserHistory} from "react-router";
 import "./Detailed.css";
-
+import CompanyHeader from "../components/CompanyHeader";
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -62,21 +62,7 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    let coverImage = {
-      backgroundImage: `url(${company.cover_image})`
-    };
 
-    if (!company.cover_image) {
-      const country = company.Country
-      if (country) {
-        const countryId = country.flickr_link
-          ? country.id
-          : country.id.slice(0, 2);
-        coverImage = {
-          backgroundImage: `url(/images/country/${countryId}.jpg)`
-        };
-      }
-    }
 
     const profileImage = {
       backgroundImage: `url(${company.profile_image})`,
@@ -106,7 +92,7 @@ class CompanyWithId extends React.Component {
                       ? <div>{trades.imports.map((trade, index) => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade}`}>
+                          <Link key={index} to={`/product/${trade.id}`}>
                             <div className="product-wrapper">
                               <div className={`icon-wrapper color-${id}`}>
                                 <img src={`/images/product_icon/hs_${id}.png`}></img>
@@ -131,7 +117,7 @@ class CompanyWithId extends React.Component {
                       ? <div>{trades.exports.map((trade, index) => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade}`}>
+                          <Link key={index} to={`/product/${trade.id}`}>
                             <div className="product-wrapper">
                               <div className={`icon-wrapper color-${id}`}>
                                 <img src={`/images/product_icon/hs_${id}.png`}></img>
@@ -158,7 +144,7 @@ class CompanyWithId extends React.Component {
                             const continentId = country.id.slice(0, 2);
                             const colorName = `color-${country.continent.toLowerCase().replace(" ", "-")}`;
                             return (
-                              <Link key={index} to={`/country/${country}`}>
+                              <Link key={index} to={`/country/${country.id}`}>
                                 <div className="product-wrapper">
                                   <div className={`icon-wrapper ${colorName}`}>
                                     <img src={`/images/flags/country_${continentId}.png`}></img>
@@ -181,52 +167,7 @@ class CompanyWithId extends React.Component {
             : null}
         </Sidebar>
         <div className="center-content">
-          <div className="header-image-wrapper">
-            <div className={connectamericas
-              ? "background-image ca-background-image"
-              : "background-image"} style={connectamericas
-              ? profileImage
-              : coverImage}></div>
-            <div className="image-overlay-wrapper">
-              <div className="image-overlay"></div>
-              <div className="text-wrapper">
-                <div className="section-wrapper">
-                  {company.address
-                    ? <div ><img src="/images/icons/icon-country-yellow.svg"/>
-                        <div className="address-wrapper">
-                          <p>{company.address}</p>
-                          <p>{company.city && company.region ? `${company.city},${company.region}` : null}</p>
-                          <p>{company.Country ? company.Country.name : null}</p>
-                        </div>
-                      </div>
-                    : null}
-                </div>
-                <div className="section-wrapper">
-                  {company.phone_number
-                    ? <div>
-                        <img src="/images/icons/icon-telephone-yellow.svg"/>
-                        <p>{company.phone_number}</p>
-                      </div>
-                    : null}
-                </div>
-                <div className="section-wrapper">
-                  {company.website
-                    ? <div>
-                        <img src="/images/icons/icon-world-yellow.svg"/>
-                        <a rel="external" href={`http://${company.website}`}>
-                          <p>{company.website}</p>
-                        </a>
-                      </div>
-                    : null}
-                </div>
-                <div className="section-wrapper">
-                  {company.company_email
-                  ? <a href={`mailto:${company.company_email}`}>
-                  <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button></a> : null}
-                </div>
-              </div>
-            </div>
-          </div>
+          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={connectamericas}/>
           <div className="description-wrapper">
             <h3>Company Description</h3>
             <p>{company.description}</p>

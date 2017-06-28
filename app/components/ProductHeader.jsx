@@ -93,8 +93,8 @@ export default class ProductHeader extends React.Component {
             </div>
             <p>{product.description}</p>
             {product.id_hs92
-              ? <a href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
-                  View on the OEC</a>
+              ? <div className="oec-link-wrapper"><a  className="oec-link" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
+                  View on the OEC <span className="chevron right"></span></a></div>
               : null}
           </div>
         </Sidebar>

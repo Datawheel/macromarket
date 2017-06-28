@@ -31,12 +31,27 @@
     }
     & .background-image {
         width: 100%;
-        
         position: relative;
         height: 100%;
         background: #f2f2f2;
         background-size: cover;
         background-position: center center;
+    }
+    & .oec-link {
+        top: 38px;
+        width: 133px;
+        padding-left: 15px;
+        position: absolute;
+        text-transform: uppercase;
+        font-size: 13px;
+        & .chevron::before {
+            color: white;
+            left: inherit;
+            right: 0px;
+            top: 0px;
+            font-size: 20px;
+            position: absolute;
+        }
     }
     & .profile-image {
         background-size: contain;
@@ -69,7 +84,7 @@
             text-transform: uppercase;
         }
         & .link-wrapper {
-              border-left: 1px solid white;
+            border-left: 1px solid white;
         }
         & .section-wrapper {
             vertical-align: text-top;
@@ -80,27 +95,10 @@
             & .data {
                 display: inline-block;
                 & .value {
-                    font-size: 18px;
+                    font-size: 16px;
                     margin-top: 8px;
                     margin-bottom: 10px;
                     text-transform: uppercase;
-                }
-            }
-
-            & .oec-link {
-                top: 38px;
-                width: 133px;
-                padding-left: 15px;
-                position: absolute;
-                text-transform: uppercase;
-                font-size: 13px;
-                & .chevron::before {
-                    color: white;
-                    left: inherit;
-                    right: 0px;
-                      top: 0px;
-                    font-size: 20px;
-                    position: absolute;
                 }
             }
         }
@@ -134,7 +132,7 @@
     & .top-data {
         & .name-wrapper {
             & h4 {
-                font-size: 14px;
+                font-size: 13px;
             }
         }
     }
@@ -169,15 +167,21 @@
 }
 
 .company {
+    & .profile-image {
+        height: 100%;
+        background-size: contain;
+    }
     & .image-overlay-wrapper {
         & .text-wrapper {
             width: 100%;
+            opacity: .8;
             padding-left: 0 !important;
             & .section-wrapper {
                 vertical-align: top;
                 display: inline-block;
                 width: 20%;
                 padding: 15px;
+                height: 68px;
                 text-align: center;
                 & .img-wrapper {
                     display: inline-block;
@@ -194,15 +198,15 @@
                 }
                 & button {
                     color: white;
-                    padding: 15px 10%;
-                    background: var(--red);
+                    background: transparent;
                     border: none;
                 }
             }
-            & .section-wrapper:nth-child(2) {
-                border-left: 1px solid white;
+            & .section-wrapper{
                 border-right: 1px solid white;
-                min-height: 45px;
+            }
+            & .section-wrapper:last-child{
+                border: none;
             }
         }
     }
@@ -214,6 +218,21 @@
     }
     & .top-data {
         width: 50%;
+    }
+    & .oec-link-wrapper {
+        margin-top: 20px;
+        & .oec-link {
+            text-transform: uppercase;
+            font-size: 13px;
+            color: white;
+        }
+    }
+    & .chevron::before {
+        color: white;
+        left: inherit;
+        right: 0px;
+        top: 2px;
+        font-size: 20px;
     }
 }
 

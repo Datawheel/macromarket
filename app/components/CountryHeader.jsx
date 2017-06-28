@@ -58,6 +58,7 @@ class CountryHeader extends React.Component {
     let importValue;
     let importName;
     let exportName;
+    console.log(countryData);
     if (countryData && importData && exportData) {
       importName = this.nameLookup(importData.hs92_id, products, "");
       exportName = this.nameLookup(exportData.hs92_id, products, "");
@@ -123,8 +124,7 @@ class CountryHeader extends React.Component {
                   </div>
                 </div>
               : null}
-            <div className="link-wrapper section-wrapper">
-
+            <div className={countryData ? "link-wrapper section-wrapper" : "section-wrapper" }>
               <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
                 View on the OEC <span className="chevron right"></span></a>
             </div>

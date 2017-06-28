@@ -139,7 +139,7 @@ class ProductWithId extends React.Component {
         </div>
         <div>
           <div className="result-wrapper-outer">
-            {trades
+            {trades && trades.length > 0
               ? <div className="result-wrapper">
                   {trades.map((trade, index) => {
                     const content = trade.Company;
@@ -151,7 +151,12 @@ class ProductWithId extends React.Component {
                     }
                   })}
                 </div>
-              : null}
+              : <div className="result-wrapper no-companies">
+              <p>There are no companies listed. Be the first one!</p>
+                <Link to={"/settings/product"}>
+                  <button className="list-company">List Your Company</button>
+                </Link>
+              </div>}
           </div>
         </div>
       </div>
