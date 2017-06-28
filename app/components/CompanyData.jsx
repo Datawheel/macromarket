@@ -122,7 +122,7 @@ class CompanyData extends React.Component {
     this.setState({phoneError: null});
     if (this.state.name.length === 0) {
       this.setState({nameError: "Company name is required."});}
-    else if (!this.validateWebsite(this.state.website)) {
+    else if (!this.validateWebsite(this.state.website) && this.state.website.length !== 0) {
       this.setState({websiteError: "Must enter a valid website."});
     }
      else if (this.state.name.length > 255) {
@@ -171,7 +171,9 @@ class CompanyData extends React.Component {
 
     if(companyLoading) {
       return(
-        <div>LOADING</div>
+        <div className="detailed-content-wrapper loading-wrapper">
+          <div>loading...</div>
+        </div>
       )
     }
 

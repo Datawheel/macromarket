@@ -167,10 +167,12 @@
 }
 
 .company {
-    & .profile-image {
-        height: 100%;
-        background-size: contain;
-    }
+  & .profile-image {
+      background-size: contain;
+      background-color: transparent;
+      height: 100%;
+      background-repeat: no-repeat;
+  }
     & .image-overlay-wrapper {
         & .text-wrapper {
             width: 100%;

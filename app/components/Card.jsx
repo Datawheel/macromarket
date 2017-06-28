@@ -18,6 +18,7 @@ export class Card extends React.Component {
       img = `/images/${this.content.profile_type}/${countryImage}.jpg`;
     }
     if (this.content.profile_type === "company") {
+      console.log(this.content);
       icon = "/images/icons/icon-company-yellow.svg";
       img = this.content.image || this.content.profile_image;
       if (id.toString().includes("company")) {

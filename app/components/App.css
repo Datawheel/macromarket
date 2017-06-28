@@ -9,7 +9,13 @@ body {
     padding-top: 90px;
     height: 100%;
 }
-
+.loading-wrapper {
+  text-align: center;
+  & p {
+    color: white;
+    font-size: 28px;
+  }
+}
 .inner-content-wrapper {
     width: 90%;
     max-width: 1200px;

@@ -48,9 +48,7 @@ class UserData extends React.Component {
   }
 
   deleteCompany = () => {
-    this.setState({
-      deleteVisible: false
-    });
+    this.setState({deleteVisible: false});
     this.props.deleteCompany(this.props.user.company_id);
   }
 
@@ -65,7 +63,7 @@ class UserData extends React.Component {
           <span onClick={this.toggleDeleteCompany} className="delete"></span>
           <div className="content">
             <p>Are you sure you want to delete your company?</p>
-              <button className="button button-next" onClick={this.deleteCompany}>Delete</button>
+            <button className="button button-next" onClick={this.deleteCompany}>Delete</button>
           </div>
         </div>
         <div className="user-data">
@@ -92,6 +90,11 @@ class UserData extends React.Component {
                 <Link to="/settings/company">
                   <button className=" button button-next">Register a Company</button>
                 </Link>
+
+                <div className="input-wrapper">
+                  <label>Or link your Connect Americas account.</label>
+                  <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
+                </div>
               </div>
             </div>}
           <div>

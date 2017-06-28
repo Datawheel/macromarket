@@ -30,10 +30,11 @@ class CountryWithId extends React.Component {
   componentDidMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchProducts();
+    this.props.fetchCountry(id);
     this.props.fetchTradesByCountry(id);
-    if (this.props.data.country) {
-      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
-    }
+    // if (this.props.data.country) {
+    //   this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
+    // }
   }
 
   componentWillReceiveProps(newProps) {
@@ -42,10 +43,9 @@ class CountryWithId extends React.Component {
       const id = newProps.params.countryWithId
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
-
-          if (this.props.data.country) {
-
-      this.props.fetchCaTradesByCountry(this.props.data.country.id_ca); }
+      this.props.fetchCountry(id);
+      //if (this.props.data.country) {
+      // this.props.fetchCaTradesByCountry(this.props.data.country.id_ca); }
       this.removeSelection();
     }
   }
@@ -106,7 +106,7 @@ class CountryWithId extends React.Component {
       );
     }
 
-    let allTrades = [];
+    let allTrades;
     if (caTrades && trades) {
       allTrades = caTrades.concat(trades);
     }
@@ -143,7 +143,7 @@ class CountryWithId extends React.Component {
         <div className="result-wrapper-outer">
           {allTrades
             ? <div className="result-wrapper">
-                {allTrades.map((trade, index) => {
+                {allTrades.length > 0 ? allTrades.map((trade, index) => {
                   if (!trade.profile_type) {
                     const content = trade.Company;
                     content.profile_type = "company";
@@ -155,9 +155,14 @@ class CountryWithId extends React.Component {
                       return <Card key={index} content={trade}/>;
                     }
                   }
-                })}
+                }) : <div className="result-wrapper no-companies">
+                  <p>There are no companies listed. Be the first one!</p>
+                  <Link to={"/settings/product"}>
+                    <button className="list-company">List Your Company</button>
+                  </Link>
+                </div>}
               </div>
-            : <p>Loading</p>}
+            : <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>}
         </div>
       </div>
     );

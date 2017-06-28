@@ -589,6 +589,12 @@
     & .no-border {
         border-bottom: none;
     }
+    & .listing{
+      & input {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
     & .listing.section-wrapper {
         & .button-wrapper {
             text-align: left;

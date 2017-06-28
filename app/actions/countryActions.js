@@ -50,7 +50,6 @@ export function fetchCountry(id) {
       dispatch(requestCaTrades());
       return api.get(`/api/trades/ca_country/${response.data.id_ca}`)
         .then(response => {
-          console.log(response, "hereeeee");
           dispatch(receiveCaTrades(response.data));
         })
         .catch(response => {
