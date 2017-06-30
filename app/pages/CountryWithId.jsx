@@ -54,33 +54,6 @@ class CountryWithId extends React.Component {
     );
   }
 
-  filterCompanies(trades) {
-    const seen = [];
-    const filteredResult = [];
-    for (let i = 0; i < trades.length; i++) {
-      const trade = trades[i];
-      let unique = true;
-
-
-      //if it is NOT a connectamericas company
-      if(trade.id.toString().slice(0, 3) !== "ca_") {
-        unique = !seen.includes(trade.company_id);
-      }
-
-
-
-      const tradeFlow = this.state.selectedOption === "all" ||  trade.trade_flow === `${this.state.selectedOption}`;
-      const product = this.state.product.value === "all" || (trade.product_id ? this.state.product.value === trade.product_id.slice(0,4) : false);
-
-      if (tradeFlow && product && unique) {
-        console.log(trade);
-        if(trade.company_id) {seen.push(trade.company_id);}
-        filteredResult.push(trade);
-      }
-    }
-    console.log(filteredResult)
-    return filteredResult;
-  }
 
   compare(a, b, attr) {
       if (a[attr] < b[attr]) {
