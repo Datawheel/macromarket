@@ -215,6 +215,7 @@
 }
 
 .product {
+  & .chevron::before { top: .1em}
     & .header-image-wrapper {
         background: #141D23;
     }
@@ -228,14 +229,15 @@
             font-size: 13px;
             color: white;
         }
+        & .chevron::before {
+            color: white;
+            left: inherit;
+            right: 0px;
+            top: 3px;
+            font-size: 18px;
+        }
     }
-    & .chevron::before {
-        color: white;
-        left: inherit;
-        right: 0px;
-        top: 2px;
-        font-size: 20px;
-    }
+
 }
 
 @media (max-width:1000px) {

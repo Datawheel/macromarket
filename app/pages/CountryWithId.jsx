@@ -82,6 +82,16 @@ class CountryWithId extends React.Component {
     return filteredResult;
   }
 
+  compare(a, b, attr) {
+      if (a[attr] < b[attr]) {
+        return -1;
+      }
+      if (a[attr] > b[attr]) {
+        return 1;
+      }
+      return 0;
+    }
+
 
   removeSelection = () => {
     this.setState({
@@ -111,8 +121,10 @@ class CountryWithId extends React.Component {
 
     const dropDownProducts = [];
 
+    products.sort((a,b) => this.compare(a, b, "name"));
     products.map(category => {
       let first = true;
+      category.values.sort((a,b) => this.compare(a, b, "name"));
       category.values.map(product => {
         dropDownProducts.push({categoryId: category.key, name: category.name, value: product.key, label: product.name, first});
         first = false;

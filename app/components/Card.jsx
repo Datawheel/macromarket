@@ -41,7 +41,7 @@ export class Card extends React.Component {
         }
       });
     }
-    console.log(this.content , "HEREE");
+
     return (
       <div className="card  fade-in ">
         <Link to={`/${this.content.profile_type=== "connectamericas" ? "company" : this.content.profile_type}/${id}`}>

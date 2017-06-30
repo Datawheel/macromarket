@@ -13,6 +13,8 @@ export default class Dropdown extends React.Component {
     );
   }
 
+
+
   productValueRenderer(value) {
     const id = value.categoryId;
     const colorName = `color-${id}`;
