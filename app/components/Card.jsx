@@ -58,6 +58,9 @@ export class Card extends React.Component {
                   ? productCategory
                   : "company"}</p>
             <p className="name">{this.content.name}</p>
+              {this.props.countries ? this.props.countries.map((country, index) => {
+                if(index < 7) {return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>}
+              }) : null}
           </div>
         </Link>
       </div>

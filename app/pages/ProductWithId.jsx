@@ -57,7 +57,16 @@ class ProductWithId extends React.Component {
       const country =this.state.country.value === "all" || this.state.country.value === trade.country_id;
       if (tradeFlow && country && unique) {
         seen.push(trade.company_id);
+
+        trade.countries = trade.country_id ? [trade.country_id]: [];
         filteredResult.push(trade);
+      }
+      else {
+        filteredResult.map(t => {
+          if(t.company_id === trade.company_id && trade.country_id) {
+            t.countries.push(trade.country_id);
+          }
+        })
       }
     }
     return filteredResult;
@@ -173,10 +182,11 @@ class ProductWithId extends React.Component {
             {trades
               ? <div className="result-wrapper">
                   {this.filterCompanies(trades).length > 0 ? this.filterCompanies(trades).map((trade, index) => {
+                    console.log(trade);
                     const content = trade.Company;
                     content.profile_type = "company";
                     if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {
-                      return <Card key={index} content={content}/>;
+                      return <Card key={index} countries={trade.countries} content={content}/>;
                     } else {
                       return null;
                     }

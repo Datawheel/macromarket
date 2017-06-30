@@ -102,6 +102,16 @@ class CompanyData extends React.Component {
     reader.readAsDataURL(file);
   }
 
+  compare(a, b, attr) {
+      if (a[attr] < b[attr]) {
+        return -1;
+      }
+      if (a[attr] > b[attr]) {
+        return 1;
+      }
+      return 0;
+    }
+
   selectDropDown = country => {
     this.setState({
       country: {
@@ -208,8 +218,10 @@ class CompanyData extends React.Component {
     }
 
     const dropDownCountries = [];
+    countries.sort((a,b) => this.compare(a,b, "key"));
     countries.map(continent => {
       let first = true;
+      continent.values.sort((a,b) => this.compare(a,b, "name"));
       continent.values.map(country => {
         dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
         first = false;

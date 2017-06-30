@@ -1,4 +1,37 @@
 @import "../Variables";
+.result-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 55px 0px;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1450px;
+    min-height: 300px;
+    & .card {
+        width: 23%;
+        margin: 1%;
+        height: 285px;
+        & .text-wrapper {
+            position: relative;
+            padding: 40px 15px 10px;
+            & .profile_type_icon {
+                position: absolute;
+                top: 10px;
+            }
+            & .name {
+                color: var(--middle-grey);
+            }
+            & .category {
+                text-transform: none;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
 .card {
     background: white;
     position: relative;
@@ -9,6 +42,15 @@
         position: absolute;
         right: 10px;
         width: 25px;
+    }
+    & .flag-wrapper {
+        display: inline-block;
+        width: 25px;
+        padding: 0px 2px;
+        & .company-flags {
+            width: 100%;
+            position: relative;
+        }
     }
     & .image-wrapper {
         position: relative;
