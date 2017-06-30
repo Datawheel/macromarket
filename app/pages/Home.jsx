@@ -26,7 +26,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    
+
     this.props.fetchCountries();
     this.props.fetchProductsForSearch();
     this.props.fetchCompanies();
@@ -60,8 +60,10 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
-    const type = suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type;
-      browserHistory.push(`/${type}/${suggestion.id}`);
+    const type = suggestion.profile_type === "connectamericas"
+      ? "company"
+      : suggestion.profile_type;
+    browserHistory.push(`/${type}/${suggestion.id}`);
   }
 
   search = () => {
@@ -106,7 +108,11 @@ class Home extends React.Component {
         <div className="home">
           <div className="content-wrapper">
             <div className="header-wrapper">
-              <img className="mm-logo" src="/images/icons/logos/macro-market-home.png"></img>
+              <div className="home-logo">
+                <div className="oec-logo-wrapper">
+                  <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
+                </div>
+              <img src="/images/icons/logos/orange-market-logo.svg"></img>  </div>
               <p className="tagline">Market for exported and imported goods.</p>
             </div>
             <div className="search-wrapper">
@@ -122,12 +128,14 @@ class Home extends React.Component {
                               ? "/images/icons/icon-product-yellow.svg"
                               : "/images/icons/icon-company-yellow.svg"}/>
                           <p>{`${suggestion.name}  |
-                        ${suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type}`}</p>
+                        ${suggestion.profile_type === "connectamericas"
+                              ? "company"
+                              : suggestion.profile_type}`}</p>
                         </li>;
                       })}
                     </ul>
                   : null}</div>
-              <Select optionClassName={"dropdown-option"}  arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
+              <Select optionClassName={"dropdown-option"} arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
             </div>
             <button onClick={this.search.bind(this)} className="search-button">Search</button >
             {/*<div className="cta-buttons-wrapper">

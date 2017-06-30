@@ -90,11 +90,13 @@
         width: 115px;
         & img {
             padding: 2px;
-            width: 100%;
-            width: 100%;
-            top: 5px;
+            width: 90%;
+            top: 10px;
             left: 0px;
             position: absolute;
+        }
+        & .market-logo {
+          top:40px;
         }
     }
     & .logo {

@@ -8,6 +8,12 @@
     background-image: url("/images/background-body.png");
     width: 100%;
     background-size: cover;
+    & .home-logo {
+      padding-bottom: 20px;
+      & img {
+        width: 140px;
+      }
+    }
     & .mm-logo {
         width: 180px;
     }
