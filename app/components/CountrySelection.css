@@ -1,3 +1,4 @@
+@import "../Variables";
 .form {
     & .country-selection-wrapper {
         padding-top: 20px;
