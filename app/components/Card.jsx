@@ -14,7 +14,9 @@ export class Card extends React.Component {
     let id = this.content.id;
     if (this.content.profile_type === "country") {
       icon = "/images/icons/icon-country-yellow.svg";
-      const countryImage = this.content.image ? this.content.id : this.content.id.slice(0,2)
+      const countryImage = this.content.image
+        ? this.content.id
+        : this.content.id.slice(0, 2)
       img = `/images/${this.content.profile_type}/${countryImage}.jpg`;
     }
     if (this.content.profile_type === "company") {
@@ -43,11 +45,15 @@ export class Card extends React.Component {
     }
 
     return (
-      <div className="card  fade-in ">
-        <Link to={`/${this.content.profile_type=== "connectamericas" ? "company" : this.content.profile_type}/${id}`}>
-          <div className="image-wrapper"><div style={{
-            backgroundImage: `url(${img})`
-          }} className="image"></div></div>
+      <div className="card fade-in">
+        <Link to={`/${this.content.profile_type === "connectamericas"
+          ? "company"
+          : this.content.profile_type}/${id}`}>
+          <div className="image-wrapper">
+            <div style={{
+              backgroundImage: `url(${img})`
+            }} className="image"></div>
+          </div>
           <div className="text-wrapper">
             <div className="yellow-line"></div>
             <img className="profile_type_icon" src={icon}/>
@@ -58,9 +64,13 @@ export class Card extends React.Component {
                   ? productCategory
                   : "company"}</p>
             <p className="name">{this.content.name}</p>
-              {this.props.countries ? this.props.countries.map((country, index) => {
-                if(index < 7) {return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>}
-              }) : null}
+            {this.props.countries
+              ? this.props.countries.map((country, index) => {
+                if (index < 7) {
+                  return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>
+                }
+              })
+              : null}
           </div>
         </Link>
       </div>
@@ -78,8 +88,7 @@ export class CardHome extends React.Component {
     let img = ""
     if (this.content.type === "company") {
       img = this.content.logo;
-    }
-    else {
+    } else {
       const id = this.content.id;
       const fallbackId = id.substring(0, 2);
       img = this.content.flickr_link
@@ -101,7 +110,9 @@ export class CardHome extends React.Component {
             <p className="category">
               {this.content.type === "country"
                 ? "country - " + this.content.continent
-                : this.content.type === "product" ? this.content.category : "company"}</p>
+                : this.content.type === "product"
+                  ? this.content.category
+                  : "company"}</p>
             <p className="name">{this.content.name}</p>
           </div>
         </Link>
