@@ -8,25 +8,26 @@ export default (state = {
 }, action) => {
   switch (action.type) {
     case "SET_SEARCH":
-      return {...state,
+      console.log(action.data, "action");
+      return { ...state,
         keyword: action.data.keyword,
         filter: action.data.filter
       };
     case `${ACTION_TYPE}_PENDING`:
-      return {...state,
+      return { ...state,
         results: null,
         loading: true,
         visible: true
       };
 
     case `${ACTION_TYPE}_FULFILLED`:
-      return {...state,
+      return { ...state,
         loading: false,
         results: action.data,
         visible: true
       };
     case `${ACTION_TYPE}_REJECTED`:
-      return {...state,
+      return { ...state,
         loading: false,
         results: null,
         error: action.data

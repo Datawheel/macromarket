@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {signup} from "../actions/authenticationActions";
+import "../components/Settings.css";
 import Sidebar from "components/Sidebar";
 import "../components/Form.css";
 

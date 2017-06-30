@@ -29,7 +29,6 @@ class ProductWithId extends React.Component {
 
   componentDidMount() {
     const id = this.props.params.productWithId;
-
     this.props.fetchCountries();
     this.props.fetchProducts();
     this.props.fetchTradesByProduct(id);
@@ -46,6 +45,22 @@ class ProductWithId extends React.Component {
 
   handleOptionChange = selectedOption => {
     this.setState({selectedOption});
+  }
+
+  filterCompanies(trades) {
+    const seen = [];
+    const filteredResult = [];
+    for (let i = 0; i < trades.length; i++) {
+      const trade = trades[i];
+      const unique = !seen.includes(trade.company_id);
+      const tradeFlow = this.state.selectedOption === "all" || trade.trade_flow === `${this.state.selectedOption}s`;
+      const country =this.state.country.value === "all" || this.state.country.value === trade.country_id;
+      if (tradeFlow && country && unique) {
+        seen.push(trade.company_id);
+        filteredResult.push(trade);
+      }
+    }
+    return filteredResult;
   }
 
   selectDropDown = country => {
@@ -82,6 +97,7 @@ class ProductWithId extends React.Component {
         </div>
       );
     }
+
     if (error || countriesError) {
       return (
         <div className="blue-loading">
@@ -139,9 +155,9 @@ class ProductWithId extends React.Component {
         </div>
         <div>
           <div className="result-wrapper-outer">
-            {trades && trades.length > 0
+            {trades
               ? <div className="result-wrapper">
-                  {trades.map((trade, index) => {
+                  {this.filterCompanies(trades).length > 0 ? this.filterCompanies(trades).map((trade, index) => {
                     const content = trade.Company;
                     content.profile_type = "company";
                     if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {
@@ -149,14 +165,14 @@ class ProductWithId extends React.Component {
                     } else {
                       return null;
                     }
-                  })}
+                  }) : <div className="result-wrapper no-companies">
+                    <p>There are no companies listed. Be the first one!</p>
+                    <Link to={"/settings/product"}>
+                      <button className="list-company">List Your Company</button>
+                    </Link>
+                  </div>}
                 </div>
-              : <div className="result-wrapper no-companies">
-                <p>There are no companies listed. Be the first one!</p>
-                <Link to={"/settings/product"}>
-                  <button className="list-company">List Your Company</button>
-                </Link>
-              </div>}
+              : null}
           </div>
         </div>
       </div>

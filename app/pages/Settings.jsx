@@ -5,6 +5,7 @@ import {deleteCompany} from "../actions/userActions";
 import {logout, updateUser} from "../actions/authenticationActions";
 import Sidebar from "../components/Sidebar";
 import "../components/Form.css";
+import "../components/Settings.css";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
 import UserData from "../components/UserData";
 import CompanyData from "../components/CompanyData";
@@ -58,7 +59,7 @@ class Settings extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-    console.log(this.props, "here");
+
     if (loading || !user) {
       return (
         <div className="settings">

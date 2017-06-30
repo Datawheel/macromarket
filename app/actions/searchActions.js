@@ -20,6 +20,7 @@ export function setSearch(json) {
 }
 
 export function fetchSearch(query, filter) {
+  console.log(query, "FETCH SEARCH ")
   return function(dispatch) {
     dispatch(requestSearch());
     return api.get(`/api/search/${filter}/${query}`)

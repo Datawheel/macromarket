@@ -5,7 +5,7 @@ import {fetchCountries} from "../actions/countriesActions";
 import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
 import SelectedCountries from "./SelectedCountries";
 import {Link} from "react-router";
-
+import "./CountrySelection.css";
 class CountrySelection extends React.Component {
   constructor(props) {
     super(props);

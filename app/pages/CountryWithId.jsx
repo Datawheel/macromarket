@@ -27,25 +27,19 @@ class CountryWithId extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.params.countryWithId;
     this.props.fetchProducts();
     this.props.fetchCountry(id);
     this.props.fetchTradesByCountry(id);
-    // if (this.props.data.country) {
-    //   this.props.fetchCaTradesByCountry(this.props.data.country.id_ca);
-    // }
   }
 
   componentWillReceiveProps(newProps) {
-
     if (newProps.params.countryWithId !== this.props.params.countryWithId) {
       const id = newProps.params.countryWithId
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
       this.props.fetchCountry(id);
-      //if (this.props.data.country) {
-      // this.props.fetchCaTradesByCountry(this.props.data.country.id_ca); }
       this.removeSelection();
     }
   }
@@ -59,6 +53,35 @@ class CountryWithId extends React.Component {
       <span className="chevron bottom"></span>
     );
   }
+
+  filterCompanies(trades) {
+    const seen = [];
+    const filteredResult = [];
+    for (let i = 0; i < trades.length; i++) {
+      const trade = trades[i];
+      let unique = true;
+
+
+      //if it is NOT a connectamericas company
+      if(trade.id.toString().slice(0, 3) !== "ca_") {
+        unique = !seen.includes(trade.company_id);
+      }
+
+
+
+      const tradeFlow = this.state.selectedOption === "all" ||  trade.trade_flow === `${this.state.selectedOption}`;
+      const product = this.state.product.value === "all" || (trade.product_id ? this.state.product.value === trade.product_id.slice(0,4) : false);
+
+      if (tradeFlow && product && unique) {
+        console.log(trade);
+        if(trade.company_id) {seen.push(trade.company_id);}
+        filteredResult.push(trade);
+      }
+    }
+    console.log(filteredResult)
+    return filteredResult;
+  }
+
 
   removeSelection = () => {
     this.setState({
@@ -75,9 +98,8 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {loading, error, products, trades, caTrades} = this.props;
+    const {loading, error, products, trades, caTrades, tradesLoading, caTradesLoading} = this.props;
     const {country, countryData, importData, exportData} = this.props.data;
-    console.log(this.props.caTrades);
 
     if (!country || !products) {
       return (
@@ -111,6 +133,8 @@ class CountryWithId extends React.Component {
       allTrades = caTrades.concat(trades);
     }
 
+
+
     return (
       <div className="detailed-content-wrapper country">
         <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
@@ -141,8 +165,9 @@ class CountryWithId extends React.Component {
           </div>
         </div>
         <div className="result-wrapper-outer">
-          {allTrades
-            ? <div className="result-wrapper">
+          {!allTrades
+            ? <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>
+            : <div className="result-wrapper">
                 {allTrades.length > 0 ? allTrades.map((trade, index) => {
                   if (!trade.profile_type) {
                     const content = trade.Company;
@@ -162,7 +187,7 @@ class CountryWithId extends React.Component {
                   </Link>
                 </div>}
               </div>
-            : <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>}
+          }
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
 import Sidebar from "components/Sidebar";
-import "./Form.css";
+import "./ProductSelection.css";
 import {createTradeForProduct} from "../actions/tradesActions";
 import Selection from "./ProductSelectionForm";
 import SelectedProduct from "./SelectedProduct";

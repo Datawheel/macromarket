@@ -7,6 +7,7 @@ import {authenticateAndFetchCompany} from "../actions/companyActions";
 import {logout} from "../actions/authenticationActions";
 import ReactDOM from "react-dom";
 import "./Navbar.css";
+import {setSearch} from "../actions/searchActions";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -40,10 +41,12 @@ class NavBar extends React.Component {
       }
     }
   }
+
   logout = () => {
     this.handleDropdown();
     this.props.logout();
   }
+
   handleDropdown = () => {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
@@ -51,7 +54,12 @@ class NavBar extends React.Component {
   }
 
   closeSearch = () => {
-      this.props.activateSearch(false);
+    this.props.activateSearch(false);
+  }
+
+  openSearch = () => {
+    this.props.activateSearch(true);
+    this.props.setSearch({keyword: "", filter: "All"});
   }
 
   dropdown = () => {
@@ -128,7 +136,7 @@ class NavBar extends React.Component {
                 {this.props.location.pathname === '/'
                   ? null
                   : <li className="nav-bar-element search-icon-wrapper">
-                    <button onClick={() => activateSearch()}>
+                    <button onClick={this.openSearch.bind(this)}>
                       <img className="search-icon" src="/images/icons/icon-search-black.svg"/>
                     </button>
                   </li>}
@@ -147,6 +155,9 @@ const mapDispatchToProps = dispatch => {
   return {
     activateSearch: activeState => {
       dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+    },
+    setSearch: query => {
+      dispatch(setSearch(query));
     },
     authenticateAndFetchCompany: token => {
       dispatch(authenticateAndFetchCompany(token));

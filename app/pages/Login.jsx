@@ -6,6 +6,7 @@ import {browserHistory} from "react-router";
 import {authenticate, login} from "../actions/authenticationActions";
 import Sidebar from "components/Sidebar";
 import "../components/Form.css";
+import "../components/Settings.css";
 
 class Login extends React.Component {
   constructor(props) {

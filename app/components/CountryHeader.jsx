@@ -106,7 +106,7 @@ class CountryHeader extends React.Component {
             {exportName && importName
               ? <div className="section-wrapper top-data">
                   <div className="data">
-                      <Link to={`/product/${importData.hs92_id}`}>
+                      <Link to={`/product/${exportData.hs92_id}`}>
                     <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
                     <h4>Top Export</h4>
                     <div className="name-wrapper">

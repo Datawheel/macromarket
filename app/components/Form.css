@@ -1,132 +1,4 @@
 @import "../Variables";
-.settings, .login, .signup {
-    background-image: url("/images/settings-bg.png");
-    padding: 60px 0;
-    min-height: 100vh;
-    background-size: cover;
-    & .Select {
-        width: 100%;
-        margin: 0;
-        border: 1px solid var(--input-grey);
-        & .Select-value {
-            padding: 0px 2%;
-        }
-        & p.product-selected {
-            padding: 0px 4px;
-            width: 100%;
-            color: black;
-        }
-        & .continent-selected-wrapper {
-            display: none;
-        }
-    }
-    & .center-content {
-        display: inline-block;
-        width: 67%;
-    }
-    & .sidebar-inner {
-        padding: 0 14%;
-        & h2 {
-            font-weight: 400;
-            margin-top: 0;
-        }
-        & p {
-            line-height: 18px;
-            font-size: 12px;
-            color: var(--dark-grey);
-        }
-        & .back-line {
-            background: black;
-            width: 7%;
-            height: 4px;
-        }
-    }
-    & button {
-        & span {
-            font-size: 14px;
-        }
-        font-size: .9em;
-        font-weight: 300;
-    }
-}
-
-.settings {
-    & .sidebar {
-        & h2 {
-            margin-bottom: 0px;
-        }
-        & .user-email {
-            margin: 7px 0px;
-            font-size: 16px;
-            font-weight: 400;
-        }
-    }
-    & .content-wrapper {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
-    }
-}
-
-.login, .signup {
-    text-align: center;
-    & .form-wrapper {
-        & .title-wrapper {
-            width: 15%;
-            text-align: center;
-            max-width: 140px;
-            padding: 1.5% 0px;
-            min-width: 100px;
-        }
-        & .form {
-            & .error-wrapper p {
-                padding: 2px 0px;
-            }
-        }
-    }
-    & .center-content {
-        text-align: left;
-    }
-    & .form {
-        & .input-wrapper {
-            padding: 10px 0px;
-            text-align: left;
-            & label {
-                padding: 7px 0px;
-                font-weight: 300;
-                color: var(--middle-grey);
-            }
-        }
-    }
-    & .text-wrapper {
-        text-align: center;
-    }
-    & p {
-        color: var(--middle-grey);
-        margin: 5px;
-        font-size: 14px;
-    }
-    & .form {
-        padding: 6% 20%;
-        padding-bottom: 0px;
-    }
-    & .login-wrapper, & .signup-wrapper {
-        text-align: center;
-        padding: 25px 0px;
-        & button {
-            background: var(--accent-color);
-            color: white;
-            border: 0px;
-            font-size: 16px;
-            width: 110px;
-            padding: 10px;
-            width: 38%;
-            max-width: 155px;
-        }
-    }
-}
 
 .form-wrapper {
     min-height: 600px;
@@ -342,6 +214,7 @@
         padding: 0px 25px;
         text-align: center;
     }
+
     & .selected-country, & .selected-product-wrapper {
         display: inline-block;
         background: #f2f2f2;
@@ -386,113 +259,10 @@
             background-position: center center;
         }
     }
-    & .product-selection {
-        background: white;
-        height: 255px;
-        overflow: scroll;
-        border: 1px solid var(--input-grey);
-        vertical-align: text-top;
-        & .product-name {
-            width: 65%;
-            padding: 8px 5px 8px 15px;
-        }
-        & .product-name.hs4, & .product-name.hs6 {
-            padding: 8px 5px 8px 55px;
-        }
-        & .product {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        & .product-id p, & .product-name {
-            font-size: 10px;
-            margin: 0;
-            color: var(--input-text);
-            display: inline-block;
-            font-weight: 200;
-        }
-        & .icon-wrapper {
-            width: 28px;
-            height: 28px;
-        }
-        & .colored-wrapper {
-            height: 28px;
-        }
-        & .product-id {
-            padding: 3px;
-            width: 40px;
-            position: absolute;
-            height: 100%;
-            background: #EBF6AD;
-            display: inline-block;
-        }
-        & .product:nth-child(odd) {
-            & .product-id {
-                background: #F9FFDE;
-            }
-        }
-        & .selectedItem {
-            background: #FEEFD8;
-        }
-    }
+
     & .categories-selection {
         & .product-name {
             width: 85%;
-        }
-    }
-    & .country-selection-wrapper {
-        padding-top: 20px;
-        height: 100px;
-        & .name {
-            color: var(--input-text);
-            font-weight: 200;
-        }
-        & .colored-wrapper {
-            width: 16%;
-        }
-        & .country-selection {
-            vertical-align: top;
-            width: 73%;
-            position: relative;
-            display: inline-block;
-            margin-left: 25px;
-            & .dropdown-container {
-                display: inline-block;
-                width: 32%;
-                vertical-align: top;
-                & .chevron.down {
-                    right: 15px;
-                    position: absolute;
-                }
-            }
-            & .Select {
-                width: 40%;
-                vertical-align: top;
-            }
-            & .selected-countries-wrapper {
-                width: 50%;
-                margin-left: 25px;
-                text-align: left;
-                display: inline-block;
-                border: 1px solid var(--input-grey);
-                background: #fff;
-                min-height: 34px;
-                & .selected-country-outter {
-                    display: inline-block;
-                }
-                & .selected-country {
-                    background: #f2f2f2;
-                }
-            }
-        }
-    }
-    & .product-selection-wrapper {
-        display: inline-block;
-        width: 29%;
-        text-align: left;
-        margin-right: 25px;
-        & .product-name {
-            color: var(--input-text);
         }
     }
     & .product-label {
@@ -500,19 +270,6 @@
         font-size: 12px;
         margin-top: 25px;
         color: var(--middle-grey);
-    }
-    & .product-selection-wrapper.selected {
-        & .product-label {
-            color: black;
-        }
-    }
-    & .selected-products-wrapper {
-        border: 1px solid var(--input-grey);
-        padding: 5px;
-        background: #fff;
-        height: 110px;
-        text-align: left;
-        margin: 20px 0 35px;
     }
     & .import-wrapper {
         min-height: 285px;

@@ -25,7 +25,7 @@ class CompanyHeader extends React.Component {
         };
       }
     }
-
+    console.log(company);
     return (
       <div className="header-image-wrapper">
         <div className={connectamericas

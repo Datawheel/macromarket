@@ -1,16 +1,15 @@
 import React from "react";
-import {fetchSearch} from "../actions/searchActions";
+import {fetchSearch, setSearch} from "../actions/searchActions";
 import {fetchProducts} from "../actions/productsActions";
 import {connect} from "react-redux";
 import {Card} from "./Card.jsx";
 import "./Search.css";
 
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: this.props.keyword || "",
-      filter: this.props.filter || "All",
       hover: ""
     };
   }
@@ -24,38 +23,30 @@ class Search extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({searchTerm: event.target.value});
     // Only run the search if the user has typed MORE than 2 characters,
     // otherwise this returns way too many results and feels laggy.
     //  - else
     // clear the results but submitting an empty string
+    this.props.setSearch({keyword: event.target.value, filter: this.props.filter});
     if (event.target.value.length > 2) {
-      this.props.fetchSearch(event.target.value, this.state.filter.toLowerCase());
+      this.props.fetchSearch(event.target.value, this.props.filter.toLowerCase());
     } else {
-      this.props.fetchSearch("", this.state.filter.toLowerCase());
+      this.props.fetchSearch("", this.props.filter.toLowerCase());
     }
   }
 
   selectFilter = filter => {
-    this.setState({filter});
-    this.props.fetchSearch(this.state.searchTerm, filter.toLowerCase());
+    this.props.setSearch({keyword: this.props.keyword, filter});
+    this.props.fetchSearch(this.props.keyword, filter.toLowerCase());
   }
 
   search = () => {
-    this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
-  }
-
-  componentDidMount() {
-    // this.props.fetchProducts();
-    if (this.props.keyword) {
-      this.props.fetchSearch(this.state.searchTerm, this.state.filter.toLowerCase());
-    }
-
+    this.props.fetchSearch(this.props.keyword, this.props.filter.toLowerCase());
   }
 
   displayResults = () => {
     const {results} = this.props;
-    if (results.length > 0) {
+    if (results.length !== 0) {
       return (
         <div className="fade-in result-wrapper">
           {results.map(result => <Card products={this.props.products} key={result.id} content={result}/>)}
@@ -64,19 +55,20 @@ class Search extends React.Component {
     } else {
       return (
         <div>
-        {this.state.searchTerm.length < 3 ? null : <div className="fade-in search-no-results"><p>No results.</p></div>}</div>
+        {this.props.keyword.length < 3 ? null : <div className="fade-in search-no-results"><p>No results.</p></div>}</div>
       );
     }
   }
 
   render() {
+
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
         <div onClick={this.props.toggleSearch}className="delete"><img src="/images/icons/icon-close-white.svg"/></div>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
-              <input ref="search" placeholder="Search" className="search-input" value={this.state.searchTerm} onChange={this.handleChange} type="text"></input>
+              <input ref="search" placeholder="Search" className="search-input" value={this.props.keyword} onChange={this.handleChange} type="text"></input>
               <img onClick={this.search} className="search-icon" src="/images/icons/icon-search-white.svg"/>
               <div className="filter-wrapper">
                 <p className="label">FILTER</p>
@@ -87,7 +79,7 @@ class Search extends React.Component {
                       : "arrow-box place tool-tip"}>
                       <p>place</p>
                     </div>
-                    {this.state.filter === "Country"
+                    {this.props.filter === "Country"
                       ? <img src="/images/icons/icon-country-yellow.svg"/>
                       : <img src="/images/icons/icon-country-black.svg"/>
                     }
@@ -98,7 +90,7 @@ class Search extends React.Component {
                       : "arrow-box product tool-tip"}>
                       <p>product</p>
                     </div>
-                    {this.state.filter === "Product"
+                    {this.props.filter === "Product"
                       ? <img src="/images/icons/icon-product-yellow.svg"/>
                       : <img src="/images/icons/icon-product-black.svg"/>}
                   </div>
@@ -108,7 +100,7 @@ class Search extends React.Component {
                       : "arrow-box company tool-tip"}>
                       <p>company</p>
                     </div>
-                    {this.state.filter === "Company"
+                    {this.props.filter === "Company"
                       ? <img src="/images/icons/icon-company-yellow.svg"/>
                       : <img src="/images/icons/icon-company-black.svg"/>}
                   </div>
@@ -118,12 +110,12 @@ class Search extends React.Component {
                       : "arrow-box transport tool-tip"}>
                       <p>transportation</p>
                     </div>
-                    {this.state.filter === "Transport"
+                    {this.props.filter === "Transport"
                       ? <img src="/images/icons/icon-transport-yellow.svg"/>
                       : <img src="/images/icons/icon-transport-black.svg"/>}
                   </div>
                   <div onClick={this.selectFilter.bind(this, "All")} className="filter-icon-wrapper">
-                    <p className={this.state.filter === "All"
+                    <p className={this.props.filter === "All"
                       ? "selected"
                       : null}>all</p>
                   </div>
@@ -147,16 +139,19 @@ const mapDispatchToProps = dispatch => {
     },
     fetchProducts: () => {
       dispatch(fetchProducts());
+    },
+    setSearch: query => {
+      dispatch(setSearch(query));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    results: state.search.results,
+    results: state.search.results || [],
     loading: state.search.loading,
     error: state.search.error,
-    keyword: state.search.keyword,
+    keyword: state.search.keyword || "",
     filter: state.search.filter,
     products: state.products.products
   };

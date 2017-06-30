@@ -181,12 +181,10 @@ export function fetchSettingsTradesByCompany(companyId) {
   };
 }
 export function fetchCaTradesByCountry(id) {
-  console.log(id, "HERERERERRE")
   return function(dispatch) {
     dispatch(requestCaTrades());
     return api.get(`/api/trades/ca_country/${id}`)
       .then(response => {
-        console.log(response, "hereeeee");
         dispatch(receiveCaTrades(response.data));
       })
       .catch(response => {
@@ -221,11 +219,9 @@ export function fetchTradesByProduct(productId) {
 }
 
 
-
 function contains(id, array) {
   let result = false;
   array.map(item => {
-
     if (id === item.id) {
       result = true;
     }
@@ -272,21 +268,21 @@ export function fetchProfileTradesByCompany(companyId) {
           if (product.Country) {
             if (!contains(product.Country.id, countries)) {
               // countries.push(product.Country);
-
               const index = findIndexX(product.Country.continent, product.Country.name, countries, "continent")
               countries.splice(index, 0, product.Country);
               countries.sort(compare);
             }
-            if (product.trade_flow === "exports" && !contains(product.Product.id, exports)) {
-
-              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, exports, "products")
-              exports.splice(index, 0, product.Product);
-            }
-            if (product.trade_flow === "imports" && !contains(product.Product.id, imports)) {
-              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, imports, "products")
-              imports.splice(index, 0, product.Product);
-            }
           }
+          if (product.trade_flow === "exports" && !contains(product.Product.id, exports)) {
+
+            const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, exports, "products")
+            exports.splice(index, 0, product.Product);
+          }
+          if (product.trade_flow === "imports" && !contains(product.Product.id, imports)) {
+            const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, imports, "products")
+            imports.splice(index, 0, product.Product);
+          }
+
         });
 
         const sortedResponse = {

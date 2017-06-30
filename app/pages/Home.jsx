@@ -6,6 +6,7 @@ import {fetchUnNestedProducts} from "../actions/productsActions";
 import {fetchSearch, setSearch} from "../actions/searchActions";
 import {CardHome} from "../components/Card.jsx";
 import "./Home.css";
+import ReactDOM from "react-dom";
 import Select from 'react-select';
 import {browserHistory} from "react-router";
 
@@ -14,7 +15,7 @@ class Home extends React.Component {
     super(props);
     this.state = {
       selected: {
-        value: 'all',
+        value: 'All',
         label: 'All'
       },
       keyword: "",
@@ -24,55 +25,48 @@ class Home extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    
     this.props.fetchCountries();
     this.props.fetchProductsForSearch();
     this.props.fetchCompanies();
+    // Hide dropdown block on click outside the block
+    window.addEventListener("click", this.hideDropDown, false);
+  }
+
+  hideDropDown = e => {
+    const area = ReactDOM.findDOMNode(this.refs.area);
+    if (area) {
+      if (!area.contains(e.target) && this.state.suggestionsVisible) {
+        this.setState({suggestionsVisible: false})
+      }
+    }
   }
 
   handleChange = e => {
-    const suggestions = [];
     this.setState({suggestionsVisible: true});
     this.setState({keyword: e.target.value});
-    const length = e.target.value.length;
-    if (length && this.props.countries && this.props.products && this.props.companies) {
-      Object.keys(this.props.countries).map(continent => {
-        this.props.countries[continent].values.map(country => {
-          if (country.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-            suggestions.push({type: "Country", name: country.name, id: country.id});
-          }
-        })
-      });
-      this.props.products[e.target.value.toLowerCase().substring(0, 1)].values.map(product => {
-        if (product.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-          suggestions.push({type: "Product", name: product.name, id: product.id});
-        }
-      });
-      this.props.companies.map(company => {
-        if (company.name.slice(0, length).toLowerCase() === e.target.value.toLowerCase()) {
-          suggestions.push({type: "Company", name: company.name, id: company.id});
-        }
-      });
-    }
 
-    suggestions.sort(function(name1, name2) {
-      const a = name1.name.toLowerCase();
-      const b = name2.name.toLowerCase();
-      if (a < b)
-        return -1;
-      if (a > b)
-        return 1;
-      return 0;
-    });
-    this.setState({suggestions});
+    // Only run the search if the user has typed MORE than 2 characters,
+    // otherwise this returns way too many results and feels laggy.
+    //  - else
+    // clear the results but submitting an empty string
+    if (e.target.value.length > 2) {
+      this.props.fetchSearch(e.target.value, this.state.selected.value.toLowerCase());
+    } else {
+      this.props.fetchSearch("", this.state.selected.value.toLowerCase());
+    }
+    // this.setState({suggestions});
   }
 
   selectSuggestion = suggestion => {
-      browserHistory.push(`/${suggestion.type.toLowerCase()}/${suggestion.id}`);
+    const type = suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type;
+      browserHistory.push(`/${type}/${suggestion.id}`);
   }
 
   search = () => {
     this.props.setSearch({keyword: this.state.keyword, filter: this.state.selected.value});
+    this.props.fetchSearch(this.state.keyword, this.state.selected.value.toLowerCase());
     this.props.activateSearch();
   }
 
@@ -81,7 +75,6 @@ class Home extends React.Component {
   }
 
   selectDropDown = item => {
-    console.log(item);
     this.setState({selected: item});
   }
 
@@ -94,16 +87,16 @@ class Home extends React.Component {
   render() {
     var options = [
       {
-        value: 'all',
+        value: 'All',
         label: 'All'
       }, {
-        value: 'companies',
+        value: 'Company',
         label: 'Companies'
       }, {
-        value: 'countries',
+        value: 'Country',
         label: 'Countries'
       }, {
-        value: 'products',
+        value: 'Product',
         label: 'Products'
       }
     ];
@@ -119,24 +112,24 @@ class Home extends React.Component {
             <div className="search-wrapper">
               <div className="search-input-wrapper">
                 <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text"></input>
-                {this.state.suggestions.length > 0 && this.state.suggestionsVisible
-                  ? <ul className="suggestions-wrapper">
-                      {this.state.suggestions.map(suggestion => {
+                {this.props.results.length > 0 && this.state.suggestionsVisible
+                  ? <ul ref="area" className="suggestions-wrapper">
+                      {this.props.results.map(suggestion => {
                         return <li onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                          <img className="icon" src={suggestion.type === "Country"
+                          <img className="icon" src={suggestion.profile_type === "Country"
                             ? "/images/icons/icon-country-yellow.svg"
-                            : suggestion.type === "Product"
+                            : suggestion.profile_type === "Product"
                               ? "/images/icons/icon-product-yellow.svg"
                               : "/images/icons/icon-company-yellow.svg"}/>
                           <p>{`${suggestion.name}  |
-                        ${suggestion.type}`}</p>
+                        ${suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type}`}</p>
                         </li>;
                       })}
                     </ul>
                   : null}</div>
               <Select optionClassName={"dropdown-option"}  arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
             </div>
-            <button onClick={this.search} className="search-button">Search</button >
+            <button onClick={this.search.bind(this)} className="search-button">Search</button >
             {/*<div className="cta-buttons-wrapper">
               <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
                 <div className="text-wrapper">
@@ -269,8 +262,8 @@ const mapDispatchToProps = dispatch => {
     activateSearch: activeState => {
       dispatch({type: "ACTIVATE_SEARCH", data: activeState});
     },
-    fetchSearch: () => {
-      dispatch(fetchSearch());
+    fetchSearch: (query, filter) => {
+      dispatch(fetchSearch(query, filter));
     },
     setSearch: query => {
       dispatch(setSearch(query));
@@ -280,6 +273,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
+    resultsLoading: state.search.loading,
+    results: state.search.results || [],
     countries: state.countries.countries,
     loadingCountries: state.countries.loading,
     errorCountries: state.countries.error,

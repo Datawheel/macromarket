@@ -11,13 +11,6 @@ export default class ProductHeader extends React.Component {
 
   nameLookup = (id) => {
     let result = ""
-    // this.props.countries.map(continent => {
-    //   continent.values.map(country => {
-    //     if(country.id === id) {
-    //       return country.name;
-    //     }
-    //   })
-    // })
     const countries = this.props.countries;
     for (let i = 0; i < countries.length; i++) {
       for (let j = 0; j < countries[i].values.length; j++) {
@@ -117,14 +110,16 @@ export default class ProductHeader extends React.Component {
                     </div>
                     <div className="section-wrapper top-data">
                       <div className="data">
+                        <Link to={`/country/${topExporter}`}>
                         <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
                         <h4>Top Exporter</h4>
-                        <h4>{exportName}</h4>
+                        <h4>{exportName}</h4></Link>
                       </div>
                       <div className="data">
+                      <Link to={`/country/${topImporter}`}>
                         <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
-                        <h4>Top Exporter</h4>
-                        <h4>{importName}</h4>
+                        <h4>Top Importer</h4>
+                        <h4>{importName}</h4></Link>
                       </div>
                     </div>
                   </div>
