@@ -38,13 +38,13 @@ class ProductSelection extends React.Component {
     return (
       <div>
         <div className="section-wrapper">
-          <b>Imports</b>
+          <b>I Import</b>
           <p className="description">Select a maximum of 5 products.</p>
           <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"imports"}></Selection>
           <SelectedProduct companyId={company.id} tradeFlow={"imports"}></SelectedProduct>
         </div>
         <div className="section-wrapper">
-          <b>Exports</b>
+          <b>I Export</b>
           <p className="description">Select a maximum of 5 products.</p>
 
           <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"exports"} products={products}></Selection>

@@ -200,8 +200,8 @@ class CompanyData extends React.Component {
         <div className="register-company">
           <img src="/images/icons/icon-registration.svg"></img>
           <p>Your Company was Saved Sucessfully!</p>
-          <Link to={`/company/${this.props.companySaved}`}>
-            <button className=" button button-next">View Listing</button>
+          <Link to="/settings/product">
+            <button className=" button button-next">List Your Products</button>
           </Link>
         </div>
       )
