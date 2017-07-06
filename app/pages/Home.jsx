@@ -173,9 +173,10 @@ class Home extends React.Component {
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>
               <div className="img-wrapper">
-                <img className="connect" src="/images/icons/logos/connectAmericasLogo.png"></img>
-                <img className="mit" src="/images/icons/logos/mit.png"></img>
-                <img className="datawheel" src="/images/icons/logos/datawheel.png"></img>
+                <img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" />
+                <img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" />
+                <img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" />
+                <img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" />
               </div>
             </div>
             <div className="grid-wrapper">

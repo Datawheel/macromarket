@@ -30,6 +30,12 @@
                 padding: 25px 30px;
                 height: 30px;
                 vertical-align: top;
+                &.collective-learning {
+                  padding: 25px 2px 25px 30px;
+                }
+                &.media-lab {
+                  padding: 25px 30px 25px 2px;
+                }
             }
         }
         & p {

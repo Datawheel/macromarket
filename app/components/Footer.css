@@ -33,14 +33,12 @@
         display: inline-block;
         width: 35%;
         vertical-align: super;
-        & .connect {
-            padding-right: 20px;
-            width: 100px;
+        & img {
+          height: 35px;
+          padding-right: 20px;
         }
-
-        & .mit {
-            width: 50px;
-            vertical-align: super;
+        & .datawheel {
+          padding-right: 0;
         }
     }
 }
