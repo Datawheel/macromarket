@@ -95,6 +95,11 @@
     & .button-next {
         background: var(--accent-color);
         border: 1px solid var(--accent-color);
+        &.disabled {
+          background: var(--input-grey);
+          border: 1px solid var(--input-text);
+          color: var(--input-text);
+        }
     }
     & .error-wrapper {
         height: 25px;

@@ -106,10 +106,7 @@ export function login(email, password) {
       withCredentials: true
     };
     dispatch(requestLogin());
-    return api.post("api/auth/login", {
-        email,
-        password
-      }, config)
+    return api.post("api/auth/login", {email, password}, config)
       .then(response => {
         if (response.data.message) {
             dispatch(receiveLoginError(response.data));

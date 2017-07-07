@@ -5,6 +5,7 @@ import {deleteCompany} from "../actions/userActions";
 import {isAuthenticated, logout, updateUser} from "../actions/authenticationActions";
 import Sidebar from "../components/Sidebar";
 import "../components/Form.css";
+import api from "../api.js";
 
 class UserData extends React.Component {
   constructor(props) {
@@ -27,6 +28,14 @@ class UserData extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  resendActivation = e => {
+    e.preventDefault();
+    return api.get("api/auth/sendActivationEmail", {withCredentials: true})
+      .then(response => {
+        this.activationDiv.remove();
+      })
   }
 
   save = () => {
@@ -53,7 +62,7 @@ class UserData extends React.Component {
   }
 
   render() {
-    const {updatedUser, user, loading, error} = this.props;
+    const {company, updatedUser, user, loading, error} = this.props;
 
     return (
       <div className={this.state.deleteVisible
@@ -67,11 +76,17 @@ class UserData extends React.Component {
           </div>
         </div>
         <div className="user-data">
-          {this.props.company
+          {!user.isConfirmed
+            ? <div className="alert alert-warning" ref={(activationDiv) => { this.activationDiv = activationDiv; }}>
+                <strong>Warning!</strong> Please activate your account to add a company. <a href="#" onClick={this.resendActivation}>Resend activation.</a>
+              </div>
+            : null
+          }
+          {company
             ? <div className="section-wrapper no-border listing">
-                <b>Your Listing: {this.props.company.name}</b>
+                <b>Your Listing: {company.name}</b>
                 <div className="input-wrapper company-wrapper">
-                  <Link to={`/company/${this.props.company.id}`}>
+                  <Link to={`/company/${company.id}`}>
                     <div className="view-listing">
                       <p>View Company</p>
                       <span className="chevron right"></span>
@@ -87,10 +102,11 @@ class UserData extends React.Component {
               <b>Your Listing</b>
               <div className="register-company">
                 <p>You do not have a company registered.</p>
-                <Link to="/settings/company">
-                  <button className=" button button-next">Register a Company</button>
-                </Link>
-
+                {user.isConfirmed
+                  ? <Link to="/settings/company">
+                    <button className="button button-next">Register a Company</button>
+                  </Link>
+                  : <button className="disabled button button-next">Register a Company</button>}
                 <div className="input-wrapper">
                   <label>Or link your Connect Americas account.</label>
                   <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
