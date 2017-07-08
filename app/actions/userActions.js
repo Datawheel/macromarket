@@ -1,7 +1,4 @@
 import api from "../api.js";
-import {
-  spread
-} from "axios";
 
 function requestSave() {
   return {
@@ -10,7 +7,6 @@ function requestSave() {
 }
 
 function receiveSave(json) {
-  console.log(json, "JSON HERE")
   return {
     type: "SAVE_FULFILLED",
     data: json
@@ -131,14 +127,15 @@ export function saveCompany2(company, profileImage = null, coverImage = null) {
           }
 
           // Promise.all(promises).then(() => dispatch(receiveSave(response.data.id)));
-          Promise.all(promises).then((a, b, c) => {
-            console.log("a", a)
-            console.log("\nb", b)
-            console.log("\nc", c)
+          Promise.all(promises).then(responses => {
+            responses.forEach(r => {
+              const imgType = r.request.responseURL.includes("type=profile") ? "profile" : "cover";
+              const error = r.data.error;
+            })
+            dispatch(receiveSave(response.data.id));
           });
         }
         else {
-          console.log("here", response.data.id);
           dispatch(receiveSave(response.data.id));
         }
       })

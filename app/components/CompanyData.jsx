@@ -127,7 +127,7 @@ class CompanyData extends React.Component {
       name: this.state.name,
       address: this.state.address,
       city: this.state.city,
-      region: this.state.name,
+      region: this.state.region,
       phone_number: this.state.phone_number,
       company_email: this.state.company_email,
       website: this.state.website,
