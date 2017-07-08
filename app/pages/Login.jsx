@@ -9,8 +9,8 @@ import "../components/Form.css";
 import "../components/Settings.css";
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor () {
+    super();
     this.state = {
       email: "",
       password: ""
@@ -43,7 +43,6 @@ class Login extends React.Component {
   logIn = e => {
     e.preventDefault();
     this.props.login(this.state.email, this.state.password);
-
   }
 
   render() {
@@ -55,12 +54,9 @@ class Login extends React.Component {
           <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
             <div className="title-wrapper">Login</div>
-            <div className="form">
+            <form className="form" onSubmit={this.logIn}>
               <div className="content-wrapper">
-                <div className="password error-wrapper">
-                  {error
-                    ? <p>{error}</p>
-                    : null}</div>
+                <div className="password error-wrapper">{error ? <p>{error}</p>: null}</div>
               </div>
               <div className="input-wrapper">
                 <label>Email</label>
@@ -71,13 +67,12 @@ class Login extends React.Component {
                 <input onChange={this.handlePasswordChange} value={this.state.password} type="password" name="password"/>
               </div>
               <div className="login-wrapper">
-                <button onClick={this.logIn}>Login</button>
+                <button type="submit" onClick={this.logIn}>Login</button>
               </div>
-            </div>
+            </form>
             <div className="text-wrapper">
               <p>Don't have an account?
-                <Link to="/signup">
-                  {` Sign up`}</Link>
+                <Link to="/signup">{`Sign up`}</Link>
               </p>
               <p>Forgot Password?</p>
             </div>

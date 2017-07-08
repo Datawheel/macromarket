@@ -104,9 +104,9 @@ export function saveCompany2(company, profileImage = null, coverImage = null) {
 
   return dispatch => {
     dispatch(requestSave());
-    const apiCall = company.id ?
-      api.put(`api/companies/${company.id}`, company) :
-      api.post("api/companies", company);
+    const apiCall = company.id
+      ? api.put(`api/companies/${company.id}`, company)
+      : api.post("api/companies", company);
     return apiCall
       .then(response => {
         if (profileImage || coverImage) {
@@ -130,7 +130,12 @@ export function saveCompany2(company, profileImage = null, coverImage = null) {
             promises.push(cover);
           }
 
-          Promise.all(promises).then(() => dispatch(receiveSave(response.data.id)));
+          // Promise.all(promises).then(() => dispatch(receiveSave(response.data.id)));
+          Promise.all(promises).then((a, b, c) => {
+            console.log("a", a)
+            console.log("\nb", b)
+            console.log("\nc", c)
+          });
         }
         else {
           console.log("here", response.data.id);
