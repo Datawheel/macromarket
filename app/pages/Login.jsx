@@ -71,10 +71,8 @@ class Login extends React.Component {
               </div>
             </form>
             <div className="text-wrapper">
-              <p>Don't have an account?
-                <Link to="/signup">{`Sign up`}</Link>
-              </p>
-              <p>Forgot Password?</p>
+              <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+              <p><Link to="/reset">Forgot Password?</Link></p>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ import Login from "pages/Login";
 import Signup from "pages/Signup";
 import Settings from "pages/Settings";
 import Inbox from "pages/Inbox";
+import Reset from "pages/Reset";
 
 function genRandId(path) {
   let candidates;
@@ -111,6 +112,7 @@ export default function RouteCreate() {
       <Route path="/company(/:companyWithId)" onEnter={checkForId} component={CompanyWithId}/>
       <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
       <Route path="/login" component={Login}/>
+      <Route path="/reset" component={Reset}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/settings/user" component={Settings}></Route>
       <Route path="/settings/company" component={Settings}></Route>

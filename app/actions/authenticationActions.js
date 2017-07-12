@@ -80,6 +80,36 @@ function receiveLogoutError(json) {
   };
 }
 
+function resetTokenIsValid() {
+  return {type: "RESET_TOKEN_IS_VALID"};
+}
+
+function resetTokenIsNotValid() {
+  return {
+    type: "RESET_TOKEN_IS_NOT_VALID",
+    data: {message: "Password reset token is invalid or has expired."}
+  };
+}
+
+function receiveChangePwSuccess(json) {
+  return {
+    type: "RESET_PW_SUCCESS",
+    data: json
+  };
+}
+function receiveChangePwError(json) {
+  return {
+    type: "RESET_PW_ERROR",
+    data: json
+  };
+}
+
+function resetEmailSent() {
+  return {
+    type: "RESET_EMAIL_SENT",
+    data: {message: "If there is an account associated with this email address, you have been sent a password reset."}
+  };
+}
 
 export function isAuthenticated() {
   return function(dispatch) {
@@ -89,7 +119,8 @@ export function isAuthenticated() {
     }).then(response => {
       if (response.data.msg) {
         dispatch(receiveAuthError(response.data.msg));
-      } else {
+      }
+      else {
         dispatch(receiveAuth(response.data));
       }
     }, err => {
@@ -109,7 +140,7 @@ export function login(email, password) {
     return api.post("api/auth/login", {email, password}, config)
       .then(response => {
         if (response.data.message) {
-            dispatch(receiveLoginError(response.data));
+          dispatch(receiveLoginError(response.data));
         }
         else {
           if (response.data.company_id) {
@@ -139,16 +170,16 @@ export function updateUser(id, email, password, newPassword) {
   return function(dispatch) {
     dispatch(requestSaveUser());
     return api.post(`/api/auth/updateUser/${id}`, {
-        email,
-        password,
-        newPassword
-      }, config)
-      .then(response => {
-        dispatch(receiveSaveUser(response.data));
-      })
-      .catch(response => {
-        dispatch(saveUserError("The password you entered is incorect."));
-      });
+      email,
+      password,
+      newPassword
+    }, config)
+    .then(response => {
+      dispatch(receiveSaveUser(response.data));
+    })
+    .catch(() => {
+      dispatch(saveUserError("The password you entered is incorect."));
+    });
   };
 }
 
@@ -159,10 +190,7 @@ export function signup(email, password) {
       withCredentials: true
     };
     dispatch(requestLogin());
-    return api.post("api/auth/signup", {
-        email,
-        password
-      }, config)
+    return api.post("api/auth/signup", {email, password}, config)
       .then(response => {
         dispatch(receiveLogin(response.data));
       })
@@ -183,14 +211,43 @@ export function logout() {
       data: null
     });
     dispatch(requestLogout());
-    return api.get("api/auth/logout", {
-        withCredentials: true
-      })
+    return api.get("api/auth/logout", {withCredentials: true})
       .then(response => {
         dispatch(receiveLogout(response.data));
       })
       .catch(response => {
         dispatch(receiveLogoutError(response.data));
+      });
+  };
+}
+
+export function checkResetToken(token) {
+  return function(dispatch) {
+    return api.get(`api/auth/isResetValid?token=${token}`)
+      .then(response => {
+        dispatch(response.data.success ? resetTokenIsValid() : resetTokenIsNotValid());
+      });
+  };
+}
+
+export function changePw(token, password) {
+  return function(dispatch) {
+    dispatch(requestLogin());
+    return api.post("api/auth/reset", {token, password})
+      .then(response => {
+        dispatch(response.data.success ? receiveChangePwSuccess(response.data) : receiveChangePwError(response.data));
+      })
+      .catch(response => {
+        dispatch(receiveChangePwError(response.data));
+      });
+  };
+}
+
+export function sendResetEmail(email) {
+  return function(dispatch) {
+    return api.get(`/api/auth/sendResetEmail?email=${email}`)
+      .then(() => {
+        dispatch(resetEmailSent());
       });
   };
 }
