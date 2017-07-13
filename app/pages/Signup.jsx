@@ -16,7 +16,7 @@ class SignUp extends React.Component {
     };
   }
 
-  validateEmail = (email) => {
+  validateEmail = email => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
@@ -56,7 +56,6 @@ class SignUp extends React.Component {
     }
 
     this.props.signup(this.state.email, this.state.password);
-
   }
 
   render() {
@@ -67,7 +66,7 @@ class SignUp extends React.Component {
           <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
             <div className="title-wrapper">Sign Up</div>
-            <div className="form">
+            <form className="form" onSubmit={this.signup}>
               <div className="content-wrapper">
                 <div className="password error-wrapper">
                   {this.props.error
@@ -93,7 +92,7 @@ class SignUp extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
