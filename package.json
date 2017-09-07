@@ -21,8 +21,12 @@
   },
   "homepage": "https://github.com/Datawheel/oecm#readme",
   "dependencies": {
-    "datawheel-canon": "^0.6.0",
+    "@google-cloud/storage": "^1.2.1",
+    "datawheel-canon": "^0.10.0",
+    "express-session": "^1.15.5",
     "localforage": "^1.5.0",
+    "mailgun-js": "^0.13.1",
+    "multer": "^1.3.0",
     "react-select": "^1.0.0-rc.5"
   }
 }

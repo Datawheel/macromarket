@@ -182,7 +182,6 @@ class ProductWithId extends React.Component {
             {trades
               ? <div className="result-wrapper">
                   {this.filterCompanies(trades).length > 0 ? this.filterCompanies(trades).map((trade, index) => {
-                    console.log(trade);
                     const content = trade.Company;
                     content.profile_type = "company";
                     if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {
@@ -225,9 +224,7 @@ const mapDispatchToProps = dispatch => {
 const productUrl = `${url}/api/products/<productWithId>`;
 
 ProductWithId.preneed = [fetchData("product", productUrl, res => res)];
-
 ProductWithId.need = [fetchData("productData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<product.id_hs92>/", res => res.data[0])];
-
 ProductWithId.postneed = [];
 
 const mapStateToProps = state => {

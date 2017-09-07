@@ -1,7 +1,7 @@
 import axios from "axios";
 const clientConfig = {
   host: process.env.MM_HOSTNAME || "localhost",
-  port: process.env.MM_PORT || "8080"
+  port: process.env.MM_PORT || "3300"
 };
 
 let baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
