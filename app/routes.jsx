@@ -6,8 +6,8 @@ import NotFound from "pages/NotFound";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
-import Login from "pages/Login";
-import Signup from "pages/Signup";
+import AdminLogin from "pages/AdminLogin";
+import AdminSignup from "pages/AdminSignup";
 import Settings from "pages/Settings";
 import Inbox from "pages/Inbox";
 import Reset from "pages/Reset";
@@ -37,7 +37,8 @@ function genRandId(path) {
       "euisl"
     ];
 
-  } else if (path.includes("product")) {
+  }
+  else if (path.includes("product")) {
     candidates = [
       "010104",
       "14710410",
@@ -73,7 +74,8 @@ function genRandId(path) {
       "14710420",
       "168425"
     ];
-  } else if (path.includes("company")) {
+  }
+  else if (path.includes("company")) {
     candidates = [
       "14",
       "1",
@@ -98,7 +100,8 @@ function checkForId(nextState, replace) {
       : `${reqestedUrl}/${randId}`;
 
     return replace({pathname: nextUrl});
-  } else {
+  }
+  else {
     // make sure it's legal
     return <NotFound/>;
   }
@@ -112,9 +115,9 @@ export default function RouteCreate() {
       <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId}/>
       <Route path="/company(/:companyWithId)" onEnter={checkForId} component={CompanyWithId}/>
       <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
-      <Route path="/login" component={Login}/>
+      <Route path="/login" component={AdminLogin}/>
       <Route path="/reset" component={Reset}/>
-      <Route path="/signup" component={Signup}/>
+      <Route path="/signup" component={AdminSignup}/>
       <Route path="/activate" component={Activate}/>
       <Route path="/settings/user" component={Settings}></Route>
       <Route path="/settings/company" component={Settings}></Route>

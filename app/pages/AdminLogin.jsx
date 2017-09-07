@@ -4,11 +4,12 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {authenticate, login} from "../actions/authenticationActions";
+import {Login} from "datawheel-canon";
 import Sidebar from "components/Sidebar";
 import "../components/Form.css";
 import "../components/Settings.css";
 
-class Login extends React.Component {
+class AdminLogin extends React.Component {
   constructor () {
     super();
     this.state = {
@@ -54,22 +55,7 @@ class Login extends React.Component {
           <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
             <div className="title-wrapper">Login</div>
-            <form className="form" onSubmit={this.logIn}>
-              <div className="content-wrapper">
-                <div className="password error-wrapper">{error ? <p>{error}</p>: null}</div>
-              </div>
-              <div className="input-wrapper">
-                <label>Email</label>
-                <input onChange={this.handleEmailChange} value={this.state.email} type="text" name="email"/>
-              </div>
-              <div className="input-wrapper">
-                <label>Password</label>
-                <input onChange={this.handlePasswordChange} value={this.state.password} type="password" name="password"/>
-              </div>
-              <div className="login-wrapper">
-                <button type="submit" onClick={this.logIn}>Login</button>
-              </div>
-            </form>
+            <Login />
             <div className="text-wrapper">
               <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
               <p><Link to="/reset">Forgot Password?</Link></p>
@@ -101,4 +87,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);

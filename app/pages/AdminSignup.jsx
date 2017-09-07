@@ -2,11 +2,12 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {signup} from "../actions/authenticationActions";
+import {SignUp} from "datawheel-canon";
 import "../components/Settings.css";
 import Sidebar from "components/Sidebar";
 import "../components/Form.css";
 
-class SignUp extends React.Component {
+class AdminSignup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,33 +67,7 @@ class SignUp extends React.Component {
           <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
             <div className="title-wrapper">Sign Up</div>
-            <form className="form" onSubmit={this.signup}>
-              <div className="content-wrapper">
-                <div className="password error-wrapper">
-                  {this.props.error
-                    ? <p>{this.props.error}</p>
-                    : this.state.error
-                      ? <p>{this.state.error}</p>
-                      : null}</div>
-                <div className="input-wrapper">
-                  <label>Email</label>
-                  <input type="text" name="email" onChange={this.onChange} value={this.state.email}></input>
-                </div>
-                <div className="input-wrapper">
-                  <label>Password</label>
-                  <input onChange={this.onChange} value={this.state.password} type="password" name="password"></input>
-                </div>
-                <div className="input-wrapper">
-                  <label>
-                    Repeat Password</label>
-                  <input onChange={this.onChange} value={this.state.passwordRepeat} type="password" name="passwordRepeat"></input>
-                  <div></div>
-                  <div className="signup-wrapper">
-                    <button onClick={this.signup}>Register</button>
-                  </div>
-                </div>
-              </div>
-            </form>
+            <SignUp />
           </div>
         </div>
       </div>
@@ -112,4 +87,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminSignup);
