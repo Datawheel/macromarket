@@ -1,6 +1,11 @@
 module.exports = function(sequelize, db) {
 
   const Company = sequelize.define("Company", {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: db.INTEGER
+    },
     name: db.STRING,
     address: db.TEXT,
     city: db.STRING,
@@ -12,48 +17,53 @@ module.exports = function(sequelize, db) {
     profile_image: db.STRING,
     cover_image: db.STRING,
     description: db.TEXT,
-    transporter: db.BOOLEAN
+    transporter: db.BOOLEAN,
+    uid: {
+      type: db.STRING,
+      primaryKey: true,
+      references: {model: "users", key: "id"}
+    }
   }, {
     hooks: {
-      afterCreate: function(company, options) {
-        sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
-          const document = response[0][0].to_tsvector.replace(/'/g, "''");
-          const name = company.dataValues.name.replace(/'/g, "''");
-          const id = "company" + company.dataValues.id;
-          const image = company.dataValues.profile_image;
-          sequelize.query("INSERT INTO " + '"Search"' + " (" + '"id"' + "," + '"name",' + '"profile_type",' + '"document",' + '"image"' + ") VALUES ('" + id + "', '" + name + "', 'company','" + document + "', '" + image + "')").then(insert => {
-            console.log(insert);
-          }).catch(err => {
-            console.log(err);
-          });
-
-        }).catch(err => {
-          console.log(err);
-        });
-      },
-      beforeDestroy: function(company, options) {
-        const id = "company" + company.dataValues.id;
-        sequelize.query("DELETE FROM" + '"Search"' + "WHERE id='" + id + "'").then(response => {
-          return options;
-        }).catch(err => {
-          console.log(err);
-        });
-      },
-      beforeUpdate: function(company, options) {
-        sequelize.query("SELECT to_tsvector('english','" + company.dataValues.name + "')").then(response => {
-          const document = response[0][0].to_tsvector.replace(/'/g, "''");
-          const name = company.dataValues.name;
-          const id = "company" + company.dataValues.id;
-          sequelize.query("UPDATE" + '"Search"' + " SET name='" + name + "' , document='" + document + "' WHERE id='" + id + "'").then(insert => {
-            return options;
-          }).catch(err => {
-            console.log(err);
-          });
-
-        }).catch(err => {
-          console.log(err);
-        });
-      }
+    //   afterCreate: function(company, options) {
+    //     sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
+    //       const document = response[0][0].to_tsvector.replace(/'/g, "''");
+    //       const name = company.dataValues.name.replace(/'/g, "''");
+    //       const id = "company" + company.dataValues.id;
+    //       const image = company.dataValues.profile_image;
+    //       sequelize.query("INSERT INTO " + '"Search"' + " (" + '"id"' + "," + '"name",' + '"profile_type",' + '"document",' + '"image"' + ") VALUES ('" + id + "', '" + name + "', 'company','" + document + "', '" + image + "')").then(insert => {
+    //         console.log(insert);
+    //       }).catch(err => {
+    //         console.log(err);
+    //       });
+    //
+    //     }).catch(err => {
+    //       console.log(err);
+    //     });
+    //   },
+    //   beforeDestroy: function(company, options) {
+    //     const id = "company" + company.dataValues.id;
+    //     sequelize.query("DELETE FROM" + '"Search"' + "WHERE id='" + id + "'").then(response => {
+    //       return options;
+    //     }).catch(err => {
+    //       console.log(err);
+    //     });
+    //   },
+    //   beforeUpdate: function(company, options) {
+    //     sequelize.query("SELECT to_tsvector('english','" + company.dataValues.name + "')").then(response => {
+    //       const document = response[0][0].to_tsvector.replace(/'/g, "''");
+    //       const name = company.dataValues.name;
+    //       const id = "company" + company.dataValues.id;
+    //       sequelize.query("UPDATE" + '"Search"' + " SET name='" + name + "' , document='" + document + "' WHERE id='" + id + "'").then(insert => {
+    //         return options;
+    //       }).catch(err => {
+    //         console.log(err);
+    //       });
+    //
+    //     }).catch(err => {
+    //       console.log(err);
+    //     });
+    //   }
     }
   });
 

@@ -10,6 +10,13 @@ module.exports = function(app) {
     db.Company.findAll({limit: 100}).then(companies => res.json(companies));
   });
 
+  app.get("/api/companies/byUser/:uid", (req, res) => {
+    const {uid} = req.params;
+    db.Company.findAll({
+      where: {uid}
+    }).then(companies => res.json(companies));
+  });
+
   // Instantiate a storage client
   const googleCloudStorage = storage({
     projectId: process.env.GCLOUD_STORAGE_BUCKET,
@@ -37,7 +44,10 @@ module.exports = function(app) {
 
   app.get("/api/companies/:id", (req, res) => {
     const {id} = req.params;
-    if (id.slice(0, 3) === "ca_") {
+    if (id === "new") {
+      res.json({})
+    }
+    else if (id.slice(0, 3) === "ca_") {
       const option = {
         hostname: "m.connectamericas.com",
         path: `/apirest/v6/company/${id.slice(3, id.length)}`,
@@ -212,10 +222,31 @@ module.exports = function(app) {
   });
 
   /** POST / - Create a new entity */
+  app.post("/api/companies", (req, res) => {
+    const {id: uid} = req.user;
+    const {body: company} = req;
+    company.uid = uid;
+    db.Company.create(company).then(company => {
+      res.json(company);
+    }).catch(error => {
+      res.status(500).json({
+        error,
+        message: "Error in creating company."
+      });
+    });
+  });
 
   /** GET /:id - Return a given entity */
 
   /** PUT /:id - Updates a given entity */
+  app.put("/api/companies/:id", (req, res) => {
+    const {id} = req.params;
+    db.Company.update(
+      req.body,
+      {where: {id}}
+    ).then(company => res.json(company))
+      .catch(err => res.json(err));
+  });
 
   /** DELETE /:id - Deletes a given entity
       WARNING: when deleting a company this will also:

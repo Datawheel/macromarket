@@ -376,7 +376,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    company: state.companyProfile.authCompany,
     user: state.authentication.user,
     companyLoading: state.user.loading,
     companySaved: state.user.company,

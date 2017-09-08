@@ -11,6 +11,7 @@ class UserData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      companies: [],
       password1: "",
       password2: "",
       error: "",
@@ -21,6 +22,11 @@ class UserData extends React.Component {
 
   componentWillMount() {
     this.props.clearUser();
+    const {user} = this.props;
+    return api.get(`api/companies/byUser/${user.id}`)
+      .then(response => {
+        this.setState({companies: response.data});
+      })
   }
 
   handleChange = e => {
@@ -62,7 +68,9 @@ class UserData extends React.Component {
   }
 
   render() {
-    const {company, updatedUser, user, loading, error} = this.props;
+    const {updatedUser, user, loading, error} = this.props;
+    const {companies} = this.state;
+    console.log("companies:", companies)
 
     return (
       <div className={this.state.deleteVisible
@@ -76,43 +84,38 @@ class UserData extends React.Component {
           </div>
         </div>
         <div className="user-data">
-          {!user.isConfirmed
-            ? <div className="alert alert-warning" ref={(activationDiv) => { this.activationDiv = activationDiv; }}>
-                <strong>Warning!</strong> Please activate your account to add a company. <a href="#" onClick={this.resendActivation}>Resend activation.</a>
-              </div>
-            : null
-          }
-          {company
-            ? <div className="section-wrapper no-border listing">
-                <b>Your Listing: {company.name}</b>
-                <div className="input-wrapper company-wrapper">
-                  <Link to={`/company/${company.id}`}>
-                    <div className="view-listing">
-                      <p>View Company</p>
-                      <span className="chevron right"></span>
-                    </div>
-                  </Link>
-                  <div className="delete-company" onClick={this.toggleDeleteCompany}>
-                    <p>Delete Company</p>
-                    <span className="delete"></span>
+          {/*
+            {!user.isConfirmed
+              ? <div className="alert alert-warning" ref={(activationDiv) => { this.activationDiv = activationDiv; }}>
+                  <strong>Warning!</strong> Please activate your account to add a company. <a href="#" onClick={this.resendActivation}>Resend activation.</a>
+                </div>
+              : null
+            }
+          */}
+          <div className="section-wrapper no-border listing">
+            <h2>My Companies</h2>
+            {companies.map(company =>
+              <div key={company.id} className="companyListing">
+                <nav className="pt-navbar .modifier">
+                  <div className="pt-navbar-group pt-align-left">
+                    <div className="pt-navbar-heading">{company.name}</div>
                   </div>
-                </div>
+                  <div className="pt-navbar-group pt-align-right">
+                    <a href={`/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-link"></a>
+                    <a href={`/settings/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-edit"></a>
+                    <span className="pt-navbar-divider"></span>
+                    <button className="pt-button pt-minimal pt-icon-delete"></button>
+                  </div>
+                </nav>
               </div>
-            : <div className="section-wrapper listing">
-              <b>Your Listing</b>
-              <div className="register-company">
-                <p>You do not have a company registered.</p>
-                {user.isConfirmed
-                  ? <Link to="/settings/company">
-                    <button className="button button-next">Register a Company</button>
-                  </Link>
-                  : <button className="disabled button button-next">Register a Company</button>}
-                <div className="input-wrapper">
-                  <label>Or link your Connect Americas account.</label>
-                  <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
-                </div>
-              </div>
-            </div>}
+            )}
+          </div>
+          <div className="section-wrapper listing">
+            <div className="register-company">
+              {!companies.length ? <p>You do not have a company registered.</p> : null}
+              <a href="#" className="button button-next">Register a Company</a>
+            </div>
+          </div>
           <div>
             <b>Update Your Password</b>
             <div className="input-wrapper">
@@ -131,8 +134,8 @@ class UserData extends React.Component {
               {updatedUser
                 ? <p>New password saved!</p>
                 : <p>{this.props.error
-                    ? this.props.error
-                    : this.state.error}</p>}
+                  ? this.props.error
+                  : this.state.error}</p>}
             </div>
             <div className="button-wrapper">
               <button className="button button-next" onClick={this.save}>Save</button>
@@ -162,6 +165,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return {updatedUser: state.authentication.updatedUser, company: state.companyProfile.authCompany, user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error}
+  return {
+    updatedUser: state.authentication.updatedUser,
+    user: state.authentication.user,
+    loading: state.authentication.loading,
+    error: state.authentication.error
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserData);
