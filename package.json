@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Datawheel/oecm#readme",
   "dependencies": {
+    "@blueprintjs/labs": "^0.8.0",
     "@google-cloud/storage": "^1.2.1",
     "datawheel-canon": "^0.10.0",
     "express-session": "^1.15.5",

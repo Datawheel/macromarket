@@ -18,8 +18,8 @@ class ProductSelectionForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProducts();
-    this.props.fetchSettingsTradesByCompany(this.props.companyId);
+    // this.props.fetchProducts();
+    // this.props.fetchSettingsTradesByCompany(this.props.companyId);
   }
 
   selectH2 = product => {
@@ -53,7 +53,7 @@ class ProductSelectionForm extends React.Component {
   }
 
   render() {
-    const {products, trades} = this.props;
+    const {products} = this.props;
     return (
       <div className="selection-wrapper">
         <div className="product-selection-wrapper selected">
@@ -61,33 +61,33 @@ class ProductSelectionForm extends React.Component {
           <div className="product-selection">
             {products
               ? <div>{Object.keys(products).map((product, index) => {
-                    const productId = products[product].key;
-                    const values = products[product].values;
-                    if (values.length > 0) {
-                      return (
-                        <div key={index}>
-                          <div className={"colored-wrapper dropdown-item"}>
-                            <div className={`color-${productId} icon-wrapper`}>
-                              <img src={`/images/product_icon/hs_${productId}.png`}/>
-                            </div>
-                            <div>
-                              <div className={`color-${productId} darker-color`}></div>
-                              <p className="category-name">{products[product].name}</p>
-                            </div>
-                          </div>
-                          {values.map(product => {
-                            return (
-                              <div className={this.state.selectedH2 === product.key
-                                ? "selectedH2 product"
-                                : "product"} key={product.key} onClick={this.selectH2.bind(this, product)}>
-                                <p className="product-name">{`${product.key} - ${product.name}`}</p>
-                              </div>
-                            );
-                          })}
+                const productId = products[product].key;
+                const values = products[product].values;
+                if (values.length > 0) {
+                  return (
+                    <div key={index}>
+                      <div className={"colored-wrapper dropdown-item"}>
+                        <div className={`color-${productId} icon-wrapper`}>
+                          <img src={`/images/product_icon/hs_${productId}.png`}/>
                         </div>
-                      );
-                    }
-                  })}</div>
+                        <div>
+                          <div className={`color-${productId} darker-color`}></div>
+                          <p className="category-name">{products[product].name}</p>
+                        </div>
+                      </div>
+                      {values.map(product => {
+                        return (
+                          <div className={this.state.selectedH2 === product.key
+                            ? "selectedH2 product"
+                            : "product"} key={product.key} onClick={this.selectH2.bind(this, product)}>
+                            <p className="product-name">{`${product.key} - ${product.name}`}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                }
+              })}</div>
               : null}
           </div>
         </div>
@@ -142,29 +142,30 @@ class ProductSelectionForm extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createTradeForProduct: (companyId, productId, tradeFlow) => {
-      dispatch(createTradeForProduct(companyId, productId, tradeFlow));
-    },
-    fetchSettingsTradesByCompany: id => {
-      dispatch(fetchSettingsTradesByCompany(id))
-    },
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    }
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     createTradeForProduct: (companyId, productId, tradeFlow) => {
+//       dispatch(createTradeForProduct(companyId, productId, tradeFlow));
+//     },
+//     fetchSettingsTradesByCompany: id => {
+//       dispatch(fetchSettingsTradesByCompany(id))
+//     },
+//     fetchProducts: () => {
+//       dispatch(fetchProducts());
+//     }
+//   };
+// };
 
-const mapStateToProps = state => {
-  return {
-    products: state.products.products,
-    loading: state.products.loading,
-    error: state.products.error,
-    trades: state.trades.settingsTrades,
-    tradesLoading: state.trades.loading,
-    tradesError: state.trades.error
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     products: state.products.products,
+//     loading: state.products.loading,
+//     error: state.products.error,
+//     trades: state.trades.settingsTrades,
+//     tradesLoading: state.trades.loading,
+//     tradesError: state.trades.error
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductSelectionForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(ProductSelectionForm);
+export default ProductSelectionForm;

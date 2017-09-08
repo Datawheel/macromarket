@@ -1,29 +1,22 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
-import {deleteCompany} from "../../actions/userActions";
+import {nest} from "d3-collection";
+import {ascending} from "d3-array";
 import Sidebar from "../../components/Sidebar";
-import {authenticateAndFetchCompany} from "../../actions/companyActions";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "../../components/Form.css";
 import "../../components/Settings.css";
+import Selection from "../../components/ProductSelectionForm";
+import TradeEdit from "./TradeEdit";
 
-class EditCompany extends React.Component {
+class EditCompanyProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.company.name,
-      description: this.props.company.description,
-      address: this.props.company.address,
-      city: this.props.company.city,
-      region: this.props.company.region,
-      country_id: this.props.company.country_id,
-      company_email: this.props.company.company_email,
-      phone_number: this.props.company.phone_number,
-      website: this.props.company.website,
-      newCompany: false
+      trades: [{product: 1, destinations: [], origins: []}]
     };
   }
 
@@ -73,9 +66,8 @@ class EditCompany extends React.Component {
   }
 
   render() {
-    const {user, loading} = this.props;
-    const {address, city, country_id, description, name, region,
-      company_email, phone_number, website} = this.state;
+    const {user, loading, products, countries} = this.props;
+    const {trades} = this.state;
 
     if (loading || !user) {
       return (
@@ -124,57 +116,16 @@ class EditCompany extends React.Component {
 
             <div className="pt-form-group">
               <label className="pt-label" htmlFor="example-form-group-input-a">
-                <span className="pt-icon pt-icon-edit"></span> Company Name <span className="pt-text-muted">(required)</span>
+                <span className="pt-icon pt-icon-insert"></span> Search for a product
               </label>
               <div className="pt-form-content">
                 <input name="name" onChange={this.handleChange} id="example-form-group-input-a" value={name} className="pt-input" placeholder="My Company" type="text" dir="auto" />
-                <div className="pt-form-helper-text">Helper text with details / user feedback</div>
               </div>
             </div>
 
             <div className="pt-form-group">
-              <label className="pt-label" htmlFor="example-form-group-input-a">
-                <span className="pt-icon pt-icon-paragraph"></span> Description
-              </label>
-              <div className="pt-form-content">
-                <textarea name="description" onChange={this.handleChange} value={description} className="pt-input pt-fill"></textarea>
-              </div>
-            </div>
-
-            <div className="pt-form-group address">
-              <label className="pt-label" htmlFor="example-form-group-input-a">
-                <span className="pt-icon pt-icon-map-marker"></span> Address
-              </label>
-              <div className="pt-input-group">
-                <input name="address" onChange={this.handleChange} value={address} type="text" className="pt-input" placeholder="Street" />
-              </div>
-              <div className="pt-input-group">
-                <input name="city" onChange={this.handleChange} value={city} type="text" className="pt-input" placeholder="City" />
-              </div>
-              <div className="pt-input-group">
-                <input name="region" onChange={this.handleChange} value={region} type="text" className="pt-input" placeholder="State / Provience / Region" />
-              </div>
-              <div className="pt-input-group">
-                <input name="country_id" onChange={this.handleChange} value={country_id} type="text" className="pt-input" placeholder="Country" />
-              </div>
-            </div>
-
-            <div className="pt-form-group contact-info">
-              <label className="pt-label" htmlFor="example-form-group-input-a">
-                <span className="pt-icon pt-icon-id-number"></span> Contact Info
-              </label>
-              <div className="pt-input-group">
-                <input type="text" className="pt-input" placeholder="Contact Name" />
-              </div>
-              <div className="pt-input-group">
-                <input name="company_email" onChange={this.handleChange} value={company_email} type="text" className="pt-input" placeholder="Email" />
-              </div>
-              <div className="pt-input-group">
-                <input name="phone_number" onChange={this.handleChange} value={phone_number} type="text" className="pt-input" placeholder="Phone" />
-              </div>
-              <div className="pt-input-group">
-                <input name="website" onChange={this.handleChange} value={website} type="text" className="pt-input" placeholder="Website" />
-              </div>
+              <p>...or browse and select from the list</p>
+              <Selection products={products} selectProduct={() => {}} companyId={105} tradeFlow={"imports"}></Selection>
             </div>
 
             <div className="pt-form-group contact-info">
@@ -184,6 +135,26 @@ class EditCompany extends React.Component {
               </button>
             </div>
 
+            <div className="trades">
+              <div className="trade">
+                <div className="trade-product">
+                  <strong>Product</strong>
+                </div>
+                <div className="trade-dest">
+                  <strong>Export Destinations</strong>
+                </div>
+                <div className="trade-origin">
+                  <strong>Import Origins</strong>
+                </div>
+                <div className="trade-controls">
+                  &nbsp;
+                </div>
+              </div>
+              {trades.map((trade, i) =>
+                <TradeEdit key={i} trade={trade} countries={countries} />
+              )}
+            </div>
+
           </div>
         </div>
       </div>
@@ -191,23 +162,62 @@ class EditCompany extends React.Component {
   }
 }
 
-EditCompany.preneed = [fetchData("company", `${url}/api/companies/<companyId>`, res => res)];
+EditCompanyProducts.preneed = [
+  fetchData("company", `${url}/api/companies/<companyId>`, res => res),
+  fetchData("countries", `${url}/api/countries`, res => {
+    const nestedCountries = nest()
+      .key(d => d.continent)
+      .entries(res);
+    return res;
+  }),
+  fetchData("products", `${url}/api/products`, res => {
+    const json = nest()
+      .key(d => d.id.substring(0, 2))
+      .sortKeys(ascending)
+      .key(d => d.id.substring(2, 4))
+      .sortKeys(ascending)
+      .key(d => d.id.substring(4, 6))
+      .sortKeys(ascending)
+      .entries(res)
+      .map(d => {
+        const myHs2 = d.values.shift();
+        const myNewValues = d.values.map(dd => {
+          const myHs4 = dd.values.shift();
+          const innerValues = dd.values.map(ddd => {
+            const myHs6 = ddd.values.shift();
+            return {
+              key: ddd.key,
+              values: ddd.values,
+              name: myHs6.name
+            };
+          });
+          return {
+            key: dd.key,
+            values: innerValues,
+            name: myHs4.values[0].name
+          };
+        });
+        const returnData = {
+          key: d.key,
+          values: myNewValues,
+          name: myHs2.values[0].values[0].name
+        };
+
+        return returnData;
+      });
+    return json;
+  })
+];
 
 const mapDispatchToProps = dispatch => ({
-  deleteCompany: id => {
-    dispatch(deleteCompany(id));
-  },
-  authenticateAndFetchCompany: () => {
-    dispatch(authenticateAndFetchCompany());
-  }
+
 });
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  updatedUser: state.authentication.updatedUser,
-  user: state.authentication.user,
-  loading: state.authentication.loading,
-  error: state.authentication.error
+  countries: state.data.countries,
+  products: state.data.products,
+  user: state.authentication.user
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCompany);
+export default connect(mapStateToProps, mapDispatchToProps)(EditCompanyProducts);
