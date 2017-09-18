@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
-import {deleteCompany} from "../actions/userActions";
-import {isAuthenticated, logout, updateUser} from "../actions/authenticationActions";
-import Sidebar from "../components/Sidebar";
-import "../components/Form.css";
-import api from "../api.js";
+import {deleteCompany} from "../../actions/userActions";
+import {isAuthenticated, logout, updateUser} from "../../actions/authenticationActions";
+import Sidebar from "../../components/Sidebar";
+import "../../components/Form.css";
+import api from "../../api.js";
 
 class UserData extends React.Component {
   constructor(props) {

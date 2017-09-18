@@ -7,9 +7,9 @@ import Sidebar from "../components/Sidebar";
 import "../components/Form.css";
 import "../components/Settings.css";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
-import UserData from "../components/UserData";
+import UserData from "./admin/UserData";
 import CompanyData from "../components/CompanyData";
-import ProductSelection from "../components/ProductSelection";
+// import ProductSelection from "../components/ProductSelection";
 import CountrySelection from "../components/CountrySelection";
 
 class Settings extends React.Component {
@@ -81,36 +81,8 @@ class Settings extends React.Component {
 
         </Sidebar>
         <div className="center-content form-wrapper">
-          <div className="toggle-wrapper">
-            <Link to="/settings/user">
-              <div className={path.includes("user")
-                ? "toggle selected"
-                : "toggle"}>User Data</div>
-            </Link>
-            <Link to="/settings/company">
-              <div className={path.includes("company")
-                ? "toggle selected"
-                : "toggle"}>Company Data</div>
-            </Link>
-            <Link to="/settings/product">
-              <div className={path.includes("product")
-                ? "toggle selected"
-                : "toggle"}>Product Selection</div>
-            </Link>
-            <Link to="/settings/country">
-              <div className={path.includes("country")
-                ? "toggle selected"
-                : "toggle"}>Country Selection</div>
-            </Link>
-          </div>
           <div className="form">
-            {path.includes("user")
-              ? <UserData/>
-              : path.includes("company")
-                ? <CompanyData user={user}/>
-                : path.includes("product")
-                  ? <ProductSelection/>
-                  : <CountrySelection user={user}/>}
+            <UserData />
           </div>
         </div>
       </div>
@@ -118,18 +90,20 @@ class Settings extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteCompany: id => {
-      dispatch(deleteCompany(id));
-    },
-    authenticateAndFetchCompany: () => {
-      dispatch(authenticateAndFetchCompany());
-    }
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  deleteCompany: id => {
+    dispatch(deleteCompany(id));
+  },
+  authenticateAndFetchCompany: () => {
+    dispatch(authenticateAndFetchCompany());
+  }
+});
 
-const mapStateToProps = state => {
-  return {updatedUser: state.authentication.updatedUser, user: state.authentication.user, loading: state.authentication.loading, error: state.authentication.error}
-}
+const mapStateToProps = state => ({
+  updatedUser: state.authentication.updatedUser,
+  user: state.authentication.user,
+  loading: state.authentication.loading,
+  error: state.authentication.error
+});
+
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -14,6 +14,35 @@ module.exports = function(app) {
     }).then(trades => res.json(trades));
   });
 
+  app.post("/api/trades/company/:companyId", (req, res) => {
+    const {companyId: company_id} = req.params;
+    const {body: trades} = req;
+
+    const tPromises = trades.map(t => {
+      // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
+      return db.Trade.findOrCreate({
+        where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id}
+      }).catch(err => console.log("err", err));
+    });
+
+    Promise.all(tPromises).then(tradeResponses => {
+      // console.log("\n\n\ntradeResponses\n")
+      // console.log(tradeResponses)
+      res.json({msg: "done."});
+    });
+  });
+
+  app.delete("/api/trades/company/:companyId/product/:productId", (req, res) => {
+    const {companyId: company_id, productId: product_id} = req.params;
+
+    db.Trade.destroy({
+      where: {company_id, product_id}
+    }).then(() =>
+      res.json({success: true})
+    );
+
+  });
+
   // TODO: rename to "/api/trades/byCountry/:countryId"
   app.get("/api/trades/country/:countryId", (req, res) => {
     const {countryId: country_id} = req.params;

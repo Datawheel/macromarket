@@ -1,76 +1,70 @@
 import React from "react";
 import "./TradeEdit.css";
-import {MenuItem} from "@blueprintjs/core";
-import {MultiSelect} from "@blueprintjs/labs";
+import {Button, Dialog, Intent} from "@blueprintjs/core";
+import CountrySelection from "./CountrySelection";
 
 class TradeEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      countries: []
+      confirmDeleteOpen: false
     };
   }
 
-  getSelectedCountryIndex = country => this.state.countries.findIndex(t => t.id === country.id);
-  isCountrySelected = country => this.state.countries.findIndex(c => c.id === country.id) > -1;
-
-  renderCountry = p => {
-    const {handleClick, isActive, item: country} = p;
-
-    return (
-      <MenuItem
-        iconName={this.isCountrySelected(country) ? "tick" : "blank"}
-        key={country.id}
-        label={country.id_3char ? country.id_3char.toUpperCase() : ""}
-        onClick={handleClick}
-        text={`${country.name}`}
-        shouldDismissPopover={false}
-      />
-    );
-  }
-
-  handleCountrySelect = country => {
-    if (!this.isCountrySelected(country)) {
-      this.selectCountry(country);
-    }
-    else {
-      this.deselectCountry(this.getSelectedCountryIndex(country));
-    }
-  }
-
-  selectCountry = country => {
-    console.log(country);
-    this.setState({countries: [...this.state.countries, country]});
-  }
-
-  deselectCountry = index => {
-    this.setState({countries: this.state.countries.filter((_country, i) => i !== index)});
+  toggleConfirmDelete = () => {
+    this.setState({confirmDeleteOpen: !this.state.confirmDeleteOpen})
   }
 
   render() {
-    const {countries: allCountries} = this.props;
-    const {countries} = this.state;
+    const {confirmDeleteOpen} = this.state;
+    const {countries: allCountries, trade, selectDestinations, selectOrigins, deleteProduct} = this.props;
+
     return (
       <div className="trade">
         <div className="trade-product">
-          013454
+          {`${trade.product.name} (${trade.product.id_hs92})`}
         </div>
         <div className="trade-dest">
-          USA, GBR
+          <CountrySelection
+            countries={trade.destinations}
+            allCountries={allCountries}
+            selectCountry={countries => selectDestinations(countries, trade.product.id)}
+          />
         </div>
         <div className="trade-origin">
-          <MultiSelect
-            items={allCountries}
-            itemRenderer={this.renderCountry}
-            noResults={<MenuItem disabled text="No results." />}
-            onItemSelect={this.handleCountrySelect}
-            tagInputProps={{tagProps: a => ({className: a.props.className})}}
-            tagRenderer={f => <span className={`color-${f.continent.toLowerCase().replace(" ", "-")}`}>{f.name}</span>}
-            selectedItems={countries}
+          <CountrySelection
+            countries={trade.origins}
+            allCountries={allCountries}
+            selectCountry={countries => selectOrigins(countries, trade.product.id)}
           />
         </div>
         <div className="trade-controls">
-          <span className="pt-icon-standard pt-icon-delete"></span>
+          <button type="button" className="pt-button pt-minimal" onClick={this.toggleConfirmDelete}>
+            <span className="pt-icon-standard pt-icon-delete"></span>
+            <Dialog
+              isOpen={confirmDeleteOpen}
+              onClose={this.toggleConfirmDelete}
+            >
+              <div className="pt-dialog-body">
+                {`Are you sure you want to remove '${trade.product.name}' and all of its associated origin and destination countries? This action cannot be undone.`}
+              </div>
+              <div className="pt-dialog-footer">
+                <div className="pt-dialog-footer-actions">
+                  <Button
+                    onClick={this.toggleConfirmDelete}
+                    text="Cancel" />
+                  <Button
+                    intent={Intent.DANGER}
+                    onClick={() => {
+                      deleteProduct(trade.product);
+                      this.toggleConfirmDelete();
+                    }}
+                    text="Delete"
+                  />
+                </div>
+              </div>
+            </Dialog>
+          </button>
         </div>
       </div>
     );

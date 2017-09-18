@@ -10,7 +10,7 @@ import AdminLogin from "pages/AdminLogin";
 import AdminSignup from "pages/AdminSignup";
 import Settings from "pages/Settings";
 import EditCompany from "pages/admin/EditCompany";
-import EditCompanyProducts from "pages/admin/EditCompanyProducts";
+import ProductSelection from "pages/admin/ProductSelection";
 import Inbox from "pages/Inbox";
 import Reset from "pages/Reset";
 import Activate from "pages/Activate";
@@ -123,7 +123,7 @@ export default function RouteCreate() {
       <Route path="/activate" component={Activate}/>
       <Route path="/settings/user" component={Settings}></Route>
       <Route path="/settings/company/:companyId" component={EditCompany}></Route>
-      <Route path="/settings/company/:companyId/products" component={EditCompanyProducts}></Route>
+      <Route path="/settings/company/:companyId/products" component={ProductSelection}></Route>
       <Route path="/settings/product" component={Settings}></Route>
       <Route path="/settings/country" component={Settings}></Route>
       <Route path="/inbox" component={Inbox}></Route>

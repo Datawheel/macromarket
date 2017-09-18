@@ -73,7 +73,7 @@ class EditCompany extends React.Component {
   }
 
   render() {
-    const {user, loading} = this.props;
+    const {company, user, loading} = this.props;
     const {address, city, country_id, description, name, region,
       company_email, phone_number, website} = this.state;
 
@@ -182,6 +182,10 @@ class EditCompany extends React.Component {
                 Save
                 <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
               </button>
+              <a href={`/settings/company/${company.id}/products`} className="pt-button pt-minimal" onClick={this.saveCompany}>
+                Edit Product List
+                <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+              </a>
             </div>
 
           </div>
