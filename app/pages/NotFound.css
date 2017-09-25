@@ -1,0 +1,19 @@
+html {
+  background-size: 100%;
+  & .error-404 {
+    margin: 0 auto 0 auto;
+    & .error-gif {
+      width: 500px;
+      height: 308px;
+      margin: 0 auto 0 auto;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-image: url("https://media3.giphy.com/static/img/error_pages/text/oops.gif");
+    }
+    & p {
+      color: white;
+      text-align: center;
+    }
+  }
+}
