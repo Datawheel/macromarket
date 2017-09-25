@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
-import "./Form.css";
+import "../pages/admin/Admin.css";
 import {Link} from "react-router";
 import {browserHistory} from "react-router";
 import Dropdown from "../components/Dropdown";

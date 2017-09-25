@@ -87,14 +87,14 @@ class NavBar extends React.Component {
           : null}>
           <ul className="nav-bar">
             <li className="logo nav-bar-element">
-              {this.props.location.pathname !== '/'
+              {this.props.location.pathname !== "/"
                 ? <Link to="/">
-                    <span>
-                      <div className="logo-wrapper"><img src="/images/icons/logos/macro-market.svg"/></div>
-                      <div className="logo-wrapper">
-                        <img className="market-logo" src="/images/icons/logos/black-market-logo.svg"/></div>
-                    </span>
-                  </Link>
+                  <span>
+                    <div className="logo-wrapper"><img src="/images/icons/logos/macro-market.svg"/></div>
+                    <div className="logo-wrapper">
+                      <img className="market-logo" src="/images/icons/logos/black-market-logo.svg"/></div>
+                  </span>
+                </Link>
                 : null}
             </li>
             <li className="nav-bar-element">
@@ -126,7 +126,7 @@ class NavBar extends React.Component {
                 </li>
               : user
                 ? <li className="nav-bar-element">
-                    <Link to="/settings/user">Settings</Link>
+                    <Link to="/settings/">Settings</Link>
                     <span>
                       <div onClick={this.handleDropdown} className="arrow-down"></div>
                     </span>
@@ -134,7 +134,7 @@ class NavBar extends React.Component {
                 : <li className="nav-bar-element">
                   <Link to="/login">Log In</Link>
                 </li>}
-                {this.props.location.pathname === '/'
+                {this.props.location.pathname === "/"
                   ? null
                   : <li className="nav-bar-element search-icon-wrapper">
                     <button onClick={this.openSearch.bind(this)}>

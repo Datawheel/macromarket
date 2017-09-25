@@ -5,7 +5,7 @@ import {uploadImage, deleteCompany} from "../actions/userActions";
 import {deleteTradeByProduct, createTrade} from "../actions/tradesActions";
 import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
 import Sidebar from "components/Sidebar";
-import "../components/Form.css";
+import "../components/Admin.css";
 
 class ProductSelection extends React.Component {
   constructor(props) {

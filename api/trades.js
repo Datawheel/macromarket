@@ -65,6 +65,21 @@ module.exports = function(app) {
     }).then(trades => res.json(trades));
   });
 
+  app.get("/api/trades/user/:uid", (req, res) => {
+    const {uid} = req.params;
+    db.Company.findAll({
+      where: {uid}
+    }).then(companies => {
+      const companyIds = companies.reduce((arr, c) => arr.concat([c.id]), []);
+      db.Trade.findAll({
+        where: {
+          company_id: companyIds
+        },
+        include: [db.Country, db.Product]
+      }).then(trades => res.json(trades));
+    });
+  });
+
   app.get("/api/trades/ca_country/:countryId", (req, res) => {
     const {countryId} = req.params;
     const config = {

@@ -1,5 +1,6 @@
 const http = require("https");
 const multer = require("multer");
+const path = require("path");
 const memoryStorage = multer.memoryStorage;
 const storage = require("@google-cloud/storage");
 
@@ -13,7 +14,8 @@ module.exports = function(app) {
   app.get("/api/companies/byUser/:uid", (req, res) => {
     const {uid} = req.params;
     db.Company.findAll({
-      where: {uid}
+      where: {uid},
+      include: [db.Country]
     }).then(companies => res.json(companies));
   });
 
@@ -37,7 +39,6 @@ module.exports = function(app) {
       if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
         return callback(new Error("Only image files are allowed!"));
       }
-
       return callback(null, true);
     }
   });
@@ -128,6 +129,24 @@ module.exports = function(app) {
     }
   });
 
+  app.delete("/api/companies/:id/:imgType", (req, res) => {
+    const {id, imgType} = req.params;
+    const {file: filename} = req.query;
+    const file = gcsBucket.file(filename);
+    // console.log("file!!!", file)
+    file.delete().then(() => {
+      db.Company.update(
+        {[`${imgType}_image`]: null},
+        {where: {id}}
+      ).then(() => {
+        res.json({
+          deleted: true,
+          query: req.query
+        });
+      });
+    });
+  });
+
   /** POST /:id - Uploads new image to google storage and updates DB
   REQUIRED:
     - id (req.params.id)
@@ -136,7 +155,8 @@ module.exports = function(app) {
     /api/companies/1/image?imgType=profile|cover
   */
   const imgUpload = upload.single("image");
-  app.post("/:id/image", (req, res) => {
+  app.post("/api/companies/:id/:imgType", (req, res) => {
+    const {id, imgType} = req.params;
     imgUpload(req, res, err => {
       if (err) return res.json({error: err});
 
@@ -144,79 +164,53 @@ module.exports = function(app) {
         return res.json({error: "No file."});
       }
 
-      const id = req.params.id;
-      const imgType = req.query.type || "profile";
-
       // Create a new blob in the bucket and upload the file data.
-      const fileName = `company/${req.file.originalname}`;
-      const blob = gcsBucket.file(fileName);
+      const fname = path.parse(req.file.originalname).name.replace(/\W+/g, "-").toLowerCase();
+      const extension = path.parse(req.file.originalname).ext.toLowerCase();
+      const fileName = `company/company${id}-${fname}${extension}`;
+      const fileTest = gcsBucket.file(fileName);
 
-      // Make sure to set the contentType metadata for the browser to be able
-      // to render the image instead of downloading the file (default behavior)
-      const blobStream = blob.createWriteStream({
-        metadata: {
-          contentType: req.file.mimetype
-        }
-      });
+      fileTest.exists().then(data => {
+        const exists = data[0];
+        console.log("exists?", exists);
+        // res.json({});
 
-      // Set configuration for getting publicUrl
-      const today = new Date();
-      const tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-      const config = {
-        action: "read",
-        expires: tomorrow
-      };
+        const blob = gcsBucket.file(fileName);
 
-      blobStream.on("error", err => {
-        console.log("blobStream error\n\n");
-        console.log(err);
-        db.Search.update({image: fileName}, {
-          where: {
-            id: `company${id}`
+        // Make sure to set the contentType metadata for the browser to be able
+        // to render the image instead of downloading the file (default behavior)
+        const blobStream = blob.createWriteStream({
+          metadata: {
+            contentType: req.file.mimetype
           }
-        }).then(() => {
-          blob.getSignedUrl(config, (err, url) => {
-            if (err) {
-              console.error("Error receiving Signed URL", err);
-              res.json({error: err});
-            }
-            res.json({url});
+        });
+
+        blobStream.on("error", err => {
+          console.log("blobStream error\n\n");
+          console.log(err);
+        });
+
+        blobStream.on("finish", () => {
+          // The public URL can be used to directly access the file via HTTP.
+          const publicUrl = `https://storage.googleapis.com/${gcsBucket.name}/${blob.name}`;
+
+          // Make the image public to the web (since we'll be displaying it in browser)
+          blob.makePublic().then(() => {
+            db.Company.update(
+              {[`${imgType}_image`]: publicUrl},
+              {where: {id}}
+            ).then(() => {
+              res.json({
+                msg: `Success! Image uploaded to ${publicUrl}`,
+                file: publicUrl
+              });
+            });
           });
         });
+
+        blobStream.end(req.file.buffer);
       });
 
-      blobStream.on("finish", () => {
-        // // The public URL can be used to directly access the file via HTTP.
-        // const publicUrl = `https://storage.googleapis.com/${gcsBucket.name}/${blob.name}`;
-        //
-        // // Make the image public to the web (since we'll be displaying it in browser)
-        // blob.makePublic().then(() => {
-        //   res.status(200).send(`Success!\n Image uploaded to ${publicUrl}`);
-        // });
-        db.Company.update({
-          [`${imgType}_image`]: fileName
-        }, {
-          where: {id}
-        }).then(() =>
-
-          db.Search.update({image: fileName}, {
-            where: {
-              id: `company${id}`
-            }
-          }).then(() => {
-            blob.getSignedUrl(config, (err, url) => {
-              if (err) {
-                console.error("Error receiving Signed URL", err);
-                return;
-              }
-              res.json({url});
-            });
-          })
-
-        );
-      });
-
-      blobStream.end(req.file.buffer);
     });
 
   });
@@ -254,3 +248,6 @@ module.exports = function(app) {
         - delete any trades associated with this company
   */
 };
+
+// https://storage.googleapis.com/mm-company/company/company105-8926d9431f22bf965600ce6fe2598afbecbf33df_m.jpg
+// https://storage.googleapis.com/mm-company/company/company105-0d2daec2762e5a1bcdcb499ca8a69b41.jpg

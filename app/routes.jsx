@@ -6,14 +6,18 @@ import NotFound from "pages/NotFound";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
-import AdminLogin from "pages/AdminLogin";
-import AdminSignup from "pages/AdminSignup";
-import Settings from "pages/Settings";
+import Login from "pages/admin/Login";
+import Signup from "pages/admin/Signup";
+import Settings from "pages/admin/Settings";
+import SettingsSummary from "pages/admin/SettingsSummary";
+import CompanySummary from "pages/admin/CompanySummary";
 import EditCompany from "pages/admin/EditCompany";
-import ProductSelection from "pages/admin/ProductSelection";
+import EditProducts from "pages/admin/EditProducts";
+// import ChangePw from "pages/admin/ChangePw";
+// import EditCompany from "pages/admin/EditCompany";
 import Inbox from "pages/Inbox";
-import Reset from "pages/Reset";
-import Activate from "pages/Activate";
+// import Reset from "pages/admin/Reset";
+// import Activate from "pages/admin/Activate";
 
 function genRandId(path) {
   let candidates;
@@ -117,16 +121,24 @@ export default function RouteCreate() {
       <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId}/>
       <Route path="/company(/:companyWithId)" onEnter={checkForId} component={CompanyWithId}/>
       <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
-      <Route path="/login" component={AdminLogin}/>
-      <Route path="/reset" component={Reset}/>
-      <Route path="/signup" component={AdminSignup}/>
-      <Route path="/activate" component={Activate}/>
-      <Route path="/settings/user" component={Settings}></Route>
-      <Route path="/settings/company/:companyId" component={EditCompany}></Route>
-      <Route path="/settings/company/:companyId/products" component={ProductSelection}></Route>
-      <Route path="/settings/product" component={Settings}></Route>
-      <Route path="/settings/country" component={Settings}></Route>
+      <Route path="/login" component={Login}/>
+      <Route path="/signup" component={Signup}/>
+      <Route path="settings" component={Settings}>
+        <IndexRoute component={SettingsSummary}/>
+        <Route path="company/:companyId" component={CompanySummary}>
+          <IndexRoute component={EditCompany}/>
+          <Route path="products" component={EditProducts}></Route>
+        </Route>
+        {/*
+        <Route path="/settings/change-password" component={ChangePw}></Route>
+        <Route path="/settings/company/:companyId" component={EditCompany}></Route>
+        <Route path="/settings/company/:companyId/products" component={EditProducts}></Route>
+        <Route path="/settings/product" component={Settings}></Route>
+        <Route path="/settings/country" component={Settings}></Route>
+        */}
+      </Route>
       <Route path="/inbox" component={Inbox}></Route>
+      <Route path="*" exact={true} component={NotFound} />
     </Route>
   );
 }

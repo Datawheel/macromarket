@@ -1,17 +1,19 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, browserHistory} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
-import {isAuthenticated, logout, updateUser} from "../../actions/authenticationActions";
+import {isAuthenticated, updateUser} from "../../actions/authenticationActions";
 import Sidebar from "../../components/Sidebar";
-import "../../components/Form.css";
+import "./Admin.css";
 import api from "../../api.js";
+import CompanyCard from "./CompanyCard";
+import {nest} from "d3-collection";
 
 class UserData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       companies: [],
+      trades: [],
       password1: "",
       password2: "",
       error: "",
@@ -23,10 +25,26 @@ class UserData extends React.Component {
   componentWillMount() {
     this.props.clearUser();
     const {user} = this.props;
-    return api.get(`api/companies/byUser/${user.id}`)
-      .then(response => {
-        this.setState({companies: response.data});
-      })
+    api.get(`api/companies/byUser/${user.id}`)
+      .then(companiesResp => {
+        const companies = companiesResp.data;
+        api.get(`api/trades/user/${user.id}`)
+          .then(tradesResp => {
+            nest()
+              .key(d => d.company_id)
+              .key(d => d.product_id)
+              .entries(tradesResp.data)
+              .forEach(nestedTrades => {
+                const thisCompany = companies.find(c => c.id.toString() === nestedTrades.key);
+                thisCompany.trades = nestedTrades.values;
+                console.log("c!!!!")
+                console.log(thisCompany)
+              })
+            // console.log(companies)
+            // this.setState({trades: response.data});
+            this.setState({companies});
+          });
+      });
   }
 
   handleChange = e => {
@@ -69,8 +87,7 @@ class UserData extends React.Component {
 
   render() {
     const {updatedUser, user, loading, error} = this.props;
-    const {companies} = this.state;
-    console.log("companies:", companies)
+    const {companies, trades} = this.state;
 
     return (
       <div className={this.state.deleteVisible
@@ -94,51 +111,16 @@ class UserData extends React.Component {
           */}
           <div className="section-wrapper no-border listing">
             <h2>My Companies</h2>
-            {companies.map(company =>
-              <div key={company.id} className="companyListing">
-                <nav className="pt-navbar .modifier">
-                  <div className="pt-navbar-group pt-align-left">
-                    <div className="pt-navbar-heading">{company.name}</div>
-                  </div>
-                  <div className="pt-navbar-group pt-align-right">
-                    <a href={`/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-link"></a>
-                    <a href={`/settings/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-edit"></a>
-                    <span className="pt-navbar-divider"></span>
-                    <button className="pt-button pt-minimal pt-icon-delete"></button>
-                  </div>
-                </nav>
-              </div>
-            )}
+            <div className="company-cards">
+              {companies.map(company =>
+                <CompanyCard key={company.id} company={company} />
+              )}
+            </div>
           </div>
           <div className="section-wrapper listing">
             <div className="register-company">
               {!companies.length ? <p>You do not have a company registered.</p> : null}
               <a href="#" className="button button-next">Register a Company</a>
-            </div>
-          </div>
-          <div>
-            <b>Update Your Password</b>
-            <div className="input-wrapper">
-              <label>Old Password</label>
-              <input type="password" value={this.state.oldPassword} onChange={this.handleChange} name="oldPassword"/>
-            </div>
-            <div className="input-wrapper">
-              <label>New Password</label>
-              <input type="password" value={this.state.password1} onChange={this.handleChange} name="password1"/>
-            </div>
-            <div className="input-wrapper">
-              <label>Comfirm Password</label>
-              <input type="password" value={this.state.password2} onChange={this.handleChange} name="password2"/>
-            </div>
-            <div className="password error-wrapper">
-              {updatedUser
-                ? <p>New password saved!</p>
-                : <p>{this.props.error
-                  ? this.props.error
-                  : this.state.error}</p>}
-            </div>
-            <div className="button-wrapper">
-              <button className="button button-next" onClick={this.save}>Save</button>
             </div>
           </div>
         </div>

@@ -201,15 +201,15 @@ const countryUrl = `${url}/api/countries/<countryWithId>`;
 CountryWithId.preneed = [fetchData("country", countryUrl, res => res)];
 
 CountryWithId.need = [fetchData("countryData", "http://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
-    const response = res.data[0];
+  const response = res.data[0];
 
-    const importId = response.top_export_hs4.slice(2, response.length);
-    const exportId = response.top_import_hs4.slice(2, response.length);
-    response.import = importId;
-    response.export = exportId;
-    return response;
+  const importId = response.top_export_hs4.slice(2, response.length);
+  const exportId = response.top_import_hs4.slice(2, response.length);
+  response.import = importId;
+  response.export = exportId;
+  return response;
 
-  })];
+})];
 
 CountryWithId.postneed = [
   fetchData("importData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.import>/", res => res.data[0]),
