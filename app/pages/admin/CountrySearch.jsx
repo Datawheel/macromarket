@@ -35,8 +35,9 @@ class CountrySearch extends React.Component {
   }
 
   render() {
-    const {country, countries} = this.props;
+    let {countries} = this.props;
     const {selectedCountry} = this.state;
+    countries = countries.sort((a, b) => b.name - a.name);
 
     return <Suggest
       inputProps={{value: selectedCountry}}

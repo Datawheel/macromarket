@@ -8,10 +8,12 @@ import "./Settings.css";
 import {authenticateAndFetchCompany} from "../../actions/companyActions";
 // import UserData from "./UserData";
 
+const prettify = name =>
+  name.replace(/-/g, " ").replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
 const Breadcrumb = props => {
   const {params, routes} = props;
   let path = "";
-  console.log("routes!!!", routes)
   const cleanRoutes = routes
     .slice(1)
     .filter(r => r.path)
@@ -26,9 +28,10 @@ const Breadcrumb = props => {
 
       return {
         fullpath: pathComponents.join("/"),
-        path: r.path.split("/:")[0]
+        path: prettify(r.path.split("/:")[0])
       };
     });
+
   return (
     <ul className="pt-breadcrumbs">
       {cleanRoutes.map((r, i) =>

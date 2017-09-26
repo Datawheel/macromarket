@@ -9,9 +9,10 @@ class CompanySummary extends React.Component {
   }
 
   render() {
+    const {company} = this.props;
     return (
       <div>
-        <h2>My Companies</h2>
+        <h2>{company.name}</h2>
         {this.props.children}
       </div>
     );
@@ -19,7 +20,7 @@ class CompanySummary extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authentication.user
+  company: state.data.company
 });
 
 export default connect(mapStateToProps)(CompanySummary);

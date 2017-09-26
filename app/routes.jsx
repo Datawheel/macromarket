@@ -13,11 +13,8 @@ import SettingsSummary from "pages/admin/SettingsSummary";
 import CompanySummary from "pages/admin/CompanySummary";
 import EditCompany from "pages/admin/EditCompany";
 import EditProducts from "pages/admin/EditProducts";
-// import ChangePw from "pages/admin/ChangePw";
-// import EditCompany from "pages/admin/EditCompany";
+import ChangePw from "pages/admin/ChangePw";
 import Inbox from "pages/Inbox";
-// import Reset from "pages/admin/Reset";
-// import Activate from "pages/admin/Activate";
 
 function genRandId(path) {
   let candidates;
@@ -125,17 +122,11 @@ export default function RouteCreate() {
       <Route path="/signup" component={Signup}/>
       <Route path="settings" component={Settings}>
         <IndexRoute component={SettingsSummary}/>
+        <Route path="change-password" component={ChangePw}></Route>
         <Route path="company/:companyId" component={CompanySummary}>
           <IndexRoute component={EditCompany}/>
           <Route path="products" component={EditProducts}></Route>
         </Route>
-        {/*
-        <Route path="/settings/change-password" component={ChangePw}></Route>
-        <Route path="/settings/company/:companyId" component={EditCompany}></Route>
-        <Route path="/settings/company/:companyId/products" component={EditProducts}></Route>
-        <Route path="/settings/product" component={Settings}></Route>
-        <Route path="/settings/country" component={Settings}></Route>
-        */}
       </Route>
       <Route path="/inbox" component={Inbox}></Route>
       <Route path="*" exact={true} component={NotFound} />

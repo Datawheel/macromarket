@@ -15,13 +15,14 @@ class EditCompany extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: null,
       name: this.props.company.name,
       description: this.props.company.description,
       address: this.props.company.address || "",
       city: this.props.company.city || "",
       region: this.props.company.region || "",
       country_id: this.props.company.country_id || "",
-      company_email: this.props.company.company_email || "",
+      companyEmail: this.props.company.company_email || "",
       phone_number: this.props.company.phone_number || "",
       website: this.props.company.website || "",
       coverImage: this.props.company.cover_image,
@@ -44,6 +45,33 @@ class EditCompany extends React.Component {
     });
   };
 
+  _validateEmail = email => (/[^\s@]+@[^\s@]+\.[^\s@]+/).test(email);
+
+  _validateURL = url => {
+    const res = url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return Boolean(res);
+  }
+
+  validate = company => {
+    const errorNames = [];
+    if (company.company_email !== "" && !this._validateEmail(company.company_email)) {
+      errorNames.push("companyEmail");
+    }
+    if (company.website !== "" && !this._validateURL(company.website)) {
+      errorNames.push("website");
+    }
+    if (errorNames.length) {
+      this.setState({error: {names: errorNames}});
+      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
+      return false;
+    }
+    else {
+      this.setState({error: null});
+      return true;
+    }
+  }
+
   saveCompany = () => {
     const {id} = this.props.company;
     const company = {
@@ -53,27 +81,29 @@ class EditCompany extends React.Component {
       city: this.state.city,
       region: this.state.region,
       country_id: this.state.country_id,
-      company_email: this.state.company_email,
+      company_email: this.state.companyEmail,
       phone_number: this.state.phone_number,
       website: this.state.website,
       profile_image: this.state.profileImage,
       cover_image: this.state.coverImage
     };
-    if (this.state.newCompany) {
-      api.post("api/companies/", {...company}).then(companyResponse => {
-        const {id: newId} = companyResponse.data;
-        this.setState({newCompany: false});
-        const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-        toast.show({message: "New company created.", intent: Intent.SUCCESS});
-        browserHistory.push(`/settings/company/${newId}`);
-      });
-    }
-    else {
-      api.put(`api/companies/${id}`, {...company}).then(() => {
-        this.setState({newCompany: false});
-        const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-        toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
-      });
+    if (this.validate(company)) {
+      if (this.state.newCompany) {
+        api.post("api/companies/", {...company}).then(companyResponse => {
+          const {id: newId} = companyResponse.data;
+          this.setState({newCompany: false});
+          const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+          toast.show({message: "New company created.", intent: Intent.SUCCESS});
+          browserHistory.push(`/settings/company/${newId}`);
+        });
+      }
+      else {
+        api.put(`api/companies/${id}`, {...company}).then(() => {
+          this.setState({newCompany: false});
+          const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+          toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
+        });
+      }
     }
   }
 
@@ -154,8 +184,8 @@ class EditCompany extends React.Component {
 
   render() {
     const {company, user, loading} = this.props;
-    const {address, city, country_id, description, name, region,
-      company_email, phone_number, website, coverImage, profileImage} = this.state;
+    const {error, address, city, country_id, description, name, region,
+      companyEmail, phone_number, website, coverImage, profileImage} = this.state;
 
     const path = this.props.location.pathname;
     return (
@@ -184,17 +214,46 @@ class EditCompany extends React.Component {
           <label className="pt-label" htmlFor="example-form-group-input-a">
             <span className="pt-icon pt-icon-map-marker"></span> Address
           </label>
-          <div className="pt-input-group">
-            <input name="address" onChange={this.handleChange} value={address} type="text" className="pt-input" placeholder="Street" />
+
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-address-street">
+              Street
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <input id="input-address-street" name="address" onChange={this.handleChange} value={address} type="text" className="pt-input" placeholder="Street" />
+              </div>
+            </div>
           </div>
-          <div className="pt-input-group">
-            <input name="city" onChange={this.handleChange} value={city} type="text" className="pt-input" placeholder="City" />
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-address-city">
+              City
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <input id="input-address-city" name="city" onChange={this.handleChange} value={city} type="text" className="pt-input" placeholder="City" />
+              </div>
+            </div>
           </div>
-          <div className="pt-input-group">
-            <input name="region" onChange={this.handleChange} value={region} type="text" className="pt-input" placeholder="State / Provience / Region" />
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-address-region">
+              State/Province
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <input id="input-address-region" name="region" onChange={this.handleChange} value={region} type="text" className="pt-input" placeholder="State / Provience / Region" />
+              </div>
+            </div>
           </div>
-          <div className="pt-input-group">
-            <CountrySearch country={company.Country} countries={this.props.countries} selectCountry={this.selectCountry} />
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-address-country">
+              Country
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <CountrySearch country={company.Country} countries={this.props.countries} selectCountry={this.selectCountry} />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -202,17 +261,59 @@ class EditCompany extends React.Component {
           <label className="pt-label" htmlFor="example-form-group-input-a">
             <span className="pt-icon pt-icon-id-number"></span> Contact Info
           </label>
-          <div className="pt-input-group">
-            <input type="text" className="pt-input" placeholder="Contact Name" />
+
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-contact-name">
+              Contact Name
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <input id="input-contact-name" type="text" className="pt-input" placeholder="Contact Name" />
+              </div>
+            </div>
           </div>
-          <div className="pt-input-group">
-            <input name="company_email" onChange={this.handleChange} value={company_email} type="text" className="pt-input" placeholder="Email" />
+
+          <div
+            className={error && error.names.includes("companyEmail")
+              ? "pt-form-group pt-inline pt-intent-danger"
+              : "pt-form-group pt-inline"}
+          >
+            <label className="pt-label" htmlFor="input-contact-email">
+              Email
+            </label>
+            <div className="pt-form-content">
+              <div className={error && error.names.includes("companyEmail") ? "pt-input-group pt-intent-danger" : "pt-input-group"}>
+                <input id="input-contact-email" name="companyEmail" onChange={this.handleChange} value={companyEmail} type="text" className="pt-input" placeholder="john@sample.com" />
+              </div>
+              {error && error.names.includes("companyEmail") ? <div className="pt-form-helper-text">Email formatted incorrectly.</div> : null}
+            </div>
           </div>
-          <div className="pt-input-group">
-            <input name="phone_number" onChange={this.handleChange} value={phone_number} type="text" className="pt-input" placeholder="Phone" />
+
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-contact-phone">
+              Phone Number
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                <input id="input-contact-phone" name="phone_number" onChange={this.handleChange} value={phone_number} type="text" className="pt-input" />
+              </div>
+            </div>
           </div>
-          <div className="pt-input-group">
-            <input name="website" onChange={this.handleChange} value={website} type="text" className="pt-input" placeholder="Website" />
+
+          <div
+            className={error && error.names.includes("website")
+              ? "pt-form-group pt-inline pt-intent-danger"
+              : "pt-form-group pt-inline"}
+          >
+            <label className="pt-label" htmlFor="input-contact-website">
+              Website
+            </label>
+            <div className="pt-form-content">
+              <div className={error && error.names.includes("website") ? "pt-input-group pt-intent-danger" : "pt-input-group"}>
+                <input id="input-contact-website" name="website" onChange={this.handleChange} value={website} type="text" className="pt-input" placeholder="http://sample.com" />
+              </div>
+              {error && error.names.includes("website") ? <div className="pt-form-helper-text">Website formatted incorrectly.</div> : null}
+            </div>
           </div>
         </div>
 

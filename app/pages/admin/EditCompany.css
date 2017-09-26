@@ -10,3 +10,15 @@ header {
   display: flex;
   justify-content: space-between;
 }
+
+.pt-inline .pt-label {
+  min-width: 100px;
+}
+
+.pt-form-group .pt-form-group {
+  margin: 0;
+}
+
+.pt-form-group .pt-input-group input {
+  min-width: 200px;
+}
