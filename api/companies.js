@@ -46,8 +46,8 @@ module.exports = function(app) {
   app.get("/api/companies/:id", (req, res) => {
     const {id} = req.params;
     // const {id: uid} = req.user;
-    console.log("companyid:", id)
-    console.log("req.user:", req.user)
+    // console.log("companyid:", id)
+    // console.log("req.user:", req.user)
 
     if (id === "new") {
       res.json({})

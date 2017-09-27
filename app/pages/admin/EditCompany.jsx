@@ -17,7 +17,7 @@ class EditCompany extends React.Component {
     this.state = {
       error: null,
       name: this.props.company.name,
-      description: this.props.company.description,
+      description: this.props.company.description || "",
       address: this.props.company.address || "",
       city: this.props.company.city || "",
       region: this.props.company.region || "",
@@ -104,11 +104,12 @@ class EditCompany extends React.Component {
     if (this.validate(company)) {
       if (this.state.newCompany) {
         api.post("api/companies/", {...company}).then(companyResponse => {
-          const {id: newId} = companyResponse.data;
+          // const {id: newId} = companyResponse.data;
           this.setState({newCompany: false});
           const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
           toast.show({message: "New company created.", intent: Intent.SUCCESS});
-          browserHistory.push(`/settings/company/${newId}`);
+          // browserHistory.push(`/settings/company/${newId}`);
+          browserHistory.push("/settings/");
         });
       }
       else {
@@ -365,15 +366,11 @@ class EditCompany extends React.Component {
           <input ref={imgField => { this.coverImgField = imgField; }} onChange={this.uploadImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
         </div>
 
-        <div className="pt-form-group contact-info">
+        <div className="button-group">
           <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveCompany}>
             Save
             <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
           </button>
-          <a href={`/settings/company/${company.id}/products`} className="pt-button pt-minimal" onClick={this.saveCompany}>
-            Edit Product List
-            <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
-          </a>
         </div>
 
       </div>

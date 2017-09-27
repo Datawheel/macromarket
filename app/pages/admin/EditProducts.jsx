@@ -52,6 +52,8 @@ class EditProducts extends React.Component {
     console.log("// END SAVING TRADES:");
 
     api.post(`/api/trades/company/${companyId}`, tradesForServer).then(tradesResponse => {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       console.log(tradesResponse.data);
       // const {id: newId} = companyResponse.data;
       // this.setState({newCompany: false});
