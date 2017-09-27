@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {deleteCompany} from "../../actions/userActions";
-import Sidebar from "../../components/Sidebar";
+import {Link} from "react-router";
 import "./Admin.css";
 import "./Settings.css";
 import {authenticateAndFetchCompany} from "../../actions/companyActions";
@@ -41,15 +40,16 @@ class SettingsSummary extends React.Component {
   render() {
     const {companies} = this.state;
     return (
-      <div>
-        <div className="section-wrapper no-border listing">
-          <h2>My Companies</h2>
-          <div className="company-cards">
-            {companies.map(company =>
-              <CompanyCard key={company.id} company={company} />
-            )}
-          </div>
+      <div className="section-wrapper no-border listing">
+        <h2>My Companies</h2>
+        <div className="company-cards">
+          {companies.map(company =>
+            <CompanyCard key={company.id} company={company} />
+          )}
         </div>
+        <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus">
+          New Company
+        </Link>
       </div>
     );
   }

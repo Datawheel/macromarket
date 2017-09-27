@@ -31,6 +31,20 @@ class EditCompany extends React.Component {
     };
   }
 
+  // componentWillReceiveProps() {
+  //   const {company} = this.props;
+  //   if (!company) {
+  //     browserHistory.push("/settings/");
+  //   }
+  // }
+  //
+  // componentWillMount() {
+  //   const {company} = this.props;
+  //   if (!company) {
+  //     browserHistory.push("/settings/");
+  //   }
+  // }
+
   componentDidMount() {
     const {companyId} = this.props.params;
     this.setState({newCompany: companyId === "new"});
@@ -317,7 +331,7 @@ class EditCompany extends React.Component {
           </div>
         </div>
 
-        <div className="pt-form-group contact-info">
+        <div className="img-container">
           <header>
             <label className="pt-label" htmlFor="example-form-group-input-a">
               <span className="pt-icon pt-icon-media"></span> Profile Image
@@ -325,7 +339,6 @@ class EditCompany extends React.Component {
             {profileImage
               ? <div className="pt-button-group pt-minimal">
                 <button className="pt-button pt-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
-                <button className="pt-button pt-icon-refresh" tabIndex="0" role="button" onClick={() => this.profileImgField.click()}>Replace</button>
               </div>
               : null}
           </header>
@@ -335,7 +348,7 @@ class EditCompany extends React.Component {
           <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.uploadImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
         </div>
 
-        <div className="pt-form-group contact-info">
+        <div className="img-container">
           <header>
             <label className="pt-label" htmlFor="example-form-group-input-a">
               <span className="pt-icon pt-icon-media"></span> Cover Image
@@ -343,7 +356,6 @@ class EditCompany extends React.Component {
             {coverImage
               ? <div className="pt-button-group pt-minimal">
                 <button className="pt-button pt-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "coverImage")}>Remove</button>
-                <button className="pt-button pt-icon-refresh" tabIndex="0" role="button" onClick={() => this.coverImgField.click()}>Replace</button>
               </div>
               : null}
           </header>

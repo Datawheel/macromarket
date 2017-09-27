@@ -81,10 +81,10 @@ class Settings extends React.Component {
             {user.email}
           </p>
 
-          <button type="button" className="pt-button">
+          <Link to="/settings/change-password" role="button" className="pt-button pt-icon-lock">
             Change Password
             <span className="pt-icon-standard pt-icon-key pt-align-right"></span>
-          </button>
+          </Link>
 
         </Sidebar>
         <div className="center-content form-wrapper">
