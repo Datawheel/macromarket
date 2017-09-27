@@ -50,7 +50,7 @@ module.exports = function(app) {
     // console.log("req.user:", req.user)
 
     if (id === "new") {
-      res.json({})
+      res.json({});
     }
     else if (id.slice(0, 3) === "ca_") {
       const option = {
