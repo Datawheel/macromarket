@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router";
 import "./Admin.css";
 import "./Settings.css";
-import {authenticateAndFetchCompany} from "../../actions/companyActions";
+import {isAuthenticated} from "datawheel-canon";
 import api from "../../api.js";
 import CompanyCard from "./CompanyCard";
 import {nest} from "d3-collection";
@@ -17,8 +17,12 @@ class SettingsSummary extends React.Component {
     };
   }
 
+  // componentDidMount() {
+  //   this.props.isAuthenticated();
+  // }
+
   componentWillMount() {
-    const {user} = this.props;
+    const {user} = this.props.auth;
     api.get(`api/companies/byUser/${user.id}`)
       .then(companiesResp => {
         const companies = companiesResp.data;
@@ -56,7 +60,13 @@ class SettingsSummary extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authentication.user
+  auth: state.auth
 });
 
-export default connect(mapStateToProps)(SettingsSummary);
+const mapDispatchToProps = dispatch => ({
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsSummary);

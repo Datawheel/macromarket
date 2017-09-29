@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 const CountryList = ({products, tradeFlow}) => {
   products = products
@@ -17,58 +18,33 @@ const CountryList = ({products, tradeFlow}) => {
 
 const CompanyCard = props => {
   const {company} = props;
+
   return (
-    <div className="pt-card pt-elevation-0 pt-interactive">
-      <h3>{company.name}<a href={`/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-link"></a></h3>
-      <a href={`/settings/company/${company.id}`} role="button" className="pt-button pt-minimal pt-icon-edit"></a>
-      {company.description ? <p>{company.description}</p> : null}
-      <div>
-        <address className="vcard">
-          <span className="adr">
-            {company.address ? <span className="street-address">{company.address}</span> : null}
-            {company.city ? <span className="locality">{company.city}</span> : null }
-            {company.region ? <abbr className="region">{company.region}</abbr> : null }
-            {company.Country ? <span className="country-name">{company.Country ? company.Country.name : ""}</span> : null}
-          </span>
-        </address>
+    <div className="mm-card">
+      <div className="image">
+        <img src={company.cover_image || "https://semantic-ui.com/images/wireframe/image.png"} />
       </div>
-      <h4>
-        Products
-        <a href={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-minimal pt-icon-edit"></a>
-      </h4>
-      { company.trades
-        ? <div>
-          <table className="pt-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Exported to:</th>
-                <th>Imported from:</th>
-              </tr>
-            </thead>
-            <tbody>
-              {company.trades.map(product =>
-                <tr key={product.key}>
-                  <td>
-                    {product.values[0].Product.name}
-                  </td>
-                  <td>
-                    <CountryList products={product.values} tradeFlow="exports" />
-                  </td>
-                  <td>
-                    <CountryList products={product.values} tradeFlow="imports" />
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+
+      <div className="content">
+        <a href={`/settings/company/${company.id}`} className="header">{company.name}</a>
+        <div className="meta">
+          <span className="date">
+            Added {moment(company.createdAt).format("MMMM Do YYYY")}
+          </span>
         </div>
-        : <a href={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-minimal pt-icon-add">
-          No products added for this company yet, add them now
+        <div className="description">
+          {company.description}
+        </div>
+      </div>
+
+      <div className="extra content">
+        <a href={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
+          { company.trades ? <span>{company.trades.length} Products</span> : <span>Add products</span>}
         </a>
-      }
+      </div>
     </div>
   );
 };
+// pt-icon-build
 
 export default CompanyCard;

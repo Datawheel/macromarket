@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import Sidebar from "../../components/Sidebar";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
@@ -17,6 +16,15 @@ class EditProducts extends React.Component {
       newProduct: false,
       unsavedTrades: false
     };
+  }
+
+  componentWillMount() {
+    const {company, auth} = this.props;
+    if (auth.user && company.uid !== auth.user.id) {
+      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      toast.show({message: "You do not have permission to view this page.", intent: Intent.DANGER});
+      browserHistory.push("/login");
+    }
   }
 
   componentDidMount() {
@@ -110,7 +118,6 @@ class EditProducts extends React.Component {
   toggleProductMenu = isOpen => this.setState({isOpen});
 
   appendProductRow = () => {
-    // console.log(this.state.trades);
     if (!this.state.newProduct) {
       this.setState({
         unsavedTrades: true,
@@ -121,21 +128,12 @@ class EditProducts extends React.Component {
   }
 
   render() {
-    const {user, loading, products, countries} = this.props;
+    console.log(this.props)
+    const {auth, products, countries} = this.props;
+    const {user, loading} = auth;
     const {newProduct, trades, unsavedTrades} = this.state;
-
-    if (loading || !user) {
-      return (
-        <div className="settings">
-          <Sidebar></Sidebar>
-          <div className="center-content form-wrapper">
-            <div className="form"></div>
-          </div>
-        </div>
-      );
-    }
-
     const path = this.props.location.pathname;
+
     return (
       <div>
 
@@ -219,7 +217,7 @@ const mapStateToProps = state => ({
   countries: state.data.countries,
   products: state.data.products,
   trades: state.data.trades,
-  user: state.authentication.user
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(EditProducts);

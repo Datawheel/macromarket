@@ -38,12 +38,14 @@ class EditCompany extends React.Component {
   //   }
   // }
   //
-  // componentWillMount() {
-  //   const {company} = this.props;
-  //   if (!company) {
-  //     browserHistory.push("/settings/");
-  //   }
-  // }
+  componentWillMount() {
+    const {company, auth} = this.props;
+    if (auth.user && company.uid !== auth.user.id) {
+      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      toast.show({message: "You do not have permission to view this page.", intent: Intent.DANGER});
+      browserHistory.push("/login");
+    }
+  }
 
   componentDidMount() {
     const {companyId} = this.props.params;
@@ -117,6 +119,7 @@ class EditCompany extends React.Component {
           this.setState({newCompany: false});
           const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
           toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
+          browserHistory.push("/settings/");
         });
       }
     }
@@ -393,6 +396,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   company: state.data.company,
   countries: state.data.countries,
   updatedUser: state.authentication.updatedUser,

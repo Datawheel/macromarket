@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
+import {isAuthenticated} from "datawheel-canon";
 import {browserHistory} from "react-router";
 import {authenticateAndFetchCompany} from "../actions/companyActions";
 import {logout} from "../actions/authenticationActions";
@@ -20,15 +21,16 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.authenticateAndFetchCompany();
-    browserHistory.listen(location => {
-      this.setState({dropdownVisible: false})
-      this.props.authenticateAndFetchCompany();
-      if (this.props.searchActive) {
-        this.props.activateSearch(false);
-
-      }
-    });
+    this.props.isAuthenticated();
+    // this.props.authenticateAndFetchCompany();
+    // browserHistory.listen(location => {
+    //   this.setState({dropdownVisible: false})
+    //   this.props.authenticateAndFetchCompany();
+    //   if (this.props.searchActive) {
+    //     this.props.activateSearch(false);
+    //
+    //   }
+    // });
     // Hide dropdown block on click outside the block
     window.addEventListener("click", this.hideDropDown, false);
   }
@@ -79,7 +81,9 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {activateSearch, searchActive, loading, company, user} = this.props;
+    const {auth, activateSearch, searchActive, company} = this.props;
+    const {loading, user} = auth;
+
     return (
       <div>
         <div className={this.props.location.pathname === '/'
@@ -114,33 +118,33 @@ class NavBar extends React.Component {
             </li>
             {company
               ? <li ref="area" className="nav-bar-element company-name">
-                  <div className="profile-image-wrapper" style={{
-                    backgroundImage: `url(${company.profile_image})`
-                  }}></div>
-                  <Link to="/login">
-                    <span>{company.name}</span>
-                  </Link>
+                <div className="profile-image-wrapper" style={{
+                  backgroundImage: `url(${company.profile_image})`
+                }}></div>
+                <Link to="/login">
+                  <span>{company.name}</span>
+                </Link>
+                <span>
+                  <div onClick={this.handleDropdown} className="arrow-down"></div>
+                </span>
+              </li>
+              : user
+                ? <li className="nav-bar-element">
+                  <Link to="/settings/">Settings</Link>
                   <span>
                     <div onClick={this.handleDropdown} className="arrow-down"></div>
                   </span>
                 </li>
-              : user
-                ? <li className="nav-bar-element">
-                    <Link to="/settings/">Settings</Link>
-                    <span>
-                      <div onClick={this.handleDropdown} className="arrow-down"></div>
-                    </span>
-                  </li>
                 : <li className="nav-bar-element">
                   <Link to="/login">Log In</Link>
                 </li>}
-                {this.props.location.pathname === "/"
-                  ? null
-                  : <li className="nav-bar-element search-icon-wrapper">
-                    <button onClick={this.openSearch.bind(this)}>
-                      <img className="search-icon" src="/images/icons/icon-search-black.svg"/>
-                    </button>
-                  </li>}
+            {this.props.location.pathname === "/"
+              ? null
+              : <li className="nav-bar-element search-icon-wrapper">
+                <button onClick={this.openSearch.bind(this)}>
+                  <img className="search-icon" src="/images/icons/icon-search-black.svg"/>
+                </button>
+              </li>}
           </ul>
         </div>
         {this.state.dropdownVisible
@@ -152,25 +156,16 @@ class NavBar extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    activateSearch: activeState => {
-      dispatch({type: "ACTIVATE_SEARCH", data: activeState});
-    },
-    setSearch: query => {
-      dispatch(setSearch(query));
-    },
-    authenticateAndFetchCompany: token => {
-      dispatch(authenticateAndFetchCompany(token));
-    },
-    logout: () => {
-      dispatch(logout())
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  activateSearch: activeState => {
+    dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  },
+  setSearch: query => {
+    dispatch(setSearch(query));
+  },
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
+  }
+});
 
-const mapStateToProps = state => {
-  return {user: state.authentication.user, searchActive: state.searchActive, token: state.authentication.token, company: state.companyProfile.authCompany, loading: state.companyProfile.loading};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(state => ({auth: state.auth}), mapDispatchToProps)(NavBar);

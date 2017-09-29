@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
+import {isAuthenticated} from "datawheel-canon";
 import {deleteCompany} from "../../actions/userActions";
 import Sidebar from "../../components/Sidebar";
 import "./Admin.css";
 import "./Settings.css";
-import {authenticateAndFetchCompany} from "../../actions/companyActions";
 // import UserData from "./UserData";
 
 const prettify = name =>
@@ -50,13 +50,15 @@ class Settings extends React.Component {
     super(props);
   }
 
+  // componentDidMount() {
+  //   this.props.isAuthenticated();
+  // }
+
   componentDidUpdate() {
-    // if (!this.props.user && !this.props.loading) {
-    //   browserHistory.push("/login");
-    // }
-    // if (this.props.deleted) {
-    //   browserHistory.push("/login");
-    // }
+    const {user, loading} = this.props.auth;
+    if (!user && !loading) {
+      browserHistory.push("/login");
+    }
   }
 
   deleteCompany = () => {
@@ -64,10 +66,11 @@ class Settings extends React.Component {
   }
 
   render() {
-    const {user, loading, location, params, routes} = this.props;
+    const {loading, user} = this.props.auth;
+    const {location, params, routes} = this.props;
     const {pathname: path} = location;
 
-    if (!user || loading) {
+    if (loading || !user) {
       return <div>loading...</div>;
     }
 
@@ -99,19 +102,32 @@ class Settings extends React.Component {
   }
 }
 
+// const mapDispatchToProps = dispatch => ({
+//   deleteCompany: id => {
+//     dispatch(deleteCompany(id));
+//   },
+//   authenticateAndFetchCompany: () => {
+//     dispatch(authenticateAndFetchCompany());
+//   }
+// });
+// const mapDispatchToProps = dispatch => ({
+//   isAuthenticated: () => {
+//     dispatch(isAuthenticated());
+//   }
+// });
+//
+// const mapStateToProps = state => ({
+//   user: state.authentication.user,
+//   loading: state.authentication.loading,
+//   error: state.authentication.error
+// });
+//
+// export default connect(mapStateToProps)(Settings);
+
 const mapDispatchToProps = dispatch => ({
-  deleteCompany: id => {
-    dispatch(deleteCompany(id));
-  },
-  authenticateAndFetchCompany: () => {
-    dispatch(authenticateAndFetchCompany());
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
   }
 });
 
-const mapStateToProps = state => ({
-  user: state.authentication.user,
-  loading: state.authentication.loading,
-  error: state.authentication.error
-});
-
-export default connect(mapStateToProps)(Settings);
+export default connect(state => ({auth: state.auth}), mapDispatchToProps)(Settings);

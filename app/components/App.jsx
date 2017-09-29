@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, browserHistory} from "react-router";
+import {isAuthenticated} from "datawheel-canon";
 import NavBar from "./NavBar.jsx";
 import Search from "./Search.jsx";
 import Footer from "./Footer.jsx";
 import "./App.css";
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,9 +15,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Helmet title="About" meta={[{
-            property: 'viewport',
-            content: 'width=device-width, initial-scale=1.0'
+        <Helmet title="About" meta={[
+          {
+            property: "viewport",
+            content: "width=device-width, initial-scale=1.0"
           }
         ]}/>
         <NavBar location={this.props.location}></NavBar>
@@ -30,12 +31,15 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({searchActive: state.searchActive});
+// const mapStateToProps = state => ({searchActive: state.searchActive});
 
 const mapDispatchToProps = dispatch => ({
-  activateSearch: activeState => {
-    dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  // activateSearch: activeState => {
+  //   dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  // },
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(state => ({auth: state.auth}), mapDispatchToProps)(App);

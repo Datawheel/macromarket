@@ -1,54 +1,25 @@
-import api from "../../api.js";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import {authenticate, login} from "../../actions/authenticationActions";
-import {Login as CanonLogin} from "datawheel-canon";
+import {isAuthenticated, Login as CanonLogin} from "datawheel-canon";
 import Sidebar from "components/Sidebar";
 import "./Admin.css";
 import "./Settings.css";
 
 class Login extends React.Component {
-  constructor () {
-    super();
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
-
   componentDidMount() {
-    const {user} = this.props;
-
-    if (user) {
-      browserHistory.push("/settings/user");
-    }
+    this.props.isAuthenticated();
   }
 
   componentDidUpdate() {
-    const {user} = this.props;
-    if (user) {
-      browserHistory.push("/settings/user");
+    const {loading, user} = this.props.auth;
+    if (user && !loading) {
+      browserHistory.push("/settings");
     }
   }
 
-  handlePasswordChange = event => {
-    this.setState({password: event.target.value});
-  }
-
-  handleEmailChange = event => {
-    this.setState({email: event.target.value});
-  }
-
-  logIn = e => {
-    e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
-  }
-
   render() {
-    const {loading, error, user} = this.props;
-
     return (
       <div className="login">
         <div className="inner-content-wrapper">
@@ -67,24 +38,10 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.authentication.user,
-    error: state.authentication.error || null,
-    loading: state.authentication.loading,
-    token: state.authentication.token
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
+  }
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    isAuthenticated: () => {
-      dispatch(isAuthenticated());
-    },
-    login: (email, password) => {
-      dispatch(login(email, password));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(state => ({auth: state.auth}), mapDispatchToProps)(Login);
