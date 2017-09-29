@@ -14,7 +14,7 @@ class CountrySelection extends React.Component {
   getSelectedCountryIndex = country => this.state.countries.findIndex(t => t.id === country.id);
   isCountrySelected = country => this.state.countries.findIndex(c => c.id === country.id) > -1;
 
-  renderCountry = ({handleClick, isActive, item: country}) => 
+  renderCountry = ({handleClick, isActive, item: country}) =>
     <MenuItem
       className={isActive ? Classes.ACTIVE : ""}
       iconName={this.isCountrySelected(country) ? "tick" : "blank"}
@@ -69,6 +69,8 @@ class CountrySelection extends React.Component {
         tagInputProps={{tagProps: a => ({className: a.props.className}), onRemove: this.deleteTag}}
         tagRenderer={this.renderTag}
         selectedItems={countries}
+        resetOnClose={true}
+        resetOnSelect={true}
       />
     );
   }

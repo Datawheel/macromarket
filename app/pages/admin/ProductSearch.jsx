@@ -35,23 +35,22 @@ class ProductSearch extends React.Component {
 
   render() {
     const {products} = this.props;
+    console.log("pRoducts", products)
 
     return (
-      <div className="pt-form-group">
-        <label className="pt-label" htmlFor="example-form-group-input-a">
-          <span className="pt-icon pt-icon-insert"></span> Search for a product
-        </label>
-        <div className="pt-form-content">
-          <Suggest
-            inputValueRenderer={() => ""}
-            itemRenderer={this.renderProduct}
-            itemListPredicate={this.filterProducts}
-            items={products.filter(p => p.id.length === 8)}
-            onItemSelect={this.selectProduct}
-            resetOnSelect={true}
-            resetOnClose={true}
-          />
-        </div>
+      <div>
+        <Suggest
+          inputProps={{placeholder: "Search for a product..."}}
+          inputValueRenderer={() => ""}
+          itemRenderer={this.renderProduct}
+          itemListPredicate={this.filterProducts}
+          items={products.filter(p => p.id.length === 8)}
+          noResults={"Please enter 3 or more characters."}
+          onItemSelect={this.selectProduct}
+          openOnKeyDown={false}
+          resetOnSelect={true}
+          resetOnClose={true}
+        />
       </div>
     );
   }

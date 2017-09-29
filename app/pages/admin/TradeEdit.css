@@ -1,4 +1,15 @@
 .trade {
-  display: flex;
-  justify-content: space-between;
+
+  & .pt-input.pt-active,
+  & .pt-input {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    & input {
+      border: none;
+    }
+  }
+  /*display: flex;
+  justify-content: space-between;*/
 }

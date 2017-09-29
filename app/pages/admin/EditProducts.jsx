@@ -1,26 +1,26 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, browserHistory} from "react-router";
+import {browserHistory} from "react-router";
 import Sidebar from "../../components/Sidebar";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
-import ProductBrowse from "./ProductBrowse";
 import TradeEdit from "./TradeEdit";
-import ProductSearch from "./ProductSearch";
 
 class EditProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trades: []
+      trades: [],
+      newProduct: false,
+      unsavedTrades: false
     };
   }
 
   componentDidMount() {
-    console.log("TrAdes!", this.props.trades)
+    // console.log("TrAdes!", this.props.trades)
     // const {companyId} = this.props.params;
     this.setState({trades: this.props.trades});
   }
@@ -35,58 +35,41 @@ class EditProducts extends React.Component {
   };
 
   saveTrades = () => {
+    const {newProduct, trades, unsavedTrades} = this.state;
     const {companyId} = this.props.params;
-    const {trades} = this.state;
     const tradesForServer = [];
-    console.log("SAVING TRADES:");
+    if (!unsavedTrades || newProduct) {
+      return;
+    }
     trades.forEach(t => {
+      if (!t.origins.length && !t.destinations.length) {
+        tradesForServer.push({product: t.product, tradeFlow: "exports", country: null});
+      }
       t.origins.forEach(o => {
         tradesForServer.push({product: t.product, tradeFlow: "imports", country: o});
-      })
+      });
       t.destinations.forEach(d => {
         tradesForServer.push({product: t.product, tradeFlow: "exports", country: d});
-      })
-    })
-    console.log(tradesForServer);
-    console.log("///////////////");
-    console.log("// END SAVING TRADES:");
+      });
+    });
 
     api.post(`/api/trades/company/${companyId}`, tradesForServer).then(tradesResponse => {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       console.log(tradesResponse.data);
-      // const {id: newId} = companyResponse.data;
-      // this.setState({newCompany: false});
-      // const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-      // toast.show({message: "New company created.", intent: Intent.SUCCESS});
-      // browserHistory.push(`/settings/company/${newId}`);
+      this.setState({unsavedTrades: false});
     });
-    // const {id} = this.props.company;
-    // if (this.state.newCompany) {
-    //   api.post("api/companies/", {...company}).then(companyResponse => {
-    //     const {id: newId} = companyResponse.data;
-    //     this.setState({newCompany: false});
-    //     const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-    //     toast.show({message: "New company created.", intent: Intent.SUCCESS});
-    //     browserHistory.push(`/settings/company/${newId}`);
-    //   });
-    // }
-    // else {
-    //   api.put(`api/companies/${id}`, {...company}).then(() => {
-    //     this.setState({newCompany: false});
-    //     const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-    //     toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
-    //   });
-    // }
   }
 
   addProduct = product => {
+    const trades = this.state.trades.filter(t => t.product);
     const trade = {
       product,
       origins: [],
       destinations: []
     };
-    this.setState({trades: this.state.trades.concat([trade])});
+    this.setState({newProduct: false, trades: trades.concat([trade])});
+    // this.saveTrades(trades.concat([trade]));
   }
 
   addOrigins = (origins, productId) => {
@@ -124,9 +107,22 @@ class EditProducts extends React.Component {
     });
   }
 
+  toggleProductMenu = isOpen => this.setState({isOpen});
+
+  appendProductRow = () => {
+    // console.log(this.state.trades);
+    if (!this.state.newProduct) {
+      this.setState({
+        unsavedTrades: true,
+        newProduct: true,
+        trades: this.state.trades.concat([{product: null, origins: [], destinations: []}])
+      });
+    }
+  }
+
   render() {
     const {user, loading, products, countries} = this.props;
-    const {trades} = this.state;
+    const {newProduct, trades, unsavedTrades} = this.state;
 
     if (loading || !user) {
       return (
@@ -143,44 +139,51 @@ class EditProducts extends React.Component {
     return (
       <div>
 
-        <ProductSearch products={products} selectProduct={this.addProduct} />
-
+        {/*
         <div className="pt-form-group">
           <p>...or browse and select from the list</p>
           <ProductBrowse products={products} selectProduct={this.addProduct} />
         </div>
+        */}
 
-        <div className="trades">
-          <div className="trade">
-            <div className="trade-product">
-              <strong>Product</strong>
-            </div>
-            <div className="trade-dest">
-              <strong>Export Destinations</strong>
-            </div>
-            <div className="trade-origin">
-              <strong>Import Origins</strong>
-            </div>
-            <div className="trade-controls">
-              &nbsp;
-            </div>
-          </div>
-          {trades.map((trade, i) =>
-            <TradeEdit
-              key={i}
-              trade={trade}
-              countries={countries}
-              selectDestinations={this.addDestinations}
-              selectOrigins={this.addOrigins}
-              deleteProduct={this.deleteProduct}
-            />
-          )}
+        <table className="pt-table pt-bordered trades">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Export Destinations</th>
+              <th>Import Origins</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trades.map((trade, i) =>
+              <TradeEdit
+                key={i}
+                trade={trade}
+                countries={countries}
+                selectProduct={this.addProduct}
+                selectDestinations={this.addDestinations}
+                selectOrigins={this.addOrigins}
+                deleteProduct={this.deleteProduct}
+              />
+            )}
+          </tbody>
+        </table>
+
+        <div>
+          <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>
+            <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
+            Add product
+          </button>
+          {/* <ProductPicker isOpen={isOpen} toggleProductMenu={this.toggleProductMenu} /> */}
         </div>
 
-        <div className="pt-form-group contact-info">
-          <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveTrades}>
+        <hr />
+
+        <div>
+          <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
             Save
-            <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+            <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
           </button>
         </div>
 
@@ -199,20 +202,17 @@ EditProducts.preneed = [
       const prodRow = trades.find(tt => tt.product.id === t.product_id);
       const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
       const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
-      if (prodRow) {
-        prodRow[tKey].push(t.Country);
+      const country = t.Country ? [t.Country] : [];
+      if (prodRow && country) {
+        prodRow[tKey] = prodRow[tKey].concat(country);
       }
       else {
-        trades.push({product: t.Product, [tKey]: [t.Country], [tOtherKey]: []});
+        trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
       }
     });
     return trades;
   })
 ];
-
-const mapDispatchToProps = dispatch => ({
-
-});
 
 const mapStateToProps = state => ({
   company: state.data.company,
@@ -222,4 +222,4 @@ const mapStateToProps = state => ({
   user: state.authentication.user
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProducts);
+export default connect(mapStateToProps)(EditProducts);

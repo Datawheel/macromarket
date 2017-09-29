@@ -20,8 +20,9 @@ module.exports = function(app) {
 
     const tPromises = trades.map(t => {
       // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
+      const country_id = t.country ? t.country.id : null;
       return db.Trade.findOrCreate({
-        where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id}
+        where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id}
       }).catch(err => console.log("err", err));
     });
 
