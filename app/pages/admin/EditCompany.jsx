@@ -16,34 +16,28 @@ class EditCompany extends React.Component {
     super(props);
     this.state = {
       error: null,
-      name: this.props.company.name,
-      description: this.props.company.description || "",
-      address: this.props.company.address || "",
-      city: this.props.company.city || "",
-      region: this.props.company.region || "",
-      country_id: this.props.company.country_id || "",
-      companyEmail: this.props.company.company_email || "",
-      phone_number: this.props.company.phone_number || "",
-      website: this.props.company.website || "",
-      coverImage: this.props.company.cover_image,
-      profileImage: this.props.company.profile_image,
       newCompany: false
     };
   }
 
-  // componentWillReceiveProps() {
-  //   const {company} = this.props;
-  //   if (!company) {
-  //     browserHistory.push("/settings/");
-  //   }
-  // }
-  //
-  componentWillMount() {
-    const {company, auth} = this.props;
-    if (auth.user && company.uid !== auth.user.id) {
-      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
-      toast.show({message: "You do not have permission to view this page.", intent: Intent.DANGER});
-      browserHistory.push("/login");
+  componentWillReceiveProps(nextProps) {
+    const {company: prevCompany} = this.props;
+    const {company} = nextProps;
+    if (prevCompany.id !== company.id) {
+      this.setState({
+        name: company.name,
+        description: company.description || "",
+        address: company.address || "",
+        city: company.city || "",
+        region: company.region || "",
+        country_id: company.country_id || "",
+        companyEmail: company.company_email || "",
+        phone_number: company.phone_number || "",
+        website: company.website || "",
+        coverImage: company.cover_image,
+        profileImage: company.profile_image,
+        newCompany: false
+      });
     }
   }
 
@@ -201,11 +195,9 @@ class EditCompany extends React.Component {
   }
 
   render() {
-    const {company, user, loading} = this.props;
+    const {company, countries} = this.props;
     const {error, address, city, country_id, description, name, region,
       companyEmail, phone_number, website, coverImage, profileImage} = this.state;
-
-    const path = this.props.location.pathname;
     return (
       <div>
 
@@ -269,7 +261,10 @@ class EditCompany extends React.Component {
             </label>
             <div className="pt-form-content">
               <div className="pt-input-group">
-                <CountrySearch country={company.Country} countries={this.props.countries} selectCountry={this.selectCountry} />
+                { countries
+                  ? <CountrySearch country={company.Country} countries={countries} selectCountry={this.selectCountry} />
+                  : <span>Loading country list...</span>
+                }
               </div>
             </div>
           </div>

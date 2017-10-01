@@ -15,7 +15,7 @@ class CompanySummary extends React.Component {
   componentWillReceiveProps = nextProps => {
     const {auth} = this.props;
     const {company} = nextProps;
-    if (company) {
+    if (company.uid) {
       if (auth.user && company.uid !== auth.user.id) {
         const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
         toast.show({message: "You do not have permission to view this page.", intent: Intent.DANGER});

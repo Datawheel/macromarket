@@ -39,14 +39,14 @@ class SettingsSummary extends React.Component {
   render() {
     const {companies} = this.state;
     return (
-      <div className="section-wrapper no-border listing">
+      <div>
         <h2>My Companies</h2>
         <div className="company-cards">
           {companies.map(company =>
             <CompanyCard key={company.id} company={company} />
           )}
         </div>
-        <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus">
+        <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
           New Company
         </Link>
       </div>
