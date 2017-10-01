@@ -3,21 +3,17 @@ import {Link} from "react-router";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
 import {isAuthenticated} from "datawheel-canon";
-import {browserHistory} from "react-router";
-import {authenticateAndFetchCompany} from "../actions/companyActions";
-import {logout} from "../actions/authenticationActions";
 import ReactDOM from "react-dom";
 import "./Navbar.css";
-import {setSearch} from "../actions/searchActions";
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchOpen: false,
       dropdownVisible: false,
       shouldUpdate: false
-    }
-    // this.hideDropDown = this.hideDropDown.bind(this);
+    };
   }
 
   componentDidMount() {
@@ -80,6 +76,8 @@ class NavBar extends React.Component {
     );
   }
 
+  toggleSearch = () => this.setState({ searchOpen: !this.state.searchOpen });
+
   render() {
     const {auth, activateSearch, searchActive, company} = this.props;
     const {loading, user} = auth;
@@ -141,16 +139,14 @@ class NavBar extends React.Component {
             {this.props.location.pathname === "/"
               ? null
               : <li className="nav-bar-element search-icon-wrapper">
-                <button onClick={this.openSearch.bind(this)}>
-                  <img className="search-icon" src="/images/icons/icon-search-black.svg"/>
-                </button>
+                <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={this.toggleSearch}></button>
               </li>}
           </ul>
         </div>
         {this.state.dropdownVisible
           ? this.dropdown()
           : null}
-        <Search toggleSearch={this.closeSearch} searchActive={searchActive}></Search>
+        <Search toggleSearch={this.toggleSearch} searchActive={this.state.searchOpen}></Search>
       </div>
     );
   }

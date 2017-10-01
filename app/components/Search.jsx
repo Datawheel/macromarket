@@ -1,17 +1,28 @@
 import React from "react";
-import {fetchSearch, setSearch} from "../actions/searchActions";
-import {fetchProducts} from "../actions/productsActions";
-import {connect} from "react-redux";
 import {Card} from "./Card.jsx";
 import "./Search.css";
-
+import api from "../api.js";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hover: ""
+      hover: "",
+      results: [],
+      query: "",
+      loading: false,
+      error: null,
+      filter: "all"
     };
+  }
+
+  componentDidUpdate = prevProps => {
+    const {searchActive: prevSearchActive} = prevProps;
+    const {searchActive} = this.props;
+    if (prevSearchActive === false && searchActive === true) {
+      console.log("focus time baby!!!", this.searchInput);
+      this.searchInput.focus();
+    }
   }
 
   mouseOver = filter => {
@@ -27,40 +38,58 @@ class Search extends React.Component {
     // otherwise this returns way too many results and feels laggy.
     //  - else
     // clear the results but submitting an empty string
-    this.props.setSearch({keyword: event.target.value, filter: this.props.filter});
-    if (event.target.value.length > 2) {
-      this.props.fetchSearch(event.target.value, this.props.filter.toLowerCase());
-    } else {
-      this.props.fetchSearch("", this.props.filter.toLowerCase());
+    // this.props.setSearch({keyword: event.target.value, filter: this.props.filter});
+    const query = event.target.value;
+    const {filter} = this.state;
+    this.setState({query});
+    if (query.length > 2) {
+      this.search(query, filter);
+    }
+    else {
+      this.setState({results: []});
     }
   }
 
   selectFilter = filter => {
-    this.props.setSearch({keyword: this.props.keyword, filter});
-    this.props.fetchSearch(this.props.keyword, filter.toLowerCase());
+    const {query} = this.state;
+    this.setState({filter});
+    this.search(query, filter.toLowerCase());
   }
 
-  search = () => {
-    this.props.fetchSearch(this.props.keyword, this.props.filter.toLowerCase());
+  search = (query, filter) => {
+    // this.props.fetchSearch(this.state.query, this.props.filter.toLowerCase());
+    api.get(`/api/search/${filter}/${query}`)
+      .then(response => {
+        // dispatch(receiveSearch(response.data));
+        console.log("search results...");
+        console.log(response.data);
+        this.setState({results: response.data});
+      })
+      .catch(response => {
+        console.log("error!", response);
+      });
   }
 
   displayResults = () => {
-    const {results} = this.props;
+    const {query, results} = this.state;
     if (results.length !== 0) {
       return (
         <div className="fade-in result-wrapper">
           {results.map(result => <Card products={this.props.products} key={result.id} content={result}/>)}
         </div>
       );
-    } else {
+    }
+    else {
       return (
         <div>
-        {this.props.keyword.length < 3 ? null : <div className="fade-in search-no-results"><p>No results.</p></div>}</div>
+          {query.length < 3 ? null : <div className="fade-in search-no-results"><p>No results.</p></div>}
+        </div>
       );
     }
   }
 
   render() {
+    const {filter, query, results} = this.state;
 
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
@@ -68,7 +97,16 @@ class Search extends React.Component {
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
-              <input ref="search" placeholder="Search" className="search-input" value={this.props.keyword} onChange={this.handleChange} type="text"></input>
+              <input
+                ref={input => {
+                  this.searchInput = input;
+                }}
+                placeholder="Search"
+                className="search-input"
+                value={query}
+                onChange={this.handleChange}
+                type="text"
+              />
               <img onClick={this.search} className="search-icon" src="/images/icons/icon-search-white.svg"/>
               <div className="filter-wrapper">
                 <p className="label">FILTER</p>
@@ -79,7 +117,7 @@ class Search extends React.Component {
                       : "arrow-box place tool-tip"}>
                       <p>place</p>
                     </div>
-                    {this.props.filter === "Country"
+                    {filter === "Country"
                       ? <img src="/images/icons/icon-country-yellow.svg"/>
                       : <img src="/images/icons/icon-country-black.svg"/>
                     }
@@ -90,7 +128,7 @@ class Search extends React.Component {
                       : "arrow-box product tool-tip"}>
                       <p>product</p>
                     </div>
-                    {this.props.filter === "Product"
+                    {filter === "Product"
                       ? <img src="/images/icons/icon-product-yellow.svg"/>
                       : <img src="/images/icons/icon-product-black.svg"/>}
                   </div>
@@ -100,7 +138,7 @@ class Search extends React.Component {
                       : "arrow-box company tool-tip"}>
                       <p>company</p>
                     </div>
-                    {this.props.filter === "Company"
+                    {filter === "Company"
                       ? <img src="/images/icons/icon-company-yellow.svg"/>
                       : <img src="/images/icons/icon-company-black.svg"/>}
                   </div>
@@ -110,12 +148,12 @@ class Search extends React.Component {
                       : "arrow-box transport tool-tip"}>
                       <p>transportation</p>
                     </div>
-                    {this.props.filter === "Transport"
+                    {filter === "Transport"
                       ? <img src="/images/icons/icon-transport-yellow.svg"/>
                       : <img src="/images/icons/icon-transport-black.svg"/>}
                   </div>
                   <div onClick={this.selectFilter.bind(this, "All")} className="filter-icon-wrapper">
-                    <p className={this.props.filter === "All"
+                    <p className={filter === "All"
                       ? "selected"
                       : null}>all</p>
                   </div>
@@ -123,7 +161,7 @@ class Search extends React.Component {
               </div>
             </div>
           </div>
-          {this.props.results
+          {results
             ? this.displayResults()
             : null}
         </div>
@@ -132,29 +170,4 @@ class Search extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchSearch: (query, filter) => {
-      dispatch(fetchSearch(query, filter));
-    },
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    },
-    setSearch: query => {
-      dispatch(setSearch(query));
-    }
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    // results: state.search.results || [],
-    // loading: state.search.loading,
-    // error: state.search.error,
-    // keyword: state.search.keyword || "",
-    // filter: state.search.filter,
-    // products: state.products.products
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;
