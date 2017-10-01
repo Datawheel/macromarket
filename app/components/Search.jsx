@@ -148,12 +148,12 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    results: state.search.results || [],
-    loading: state.search.loading,
-    error: state.search.error,
-    keyword: state.search.keyword || "",
-    filter: state.search.filter,
-    products: state.products.products
+    // results: state.search.results || [],
+    // loading: state.search.loading,
+    // error: state.search.error,
+    // keyword: state.search.keyword || "",
+    // filter: state.search.filter,
+    // products: state.products.products
   };
 };
 

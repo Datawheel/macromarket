@@ -2,11 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
 import {isAuthenticated} from "datawheel-canon";
-import {deleteCompany} from "../../actions/userActions";
+import {fetchData} from "datawheel-canon";
+import {url} from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import "./Admin.css";
 import "./Settings.css";
-// import UserData from "./UserData";
 
 const prettify = name =>
   name.replace(/-/g, " ").replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -92,7 +92,6 @@ class Settings extends React.Component {
         </Sidebar>
         <div className="center-content form-wrapper">
           <div className="form">
-            {/* <UserData /> */}
             <Breadcrumb params={params} routes={routes} />
             {this.props.children}
           </div>

@@ -7,7 +7,6 @@ import {isAuthenticated} from "datawheel-canon";
 import api from "../../api.js";
 import CompanyCard from "./CompanyCard";
 import {nest} from "d3-collection";
-// import UserData from "./UserData";
 
 class SettingsSummary extends React.Component {
   constructor(props) {
@@ -16,10 +15,6 @@ class SettingsSummary extends React.Component {
       companies: []
     };
   }
-
-  // componentDidMount() {
-  //   this.props.isAuthenticated();
-  // }
 
   componentWillMount() {
     const {user} = this.props.auth;

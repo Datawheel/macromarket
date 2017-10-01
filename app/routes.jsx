@@ -2,6 +2,7 @@ import React from "react";
 import {Route, IndexRoute} from "react-router";
 import App from "components/App";
 import Home from "pages/Home";
+import HomeSimple from "pages/HomeSimple";
 import NotFound from "pages/NotFound";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
@@ -113,7 +114,7 @@ function checkForId(nextState, replace) {
 export default function RouteCreate() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
+      <IndexRoute component={HomeSimple}/>
 
       <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId}/>
       <Route path="/company(/:companyWithId)" onEnter={checkForId} component={CompanyWithId}/>

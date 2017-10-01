@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router";
 import moment from "moment";
 
 const CountryList = ({products, tradeFlow}) => {
@@ -26,7 +27,7 @@ const CompanyCard = props => {
       </div>
 
       <div className="content">
-        <a href={`/settings/company/${company.id}`} className="header">{company.name}</a>
+        <Link to={`/settings/company/${company.id}`} className="header">{company.name}</Link>
         <div className="meta">
           <span className="date">
             Added {moment(company.createdAt).format("MMMM Do YYYY")}
@@ -38,13 +39,12 @@ const CompanyCard = props => {
       </div>
 
       <div className="extra content">
-        <a href={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
-          { company.trades ? <span>{company.trades.length} Products</span> : <span>Add products</span>}
-        </a>
+        <Link to={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
+          { company.trades ? <span>{company.trades.length} products listed</span> : <span>Add products</span>}
+        </Link>
       </div>
     </div>
   );
 };
-// pt-icon-build
 
 export default CompanyCard;

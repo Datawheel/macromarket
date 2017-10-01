@@ -26,9 +26,9 @@ class Login extends React.Component {
           <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
             <div className="title-wrapper">Login</div>
-            <CanonLogin />
+            <CanonLogin redirect="/settings" />
             <div className="text-wrapper">
-              <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+              <p>Don&apos;t have an account? <Link to="/signup">Sign up</Link></p>
               <p><Link to="/reset">Forgot Password?</Link></p>
             </div>
           </div>

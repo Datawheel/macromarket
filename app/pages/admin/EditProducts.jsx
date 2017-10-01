@@ -18,19 +18,25 @@ class EditProducts extends React.Component {
     };
   }
 
-  componentWillMount() {
-    const {company, auth} = this.props;
-    if (auth.user && company.uid !== auth.user.id) {
-      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
-      toast.show({message: "You do not have permission to view this page.", intent: Intent.DANGER});
-      browserHistory.push("/login");
-    }
-  }
-
   componentDidMount() {
-    // console.log("TrAdes!", this.props.trades)
-    // const {companyId} = this.props.params;
-    this.setState({trades: this.props.trades});
+    const {companyId} = this.props.params;
+    api.get(`/api/trades/company/${companyId}`).then(res => {
+      const trades = [];
+      res.data.forEach(t => {
+        const prodRow = trades.find(tt => tt.product.id === t.product_id);
+        const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
+        const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
+        const country = t.Country ? [t.Country] : [];
+        if (prodRow && country) {
+          prodRow[tKey] = prodRow[tKey].concat(country);
+        }
+        else {
+          trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
+        }
+      });
+      console.log("TrAdes!", trades);
+      this.setState({trades});
+    });
   }
 
   handleChange = e => {
@@ -134,6 +140,8 @@ class EditProducts extends React.Component {
     const {newProduct, trades, unsavedTrades} = this.state;
     const path = this.props.location.pathname;
 
+
+
     return (
       <div>
 
@@ -190,33 +198,14 @@ class EditProducts extends React.Component {
   }
 }
 
-EditProducts.preneed = [
-  fetchData("company", `${url}/api/companies/<companyId>`, res => res),
-  fetchData("countries", `${url}/api/countries`, res => res),
-  fetchData("products", `${url}/api/products`, res => res),
-  fetchData("trades", `${url}/api/trades/company/<companyId>`, res => {
-    const trades = [];
-    res.forEach(t => {
-      const prodRow = trades.find(tt => tt.product.id === t.product_id);
-      const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
-      const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
-      const country = t.Country ? [t.Country] : [];
-      if (prodRow && country) {
-        prodRow[tKey] = prodRow[tKey].concat(country);
-      }
-      else {
-        trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
-      }
-    });
-    return trades;
-  })
+EditProducts.need = [
+  fetchData("countries", `${url}/api/countries`, res => res)
 ];
 
 const mapStateToProps = state => ({
   company: state.data.company,
   countries: state.data.countries,
   products: state.data.products,
-  trades: state.data.trades,
   auth: state.auth
 });
 

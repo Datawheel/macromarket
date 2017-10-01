@@ -17,7 +17,7 @@ class NavBar extends React.Component {
       dropdownVisible: false,
       shouldUpdate: false
     }
-    this.hideDropDown = this.hideDropDown.bind(this);
+    // this.hideDropDown = this.hideDropDown.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class NavBar extends React.Component {
     //   }
     // });
     // Hide dropdown block on click outside the block
-    window.addEventListener("click", this.hideDropDown, false);
+    // window.addEventListener("click", this.hideDropDown, false);
   }
 
   hideDropDown = e => {
@@ -66,7 +66,7 @@ class NavBar extends React.Component {
 
   dropdown = () => {
     return (
-      <div  className={this.props.location.pathname !== '/' ? "nav-bar-dropdown" : "home-nav nav-bar-dropdown"}>
+      <div  className={this.props.location.pathname !== "/" ? "nav-bar-dropdown" : "home-nav nav-bar-dropdown"}>
         <ul>
           <Link to="/settings/user">
             <li>Settings</li>
@@ -86,7 +86,7 @@ class NavBar extends React.Component {
 
     return (
       <div>
-        <div className={this.props.location.pathname === '/'
+        <div className={this.props.location.pathname === "/"
           ? "home"
           : null}>
           <ul className="nav-bar">
@@ -157,12 +157,12 @@ class NavBar extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  activateSearch: activeState => {
-    dispatch({type: "ACTIVATE_SEARCH", data: activeState});
-  },
-  setSearch: query => {
-    dispatch(setSearch(query));
-  },
+  // activateSearch: activeState => {
+  //   dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  // },
+  // setSearch: query => {
+  //   dispatch(setSearch(query));
+  // },
   isAuthenticated: () => {
     dispatch(isAuthenticated());
   }
