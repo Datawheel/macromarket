@@ -1,3 +1,5 @@
+const Op = require("sequelize").Op;
+
 module.exports = function(app) {
   const {db} = app.settings;
   // Using the "|" aka "or" operator allows the route to handle the case of
@@ -12,16 +14,16 @@ module.exports = function(app) {
     // });
     let where = {
       name: {
-        $iLike: `${query}%`
+        [Op.iLike]: `${query}%`
       }
     };
     if (filter !== "all") {
       if (filter === "company") {
         where = {
           name: {
-            $iLike: `${query}%`
+            [Op.iLike]: `${query}%`
           },
-          $or: [
+          [Op.or]: [
             {profile_type: "company"},
             {profile_type: "connectamericas"}
           ]
@@ -30,7 +32,7 @@ module.exports = function(app) {
       else {
         where = {
           name: {
-            $iLike: `${query}%`
+            [Op.iLike]: `${query}%`
           },
           profile_type: filter
         };
