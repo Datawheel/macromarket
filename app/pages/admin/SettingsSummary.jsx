@@ -40,15 +40,22 @@ class SettingsSummary extends React.Component {
     const {companies} = this.state;
     return (
       <div>
-        <h2>My Companies</h2>
+        <nav className="pt-navbar">
+          <div className="pt-navbar-group pt-align-left">
+            <div className="pt-navbar-heading">My Companies</div>
+          </div>
+          <div className="pt-navbar-group pt-align-right">
+            <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
+              New Company
+            </Link>
+          </div>
+        </nav>
+
         <div className="company-cards">
           {companies.map(company =>
             <CompanyCard key={company.id} company={company} />
           )}
         </div>
-        <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
-          New Company
-        </Link>
       </div>
     );
   }

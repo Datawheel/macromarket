@@ -1,3 +1,5 @@
+const SequelizeSlugify = require("sequelize-slugify");
+
 module.exports = function(sequelize, db) {
 
   const Company = sequelize.define("Company", {
@@ -7,6 +9,10 @@ module.exports = function(sequelize, db) {
       type: db.INTEGER
     },
     name: db.STRING,
+    slug: {
+      type: db.STRING,
+      unique: true
+    },
     address: db.TEXT,
     city: db.STRING,
     region: db.STRING,
@@ -25,46 +31,64 @@ module.exports = function(sequelize, db) {
     }
   }, {
     hooks: {
-    //   afterCreate: function(company, options) {
-    //     sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
-    //       const document = response[0][0].to_tsvector.replace(/'/g, "''");
-    //       const name = company.dataValues.name.replace(/'/g, "''");
-    //       const id = "company" + company.dataValues.id;
-    //       const image = company.dataValues.profile_image;
-    //       sequelize.query("INSERT INTO " + '"Search"' + " (" + '"id"' + "," + '"name",' + '"profile_type",' + '"document",' + '"image"' + ") VALUES ('" + id + "', '" + name + "', 'company','" + document + "', '" + image + "')").then(insert => {
-    //         console.log(insert);
-    //       }).catch(err => {
-    //         console.log(err);
-    //       });
-    //
-    //     }).catch(err => {
-    //       console.log(err);
-    //     });
-    //   },
-    //   beforeDestroy: function(company, options) {
-    //     const id = "company" + company.dataValues.id;
-    //     sequelize.query("DELETE FROM" + '"Search"' + "WHERE id='" + id + "'").then(response => {
-    //       return options;
-    //     }).catch(err => {
-    //       console.log(err);
-    //     });
-    //   },
-    //   beforeUpdate: function(company, options) {
-    //     sequelize.query("SELECT to_tsvector('english','" + company.dataValues.name + "')").then(response => {
-    //       const document = response[0][0].to_tsvector.replace(/'/g, "''");
-    //       const name = company.dataValues.name;
-    //       const id = "company" + company.dataValues.id;
-    //       sequelize.query("UPDATE" + '"Search"' + " SET name='" + name + "' , document='" + document + "' WHERE id='" + id + "'").then(insert => {
-    //         return options;
-    //       }).catch(err => {
-    //         console.log(err);
-    //       });
-    //
-    //     }).catch(err => {
-    //       console.log(err);
-    //     });
-    //   }
+      afterCreate: company => {
+        sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
+          const document = response[0][0].to_tsvector.replace(/'/g, "''");
+          const name = company.dataValues.name.replace(/'/g, "''");
+          const id = `company${company.dataValues.id}`;
+          const image = company.dataValues.profile_image;
+          sequelize.models.Search.create({
+            id, name, profile_type: "company", document, image
+          }).then(Search => {
+            console.log(Search);
+          }).catch(err => {
+            console.log(err);
+          });
+          // const insertQuery = `INSERT INTO
+          // "Search" ("id", "name", "profile_type", "document", "image")
+          // VALUES ('${id}', '${name}', 'company', '${document}', '${image}');`;
+          // sequelize.query(insertQuery).then(insert => {
+          //   console.log(insert);
+          // }).catch(err => {
+          //   console.log(err);
+          // });
+
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+      beforeDestroy: company => {
+        const id = `company${company.dataValues.id}`;
+        sequelize.models.Search.destroy({
+          where: {id}
+        }).then(response => {
+          console.log(response);
+        }).catch(err => {
+          console.log(err);
+        });
+      },
+      beforeUpdate: company => {
+        sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
+          const document = response[0][0].to_tsvector.replace(/'/g, "''");
+          const name = company.dataValues.name;
+          const id = `company${company.dataValues.id}`;
+          const image = company.dataValues.profile_image;
+          sequelize.models.Search.update(
+            {name, document, image},
+            {where: {id}}
+          ).then(company => console.log(company))
+            .catch(err => console.log(err));
+        }).catch(err => {
+          console.log(err);
+        });
+      }
     }
+  });
+
+  SequelizeSlugify.slugifyModel(Company, {
+    source: ["name"],
+    suffixSource: ["id"],
+    overwrite: true
   });
 
   // Class Methods

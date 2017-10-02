@@ -32,10 +32,10 @@ class NavBar extends React.Component {
   }
 
   hideDropDown = e => {
-    const area = ReactDOM.findDOMNode(this.refs.area);
+    const area = this.area;
     if (area) {
       if (!area.contains(e.target) && this.state.dropdownVisible) {
-        this.setState({dropdownVisible: false})
+        this.setState({dropdownVisible: false});
       }
     }
   }
@@ -60,23 +60,22 @@ class NavBar extends React.Component {
     this.props.setSearch({keyword: "", filter: "All"});
   }
 
-  dropdown = () => {
-    return (
-      <div  className={this.props.location.pathname !== "/" ? "nav-bar-dropdown" : "home-nav nav-bar-dropdown"}>
-        <ul>
-          <Link to="/settings/user">
-            <li>Settings</li>
-          </Link>
-          <Link to="/settings/company">
-            <li>Company</li>
-          </Link>
+  dropdown = () =>
+    <div  className={this.props.location.pathname !== "/" ? "nav-bar-dropdown" : "home-nav nav-bar-dropdown"}>
+      <ul>
+        <li>
+          <Link to="/settings/user">Settings</Link>
+        </li>
+        <li>
+          <Link to="/settings/company">Company</Link>
+        </li>
+        <li>
           <a className="" href="/auth/logout">Logout</a>
-        </ul>
-      </div>
-    );
-  }
+        </li>
+      </ul>
+    </div>;
 
-  toggleSearch = () => this.setState({ searchOpen: !this.state.searchOpen });
+  toggleSearch = () => this.setState({searchOpen: !this.state.searchOpen});
 
   render() {
     const {auth, activateSearch, searchActive, company} = this.props;
@@ -115,7 +114,11 @@ class NavBar extends React.Component {
               </Link>
             </li>
             {company
-              ? <li ref="area" className="nav-bar-element company-name">
+              ? <li
+                ref={li => {
+                  this.area = li;
+                }}
+                className="nav-bar-element company-name">
                 <div className="profile-image-wrapper" style={{
                   backgroundImage: `url(${company.profile_image})`
                 }}></div>

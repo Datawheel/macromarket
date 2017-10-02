@@ -16,29 +16,43 @@ class EditCompany extends React.Component {
     super(props);
     this.state = {
       error: null,
-      newCompany: false
+      newCompany: false,
+      name: props.company.name || "",
+      description: props.company.description || "",
+      address: props.company.address || "",
+      city: props.company.city || "",
+      region: props.company.region || "",
+      country_id: props.company.country_id,
+      country: props.company.Country,
+      companyEmail: props.company.company_email || "",
+      phone_number: props.company.phone_number || "",
+      website: props.company.website || "",
+      coverImage: props.company.cover_image,
+      profileImage: props.company.profile_image
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const {company: prevCompany} = this.props;
+    // const {company: prevCompany} = this.props;
     const {company} = nextProps;
-    if (prevCompany.id !== company.id) {
-      this.setState({
-        name: company.name,
-        description: company.description || "",
-        address: company.address || "",
-        city: company.city || "",
-        region: company.region || "",
-        country_id: company.country_id || "",
-        companyEmail: company.company_email || "",
-        phone_number: company.phone_number || "",
-        website: company.website || "",
-        coverImage: company.cover_image,
-        profileImage: company.profile_image,
-        newCompany: false
-      });
-    }
+    console.log(company)
+    // if (prevCompany.id !== company.id) {
+    this.setState({
+      name: company.name,
+      description: company.description || "",
+      address: company.address || "",
+      city: company.city || "",
+      region: company.region || "",
+      country_id: company.country_id || "",
+      country: company.Country,
+      companyEmail: company.company_email || "",
+      phone_number: company.phone_number || "",
+      website: company.website || "",
+      coverImage: company.cover_image,
+      profileImage: company.profile_image,
+      newCompany: false
+    });
+    // }
   }
 
   componentDidMount() {
@@ -64,10 +78,13 @@ class EditCompany extends React.Component {
 
   validate = company => {
     const errorNames = [];
-    if (company.company_email !== "" && !this._validateEmail(company.company_email)) {
+    if (company.name === "") {
+      errorNames.push("name");
+    }
+    if (company.company_email && !this._validateEmail(company.company_email)) {
       errorNames.push("companyEmail");
     }
-    if (company.website !== "" && !this._validateURL(company.website)) {
+    if (company.website && !this._validateURL(company.website)) {
       errorNames.push("website");
     }
     if (errorNames.length) {
@@ -86,14 +103,14 @@ class EditCompany extends React.Component {
     const {id} = this.props.company;
     const company = {
       name: this.state.name,
-      description: this.state.description,
-      address: this.state.address,
-      city: this.state.city,
-      region: this.state.region,
-      country_id: this.state.country_id,
-      company_email: this.state.companyEmail,
-      phone_number: this.state.phone_number,
-      website: this.state.website,
+      description: this.state.description || null,
+      address: this.state.address || null,
+      city: this.state.city || null,
+      region: this.state.region || null,
+      country_id: this.state.country_id || null,
+      company_email: this.state.companyEmail || null,
+      phone_number: this.state.phone_number || null,
+      website: this.state.website || null,
       profile_image: this.state.profileImage,
       cover_image: this.state.coverImage
     };
@@ -196,18 +213,24 @@ class EditCompany extends React.Component {
 
   render() {
     const {company, countries} = this.props;
-    const {error, address, city, country_id, description, name, region,
+    const {error, address, city, country, description, name, region,
       companyEmail, phone_number, website, coverImage, profileImage} = this.state;
     return (
       <div>
 
-        <div className="pt-form-group">
-          <label className="pt-label" htmlFor="example-form-group-input-a">
+        <div
+          className={error && error.names.includes("name")
+            ? "pt-form-group pt-intent-danger"
+            : "pt-form-group"}
+        >
+          <label className="pt-label" htmlFor="input-company-name">
             <span className="pt-icon pt-icon-edit"></span> Company Name <span className="pt-text-muted">(required)</span>
           </label>
           <div className="pt-form-content">
-            <input name="name" onChange={this.handleChange} id="example-form-group-input-a" value={name} className="pt-input" placeholder="My Company" type="text" dir="auto" />
-            <div className="pt-form-helper-text">This will be displayed on your profile.</div>
+            <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : "pt-input-group"}>
+              <input name="name" onChange={this.handleChange} id="input-company-name" value={name} className="pt-input" placeholder="My Company" type="text" dir="auto" />
+            </div>
+            {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
           </div>
         </div>
 
@@ -262,7 +285,7 @@ class EditCompany extends React.Component {
             <div className="pt-form-content">
               <div className="pt-input-group">
                 { countries
-                  ? <CountrySearch country={company.Country} countries={countries} selectCountry={this.selectCountry} />
+                  ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
                   : <span>Loading country list...</span>
                 }
               </div>

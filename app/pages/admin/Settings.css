@@ -140,9 +140,19 @@
 }
 
 
+.pt-navbar {
+  box-shadow: none;
+  background-color: transparent;
+  & .pt-navbar-heading {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
 .company-cards {
   display: flex;
-  margin: -10px -10px 20px -10px;
+  flex-wrap: wrap;
+  /*margin: -10px -10px 20px -10px;*/
 
   & .mm-card {
     max-width: 100%;
@@ -154,7 +164,6 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 290px;
     min-height: 0;
     background: #fff;
     margin: 10px; /* spacing between boxes, matches parent element */
@@ -162,6 +171,8 @@
     border: none;
     border-radius: .28571429rem;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    flex: 1 0 200px;
+    max-width: 400px;
 
     & .image {
       position: relative;

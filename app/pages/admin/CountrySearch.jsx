@@ -9,8 +9,15 @@ class CountrySearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCountry: this.props.country ? this.props.country.name : ""
+      selectedCountry: this.props.country ? this.props.country.name : "",
+      userChanged: false
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.country !== nextProps.country) {
+      this.setState({selectedCountry: nextProps.country ? nextProps.country.name : ""});
+    }
   }
 
   renderCountry = ({handleClick, isActive, item: country}) =>
@@ -31,7 +38,7 @@ class CountrySearch extends React.Component {
 
   selectCountry = country => {
     this.props.selectCountry(country);
-    this.setState({selectedCountry: country.name});
+    this.setState({selectedCountry: country.name, userChanged: true});
   }
 
   render() {
@@ -40,7 +47,7 @@ class CountrySearch extends React.Component {
     countries = countries.sort((a, b) => b.name - a.name);
 
     return <Suggest
-      inputProps={{value: selectedCountry}}
+      inputProps={{value: selectedCountry, onChange: e => this.setState({selectedCountry: e.target.value})}}
       inputValueRenderer={c => c.name}
       itemRenderer={this.renderCountry}
       itemListPredicate={this.filterCountries}

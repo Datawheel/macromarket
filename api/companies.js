@@ -242,17 +242,22 @@ module.exports = function(app) {
     const {id} = req.params;
     db.Company.update(
       req.body,
-      {where: {id}}
+      {where: {id}, individualHooks: true},
     ).then(company => res.json(company))
       .catch(err => res.json(err));
   });
 
   /** DELETE /:id - Deletes a given entity
-      WARNING: when deleting a company this will also:
-        - set the user's associated company to NULL
+      WARNING: when deleting a company should also:
+        - ensure user has the proper permissions
         - delete any trades associated with this company
   */
+  app.delete("/api/companies/:id", (req, res) => {
+    const {id} = req.params;
+    db.Company.destroy({
+      where: {id},
+      individualHooks: true
+    }).then(company => res.json(company))
+      .catch(err => res.json(err));
+  });
 };
-
-// https://storage.googleapis.com/mm-company/company/company105-8926d9431f22bf965600ce6fe2598afbecbf33df_m.jpg
-// https://storage.googleapis.com/mm-company/company/company105-0d2daec2762e5a1bcdcb499ca8a69b41.jpg
