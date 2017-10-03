@@ -47,10 +47,10 @@ function requestAuth() {
     type: "AUTH_PENDING"
   };
 }
-export function fetchCompany(id) {
+export function fetchCompany(slug) {
   return function(dispatch) {
     dispatch(requestCompany());
-    return api.get(`/api/companies/${id}`)
+    return api.get(`/api/companies/${slug}`)
       .then(response => {
         dispatch(receiveCompany(response.data));
       })
@@ -75,7 +75,6 @@ export function authenticateAndFetchCompany() {
         console.log(user.company_id, "ID");
         if (user.company_id) {
           return api.get(`/api/companies/${user.company_id}`).then(companyResponse => {
-              console.log(companyResponse, "RESPOSNE WHYYYYYYY")
             dispatch(receiveAuthCompany(companyResponse.data));
           }).then(() => {
             dispatch(receiveAuth(response.data));

@@ -253,10 +253,10 @@ function compare(a, b) {
   return 0;
 }
 
-export function fetchProfileTradesByCompany(companyId) {
+export function fetchProfileTradesByCompany(companySlug) {
   return function(dispatch) {
     dispatch(requestProfileTrades());
-    return api.get(`/api/trades/company/${companyId}`)
+    return api.get(`/api/trades/company/${companySlug}`)
       .then(response => {
         const exports = [];
         const imports = [];

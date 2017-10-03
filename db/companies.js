@@ -44,15 +44,6 @@ module.exports = function(sequelize, db) {
           }).catch(err => {
             console.log(err);
           });
-          // const insertQuery = `INSERT INTO
-          // "Search" ("id", "name", "profile_type", "document", "image")
-          // VALUES ('${id}', '${name}', 'company', '${document}', '${image}');`;
-          // sequelize.query(insertQuery).then(insert => {
-          //   console.log(insert);
-          // }).catch(err => {
-          //   console.log(err);
-          // });
-
         }).catch(err => {
           console.log(err);
         });

@@ -27,7 +27,7 @@ const CompanyCard = props => {
       </div>
 
       <div className="content">
-        <Link to={`/settings/company/${company.id}`} className="header">{company.name}</Link>
+        <Link to={`/settings/company/${company.slug}`} className="header">{company.name}</Link>
         <div className="meta">
           <span className="date">
             Added {moment(company.createdAt).format("MMMM Do YYYY")}

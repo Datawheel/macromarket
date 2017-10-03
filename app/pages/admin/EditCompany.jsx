@@ -401,7 +401,7 @@ class EditCompany extends React.Component {
 
 EditCompany.preneed = [
   fetchData("countries", `${url}/api/countries`, res => res),
-  fetchData("company", `${url}/api/companies/<companyId>`, res => res)
+  fetchData("company", `${url}/api/companies/<companySlug>`, res => res)
 ];
 
 const mapDispatchToProps = dispatch => ({

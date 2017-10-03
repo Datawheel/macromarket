@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const memoryStorage = multer.memoryStorage;
 const storage = require("@google-cloud/storage");
+const Op = require("sequelize").Op;
 
 module.exports = function(app) {
   const {db} = app.settings;
@@ -43,19 +44,19 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/companies/:id", (req, res) => {
-    const {id} = req.params;
+  app.get("/api/companies/:slug", (req, res) => {
+    const {slug} = req.params;
     // const {id: uid} = req.user;
     // console.log("companyid:", id)
     // console.log("req.user:", req.user)
 
-    if (id === "new") {
+    if (slug === "new") {
       res.json({});
     }
-    else if (id.slice(0, 3) === "ca_") {
+    else if (slug.slice(0, 3) === "ca_") {
       const option = {
         hostname: "m.connectamericas.com",
-        path: `/apirest/v6/company/${id.slice(3, id.length)}`,
+        path: `/apirest/v6/company/${slug.slice(3, slug.length)}`,
         method: "GET",
         headers: {
           "Accept": "application/json",
@@ -90,7 +91,7 @@ module.exports = function(app) {
     else {
       db.Company.findOne({
         // where: {id, uid},
-        where: {id},
+        where: {slug},
         include: [db.Country]
       }).then(company => {
         const err = company ? null : "Not found";

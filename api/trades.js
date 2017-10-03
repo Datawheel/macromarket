@@ -4,14 +4,20 @@ module.exports = function(app) {
   const {db} = app.settings;
 
   // TODO: rename to "/api/trades/byCompany/:companyId"
-  app.get("/api/trades/company/:companyId", (req, res) => {
-    const {companyId: company_id} = req.params;
-    db.Trade.findAll({
-      where: {
-        company_id
-      },
-      include: [db.Product, db.Country]
-    }).then(trades => res.json(trades));
+  app.get("/api/trades/company/:companySlug", (req, res) => {
+    const {companySlug: slug} = req.params;
+    db.Company.findOne({
+      where: {slug},
+      include: [db.Country]
+    }).then(company => {
+      const err = company ? null : "Not found";
+      db.Trade.findAll({
+        where: {
+          company_id: company.id
+        },
+        include: [db.Product, db.Country]
+      }).then(trades => res.json(trades));
+    });
   });
 
   app.post("/api/trades/company/:companyId", (req, res) => {
@@ -27,8 +33,6 @@ module.exports = function(app) {
     });
 
     Promise.all(tPromises).then(tradeResponses => {
-      // console.log("\n\n\ntradeResponses\n")
-      // console.log(tradeResponses)
       res.json({msg: "done."});
     });
   });

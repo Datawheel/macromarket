@@ -81,21 +81,13 @@ function genRandId(path) {
     ];
   }
   else if (path.includes("company")) {
-    candidates = [
-      "14",
-      "1",
-      "3",
-      "2",
-      "34",
-      "12",
-      "55"
-    ];
+    candidates = ["thiel_inc", "haag_schultz_and_damore", "dickens_romaguera_and_boyer", "waelchi_and_sons"];
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
 function checkForId(nextState, replace) {
-  if (!nextState.params.countryWithId && !nextState.params.productWithId && !nextState.params.companyWithId) {
+  if (!nextState.params.countryWithId && !nextState.params.productWithId && !nextState.params.companySlug) {
     const reqestedUrl = nextState.location.pathname;
 
     const randId = genRandId(reqestedUrl);
@@ -103,6 +95,8 @@ function checkForId(nextState, replace) {
     const nextUrl = reqestedUrl.slice(-1) === "/"
       ? `${reqestedUrl}${randId}`
       : `${reqestedUrl}/${randId}`;
+
+    console.log(reqestedUrl, randId, nextUrl);
 
     return replace({pathname: nextUrl});
   }
@@ -118,7 +112,7 @@ export default function RouteCreate() {
       <IndexRoute component={HomeSimple}/>
 
       <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId}/>
-      <Route path="/company(/:companyWithId)" onEnter={checkForId} component={CompanyWithId}/>
+      <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId}/>
       <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>
@@ -126,7 +120,7 @@ export default function RouteCreate() {
       <Route path="settings" component={Settings}>
         <IndexRoute component={SettingsSummary}/>
         <Route path="change-password" component={ChangePw}></Route>
-        <Route path="company/:companyId" component={CompanySummary}>
+        <Route path="company/:companySlug" component={CompanySummary}>
           <IndexRoute component={EditCompany}/>
           <Route path="products" component={EditProducts}></Route>
         </Route>
