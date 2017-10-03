@@ -2,9 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
+import {isAuthenticated} from "datawheel-canon";
+import api from "../../api.js";
 import "./Settings.css";
 import "./Admin.css";
-import api from "../../api.js";
 
 class ChangePw extends React.Component {
   constructor(props) {
@@ -16,6 +17,10 @@ class ChangePw extends React.Component {
       error: ""
     };
   }
+
+  // componentDidMount() {
+  //   this.props.isAuthenticated();
+  // }
 
   handleChange = e => {
     e.target.value;
@@ -34,7 +39,7 @@ class ChangePw extends React.Component {
 
   save = () => {
     const {password, password1, password2} = this.state;
-    const {user} = this.props;
+    const {user} = this.props.auth;
     if (password1.length < 5 || password2.length < 5) {
       this.notify("Password must be longer than 5 characters", Intent.DANGER);
       return;
@@ -93,8 +98,11 @@ class ChangePw extends React.Component {
             </div>
           </div>
 
-          <div className="pt-form-group">
-            <button type="button" className="pt-button" onClick={this.save}>Save</button>
+          <div>
+            <button type="button" className="pt-button pt-intent-success" onClick={this.save}>
+              Save
+              <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+            </button>
           </div>
         </div>
 
@@ -103,8 +111,10 @@ class ChangePw extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.authentication.user
+const mapDispatchToProps = dispatch => ({
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
+  }
 });
 
-export default connect(mapStateToProps)(ChangePw);
+export default connect(state => ({auth: state.auth}), mapDispatchToProps)(ChangePw);

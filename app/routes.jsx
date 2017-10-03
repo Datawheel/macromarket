@@ -10,6 +10,7 @@ import ProductWithId from "pages/ProductWithId";
 import Login from "pages/admin/Login";
 import Signup from "pages/admin/Signup";
 import Reset from "pages/admin/Reset";
+import Activate from "pages/admin/Activate";
 import Settings from "pages/admin/Settings";
 import SettingsSummary from "pages/admin/SettingsSummary";
 import CompanySummary from "pages/admin/CompanySummary";
@@ -117,6 +118,7 @@ export default function RouteCreate() {
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>
       <Route path="reset" component={Reset} />
+      <Route path="activate" component={Activate} />
       <Route path="settings" component={Settings}>
         <IndexRoute component={SettingsSummary}/>
         <Route path="change-password" component={ChangePw}></Route>

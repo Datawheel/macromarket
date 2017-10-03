@@ -50,9 +50,9 @@ class Settings extends React.Component {
     super(props);
   }
 
-  // componentDidMount() {
-  //   this.props.isAuthenticated();
-  // }
+  componentDidMount() {
+    this.props.isAuthenticated();
+  }
 
   componentDidUpdate() {
     const {user, loading} = this.props.auth;

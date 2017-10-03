@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
+import {Activate as CanonActivate} from "datawheel-canon";
+import {NonIdealState} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import {isAuthenticated} from "datawheel-canon";
@@ -38,18 +40,27 @@ class SettingsSummary extends React.Component {
 
   render() {
     const {companies} = this.state;
+    const {user} = this.props.auth;
     return (
       <div>
-        <nav className="pt-navbar">
-          <div className="pt-navbar-group pt-align-left">
-            <div className="pt-navbar-heading">My Companies</div>
-          </div>
-          <div className="pt-navbar-group pt-align-right">
-            <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
-              New Company
-            </Link>
-          </div>
-        </nav>
+        { user.activated
+          ? <nav className="pt-navbar">
+            <div className="pt-navbar-group pt-align-left">
+              <div className="pt-navbar-heading">My Companies</div>
+            </div>
+            <div className="pt-navbar-group pt-align-right">
+              <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
+                New Company
+              </Link>
+            </div>
+          </nav>
+          : <NonIdealState
+            action={<CanonActivate />}
+            visual="search"
+            title="Confirm Account"
+            description="Please click the link in your email to activate your account. If you did not receive an email, resend one here."
+          />
+        }
 
         <div className="company-cards">
           {companies.map(company =>

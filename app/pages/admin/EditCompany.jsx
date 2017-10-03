@@ -35,7 +35,6 @@ class EditCompany extends React.Component {
   componentWillReceiveProps(nextProps) {
     // const {company: prevCompany} = this.props;
     const {company} = nextProps;
-    console.log(company)
     // if (prevCompany.id !== company.id) {
     this.setState({
       name: company.name,
@@ -50,7 +49,7 @@ class EditCompany extends React.Component {
       website: company.website || "",
       coverImage: company.cover_image,
       profileImage: company.profile_image,
-      newCompany: false
+      newCompany: company.id ? false : true
     });
     // }
   }
