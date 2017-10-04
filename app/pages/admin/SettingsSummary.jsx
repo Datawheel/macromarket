@@ -50,7 +50,7 @@ class SettingsSummary extends React.Component {
             </div>
             <div className="pt-navbar-group pt-align-right">
               <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
-                New Company
+                List your Company
               </Link>
             </div>
           </nav>

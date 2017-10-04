@@ -42,10 +42,12 @@ jspm_packages
 # Don't add env vars to repo
 .env
 
-
 .eslintrc
 
 static/assets
 
 # production build
 /index.js
+
+# ignore private key file
+mm-keyfile.json
