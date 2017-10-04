@@ -243,7 +243,7 @@ module.exports = function(app) {
     const {id} = req.params;
     db.Company.update(
       req.body,
-      {where: {id}, individualHooks: true},
+      {where: {id}, individualHooks: true}
     ).then(company => res.json(company))
       .catch(err => res.json(err));
   });
