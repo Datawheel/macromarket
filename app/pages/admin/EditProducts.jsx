@@ -19,8 +19,8 @@ class EditProducts extends React.Component {
   }
 
   componentDidMount() {
-    const {companyId} = this.props.params;
-    api.get(`/api/trades/company/${companyId}`).then(res => {
+    const {companySlug} = this.props.params;
+    api.get(`/api/trades/company/${companySlug}`).then(res => {
       const trades = [];
       res.data.forEach(t => {
         const prodRow = trades.find(tt => tt.product.id === t.product_id);
@@ -50,7 +50,7 @@ class EditProducts extends React.Component {
 
   saveTrades = () => {
     const {newProduct, trades, unsavedTrades} = this.state;
-    const {companyId} = this.props.params;
+    const {company} = this.props;
     const tradesForServer = [];
     if (!unsavedTrades || newProduct) {
       return;
@@ -67,7 +67,7 @@ class EditProducts extends React.Component {
       });
     });
 
-    api.post(`/api/trades/company/${companyId}`, tradesForServer).then(tradesResponse => {
+    api.post(`/api/trades/company/${company.id}`, tradesForServer).then(tradesResponse => {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       console.log(tradesResponse.data);
@@ -95,7 +95,7 @@ class EditProducts extends React.Component {
       return t;
     });
     console.log("ADDING ORIGIN", productId, origins);
-    this.setState({trades: newTrades});
+    this.setState({trades: newTrades, unsavedTrades: true});
   }
 
   addDestinations = (destinations, productId) => {
@@ -107,7 +107,7 @@ class EditProducts extends React.Component {
       return t;
     });
     console.log("ADDING DESTS", productId, destinations);
-    this.setState({trades: newTrades});
+    this.setState({trades: newTrades, unsavedTrades: true});
   }
 
   deleteProduct = p => {
@@ -199,7 +199,8 @@ class EditProducts extends React.Component {
 }
 
 EditProducts.need = [
-  fetchData("countries", `${url}/api/countries`, res => res)
+  fetchData("countries", `${url}/api/countries`, res => res),
+  fetchData("products", `${url}/api/products`, res => res)
 ];
 
 const mapStateToProps = state => ({

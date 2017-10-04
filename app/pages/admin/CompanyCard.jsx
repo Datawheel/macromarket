@@ -39,7 +39,7 @@ const CompanyCard = props => {
       </div>
 
       <div className="extra content">
-        <Link to={`/settings/company/${company.id}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
+        <Link to={`/settings/company/${company.slug}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
           { company.trades ? <span>{company.trades.length} products listed</span> : <span>Add products</span>}
         </Link>
       </div>
