@@ -33,9 +33,9 @@ const CompanyCard = props => {
             Added {moment(company.createdAt).format("MMMM Do YYYY")}
           </span>
         </div>
-        <div className="description">
+        {/* <div className="description">
           {company.description}
-        </div>
+        </div> */}
       </div>
 
       <div className="extra content">

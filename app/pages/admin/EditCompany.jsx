@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import axios from "axios";
 import {browserHistory} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
 import {authenticateAndFetchCompany} from "../../actions/companyActions";
@@ -28,7 +29,9 @@ class EditCompany extends React.Component {
       phone_number: props.company.phone_number || "",
       website: props.company.website || "",
       coverImage: props.company.cover_image,
-      profileImage: props.company.profile_image
+      profileImage: props.company.profile_image,
+      coverImagePreview: null,
+      profileImagePreview: null
     };
   }
 
@@ -49,7 +52,9 @@ class EditCompany extends React.Component {
       website: company.website || "",
       coverImage: company.cover_image,
       profileImage: company.profile_image,
-      newCompany: company.id ? false : true
+      newCompany: company.id ? false : true,
+      coverImagePreview: null,
+      profileImagePreview: null
     });
     // }
   }
@@ -114,22 +119,42 @@ class EditCompany extends React.Component {
       cover_image: this.state.coverImage
     };
     if (this.validate(company)) {
+      const imgUploadInputs = [this.profileImgField, this.coverImgField];
       if (this.state.newCompany) {
         api.post("api/companies/", {...company}).then(companyResponse => {
-          // const {id: newId} = companyResponse.data;
-          this.setState({newCompany: false});
-          const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-          toast.show({message: "New company created.", intent: Intent.SUCCESS});
-          // browserHistory.push(`/settings/company/${newId}`);
-          browserHistory.push("/settings/");
+          const {id: newCompanyId} = companyResponse.data;
+          const imgUploadPromises = imgUploadInputs.filter(uploadInput => uploadInput.files.length).map(uploadInput => {
+            const imgType = uploadInput.id.includes("profile") ? "profile" : "cover";
+            const config = {headers: {"Content-Type": "multipart/form-data"}};
+            const formData = new FormData();
+            formData.append("image", uploadInput.files[0]);
+            return api.post(`/api/companies/${newCompanyId}/${imgType}`, formData, config);
+          });
+          Promise.all(imgUploadPromises).then(imgUploadResponses => {
+            // console.log("imgUploadResponses!", imgUploadResponses);
+            this.setState({newCompany: false});
+            const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+            toast.show({message: "New company created.", intent: Intent.SUCCESS});
+            // browserHistory.push(`/settings/company/${newCompanyId}`);
+            browserHistory.push("/settings/");
+          });
         });
       }
       else {
         api.put(`api/companies/${id}`, {...company}).then(() => {
-          this.setState({newCompany: false});
-          const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-          toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
-          browserHistory.push("/settings/");
+          const imgUploadPromises = imgUploadInputs.filter(uploadInput => uploadInput.files.length).map(uploadInput => {
+            const imgType = uploadInput.id.includes("profile") ? "profile" : "cover";
+            const config = {headers: {"Content-Type": "multipart/form-data"}};
+            const formData = new FormData();
+            formData.append("image", uploadInput.files[0]);
+            return api.post(`/api/companies/${id}/${imgType}`, formData, config);
+          });
+          Promise.all(imgUploadPromises).then(imgUploadResponses => {
+            this.setState({newCompany: false});
+            const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+            toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
+            browserHistory.push("/settings/");
+          });
         });
       }
     }
@@ -147,20 +172,16 @@ class EditCompany extends React.Component {
     </div>);
   }
 
-  renderProgress = amount => {
-    return {
-      className: "tests",
-      iconName: "cloud-upload",
-      message: (
-        <ProgressBar
-          className={amount < 100 ? "" : "pt-no-stripes"}
-          intent={amount < 100 ? Intent.PRIMARY : Intent.SUCCESS}
-          value={amount / 100}
-        />
-      ),
-      timeout: amount < 100 ? 0 : 2000
-    };
-  }
+  renderProgress = amount => ({
+    className: "tests",
+    iconName: "cloud-upload",
+    message: <ProgressBar
+      className={amount < 100 ? "" : "pt-no-stripes"}
+      intent={amount < 100 ? Intent.PRIMARY : Intent.SUCCESS}
+      value={amount / 100}
+    />,
+    timeout: amount < 100 ? 0 : 2000
+  });
 
   removeImg = imgStateKey => {
     const imgType = imgStateKey.replace("Image", "");
@@ -176,31 +197,10 @@ class EditCompany extends React.Component {
     });
   }
 
-  uploadImg = e => {
+  previewImg = e => {
     const imgType = e.target.id.includes("profile") ? "profile" : "cover";
-    const imgStateKey = `${imgType}Image`;
-    const {id: companyId} = this.props.company;
-    let amount = 10;
-    const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-    const key = toast.show(this.renderProgress(amount));
-    const config = {
-      onUploadProgress: progressEvent => {
-        console.log("progressEvent");
-        amount = Math.round(progressEvent.loaded * 100 / progressEvent.total);
-        console.log(progressEvent);
-        console.log(amount);
-        // toast.update("message", <ProgressBar className={amount < 100 ? "" : "pt-no-stripes"} intent={amount < 100 ? Intent.PRIMARY : Intent.SUCCESS} value={amount / 100} />);
-        toast.update(key, this.renderProgress(amount));
-        console.log("END progressEvent");
-      },
-      headers: {"Content-Type": "multipart/form-data"}
-    };
-    const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    api.post(`/api/companies/${companyId}/${imgType}`, formData, config).then(imgResp => {
-      console.log("COMPLETED", imgResp.data);
-      this.setState({[imgStateKey]: imgResp.data.file});
-    });
+    const imgStateKey = `${imgType}ImagePreview`;
+    this.setState({[imgStateKey]: URL.createObjectURL(e.target.files[0])});
   }
 
   selectCountry = country => {
@@ -213,7 +213,8 @@ class EditCompany extends React.Component {
   render() {
     const {company, countries} = this.props;
     const {error, address, city, country, description, name, region,
-      companyEmail, phone_number, website, coverImage, profileImage} = this.state;
+      companyEmail, phone_number, website, coverImage, profileImage,
+      coverImagePreview, profileImagePreview} = this.state;
     return (
       <div>
 
@@ -359,14 +360,17 @@ class EditCompany extends React.Component {
             </label>
             {profileImage
               ? <div className="pt-button-group pt-minimal">
-                <button className="pt-button pt-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
+                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.profileImgField.click()}}>Replace</button>
+                <button className="pt-button pt-icon-trash" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
               </div>
               : null}
           </header>
-          {profileImage
-            ? <img src={profileImage} />
-            : this.addImage("profileImgField")}
-          <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.uploadImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
+          {profileImagePreview
+            ? <img src={profileImagePreview} />
+            : profileImage
+              ? <img src={profileImage} />
+              : this.addImage("profileImgField")}
+          <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
         </div>
 
         <div className="img-container">
@@ -376,14 +380,17 @@ class EditCompany extends React.Component {
             </label>
             {coverImage
               ? <div className="pt-button-group pt-minimal">
+                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.coverImgField.click()}}>Replace</button>
                 <button className="pt-button pt-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "coverImage")}>Remove</button>
               </div>
               : null}
           </header>
-          {coverImage
-            ? <img src={coverImage} />
-            : this.addImage("coverImgField")}
-          <input ref={imgField => { this.coverImgField = imgField; }} onChange={this.uploadImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
+          {coverImagePreview
+            ? <img src={coverImagePreview} />
+            : coverImage
+              ? <img src={coverImage} />
+              : this.addImage("coverImgField")}
+          <input ref={imgField => { this.coverImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
         </div>
 
         <div className="button-group">

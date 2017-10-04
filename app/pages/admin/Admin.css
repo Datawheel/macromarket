@@ -390,3 +390,7 @@
         padding-bottom: 25px;
     }
 }
+
+.pt-navbar {
+  padding: 0;
+}
