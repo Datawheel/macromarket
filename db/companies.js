@@ -40,9 +40,9 @@ module.exports = function(sequelize, db) {
           sequelize.models.Search.create({
             id, name, profile_type: "company", document, image
           }).then(Search => {
-            console.log(Search);
+            console.log("Success: New company created.");
           }).catch(err => {
-            console.log(err);
+            console.log("Error creating company.", err);
           });
         }).catch(err => {
           console.log(err);

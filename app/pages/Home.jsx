@@ -87,20 +87,11 @@ class Home extends React.Component {
   }
 
   render() {
-    var options = [
-      {
-        value: 'All',
-        label: 'All'
-      }, {
-        value: 'Company',
-        label: 'Companies'
-      }, {
-        value: 'Country',
-        label: 'Countries'
-      }, {
-        value: 'Product',
-        label: 'Products'
-      }
+    const options = [
+      {value: "All", label: "All"},
+      {value: "Company", label: "Companies"},
+      {value: "Country", label: "Countries"},
+      {value: "Product", label: "Products"}
     ];
 
     return (
@@ -112,7 +103,8 @@ class Home extends React.Component {
                 <div className="oec-logo-wrapper">
                   <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
                 </div>
-              <img src="/images/icons/logos/orange-market-logo.svg"></img>  </div>
+                <img src="/images/icons/logos/orange-market-logo.svg" />
+              </div>
               <p className="tagline">Market for exported and imported goods.</p>
             </div>
             <div className="search-wrapper">
@@ -120,25 +112,24 @@ class Home extends React.Component {
                 <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text"></input>
                 {this.props.results.length > 0 && this.state.suggestionsVisible
                   ? <ul ref="area" className="suggestions-wrapper">
-                      {this.props.results.map(suggestion => {
-                        return <li onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                          <img className="icon" src={suggestion.profile_type === "Country"
-                            ? "/images/icons/icon-country-yellow.svg"
-                            : suggestion.profile_type === "Product"
-                              ? "/images/icons/icon-product-yellow.svg"
-                              : "/images/icons/icon-company-yellow.svg"}/>
-                          <p>{`${suggestion.name}  |
-                        ${suggestion.profile_type === "connectamericas"
-                              ? "company"
-                              : suggestion.profile_type}`}</p>
-                        </li>;
-                      })}
-                    </ul>
-                  : null}</div>
+                    {this.props.results.map((suggestion, i) => {
+                      return <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
+                        <img className="icon" src={suggestion.profile_type === "Country"
+                          ? "/images/icons/icon-country-yellow.svg"
+                          : suggestion.profile_type === "Product"
+                            ? "/images/icons/icon-product-yellow.svg"
+                            : "/images/icons/icon-company-yellow.svg"}/>
+                        <p>{`${suggestion.name}  |
+                      ${suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type}`}</p>
+                      </li>;
+                    })}
+                  </ul>
+                  : null}
+              </div>
               <Select optionClassName={"dropdown-option"} arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
             </div>
             <button onClick={this.search.bind(this)} className="search-button">Search</button >
-            {/*<div className="cta-buttons-wrapper">
+            {/* <div className="cta-buttons-wrapper">
               <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
                 <div className="text-wrapper">
                   <img className="icon" src="/images/icons/icon-import.svg"/>

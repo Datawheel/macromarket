@@ -2,6 +2,7 @@ import React from "react";
 import {CardHome} from "../components/Card.jsx";
 import "./Home.css";
 import {browserHistory} from "react-router";
+import Select from "react-select";
 
 class HomeSimple extends React.Component {
   constructor(props) {
@@ -36,6 +37,12 @@ class HomeSimple extends React.Component {
   }
 
   render() {
+    const options = [
+      {value: "All", label: "All"},
+      {value: "Company", label: "Companies"},
+      {value: "Country", label: "Countries"},
+      {value: "Product", label: "Products"}
+    ];
 
     return (
       <div className="home-background">
@@ -50,7 +57,12 @@ class HomeSimple extends React.Component {
               </div>
               <p className="tagline">Market for exported and imported goods.</p>
             </div>
-            <div className="search-wrapper"></div>
+            <div className="search-wrapper">
+              <div className="search-input-wrapper">
+                <input className="search-input" placeholder="Enter a Search" type="text" />
+              </div>
+              <Select optionClassName={"dropdown-option"} arrowRenderer={() => {<span className="chevron bottom"></span>}} clearable={false} searchable={false} name="form-field-name" value="All" options={options} onChange={this.selectDropDown} />
+            </div>
 
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>

@@ -110,8 +110,8 @@
     }
     & .search-icon-wrapper {
         & button {
-            top: 30px;
-            right: 14px;
+            top: 26px;
+            right: 8px;
             position: absolute;
             &:before {
               color: black;

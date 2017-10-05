@@ -44,16 +44,23 @@ class SettingsSummary extends React.Component {
     return (
       <div>
         { user.activated
-          ? <nav className="pt-navbar">
-            <div className="pt-navbar-group pt-align-left">
-              <div className="pt-navbar-heading">My Companies</div>
-            </div>
-            <div className="pt-navbar-group pt-align-right">
-              <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
-                List your Company
-              </Link>
-            </div>
-          </nav>
+          ? companies.length
+            ? <nav className="pt-navbar">
+              <div className="pt-navbar-group pt-align-left">
+                <div className="pt-navbar-heading">My Companies</div>
+              </div>
+              <div className="pt-navbar-group pt-align-right">
+                <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
+                  List your company
+                </Link>
+              </div>
+            </nav>
+            : <NonIdealState
+              action={<Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">Add company</Link>}
+              visual="search"
+              title="No companies listed"
+              description="Click below to add your first company listing."
+            />
           : <NonIdealState
             action={<CanonActivate />}
             visual="search"
