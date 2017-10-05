@@ -119,6 +119,8 @@ class EditCompany extends React.Component {
       cover_image: this.state.coverImage
     };
     if (this.validate(company)) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       const imgUploadInputs = [this.profileImgField, this.coverImgField];
       if (this.state.newCompany) {
         api.post("api/companies/", {...company}).then(companyResponse => {
@@ -192,7 +194,7 @@ class EditCompany extends React.Component {
     const f = this.state[imgStateKey].replace("https://storage.googleapis.com/mm-company/", "");
     api.delete(`/api/companies/${companyId}/${imgType}?file=${f}`).then(imgResp => {
       toast.update(key, this.renderProgress(100));
-      console.log("COMPLETED", imgResp.data);
+      // console.log("COMPLETED", imgResp.data);
       this.setState({[imgStateKey]: null});
     });
   }
@@ -204,7 +206,6 @@ class EditCompany extends React.Component {
   }
 
   selectCountry = country => {
-    console.log("selected country:", country);
     this.setState({
       country_id: country.id
     });

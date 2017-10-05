@@ -16,7 +16,8 @@ module.exports = function(app) {
     const {uid} = req.params;
     db.Company.findAll({
       where: {uid},
-      include: [db.Country]
+      include: [db.Country],
+      order: [["createdAt", "DESC"]]
     }).then(companies => res.json(companies));
   });
 
