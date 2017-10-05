@@ -27,7 +27,9 @@ const CompanyCard = props => {
       </div>
 
       <div className="content">
-        <Link to={`/settings/company/${company.slug}`} className="header">{company.name}</Link>
+        <h2>
+          <Link to={`/settings/company/${company.slug}`} className="header">{company.name}</Link>
+        </h2>
         <div className="meta">
           <span className="date">
             Added {moment(company.createdAt).format("MMMM Do YYYY")}
@@ -40,7 +42,11 @@ const CompanyCard = props => {
 
       <div className="extra content">
         <Link to={`/settings/company/${company.slug}/products`} role="button" className="pt-button pt-small pt-minimal pt-icon-edit">
-          { company.trades ? <span>{company.trades.length} products listed</span> : <span>Add products</span>}
+          { company.trades ? <span>{company.trades.length} products</span> : <span>Add products</span>}
+        </Link>
+        <Link to={`/company/${company.slug}`} role="button" className="view-listing pt-button pt-small pt-minimal">
+          View listing
+          <span className="pt-icon-standard pt-minimal pt-icon-link pt-align-right"></span>
         </Link>
       </div>
     </div>

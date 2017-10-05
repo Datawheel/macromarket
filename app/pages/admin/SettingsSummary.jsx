@@ -58,7 +58,7 @@ class SettingsSummary extends React.Component {
             action={<CanonActivate />}
             visual="search"
             title="Confirm Account"
-            description="Please click the link in your email to activate your account. If you did not receive an email, resend one here."
+            description="In order to list your company, you first need to activate your account. Click the link in your email or if you did not receive an email, resend one here."
           />
         }
 
