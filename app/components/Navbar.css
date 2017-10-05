@@ -14,7 +14,6 @@
     border-bottom: 3px solid var(--accent-color);
     & li {
         cursor: pointer;
-        font-size: 13px;
         padding: 7px 5px;
         font-weight: 300;
     }
@@ -73,9 +72,10 @@
             padding: 8px 40px;
             color: black;
             letter-spacing: 2px;
-            font-size: 11px;
-            font-weight: 200;
+            font-size: 14px;
+            font-weight: bold;
             text-transform: uppercase;
+            text-decoration: none;
         }
         & button {
             background: transparent;
@@ -107,9 +107,12 @@
     }
     & .search-icon-wrapper {
         & button {
-            top: 26px;
-            right: -6px;
+            top: 30px;
+            right: 14px;
             position: absolute;
+            &:before {
+              color: black;
+            }
         }
         & .search-icon {
             width: 20px;

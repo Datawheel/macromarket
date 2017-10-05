@@ -3,7 +3,6 @@ import {Link} from "react-router";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
 import {isAuthenticated} from "datawheel-canon";
-import ReactDOM from "react-dom";
 import "./Navbar.css";
 
 class NavBar extends React.Component {
@@ -141,7 +140,7 @@ class NavBar extends React.Component {
                 </li>}
             {this.props.location.pathname === "/"
               ? null
-              : <li className="nav-bar-element search-icon-wrapper">
+              : <li className="nav-bar-element search-icon-wrapper XX">
                 <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={this.toggleSearch}></button>
               </li>}
           </ul>
