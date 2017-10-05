@@ -13,6 +13,18 @@
     --libreFranklin: "Libre Franklin", sans-serif;
 }
 
+body {
+  background-color: var(--dark-blue);
+}
+body, h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+}
+p {
+  line-height: 1.3;
+}
+
+
+
 textarea:focus, input:focus, button {
     outline: none;
 }

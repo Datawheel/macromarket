@@ -37,19 +37,21 @@
 }
 
 .nav-bar {
+    display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     list-style-type: none;
     text-align: right;
     position: fixed;
     z-index: 1;
     top: 0;
     width: 100%;
-    padding: 20px;
     background: var(--accent-color);
     margin: 0;
-    padding: 36px 8%;
+    padding: 32px 80px 32px 40px;
+
     & .profile-image-wrapper {
         margin-left: 10px;
         display: inline-block;
@@ -80,6 +82,7 @@
         & button {
             background: transparent;
             border: none;
+            margin-right: 40px;
         }
     }
     & .nav-bar-element.company-name a {
@@ -188,7 +191,7 @@
             width: 25px;
         }
         & a, & a:visited, & button {
-            padding: 8px 40px;
+            padding: 8px 24px;
             color: black;
             letter-spacing: 2px;
             font-size: 11px;

@@ -76,14 +76,25 @@ class CompanyWithId extends React.Component {
             <div className="profile-image-wrapper">
               <div className="profile-image background-image" style={profileImage}></div>
             </div>
-            <img className="icon" src="/images/icons/icon-company-white.svg"/>
+
             <h3>{company.name}</h3>
+            <div className="description-wrapper">
+
+              <p>{company.description}</p>
+            </div>
           </div>
+
+        </Sidebar>
+        <div className="center-content">
+          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={connectamericas}/>
+
+          <div className="content-wrapper">
+
           {this.props.trades
             ? <div className="products">
               <div className="imports">
                 <div className="section-wrapper">
-                  <h5>Products Imported</h5>
+                  <h3>Products Imported</h3>
                   <div className="yellow-line"></div>
                   {trades.imports
                     ? <div>{trades.imports.map((trade, index) => {
@@ -108,7 +119,7 @@ class CompanyWithId extends React.Component {
               </div>
               <div className="exports">
                 <div className="section-wrapper">
-                  <h5>Products Exported</h5>
+                  <h3>Products Exported</h3>
                   <div className="yellow-line"></div>
                   {trades.exports
                     ? <div>{trades.exports.map((trade, index) => {
@@ -138,7 +149,7 @@ class CompanyWithId extends React.Component {
               </div>
               <div className="coverage">
                 <div className="section-wrapper">
-                  <h5>Coverage Area</h5>
+                  <h3>Coverage Area</h3>
                   <div className="yellow-line"></div>
                   {trades.countries
                     ? <div>
@@ -170,12 +181,7 @@ class CompanyWithId extends React.Component {
                 </a> : null}
             </div>
             : null}
-        </Sidebar>
-        <div className="center-content">
-          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={connectamericas}/>
-          <div className="description-wrapper">
-            <h3>Company Description</h3>
-            <p>{company.description}</p>
+
           </div>
         </div>
       </div>

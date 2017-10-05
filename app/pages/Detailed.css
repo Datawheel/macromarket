@@ -54,7 +54,8 @@
     }
     & .center-content {
         display: inline-block;
-        width: 73%;
+        width: 75%;
+
     }
     & .filter-wrapper {
         text-align: center;
@@ -133,12 +134,16 @@
     & .description-wrapper {
         padding: 40px 10%;
         & p {
-            line-height: 2;
+            line-height: 1.5;
         }
     }
 }
 
 .company {
+
+    & h3 {
+      color: white;
+    }
     & button {
         font-size: 14px;
     }
@@ -147,15 +152,51 @@
         vertical-align: top;
         display: inline-block;
     }
-    & .product-wrapper {
-        padding: 2px 0;
-        & p {
-            font-size: 9px;
+    & .products {
+
+      & h3 {
+        padding: 24px 16px 16px;
+      }
+      & button {
+          color: white;
+          border: 1px solid white;
+          background: black;
+          padding: 15px;
+          margin: 40px 0 40px 16px;
+          width: 285px;
+      }
+      & .product-wrapper {
+        display: inline-block;
+        margin: 8px 16px;
+        width: 285px;
+        height: 64px;
+
+        & .icon-wrapper {
+          position: relative;
+          display: inline-block;
+          width: 64px;
+          height: 64px;
+          margin: 0px;
+          z-index: 0;
+
+          & img {
+            margin-right: 0px;
+          }
         }
+
         & .colored-wrapper {
-            width: 70%;
-            max-width: 165px;
+          display: inline-block;
+          width: 220px;
+          height: 64px;
+          padding: 0px;
+          margin: 0px;
+
+          & p {
+              font-size: 14px;
+              padding: 8px 8px 8px 16px;
+          }
         }
+      }
     }
 }
 
