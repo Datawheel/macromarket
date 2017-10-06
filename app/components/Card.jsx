@@ -1,8 +1,9 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router";
 import "./Card.css";
 
-export class Card extends React.Component {
+class Card extends React.Component {
   constructor(props) {
     super(props);
     this.content = this.props.content;
@@ -51,7 +52,7 @@ export class Card extends React.Component {
       <div className="card fade-in">
         <Link to={`/${this.content.profile_type === "connectamericas"
           ? "company"
-          : this.content.profile_type}/${id}`}>
+          : this.content.profile_type}/${id}`} onClick={() => {this.props.activateSearch(false)}}>
           <div className="image-wrapper">
             <div style={{
               backgroundImage: `url(${img})`
@@ -126,3 +127,11 @@ export class CardHome extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  activateSearch: activeState => {
+    dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  }
+});
+
+export default connect(state => ({searchActive: state.searchActive}), mapDispatchToProps)(Card);

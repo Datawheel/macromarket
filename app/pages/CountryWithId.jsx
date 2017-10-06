@@ -6,7 +6,7 @@ import {fetchCountry} from '../actions/countryActions';
 import {fetchProducts} from '../actions/productsActions';
 import {fetchTradesByCountry} from "../actions/tradesActions";
 import {fetchCaTradesByCountry} from "../actions/tradesActions";
-import {Card} from "../components/Card.jsx";
+import Card from "../components/Card.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from "react-select";

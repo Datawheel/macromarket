@@ -1,4 +1,3 @@
-import {combineReducers} from "redux";
 import companyProfile from "./companyProfile";
 import countryProfile from "./countryProfile";
 import productProfile from "./productProfile";

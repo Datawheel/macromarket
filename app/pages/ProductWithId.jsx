@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import Select from 'react-select';
 import {browserHistory} from "react-router";
-import {Card} from "../components/Card.jsx";
+import Card from "../components/Card.jsx";
 import {Link} from "react-router";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";

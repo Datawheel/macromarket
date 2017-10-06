@@ -140,24 +140,24 @@ class NavBar extends React.Component {
                 </li>}
             {this.props.location.pathname === "/"
               ? null
-              : <li className="nav-bar-element search-icon-wrapper XX">
-                <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={this.toggleSearch}></button>
+              : <li className="nav-bar-element search-icon-wrapper">
+                <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={() => {activateSearch(true)}}></button>
               </li>}
           </ul>
         </div>
         {this.state.dropdownVisible
           ? this.dropdown()
           : null}
-        <Search toggleSearch={this.toggleSearch} searchActive={this.state.searchOpen}></Search>
+        <Search toggleSearch={activateSearch} searchActive={searchActive}></Search>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  // activateSearch: activeState => {
-  //   dispatch({type: "ACTIVATE_SEARCH", data: activeState});
-  // },
+  activateSearch: activeState => {
+    dispatch({type: "ACTIVATE_SEARCH", data: activeState});
+  },
   // setSearch: query => {
   //   dispatch(setSearch(query));
   // },
@@ -166,4 +166,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(state => ({auth: state.auth}), mapDispatchToProps)(NavBar);
+export default connect(state => ({auth: state.auth, searchActive: state.searchActive}), mapDispatchToProps)(NavBar);

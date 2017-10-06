@@ -1,5 +1,5 @@
 import React from "react";
-import {Card} from "./Card.jsx";
+import Card from "./Card.jsx";
 import "./Search.css";
 import api from "../api.js";
 
@@ -93,7 +93,7 @@ class Search extends React.Component {
 
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
-        <div onClick={this.props.toggleSearch}className="delete"><img src="/images/icons/icon-close-white.svg"/></div>
+        <div onClick={() => {this.props.toggleSearch(false)}} className="delete"><img src="/images/icons/icon-close-white.svg"/></div>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
