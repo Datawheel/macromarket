@@ -56,14 +56,14 @@ class CountryWithId extends React.Component {
 
 
   compare(a, b, attr) {
-      if (a[attr] < b[attr]) {
-        return -1;
-      }
-      if (a[attr] > b[attr]) {
-        return 1;
-      }
-      return 0;
+    if (a[attr] < b[attr]) {
+      return -1;
     }
+    if (a[attr] > b[attr]) {
+      return 1;
+    }
+    return 0;
+  }
 
 
   removeSelection = () => {
@@ -153,25 +153,26 @@ class CountryWithId extends React.Component {
           {!allTrades
             ? <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>
             : <div className="result-wrapper">
-                {allTrades.length > 0 ? allTrades.map((trade, index) => {
-                  if (!trade.profile_type) {
-                    const content = trade.Company;
-                    content.profile_type = "company";
-                    if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
-                      return <Card key={index} content={content}/>;
-                    }
-                  } else {
-                    if (this.state.selectedOption === "all" && this.state.product.value === "all") {
-                      return <Card key={index} content={trade}/>;
-                    }
+              {allTrades.length > 0 ? allTrades.map((trade, index) => {
+                if (!trade.profile_type) {
+                  const content = trade.Company;
+                  content.profile_type = "company";
+                  if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
+                    return <Card key={index} content={content}/>;
                   }
-                }) : <div className="result-wrapper no-companies">
-                  <p>There are no companies listed. Be the first one!</p>
-                  <Link to={"/settings/product"}>
-                    <button className="list-company">List Your Company</button>
-                  </Link>
-                </div>}
-              </div>
+                }
+                else {
+                  if (this.state.selectedOption === "all" && this.state.product.value === "all") {
+                    return <Card key={index} content={trade}/>;
+                  }
+                }
+              }) : <div className="result-wrapper no-companies">
+                <p>There are no companies listed. Be the first one!</p>
+                <Link to={"/settings/product"}>
+                  <button className="list-company">List Your Company</button>
+                </Link>
+              </div>}
+            </div>
           }
         </div>
       </div>

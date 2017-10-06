@@ -3,7 +3,8 @@ module.exports = function(sequelize, db) {
     name: db.STRING,
     profile_type: db.STRING,
     image: db.STRING,
-    document: db.STRING
+    document: db.STRING,
+    slug: db.STRING
   }, {
     classMethods: {
       search: (query, filter) => {

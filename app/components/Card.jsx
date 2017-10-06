@@ -16,19 +16,22 @@ export class Card extends React.Component {
       icon = "/images/icons/icon-country-yellow.svg";
       const countryImage = this.content.image
         ? this.content.id
-        : this.content.id.slice(0, 2)
+        : this.content.id.slice(0, 2);
       img = `/images/${this.content.profile_type}/${countryImage}.jpg`;
     }
     if (this.content.profile_type === "company") {
       icon = "/images/icons/icon-company-yellow.svg";
       img = this.content.image || this.content.profile_image;
-      if (id.toString().includes("company")) {
-        id = id.replace("company", "");
-      }
+      id = this.content.slug;
+      // if (id.toString().includes("company")) {
+      //   id = id.replace("company", "");
+      // }
+      // else {
+      //   id = this.content.slug;
+      // }
     }
     if (this.content.profile_type === "product") {
-      const id = this.content.id;
-      img = `/images/${this.content.profile_type}/${this.content.image}.jpg`
+      img = `/images/${this.content.profile_type}/${this.content.image}.jpg`;
     }
 
     if (this.content.profile_type === "connectamericas") {
@@ -85,16 +88,19 @@ export class CardHome extends React.Component {
   }
 
   render() {
-    let img = ""
+    let img = "";
     if (this.content.type === "company") {
       img = this.content.logo;
-    } else {
+    }
+    else {
       const id = this.content.id;
       const fallbackId = id.substring(0, 2);
       img = this.content.flickr_link
         ? `/images/${this.content.type}/${this.content.id}.jpg`
         : `/images/${this.content.type}/${fallbackId}.jpg`;
     }
+
+    console.log(this)
 
     return (
       <div className="card">
@@ -109,7 +115,7 @@ export class CardHome extends React.Component {
               : null}
             <p className="category">
               {this.content.type === "country"
-                ? "country - " + this.content.continent
+                ? `country - ${this.content.continent}`
                 : this.content.type === "product"
                   ? this.content.category
                   : "company"}</p>
