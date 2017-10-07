@@ -4,6 +4,8 @@ import App from "components/App";
 import Home from "pages/Home";
 import HomeSimple from "pages/HomeSimple";
 import NotFound from "pages/NotFound";
+import Terms from "pages/Terms";
+import Privacy from "pages/Privacy";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
@@ -22,64 +24,11 @@ import Inbox from "pages/Inbox";
 function genRandId(path) {
   let candidates;
   if (path.includes("country")) {
-    candidates = [
-      "saper",
-      "napri",
-      "sapry",
-      "ocnzl",
-      "afken",
-      "asbgd",
-      "afzaf",
-      "aschn",
-      "asvnm",
-      "eudeu",
-      "eufra",
-      "nacri",
-      "namex",
-      "nausa",
-      "saarg",
-      "sabra",
-      "sachl",
-      "euisl"
-    ];
+    candidates = ["saper", "napri", "sapry", "ocnzl", "afken", "asbgd", "afzaf", "aschn", "asvnm", "eudeu", "eufra", "nacri", "namex", "nausa", "saarg", "sabra", "sachl", "euisl"];
 
   }
   else if (path.includes("product")) {
-    candidates = [
-      "010104",
-      "14710410",
-      "11540232",
-      "15730210",
-      "115512",
-      "11570292",
-      "115903",
-      "02080540",
-      "041601",
-      "042306",
-      "020804",
-      "01010420",
-      "01020649",
-      "01020750",
-      "01030614",
-      "010406",
-      "02070960",
-      "02071220",
-      "020713",
-      "15820220",
-      "15830120",
-      "15830610",
-      "02071332",
-      "02080710",
-      "15731520",
-      "157414",
-      "16848350",
-      "06284210",
-      "16842541",
-      "168427",
-      "18902111",
-      "14710420",
-      "168425"
-    ];
+    candidates = ["010104", "14710410", "11540232", "15730210", "115512", "11570292", "115903", "02080540", "041601", "042306", "020804", "01010420", "01020649", "01020750", "01030614", "010406", "02070960", "02071220", "020713", "15820220", "15830120", "15830610", "02071332", "02080710", "15731520", "157414", "16848350", "06284210", "16842541", "168427", "18902111", "14710420", "168425"];
   }
   else if (path.includes("company")) {
     candidates = ["thiel_inc", "haag_schultz_and_damore", "dickens_romaguera_and_boyer", "waelchi_and_sons"];
@@ -117,6 +66,8 @@ export default function RouteCreate() {
       <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
       <Route path="/login" component={Login}/>
       <Route path="/signup" component={Signup}/>
+      <Route path="terms" component={Terms} />
+      <Route path="privacy" component={Privacy} />
       <Route path="reset" component={Reset} />
       <Route path="activate" component={Activate} />
       <Route path="settings" component={Settings}>

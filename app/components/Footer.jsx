@@ -36,7 +36,7 @@ const Footer = () =>
     </div>
     <div className="footer-meta">
       <div className="footer-copyright">
-      2017 Macro Market. <a href="#">Terms of service</a> and <a href="#">privacy policy</a> apply.
+      2017 Macro Market. <a href="/terms">Terms of service</a> and <a href="/privacy">privacy policy</a> apply.
       </div>
       <div className="footer-logos">
         <img className="connect" src="/images/icons/logos/connectAmericasLogo.png" />
