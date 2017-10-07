@@ -20,8 +20,19 @@ class Search extends React.Component {
     const {searchActive: prevSearchActive} = prevProps;
     const {searchActive} = this.props;
     if (prevSearchActive === false && searchActive === true) {
-      console.log("focus time baby!!!", this.searchInput);
+      console.log("Opening search...");
+      document.addEventListener("keydown", this.escFunc, false);
       this.searchInput.focus();
+    }
+    if (prevSearchActive === true && searchActive === false) {
+      console.log("Closing search...");
+      document.removeEventListener("keydown", this.escFunc, false);
+    }
+  }
+
+  escFunc = event => {
+    if (event.keyCode === 27) {
+      this.props.toggleSearch(false);
     }
   }
 
