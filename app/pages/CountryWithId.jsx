@@ -7,13 +7,15 @@ import {fetchProducts} from '../actions/productsActions';
 import {fetchTradesByCountry} from "../actions/tradesActions";
 import {fetchCaTradesByCountry} from "../actions/tradesActions";
 import Card from "../components/Card.jsx";
+import AnchorList from "../components/AnchorList.jsx";
 import "./Detailed.css";
 import "../components/Dropdown.css";
 import Select from "react-select";
 import Dropdown from "../components/Dropdown";
 import {fetchData} from "datawheel-canon";
 import {url} from "../api";
-import CountryHeader from "../components/CountryHeader"
+import CountryHeader from "../components/CountryHeader";
+import {nest} from "d3-collection";
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -36,7 +38,7 @@ class CountryWithId extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.params.countryWithId !== this.props.params.countryWithId) {
-      const id = newProps.params.countryWithId
+      const id = newProps.params.countryWithId;
       this.props.fetchProducts();
       this.props.fetchTradesByCountry(id);
       this.props.fetchCountry(id);
@@ -48,12 +50,7 @@ class CountryWithId extends React.Component {
     this.setState({selectedOption});
   }
 
-  arrowRenderer = () => {
-    return (
-      <span className="chevron bottom"></span>
-    );
-  }
-
+  arrowRenderer = () => <span className="chevron bottom"></span>;
 
   compare(a, b, attr) {
     if (a[attr] < b[attr]) {
@@ -78,6 +75,29 @@ class CountryWithId extends React.Component {
 
   selectDropDown = item => {
     this.setState({product: item});
+  }
+
+  introParagraph = () => {
+    const {country, trades} = this.props.data;
+    const tradesByCompany = nest()
+      .key(d => d.company_id)
+      .entries(trades)
+      .map(c => c.values[0].Company);
+    const exportsByProduct = nest()
+      .key(d => d.product_id)
+      .entries(trades.filter(t => t.trade_flow === "exports"))
+      .map(c => c.values[0].Product);
+    const importsByProduct = nest()
+      .key(d => d.product_id)
+      .entries(trades.filter(t => t.trade_flow === "imports"))
+      .map(c => c.values[0].Product);
+    return tradesByCompany.length
+      ? <p>
+        There are {tradesByCompany.length} companies doing business in {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.
+        These companies export {exportsByProduct.length} products including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
+        They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
+      </p>
+      : null;
   }
 
   render() {
@@ -118,8 +138,6 @@ class CountryWithId extends React.Component {
       allTrades = caTrades.concat(trades);
     }
 
-
-
     return (
       <div className="detailed-content-wrapper country">
         <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
@@ -149,6 +167,13 @@ class CountryWithId extends React.Component {
               Clear All Filters</button>
           </div>
         </div>
+
+        <div className="intro-text">
+          <section>
+            {this.introParagraph()}
+          </section>
+        </div>
+
         <div className="result-wrapper-outer">
           {!allTrades
             ? <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>
@@ -197,9 +222,10 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-const countryUrl = `${url}/api/countries/<countryWithId>`;
-
-CountryWithId.preneed = [fetchData("country", countryUrl, res => res)];
+CountryWithId.preneed = [
+  fetchData("country", `${url}/api/countries/<countryWithId>`, res => res),
+  fetchData("trades", `${url}/api/trades/country/<countryWithId>`, res => res)
+];
 
 CountryWithId.need = [fetchData("countryData", "http://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
   const response = res.data[0];
