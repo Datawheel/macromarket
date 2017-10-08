@@ -82,10 +82,11 @@
             background-color: white;
             border: 1px solid white;
             border-radius: var(--border-raidus);
-            display: inline-block;
-            width: 84%;
+            display: flex;
             font-family: var(--libreFranklin);
             font-weight: 300;
+            margin: auto;
+            width: 84%;
         }
         & .Select, & .search-button, & .search-input, & .search-input-wrapper, & .selected-wrapper {
             display: inline-block;

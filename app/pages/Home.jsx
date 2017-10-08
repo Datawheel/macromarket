@@ -1,62 +1,21 @@
 import React from "react";
-import {connect} from "react-redux";
-import {fetchCountries} from "../actions/countriesActions";
-import {fetchCompanies} from "../actions/companiesActions";
-import {fetchUnNestedProducts} from "../actions/productsActions";
-import {fetchSearch, setSearch} from "../actions/searchActions";
 import {CardHome} from "../components/Card.jsx";
 import "./Home.css";
-import ReactDOM from "react-dom";
-import Select from 'react-select';
 import {browserHistory} from "react-router";
+import Select from "react-select";
+import api from "../api.js";
 
-class Home extends React.Component {
+class HomeSimple extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: {
-        value: 'All',
-        label: 'All'
-      },
       keyword: "",
       suggestions: [],
       suggestionsVisible: true,
-      active: null
+      active: null,
+      searchResults: [],
+      filter: {value: "All", label: "All"}
     };
-  }
-
-  componentDidMount() {
-
-    this.props.fetchCountries();
-    this.props.fetchProductsForSearch();
-    this.props.fetchCompanies();
-    // Hide dropdown block on click outside the block
-    window.addEventListener("click", this.hideDropDown, false);
-  }
-
-  hideDropDown = e => {
-    const area = ReactDOM.findDOMNode(this.refs.area);
-    if (area) {
-      if (!area.contains(e.target) && this.state.suggestionsVisible) {
-        this.setState({suggestionsVisible: false})
-      }
-    }
-  }
-
-  handleChange = e => {
-    this.setState({suggestionsVisible: true});
-    this.setState({keyword: e.target.value});
-
-    // Only run the search if the user has typed MORE than 2 characters,
-    // otherwise this returns way too many results and feels laggy.
-    //  - else
-    // clear the results but submitting an empty string
-    if (e.target.value.length > 2) {
-      this.props.fetchSearch(e.target.value, this.state.selected.value.toLowerCase());
-    } else {
-      this.props.fetchSearch("", this.state.selected.value.toLowerCase());
-    }
-    // this.setState({suggestions});
   }
 
   selectSuggestion = suggestion => {
@@ -66,10 +25,17 @@ class Home extends React.Component {
     browserHistory.push(`/${type}/${suggestion.id}`);
   }
 
-  search = () => {
-    this.props.setSearch({keyword: this.state.keyword, filter: this.state.selected.value});
-    this.props.fetchSearch(this.state.keyword, this.state.selected.value.toLowerCase());
-    this.props.activateSearch();
+  search = (searchTerm, filter) => {
+    // this.props.setSearch({keyword: this.state.keyword, filter: this.state.selected.value});
+    // this.props.fetchSearch(this.state.keyword, this.state.selected.value.toLowerCase());
+    // this.props.activateSearch();
+    api.get(`/api/search/${filter}/${searchTerm}`)
+      .then(response => {
+        this.setState({searchResults: response.data});
+      })
+      .catch(response => {
+        console.log(response);
+      });
   }
 
   hover = button => {
@@ -80,13 +46,34 @@ class Home extends React.Component {
     this.setState({selected: item});
   }
 
-  arrowRenderer = () => {
-    return (
-      <span className="chevron bottom"></span>
-    );
+  handleChange = e => {
+    this.setState({
+      suggestionsVisible: true,
+      keyword: e.target.value
+    });
+    const {filter} = this.state;
+
+    // Only run the search if the user has typed MORE than 2 characters,
+    // otherwise this returns way too many results and feels laggy.
+    //  - else
+    // clear the results but submitting an empty string
+    if (e.target.value.length > 2) {
+      this.search(e.target.value, filter.value.toLowerCase());
+    }
+    else {
+      this.search("", filter.value.toLowerCase());
+    }
+  }
+
+  selectSuggestion = suggestion => {
+    const type = suggestion.profile_type === "connectamericas"
+      ? "company"
+      : suggestion.profile_type;
+    browserHistory.push(`/${type}/${suggestion.id}`);
   }
 
   render() {
+    const {filter, searchResults} = this.state;
     const options = [
       {value: "All", label: "All"},
       {value: "Company", label: "Companies"},
@@ -103,16 +90,16 @@ class Home extends React.Component {
                 <div className="oec-logo-wrapper">
                   <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
                 </div>
-                <img src="/images/icons/logos/orange-market-logo.svg" />
+                <img src="/images/icons/logos/orange-market-logo.svg"></img>
               </div>
               <p className="tagline">Market for exported and imported goods.</p>
             </div>
             <div className="search-wrapper">
               <div className="search-input-wrapper">
-                <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text"></input>
-                {this.props.results.length > 0 && this.state.suggestionsVisible
+                <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text" />
+                {searchResults.length > 0
                   ? <ul ref="area" className="suggestions-wrapper">
-                    {this.props.results.map((suggestion, i) => {
+                    {searchResults.map((suggestion, i) => {
                       return <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
                         <img className="icon" src={suggestion.profile_type === "Country"
                           ? "/images/icons/icon-country-yellow.svg"
@@ -126,41 +113,20 @@ class Home extends React.Component {
                   </ul>
                   : null}
               </div>
-              <Select optionClassName={"dropdown-option"} arrowRenderer={this.arrowRenderer} clearable={false} searchable={false} name="form-field-name" value={this.state.selected.value} options={options} onChange={this.selectDropDown}/>
+              <Select
+                optionClassName={"dropdown-option"}
+                arrowRenderer={() => <span className="chevron bottom"></span>}
+                clearable={false}
+                searchable={false}
+                name="form-field-name"
+                value={filter}
+                options={options}
+                onChange={item => {
+                  this.setState({filter: item});
+                }}
+              />
             </div>
-            <button onClick={this.search.bind(this)} className="search-button">Search</button >
-            {/* <div className="cta-buttons-wrapper">
-              <div onMouseOver={this.hover.bind(this, 0)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 0 ? "cta-button cta-button-selected" : "cta-button"}>
-                <div className="text-wrapper">
-                  <img className="icon" src="/images/icons/icon-import.svg"/>
-                  <div className="text-inner">
-                    <h2>I import</h2>
-                    <p>View the marketplace.</p>
-                    <span className="chevron right"></span>
-                  </div>
-                </div>
-              </div>
-              <div onMouseOver={this.hover.bind(this, 1)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 1 ? "cta-button cta-button-selected" : "cta-button"}>
-                <div className="text-wrapper">
-                  <img className="icon" src="/images/icons/icon-export.svg"/>
-                  <div className="text-inner">
-                    <h2>I export</h2>
-                    <p>Offer my products.</p>
-                    <span className="chevron right"></span>
-                  </div>
-                </div>
-              </div>
-              <div onMouseOver={this.hover.bind(this, 2)} onMouseOut={this.hover.bind(this, null)} className= {this.state.active === 2 ? "cta-button cta-button-selected" : "cta-button"}>
-                <div className="text-wrapper">
-                  <img className="icon transport" src="/images/icons/icon-transport.svg"/>
-                  <div className="text-inner">
-                    <h2>I transport</h2>
-                    <p>Offer my services.</p>
-                    <span className="chevron right"></span>
-                  </div>
-                </div>
-              </div>
-            </div>*/}
+
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>
               <div className="img-wrapper">
@@ -248,44 +214,4 @@ class Home extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCountries: () => {
-      dispatch(fetchCountries());
-    },
-    fetchProductsForSearch: () => {
-      dispatch(fetchUnNestedProducts());
-    },
-    fetchCompanies: () => {
-      dispatch(fetchCompanies());
-    },
-    activateSearch: activeState => {
-      dispatch({type: "ACTIVATE_SEARCH", data: activeState});
-    },
-    fetchSearch: (query, filter) => {
-      dispatch(fetchSearch(query, filter));
-    },
-    setSearch: query => {
-      dispatch(setSearch(query));
-    }
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    resultsLoading: state.search.loading,
-    results: state.search.results || [],
-    countries: state.countries.countries,
-    loadingCountries: state.countries.loading,
-    errorCountries: state.countries.error,
-    companies: state.companies.companies,
-    loadingCompanies: state.companies.loading,
-    errorCompanies: state.companies.error,
-    products: state.products.productsForSearch,
-    loadingProducts: state.products.loading,
-    errorProducts: state.products.error,
-    searchVisible: state.search.visible
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default HomeSimple;

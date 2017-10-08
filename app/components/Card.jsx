@@ -101,8 +101,6 @@ export class CardHome extends React.Component {
         : `/images/${this.content.type}/${fallbackId}.jpg`;
     }
 
-    console.log(this)
-
     return (
       <div className="card">
         <Link to={`/${this.content.type}/${this.content.id}`}>
