@@ -129,7 +129,7 @@ class NavBar extends React.Component {
                 </span>
               </li>
               : user
-                ? <li className="nav-bar-element">
+                ? <li className="nav-bar-element nav-settings">
                   <Link to="/settings/">Settings</Link>
                   <span>
                     <div onClick={this.handleDropdown} className="arrow-down"></div>

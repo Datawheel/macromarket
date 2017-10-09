@@ -71,7 +71,7 @@
             width: 25px;
         }
         & a, & a:visited, & button {
-            padding: 8px 40px;
+            padding: 8px 30px;
             color: black;
             letter-spacing: 2px;
             font-size: 14px;
@@ -82,12 +82,15 @@
         & button {
             background: transparent;
             border: none;
-            margin-right: 40px;
+            margin-right: 20px;
         }
     }
     & .nav-bar-element.company-name a {
         padding-left: 15px;
         padding-right: 15px;
+    }
+    & .nav-bar-element.nav-settings a {
+        padding-right: 5px;
     }
     & .logo-wrapper {
         width: 115px;
