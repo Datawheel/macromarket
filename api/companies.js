@@ -82,6 +82,7 @@ module.exports = function(app) {
             phone_number: json.phone_number,
             description: json.bussiness_objetives,
             address: json.address + json.address_line2 + json.city + json.country,
+            Country: {id:json.country_id, name:json.country},
             profile_image: json.photo_url,
             ca_link: json.public_url,
             catalog: json.catalog
