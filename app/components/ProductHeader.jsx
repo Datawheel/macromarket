@@ -76,61 +76,75 @@ export default class ProductHeader extends React.Component {
 
     return (
       <div className="header">
-        <Sidebar>
-          <div className="profile-info">
-            <div className="header-wrapper">
-              <h2>
-                <span><img src={"/images/icons/icon-product-white.svg"}/></span>{product.name}</h2>
-              <div className="yellow-line"></div>
-              <p className="product-category">{productCategory}</p>
-            </div>
-            <p>{product.description}</p>
-            {product.id_hs92
-              ? <div className="oec-link-wrapper"><a  className="oec-link" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
-                  View on the OEC <span className="chevron right"></span></a></div>
-              : null}
-          </div>
-        </Sidebar>
-        <div className="center-content">
+
+
           <div className="header-image-wrapper">
             <div className="fade-in background-image" style={{
               backgroundImage: `url(${img})`
-            }}></div>
+            }}><div className="image-overlay"></div>
+            </div>
+            <div className="header-info">
+
+              <div className="header-wrapper name page-title section-wrapper">
+                <div className="name-image">
+                  <img src={"/images/icons/icon-product-white.svg"}/>
+                </div>
+                <div className="name-text">
+                  <h2>{product.name}</h2>
+                  <h4 className="product-category">{productCategory}</h4>
+                </div>
+
+                <p>{product.description}</p>
+              </div>
+              <div className="page-links">
+              <Link to={"/settings/product"}>
+                <button className="list-company">List Your Company</button>
+              </Link>
+              {product.id_hs92
+                ? <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
+                    View on the OEC <span className="chevron right"></span></a>
+                : null}
+              </div>
+            </div>
             {productValue
               ? <div className="image-overlay-wrapper">
-                  <div className="image-overlay"></div>
+
                   <div className="text-wrapper">
                     <div className="section-wrapper total-data">
                       <div className="data">
-                        <p className="value">{productValue}</p>
                         <h4>Exports</h4>
+                        <p className="value">{productValue}</p>
+                        <img></img>
+                        <h4></h4>
+                      </div>
+                      <div className="data">
+                        <h4>Imports</h4>
+                        <p className="value">{productValue}</p>
                         <img></img>
                         <h4></h4>
                       </div>
                     </div>
                     <div className="section-wrapper top-data">
                       <div className="data">
+                        <h4>Top Exporter</h4>
                         <Link to={`/country/${topExporter}`}>
                         <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
-                        <h4>Top Exporter</h4>
                         <h4>{exportName}</h4></Link>
                       </div>
                       <div className="data">
-                      <Link to={`/country/${topImporter}`}>
-                        <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
                         <h4>Top Importer</h4>
+                        <Link to={`/country/${topImporter}`}>
+                        <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
                         <h4>{importName}</h4></Link>
                       </div>
                     </div>
                   </div>
                 </div>
               : null}
-            <Link to={"/settings/product"}>
-              <button className="list-company">List Your Company</button>
-            </Link>
+
           </div>
         </div>
-      </div>
+
 
     );
   }
