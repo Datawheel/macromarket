@@ -88,7 +88,7 @@ class CountryHeader extends React.Component {
             </div>
           </div>
           <div className="page-links">
-            <Link to={"/settings/country"}>
+            <Link to={"/settings"}>
               <button className="list-company">List Your Company</button>
             </Link>
             <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
