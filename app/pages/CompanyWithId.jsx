@@ -85,7 +85,7 @@ class CompanyWithId extends React.Component {
               ? <a href={company.ca_link}>
                 <div className="link-wrapper">
                   <div className="icon-wrapper color-ca">
-                    <img src={`/images/icons/icon-ca.png`}></img>
+                    <img src="/images/icons/icon-ca.png" />
                   </div>
                   <div className="colored-wrapper">
                     <div className="darker-color color-ca"></div>
@@ -193,6 +193,31 @@ class CompanyWithId extends React.Component {
                   </a> : null}
               </div>
               : null}
+
+            {company.catalog
+              ? <div className="products">
+                <div className="imports">
+                  {company.catalog.map(industry =>
+                    <div key={industry.id} className="section-wrapper">
+                      <h3>{industry.name}</h3>
+                      {industry.products_services.map(ps =>
+                        <a key={ps.id} href={company.ca_link}>
+                          <div className="link-wrapper">
+                            <div className="icon-wrapper color-ca">
+                              <img src="/images/icons/icon-ca.png" />
+                            </div>
+                            <div className="colored-wrapper">
+                              <div className="darker-color color-ca"></div>
+                              <p>{ps.product_alias_name}</p>
+                            </div>
+                          </div>
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              : <div>no company catalog!</div>}
 
           </div>
         </div>
