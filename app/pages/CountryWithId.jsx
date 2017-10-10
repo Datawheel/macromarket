@@ -193,7 +193,7 @@ class CountryWithId extends React.Component {
                 }
               }) : <div className="result-wrapper no-companies">
                 <p>There are no companies listed. Be the first one!</p>
-                <Link to={"/settings/product"}>
+                <Link to={"/settings"}>
                   <button className="list-company">List Your Company</button>
                 </Link>
               </div>}

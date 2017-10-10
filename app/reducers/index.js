@@ -14,7 +14,7 @@ import search from "./search";
 const searchActive = (state = false, action) => {
   switch (action.type) {
     case "ACTIVATE_SEARCH":
-      return action.data || !state;
+      return action.data || false;
     default:
       return state;
   }
