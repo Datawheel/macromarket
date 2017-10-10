@@ -33,12 +33,13 @@ module.exports = function(sequelize, db) {
     hooks: {
       afterCreate: company => {
         sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
-          const document = response[0][0].to_tsvector.replace(/'/g, "''");
-          const name = company.dataValues.name.replace(/'/g, "''");
+          const document = response[0][0].to_tsvector
+          const name = company.dataValues.name
           const id = `company${company.dataValues.id}`;
           const image = company.dataValues.profile_image;
+          const slug = company.dataValues.slug;
           sequelize.models.Search.create({
-            id, name, profile_type: "company", document, image
+            id, name, profile_type: "company", document, image, slug
           }).then(Search => {
             console.log("Success: New company created.");
           }).catch(err => {
@@ -50,12 +51,19 @@ module.exports = function(sequelize, db) {
       },
       beforeDestroy: company => {
         const id = `company${company.dataValues.id}`;
-        sequelize.models.Search.destroy({
+        return sequelize.models.Search.destroy({
           where: {id}
-        }).then(response => {
-          console.log(response);
-        }).catch(err => {
-          console.log(err);
+        }).then(searchDestroyResponse => {
+          return sequelize.models.Trade.destroy({
+            where: {company_id: company.id}
+          }).then(tradeDestroyResponse => {
+            console.log(tradeDestroyResponse);
+            return Promise.resolve()
+          }).catch(tradeDestroyErr => {
+            console.log(tradeDestroyErr);
+          });
+        }).catch(searchDestroyErr => {
+          console.log(searchDestroyErr);
         });
       },
       beforeUpdate: company => {
@@ -86,6 +94,11 @@ module.exports = function(sequelize, db) {
   Company.associate = models => {
     Company.belongsTo(models.Country, {
       foreignKey: "country_id"
+    });
+    Company.hasMany(models.Trade, {
+      foreignKey: "company_id",
+      onDelete: "cascade",
+      hooks: true
     });
   };
 

@@ -1,13 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import axios from "axios";
 import {browserHistory} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
 import {authenticateAndFetchCompany} from "../../actions/companyActions";
 import CountrySearch from "./CountrySearch";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
-import {Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
+import {Button, Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import "./EditCompany.css";
@@ -31,7 +30,8 @@ class EditCompany extends React.Component {
       coverImage: props.company.cover_image,
       profileImage: props.company.profile_image,
       coverImagePreview: null,
-      profileImagePreview: null
+      profileImagePreview: null,
+      confirmDeleteOpen: false
     };
   }
 
@@ -162,6 +162,21 @@ class EditCompany extends React.Component {
     }
   }
 
+  toggleConfirmDelete = () => {
+    this.setState({confirmDeleteOpen: !this.state.confirmDeleteOpen});
+  }
+
+  deleteCompany = () => {
+    const {id} = this.props.company;
+    console.log("deleteing compnay id ", id);
+
+    api.delete(`/api/companies/${id}/`).then(() => {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({message: "Company deleted.", intent: Intent.SUCCESS});
+      browserHistory.push("/settings/");
+    });
+  }
+
   addImage = imgType => {
     return (<div className="pt-non-ideal-state">
       <div className="pt-non-ideal-state-visual pt-non-ideal-state-icon">
@@ -215,7 +230,7 @@ class EditCompany extends React.Component {
     const {company, countries} = this.props;
     const {error, address, city, country, description, name, region,
       companyEmail, phone_number, website, coverImage, profileImage,
-      coverImagePreview, profileImagePreview} = this.state;
+      coverImagePreview, profileImagePreview, confirmDeleteOpen} = this.state;
     return (
       <div>
 
@@ -398,6 +413,33 @@ class EditCompany extends React.Component {
           <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveCompany}>
             Save
             <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+          </button>
+          <button type="button" className="pt-button pt-intent-danger pt-large pt-minimal" onClick={this.toggleConfirmDelete}>
+            Delete Company
+            <span className="pt-icon-standard pt-icon-delete pt-align-right"></span>
+            <Dialog
+              isOpen={confirmDeleteOpen}
+              onClose={this.toggleConfirmDelete}
+            >
+              <div className="pt-dialog-body">
+                {`Are you sure you want to remove this company and all of its associated trades? This action cannot be undone.`}
+              </div>
+              <div className="pt-dialog-footer">
+                <div className="pt-dialog-footer-actions">
+                  <Button
+                    onClick={this.toggleConfirmDelete}
+                    text="Cancel" />
+                  <Button
+                    intent={Intent.DANGER}
+                    onClick={() => {
+                      this.deleteCompany();
+                      this.toggleConfirmDelete();
+                    }}
+                    text="Delete"
+                  />
+                </div>
+              </div>
+            </Dialog>
           </button>
         </div>
 

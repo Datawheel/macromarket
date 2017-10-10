@@ -14,7 +14,7 @@ class TradeEdit extends React.Component {
   }
 
   toggleConfirmDelete = () => {
-    this.setState({confirmDeleteOpen: !this.state.confirmDeleteOpen})
+    this.setState({confirmDeleteOpen: !this.state.confirmDeleteOpen});
   }
 
   render() {
