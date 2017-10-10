@@ -75,14 +75,16 @@ module.exports = function(app) {
         response.on("end", () => {
           const err = result ? null : "Not found";
           const json = JSON.parse(result);
-          console.log(result);
+          // console.log(result);
           const company = {
             name: json.name,
             website: json.website,
             phone_number: json.phone_number,
             description: json.bussiness_objetives,
             address: json.address + json.address_line2 + json.city + json.country,
-            profile_image: json.photo_url
+            profile_image: json.photo_url,
+            ca_link: json.public_url,
+            catalog: json.catalog
           };
           res.json(company);
         });

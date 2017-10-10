@@ -93,7 +93,7 @@ class CountryWithId extends React.Component {
       .map(c => c.values[0].Product);
     return tradesByCompany.length
       ? <p>
-        There are {tradesByCompany.length} companies doing business in {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.
+        There are {tradesByCompany.length} companies exporting to and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.
         These companies export {exportsByProduct.length} products including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
         They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
       </p>
