@@ -6,9 +6,10 @@ const Footer = () =>
     <div className="footer-links">
       <div className="link-column">
         <div className="title">Companies</div>
-        <a href="/company/1">Super Special Company 1</a>
-        <a href="/company/2">Super Special Company 2</a>
-        <a href="/company/3">Super Special Company 3</a>
+        <a href="/company/ca_21078">DeCultura (Argentina)</a>
+        <a href="/company/ca_4616">La Nuit (Mexico)</a>
+        <a href="/company/ca_27687">Deutsche Finetrading AG (Germany)</a>
+        <a href="/company/ca_56948">Centre for Export Development (South Africa)</a>
         <a href="/company/">View more...</a>
       </div>
       <div className="link-column">
