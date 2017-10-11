@@ -17,3 +17,11 @@
 .pt-table {
   width: 100%;
 }
+
+.button-group {
+  text-align: right;
+  & button {
+    display: inline-block;
+    margin: 0 0 0 15px;
+  }
+}

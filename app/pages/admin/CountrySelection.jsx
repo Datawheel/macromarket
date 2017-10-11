@@ -35,18 +35,21 @@ class CountrySelection extends React.Component {
   }
 
   selectCountry = country => {
-    const {selectCountry} = this.props;
     const countries = [...this.state.countries, country];
-    selectCountry(countries);
+    this.props.selectCountry(countries);
     this.setState({countries});
   }
 
   deselectCountry = index => {
-    this.setState({countries: this.state.countries.filter((_country, i) => i !== index)});
+    const countries = this.state.countries.filter((_country, i) => i !== index);
+    this.props.selectCountry(countries);
+    this.setState({countries});
   }
 
   deleteTag = (el, index) => {
-    this.setState({countries: this.state.countries.filter((_country, i) => i !== index)});
+    const countries = this.state.countries.filter((_country, i) => i !== index);
+    this.props.selectCountry(countries);
+    this.setState({countries});
   }
 
   renderTag = f => {

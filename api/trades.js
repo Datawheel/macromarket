@@ -24,16 +24,20 @@ module.exports = function(app) {
     const {companyId: company_id} = req.params;
     const {body: trades} = req;
 
-    const tPromises = trades.map(t => {
-      // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
-      const country_id = t.country ? t.country.id : null;
-      return db.Trade.findOrCreate({
-        where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id}
-      }).catch(err => console.log("err", err));
-    });
+    db.Trade.destroy({
+      where: {company_id}
+    }).then(() => {
+      const tPromises = trades.map(t => {
+        // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
+        const country_id = t.country ? t.country.id : null;
+        return db.Trade.findOrCreate({
+          where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id}
+        }).catch(err => console.log("err", err));
+      });
 
-    Promise.all(tPromises).then(tradeResponses => {
-      res.json({msg: "done."});
+      Promise.all(tPromises).then(() => {
+        res.json({msg: "done."});
+      });
     });
   });
 

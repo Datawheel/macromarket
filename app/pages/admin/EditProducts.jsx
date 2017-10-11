@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
@@ -71,6 +71,7 @@ class EditProducts extends React.Component {
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       console.log(tradesResponse.data);
       this.setState({unsavedTrades: false});
+      browserHistory.push("/settings/");
     });
   }
 
@@ -110,10 +111,10 @@ class EditProducts extends React.Component {
   }
 
   deleteProduct = p => {
-    const {companyId} = this.props.params;
+    const {company} = this.props;
     const {trades} = this.state;
 
-    api.delete(`/api/trades/company/${companyId}/product/${p.id}`).then(res => {
+    api.delete(`/api/trades/company/${company.id}/product/${p.id}`).then(() => {
       this.setState({
         trades: trades.filter(t => t.product.id !== p.id)
       });
@@ -133,13 +134,8 @@ class EditProducts extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {auth, products, countries} = this.props;
-    const {user, loading} = auth;
     const {newProduct, trades, unsavedTrades} = this.state;
-    const path = this.props.location.pathname;
-
-
 
     return (
       <div>
@@ -188,7 +184,11 @@ class EditProducts extends React.Component {
 
         <hr />
 
-        <div>
+        <div className="button-group">
+          <Link role="button" className="pt-button pt-large" to="/settings">
+            Cancel
+            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
+          </Link>
           <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
             Save
             <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
