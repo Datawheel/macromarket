@@ -26,7 +26,9 @@ class CompanyWithId extends React.Component {
     if (this.props.params.companySlug !== newProps.params.companySlug) {
       const slug = newProps.params.companySlug;
       this.props.fetchCompany(slug);
-      this.props.fetchProfileTradesByCompany(slug);
+      if (slug.slice(0, 3) !== "ca_") {
+        this.props.fetchProfileTradesByCompany(slug);
+      }
       this.shouldUpdate = false;
     }
   }

@@ -111,8 +111,26 @@ class ProductWithId extends React.Component {
       .key(d => d.product_id)
       .entries(trades.filter(t => t.trade_flow === "imports"))
       .map(c => c.values[0].Country);
-    // These companies export {exportsByProduct.length} products including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
-    // They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
+
+    const numCompanies = tradesByCompany.length;
+    return numCompanies
+      ? <p>
+        {numCompanies === 1
+          ? <span>There is one company trading {product.name} named <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>
+          : <span>There are {tradesByCompany.length} companies trading {product.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>}
+        {exportsByCountry.length
+          ? exportsByCountry.length === 1
+            ? <span>{numCompanies === 1 ? <span>This company exports them from</span> : <span>These companies export them from</span>} <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            : <span>{numCompanies === 1 ? <span>This company exports them from {exportsByCountry.length} different countries</span> : <span>These companies export them from {exportsByCountry.length} different countries</span>} including <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+          : null}
+        {importsByCountry.length
+          ? importsByCountry.length === 1
+            ? <span>They import them from one country, <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            : <span>They import them from {importsByCountry.length} different countries including <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+          : null}
+      </p>
+      : null;
+
     return tradesByCompany.length
       ? <p>
         There are {tradesByCompany.length} companies trading {product.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.

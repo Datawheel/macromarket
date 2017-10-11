@@ -91,11 +91,22 @@ class CountryWithId extends React.Component {
       .key(d => d.product_id)
       .entries(trades.filter(t => t.trade_flow === "imports"))
       .map(c => c.values[0].Product);
-    return tradesByCompany.length
+    const numCompanies = tradesByCompany.length;
+    return numCompanies
       ? <p>
-        There are {tradesByCompany.length} companies exporting to and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.
-        These companies export {exportsByProduct.length} products including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
-        They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.
+        {numCompanies === 1
+          ? <span>There is one company exporting or importing from {country.name} named <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>
+          : <span>There are {tradesByCompany.length} companies exporting and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>}
+        {exportsByProduct.length
+          ? exportsByProduct.length === 1
+            ? <span>{numCompanies === 1 ? <span>This company exports one product</span> : <span>These companies export one product</span>}, <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            : <span>{numCompanies === 1 ? <span>This company exports {exportsByProduct.length} products</span> : <span>These companies export {exportsByProduct.length} products</span>} including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+          : null}
+        {importsByProduct.length
+          ? importsByProduct.length === 1
+            ? <span>They import one product, <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            : <span>They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+          : null}
       </p>
       : null;
   }
