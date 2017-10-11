@@ -93,7 +93,7 @@
         padding-right: 5px;
     }
     & .logo-wrapper {
-        width: 115px;
+        width: 70px;
         & img {
             padding: 2px;
             width: 90%;
@@ -106,10 +106,13 @@
         }
     }
     & .logo {
-        float: left;
-        position: absolute;
-        left: 30px;
-        top: 8px;
+      position: absolute;
+      left: 30px;
+      top: 8px;
+      & a {
+        display: block;
+        height: 60px;
+      }
     }
     & .search-icon-wrapper {
         & button {
@@ -218,7 +221,6 @@
         }
     }
     &.logo {
-        float: left;
         position: absolute;
         left: 30px;
         top: 8px;

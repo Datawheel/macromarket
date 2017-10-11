@@ -82,18 +82,17 @@ class NavBar extends React.Component {
 
     return (
       <div>
-        <div className={this.props.location.pathname === "/"
-          ? "home"
-          : null}>
+        <div className={this.props.location.pathname === "/" ? "home" : null}>
           <ul className="nav-bar">
             <li className="logo nav-bar-element">
               {this.props.location.pathname !== "/"
                 ? <Link to="/">
-                  <span>
-                    <div className="logo-wrapper"><img src="/images/icons/logos/macro-market.svg"/></div>
-                    <div className="logo-wrapper">
-                      <img className="market-logo" src="/images/icons/logos/black-market-logo.svg"/></div>
-                  </span>
+                  <div className="logo-wrapper">
+                    <img src="/images/icons/logos/macro-market.svg"/>
+                  </div>
+                  <div className="logo-wrapper">
+                    <img className="market-logo" src="/images/icons/logos/black-market-logo.svg"/>
+                  </div>
                 </Link>
                 : null}
             </li>
