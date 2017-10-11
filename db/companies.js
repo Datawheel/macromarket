@@ -66,14 +66,15 @@ module.exports = function(sequelize, db) {
           console.log(searchDestroyErr);
         });
       },
-      beforeUpdate: company => {
+      afterUpdate: company => {
         sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
           const document = response[0][0].to_tsvector.replace(/'/g, "''");
           const name = company.dataValues.name;
           const id = `company${company.dataValues.id}`;
           const image = company.dataValues.profile_image;
+          const slug = company.dataValues.slug;
           sequelize.models.Search.update(
-            {name, document, image},
+            {name, document, image, slug},
             {where: {id}}
           ).then(company => console.log(company))
             .catch(err => console.log(err));

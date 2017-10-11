@@ -31,7 +31,8 @@ class EditCompany extends React.Component {
       profileImage: props.company.profile_image,
       coverImagePreview: null,
       profileImagePreview: null,
-      confirmDeleteOpen: false
+      confirmDeleteOpen: false,
+      isSaving: false
     };
   }
 
@@ -40,7 +41,7 @@ class EditCompany extends React.Component {
     const {company} = nextProps;
     // if (prevCompany.id !== company.id) {
     this.setState({
-      name: company.name,
+      name: company.name || "",
       description: company.description || "",
       address: company.address || "",
       city: company.city || "",
@@ -92,7 +93,7 @@ class EditCompany extends React.Component {
       errorNames.push("website");
     }
     if (errorNames.length) {
-      this.setState({error: {names: errorNames}});
+      this.setState({error: {names: errorNames}, isSaving: false});
       const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
       toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
       return false;
@@ -104,6 +105,7 @@ class EditCompany extends React.Component {
   }
 
   saveCompany = () => {
+    this.setState({isSaving: true});
     const {id} = this.props.company;
     const company = {
       name: this.state.name,
@@ -134,7 +136,7 @@ class EditCompany extends React.Component {
           });
           Promise.all(imgUploadPromises).then(imgUploadResponses => {
             // console.log("imgUploadResponses!", imgUploadResponses);
-            this.setState({newCompany: false});
+            this.setState({newCompany: false, isSaving: false});
             const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
             toast.show({message: "New company created.", intent: Intent.SUCCESS});
             // browserHistory.push(`/settings/company/${newCompanyId}`);
@@ -152,7 +154,7 @@ class EditCompany extends React.Component {
             return api.post(`/api/companies/${id}/${imgType}`, formData, config);
           });
           Promise.all(imgUploadPromises).then(imgUploadResponses => {
-            this.setState({newCompany: false});
+            this.setState({newCompany: false, isSaving: false});
             const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
             toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
             browserHistory.push("/settings/");
@@ -228,7 +230,7 @@ class EditCompany extends React.Component {
 
   render() {
     const {company, countries} = this.props;
-    const {error, address, city, country, description, name, region,
+    const {isSaving, error, address, city, country, description, name, region,
       companyEmail, phone_number, website, coverImage, profileImage,
       coverImagePreview, profileImagePreview, confirmDeleteOpen} = this.state;
     return (
@@ -413,7 +415,7 @@ class EditCompany extends React.Component {
               onClose={this.toggleConfirmDelete}
             >
               <div className="pt-dialog-body">
-                {`Are you sure you want to remove this company and all of its associated trades? This action cannot be undone.`}
+                Are you sure you want to remove this company and all of its associated trades? This action cannot be undone.
               </div>
               <div className="pt-dialog-footer">
                 <div className="pt-dialog-footer-actions">
@@ -436,7 +438,7 @@ class EditCompany extends React.Component {
             Cancel
             <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
           </Link>
-          <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveCompany}>
+          <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.saveCompany : null}>
             Save
             <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
           </button>
