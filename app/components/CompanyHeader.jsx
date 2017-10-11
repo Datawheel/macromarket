@@ -19,6 +19,7 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
   }
 
   console.log("Company:", company);
+  const companyWebsite = !(/^https?:\/\//i).test(company.website) ? `http://${company.website}` : company.website;
   return (
     <div className="header-image-wrapper">
       <div className={connectamericas
@@ -57,7 +58,7 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
             ? <div className="section-wrapper">
               <div>
                 <img src="/images/icons/icon-world-yellow.svg"/>
-                <a target="_blank" rel="external" href={`http://${company.website}`}>
+                <a target="_blank" rel="external" href={companyWebsite}>
                   <p>{company.website}</p>
                 </a>
               </div>

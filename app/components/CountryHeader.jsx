@@ -103,40 +103,40 @@ class CountryHeader extends React.Component {
             </div>
             {exportValue && importValue
               ? <div className="section-wrapper total-data">
-                  <div className="data exports">
-                    <h4>Exports</h4>
-                    <img className="icon" src="/images/icons/icon-export.svg"></img>
-                    <h3 className="value">{exportValue}</h3>
-                  </div>
-                  <div className="data imports">
-                    <h4 >Imports</h4>
-                    <img className="icon" src="/images/icons/icon-import.svg"></img>
-                    <h3 className="value">{importValue}</h3>
-                  </div>
+                <div className="data exports">
+                  <h4>Exports</h4>
+                  <img className="icon" src="/images/icons/icon-export.svg"></img>
+                  <h3 className="value">{exportValue}</h3>
                 </div>
+                <div className="data imports">
+                  <h4 >Imports</h4>
+                  <img className="icon" src="/images/icons/icon-import.svg"></img>
+                  <h3 className="value">{importValue}</h3>
+                </div>
+              </div>
               : null}
             {exportName && importName
               ? <div className="section-wrapper top-data">
-                  <div className="data top-export">
-                    <h4>Top Export</h4>
-                    <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
-                    <Link to={`/product/${exportData.hs92_id}`}>
-                      <div className="name-wrapper">
-                        <h3>{exportName}</h3>
-                      </div>
-                    </Link>
-                  </div>
-
-                  <div className="data top-import">
-                    <h4>Top Import</h4>
-                    <img className="icon" src={`/images/product_icon/hs_${importData.hs92_id.slice(0, 2)}.png`}></img>
-                    <Link to={`/product/${importData.hs92_id}`}>
-                      <div className="name-wrapper">
-                        <h3>{importName}</h3>
-                      </div>
-                    </Link>
-                  </div>
+                <div className="data top-export">
+                  <h4>Top Export</h4>
+                  <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
+                  <Link to={`/product/${exportData.hs92_id}`}>
+                    <div className="name-wrapper">
+                      <h3>{exportName}</h3>
+                    </div>
+                  </Link>
                 </div>
+
+                <div className="data top-import">
+                  <h4>Top Import</h4>
+                  <img className="icon" src={`/images/product_icon/hs_${importData.hs92_id.slice(0, 2)}.png`}></img>
+                  <Link to={`/product/${importData.hs92_id}`}>
+                    <div className="name-wrapper">
+                      <h3>{importName}</h3>
+                    </div>
+                  </Link>
+                </div>
+              </div>
               : null}
           </div>
         </div>
