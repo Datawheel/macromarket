@@ -1,3 +1,4 @@
+@import "../Variables";
 .header-image-wrapper {
     height: 400px;
     position: relative;
@@ -110,7 +111,7 @@
                 & .value {
                     font-size: 1.5rem;
                     font-weight: bold;
-                    margin-top: 8px;
+                    margin-top: 2px;
                     margin-bottom: 10px;
                     text-transform: uppercase;
                 }
@@ -120,12 +121,12 @@
     & .top-data, & .total-data {
         width: 40%;
         opacity: .8;
-        text-align: center;
+        text-align: left;
     }
     & .data {
         vertical-align: top;
         width: 50%;
-        text-align: center;
+        text-align: left;
         & .label {
             text-transform: uppercase;
         }
@@ -223,13 +224,21 @@
 
             & h3 {
               color: white;
+              display: inline-block;
               font-size: 1.5rem;
               font-weight: bold;
-              margin-top: 8px;
+              margin-top: 2px;
+              vertical-align: top;
             }
 
             & h4 {
               color: white;
+              display: inline-block;
+              vertical-align: top;
+            }
+
+            & img {
+              margin-right: 12px;
             }
         }
         & .image-overlay-wrapper {
@@ -266,7 +275,7 @@
 
           & .page-title {
             display: inline-block;
-            width: 65%;
+            width: 65d%;
             position: relative;
             padding:16px 0px;
 
@@ -321,6 +330,8 @@
         & .text-wrapper {
             padding-left: 32px;
 
+
+
             & h3 {
               color: white;
               font-size: 1.5rem;
@@ -330,7 +341,11 @@
 
             & h4 {
               color: white;
+              display: inline-block;
+              width: auto;
+
             }
+
         }
         & .image-overlay-wrapper {
 

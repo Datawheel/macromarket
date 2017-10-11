@@ -103,17 +103,19 @@ class CountryHeader extends React.Component {
             </div>
             {exportValue && importValue
               ? <div className="section-wrapper total-data">
-                <div className="data exports">
-                  <h4>Exports</h4>
-                  <img className="icon" src="/images/icons/icon-export.svg"></img>
-                  <h3 className="value">{exportValue}</h3>
+
+                  <div className="data exports">
+                    <h4>Exports</h4>
+                    <h3 className="value">{exportValue}</h3>
+                  </div>
+                  <div className="data imports">
+                    <h4 >Imports</h4>
+                    <h3 className="value">{importValue}</h3>
+                  </div>
+
                 </div>
-                <div className="data imports">
-                  <h4 >Imports</h4>
-                  <img className="icon" src="/images/icons/icon-import.svg"></img>
-                  <h3 className="value">{importValue}</h3>
-                </div>
-              </div>
+
+
               : null}
             {exportName && importName
               ? <div className="section-wrapper top-data">
