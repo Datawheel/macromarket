@@ -32,6 +32,9 @@ export default class Terms extends React.Component {
         exposed to such materials. You agree to use the Service at your own risk.
         </p>
 
+        <h2>Conducting business</h2>
+        <p>Macro Market is not responsible for any business conducted on our site, whether this includes buying or selling goods. The goal of the platform is to be an information hub, connecting vendors with buyers. Any business conducted via information conveyed on this platform is the sole responsibility of said parties. Take any necessary precautions before entering into a business agreement or transaction as this site does not guarentee the validity of any of the businesses listed herein.</p>
+
         <h2>Conditions for accounts</h2>
         <ol>
           <li>You must be 13 years or older to use this Service.</li>
