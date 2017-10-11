@@ -1,24 +1,34 @@
-img {
-  max-width: 400px;
-}
+.edit-company {
+  & img {
+    max-width: 400px;
+  }
 
-input[type="file"] {
-  visibility: hidden;
-}
+  & input[type="file"] {
+    visibility: hidden;
+  }
 
-header {
-  display: flex;
-  justify-content: space-between;
-}
+  & header {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.pt-inline .pt-label {
-  min-width: 100px;
-}
+  & .pt-inline .pt-label {
+    min-width: 100px;
+  }
 
-.pt-form-group .pt-form-group {
-  margin: 0;
-}
+  & .pt-form-group .pt-form-group {
+    margin: 0;
+  }
 
-.pt-form-group .pt-input-group input {
-  min-width: 200px;
+  & .pt-form-group .pt-input-group input {
+    min-width: 200px;
+  }
+
+  & .button-group {
+    text-align: right;
+    & button {
+      display: inline-block;
+      margin: 0 0 0 15px;
+    }
+  }
 }

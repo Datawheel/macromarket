@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
 import {authenticateAndFetchCompany} from "../../actions/companyActions";
 import CountrySearch from "./CountrySearch";
@@ -82,7 +82,7 @@ class EditCompany extends React.Component {
 
   validate = company => {
     const errorNames = [];
-    if (company.name === "") {
+    if (!company.name || company.name === "") {
       errorNames.push("name");
     }
     if (company.company_email && !this._validateEmail(company.company_email)) {
@@ -232,13 +232,8 @@ class EditCompany extends React.Component {
       companyEmail, phone_number, website, coverImage, profileImage,
       coverImagePreview, profileImagePreview, confirmDeleteOpen} = this.state;
     return (
-      <div>
-
-        <div
-          className={error && error.names.includes("name")
-            ? "pt-form-group pt-intent-danger"
-            : "pt-form-group"}
-        >
+      <div className="edit-company">
+        <div className={error && error.names.includes("name") ? "pt-form-group pt-intent-danger" : "pt-form-group"}>
           <label className="pt-label" htmlFor="input-company-name">
             <span className="pt-icon pt-icon-edit"></span> Company Name <span className="pt-text-muted">(required)</span>
           </label>
@@ -410,10 +405,6 @@ class EditCompany extends React.Component {
         </div>
 
         <div className="button-group">
-          <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveCompany}>
-            Save
-            <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
-          </button>
           <button type="button" className="pt-button pt-intent-danger pt-large pt-minimal" onClick={this.toggleConfirmDelete}>
             Delete Company
             <span className="pt-icon-standard pt-icon-delete pt-align-right"></span>
@@ -440,6 +431,14 @@ class EditCompany extends React.Component {
                 </div>
               </div>
             </Dialog>
+          </button>
+          <Link role="button" className="pt-button pt-large" to="/settings">
+            Cancel
+            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
+          </Link>
+          <button type="button" className="pt-button pt-intent-success pt-large" onClick={this.saveCompany}>
+            Save
+            <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
           </button>
         </div>
 
