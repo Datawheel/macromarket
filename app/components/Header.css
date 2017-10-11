@@ -1,6 +1,7 @@
 .header-image-wrapper {
     height: 400px;
     position: relative;
+    overflow: hidden;
 
     & .image-overlay-wrapper {
         position: absolute;

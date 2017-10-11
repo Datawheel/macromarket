@@ -69,7 +69,7 @@ class Search extends React.Component {
 
   search = (query, filter) => {
     // this.props.fetchSearch(this.state.query, this.props.filter.toLowerCase());
-    api.get(`/api/search/${filter}/${query}`)
+    api.get(`/api/search/${filter.toLowerCase()}/${query}`)
       .then(response => {
         // dispatch(receiveSearch(response.data));
         console.log("search results...");
@@ -104,7 +104,9 @@ class Search extends React.Component {
 
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
-        <div onClick={() => {this.props.toggleSearch(false)}} className="delete"><img src="/images/icons/icon-close-white.svg"/></div>
+        <div onClick={() => {this.props.toggleSearch(false)}} className="delete">
+          <img src="/images/icons/icon-close-white.svg"/>
+        </div>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
@@ -152,16 +154,6 @@ class Search extends React.Component {
                     {filter === "Company"
                       ? <img src="/images/icons/icon-company-yellow.svg"/>
                       : <img src="/images/icons/icon-company-black.svg"/>}
-                  </div>
-                  <div onMouseOut={this.mouseOut} onMouseOver={this.mouseOver.bind(this, "Transport")} onClick={this.selectFilter.bind(this, "Transport")} className="filter-icon-wrapper">
-                    <div className={this.state.hover === "Transport"
-                      ? "arrow-box transport tool-tip visible"
-                      : "arrow-box transport tool-tip"}>
-                      <p>transportation</p>
-                    </div>
-                    {filter === "Transport"
-                      ? <img src="/images/icons/icon-transport-yellow.svg"/>
-                      : <img src="/images/icons/icon-transport-black.svg"/>}
                   </div>
                   <div onClick={this.selectFilter.bind(this, "All")} className="filter-icon-wrapper">
                     <p className={filter === "All"
