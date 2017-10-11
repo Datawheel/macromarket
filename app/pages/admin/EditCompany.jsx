@@ -369,26 +369,6 @@ class EditCompany extends React.Component {
         <div className="img-container">
           <header>
             <label className="pt-label" htmlFor="example-form-group-input-a">
-              <span className="pt-icon pt-icon-media"></span> Profile Image
-            </label>
-            {profileImage
-              ? <div className="pt-button-group pt-minimal">
-                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.profileImgField.click()}}>Replace</button>
-                <button className="pt-button pt-icon-trash" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
-              </div>
-              : null}
-          </header>
-          {profileImagePreview
-            ? <img src={profileImagePreview} />
-            : profileImage
-              ? <img src={profileImage} />
-              : this.addImage("profileImgField")}
-          <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
-        </div>
-
-        <div className="img-container">
-          <header>
-            <label className="pt-label" htmlFor="example-form-group-input-a">
               <span className="pt-icon pt-icon-media"></span> Cover Image
             </label>
             {coverImage
@@ -404,6 +384,26 @@ class EditCompany extends React.Component {
               ? <img src={coverImage} />
               : this.addImage("coverImgField")}
           <input ref={imgField => { this.coverImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
+        </div>
+
+        <div className="img-container">
+          <header>
+            <label className="pt-label" htmlFor="example-form-group-input-a">
+              <span className="pt-icon pt-icon-media"></span> Profile Header Image
+            </label>
+            {profileImage
+              ? <div className="pt-button-group pt-minimal">
+                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.profileImgField.click()}}>Replace</button>
+                <button className="pt-button pt-icon-trash" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
+              </div>
+              : null}
+          </header>
+          {profileImagePreview
+            ? <img src={profileImagePreview} />
+            : profileImage
+              ? <img src={profileImage} />
+              : this.addImage("profileImgField")}
+          <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
         </div>
 
         <div className="button-group">

@@ -1,5 +1,13 @@
 @import "../Variables";
 .detailed-content-wrapper {
+  & .pt-non-ideal-state {
+    color: white;
+    margin: 40px auto;
+    & .pt-non-ideal-state-title {
+      color: white;
+    }
+  }
+
   & .loading-wrapper {
     text-align: center;
           display: block;

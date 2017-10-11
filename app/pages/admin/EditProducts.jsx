@@ -34,7 +34,6 @@ class EditProducts extends React.Component {
           trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
         }
       });
-      console.log("TrAdes!", trades);
       this.setState({trades});
     });
   }
@@ -152,29 +151,32 @@ class EditProducts extends React.Component {
         </div>
         */}
 
-        <table className="pt-table pt-bordered trades">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Export Destinations</th>
-              <th>Import Origins</th>
-              <th>&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trades.map((trade, i) =>
-              <TradeEdit
-                key={i}
-                trade={trade}
-                countries={countries}
-                selectProduct={this.addProduct}
-                selectDestinations={this.addDestinations}
-                selectOrigins={this.addOrigins}
-                deleteProduct={this.deleteProduct}
-              />
-            )}
-          </tbody>
-        </table>
+        { trades.length
+          ? <table className="pt-table pt-bordered trades">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Export Destinations</th>
+                <th>Import Origins</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trades.map((trade, i) =>
+                <TradeEdit
+                  key={i}
+                  trade={trade}
+                  countries={countries}
+                  selectProduct={this.addProduct}
+                  selectDestinations={this.addDestinations}
+                  selectOrigins={this.addOrigins}
+                  deleteProduct={this.deleteProduct}
+                />
+              )}
+            </tbody>
+          </table>
+          : null
+        }
 
         <div>
           <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>

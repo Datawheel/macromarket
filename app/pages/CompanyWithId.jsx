@@ -31,8 +31,11 @@ class CompanyWithId extends React.Component {
     }
   }
 
+  isEmptyObject = o => !o || Object.keys(o).every(x => o[x] === "" || o[x] === null || !o[x].length);
+
   render() {
     const {company, loading, error, trades} = this.props;
+    // console.log("this.props.trades", this.props.trades, this.isEmptyObject(this.props.trades))
 
     if (loading || !company) {
       return (
@@ -66,7 +69,7 @@ class CompanyWithId extends React.Component {
       opacity: 1
     };
 
-    const connectamericas = this.props.params.companySlug.slice(0, 3) === "ca_";
+    const isConnectamericas = this.props.params.companySlug.slice(0, 3) === "ca_";
 
     return (
       <div className="detailed-content-wrapper company">
@@ -97,11 +100,11 @@ class CompanyWithId extends React.Component {
         </Sidebar>
 
         <div className="center-content">
-          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={connectamericas}/>
+          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={isConnectamericas}/>
 
           <div className="content-wrapper">
 
-            {this.props.trades
+            {!this.isEmptyObject(trades)
               ? <div className="products">
                 <div className="imports">
                   <div className="section-wrapper">
@@ -191,7 +194,17 @@ class CompanyWithId extends React.Component {
                     </button>
                   </a> : null}
               </div>
-              : null}
+              : !isConnectamericas
+                ? <div className="pt-non-ideal-state">
+                  <div className="pt-non-ideal-state-visual pt-non-ideal-state-icon">
+                    <span className="pt-icon pt-icon-search"></span>
+                  </div>
+                  <h4 className="pt-non-ideal-state-title">No Products</h4>
+                  <div className="pt-non-ideal-state-description">
+                    This company hasn&apos;t selected any exports or imports yet.
+                  </div>
+                </div>
+                : null}
 
             {company.catalog
               ? <div className="products">
@@ -216,7 +229,7 @@ class CompanyWithId extends React.Component {
                   )}
                 </div>
               </div>
-              : <div>no company catalog!</div>}
+              : null}
 
           </div>
         </div>
