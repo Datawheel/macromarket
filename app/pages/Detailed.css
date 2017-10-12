@@ -65,7 +65,7 @@
 
     }
     & .filter-wrapper {
-        text-align: center;
+        text-align: left;
         padding: 40px;
         background: #2E3437;
         color: white;
@@ -89,10 +89,16 @@
                 display: inline-block;
             }
             & .label {
-                margin: 0;
-                width: 35%;
+                margin: 0 40px 0 0;
+                width: auto;
                 display: inline-block;
+
+                & .radio {
+                  display: inline-block;
+                  margin-left: 0px;
+                }
                 & p {
+                    display: inline-block;
                     text-transform: uppercase;
                     font-weight: 300;
                     text-align: left;
@@ -107,7 +113,8 @@
             }
         }
         & .filter.export-import {
-            width: 30%;
+            width: auto;
+            margin-right: 24px;
         }
         & .filter.button-wrapper {
             width: 15%;
@@ -128,10 +135,14 @@
 
     & .intro-text {
       background: #212831;
+      display: inline-block;
+      float: right;
+      width: 25%;
+      padding:55px 32px 24px 0px;
+
       & section {
-        width: 960px;
-        margin: 0 auto;
-        padding: 40px 260px 5px 40px;
+        margin: 0px;
+        padding: 0px;
 
         & p {
           vertical-align: middle;
@@ -255,7 +266,7 @@
             width: 50%;
         }
         & .country-dropdown-label {
-            width: 25%;
+            width: auto;
         }
     }
 }

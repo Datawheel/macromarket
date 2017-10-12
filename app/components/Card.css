@@ -6,9 +6,9 @@
     display: flex;
     flex-wrap: wrap;
     padding: 55px 0px;
-    width: 90%;
-    margin: 0 auto;
-    max-width: 1450px;
+    width: 75%;
+    margin: 0 40px;
+    max-width: 1200px;
     min-height: 300px;
     & .card {
         width: 23%;

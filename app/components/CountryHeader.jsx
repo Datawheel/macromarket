@@ -121,22 +121,22 @@ class CountryHeader extends React.Component {
               ? <div className="section-wrapper top-data">
                 <div className="data top-export">
                   <h4>Top Export</h4>
-                  <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
-                  <Link to={`/product/${exportData.hs92_id}`}>
-                    <div className="name-wrapper">
+                  <div className="name-wrapper">
+                    <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
+                    <Link to={`/product/${exportData.hs92_id}`}>
                       <h3>{exportName}</h3>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="data top-import">
                   <h4>Top Import</h4>
-                  <img className="icon" src={`/images/product_icon/hs_${importData.hs92_id.slice(0, 2)}.png`}></img>
-                  <Link to={`/product/${importData.hs92_id}`}>
-                    <div className="name-wrapper">
+                  <div className="name-wrapper">
+                    <img className="icon" src={`/images/product_icon/hs_${importData.hs92_id.slice(0, 2)}.png`}></img>
+                    <Link to={`/product/${importData.hs92_id}`}>
                       <h3>{importName}</h3>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 </div>
               </div>
               : null}

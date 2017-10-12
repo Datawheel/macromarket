@@ -165,7 +165,6 @@ class CountryWithId extends React.Component {
           </div>
           <div className="filter">
             <div className="label">
-              <span><img src="/images/icons/icon-product-grey.svg"/></span>
               <p>Filter Products</p>
             </div>
             <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown>

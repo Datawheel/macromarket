@@ -114,12 +114,10 @@ export default class ProductHeader extends React.Component {
                       <div className="data">
                         <h4>Exports</h4>
                         <p className="value">{productValue}</p>
-
                       </div>
                       <div className="data">
                         <h4>Imports</h4>
                         <p className="value">{productValue}</p>
-
                       </div>
                     </div>
                     <div className="section-wrapper top-data">
