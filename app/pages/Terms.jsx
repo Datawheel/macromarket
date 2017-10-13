@@ -1,6 +1,9 @@
 import React from "react";
 import "./Static.css";
 
+import Helmet from "react-helmet";
+import header from "../helmet.js";
+
 export default class Terms extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +12,7 @@ export default class Terms extends React.Component {
   render() {
     return (
       <div className="static-body">
+        <Helmet title={ `${ header.title } - Terms of Service` } />
         <h1>Terms of Service</h1>
         <p>
         By using the Macro.market website (&ldquo;Service&rdquo;), you are

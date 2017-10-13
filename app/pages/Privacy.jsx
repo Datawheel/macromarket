@@ -1,6 +1,9 @@
 import React from "react";
 import "./Static.css";
 
+import Helmet from "react-helmet";
+import header from "../helmet.js";
+
 export default class Privacy extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +12,7 @@ export default class Privacy extends React.Component {
   render() {
     return (
       <div className="static-body">
+        <Helmet title={ `${ header.title } - Privacy Policy` } />
         <h1>Privacy Policy</h1>
         <section>
           <p>This privacy notice discloses the privacy practices for macro.market. This privacy notice applies solely to information collected by this website. It will notify you of the following:</p>

@@ -17,6 +17,9 @@ import {fetchData} from "datawheel-canon";
 import {url} from "../api";
 import {nest} from "d3-collection";
 
+import Helmet from "react-helmet";
+import header from "../helmet.js";
+
 class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -185,6 +188,7 @@ class ProductWithId extends React.Component {
 
     return (
       <div className="detailed-content-wrapper product">
+        <Helmet title={ `${ header.title } - ${ product.name }` } />
         <ProductHeader countries={countries} productData= {productData} product={product} productCategory={productCategory}/>
         <div className="filter-wrapper">
           <div className="filter export-import">

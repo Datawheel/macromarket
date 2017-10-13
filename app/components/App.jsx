@@ -4,7 +4,9 @@ import {isAuthenticated} from "datawheel-canon";
 import NavBar from "./NavBar.jsx";
 import Footer from "./Footer.jsx";
 import "./App.css";
+
 import Helmet from "react-helmet";
+import header from "../helmet.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -14,12 +16,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Helmet title="About" meta={[
-          {
-            property: "viewport",
-            content: "width=device-width, initial-scale=1.0"
-          }
-        ]}/>
+        <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
         <NavBar location={this.props.location} />
         <div className="main-content">
           {this.props.children}

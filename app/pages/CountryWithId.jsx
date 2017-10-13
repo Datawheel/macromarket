@@ -17,6 +17,9 @@ import {url} from "../api";
 import CountryHeader from "../components/CountryHeader";
 import {nest} from "d3-collection";
 
+import Helmet from "react-helmet";
+import header from "../helmet.js";
+
 class CountryWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -151,6 +154,7 @@ class CountryWithId extends React.Component {
 
     return (
       <div className="detailed-content-wrapper country">
+        <Helmet title={ `${ header.title } - ${ country.name }` } />
         <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
         <div className="filter-wrapper">
           <div className="filter export-import">

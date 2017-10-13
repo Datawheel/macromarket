@@ -6,6 +6,10 @@ import {fetchCompany} from "../actions/companyActions";
 import {fetchProfileTradesByCompany} from "../actions/tradesActions";
 import "./Detailed.css";
 import CompanyHeader from "../components/CompanyHeader";
+
+import Helmet from "react-helmet";
+import header from "../helmet.js";
+
 class CompanyWithId extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +79,7 @@ class CompanyWithId extends React.Component {
 
     return (
       <div className="detailed-content-wrapper company">
-
+        <Helmet title={ `${ header.title } - ${ company.name }` } />
         <Sidebar>
           <div className="profile-info">
             <div className="profile-image-wrapper">
