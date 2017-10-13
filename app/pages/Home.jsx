@@ -130,10 +130,10 @@ class HomeSimple extends React.Component {
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>
               <div className="img-wrapper">
-                <img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" />
-                <img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" />
-                <img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" />
-                <img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" />
+                <a href="https://connectamericas.com/" target="_blank"><img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" /></a>
+                <a href="https://www.media.mit.edu/groups/collective-learning/overview/" target="_blank"><img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" /></a>
+                <a href="https://www.media.mit.edu/" target="_blank"><img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" /></a>
+                <a href="http://www.datawheel.us/" target="_blank"><img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" /></a>
               </div>
             </div>
             <div className="grid-wrapper">
