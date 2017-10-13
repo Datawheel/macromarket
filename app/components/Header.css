@@ -185,7 +185,8 @@
                 position: relative;
                 font-size: 2.5rem;
                 font-weight: bold;
-                margin: 8px 0px 0px;
+                line-height: 1.2;
+                margin: 8px 0px 8px;
                 padding-top:0px;
               }
               & h4 {
