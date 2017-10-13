@@ -64,9 +64,7 @@ class Signup extends React.Component {
     return (
       <div className="signup">
         <div className="inner-content-wrapper">
-          <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
-            <div className="title-wrapper">Sign Up</div>
             <SignUp redirect="/settings" />
           </div>
         </div>

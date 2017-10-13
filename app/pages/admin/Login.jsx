@@ -23,9 +23,7 @@ class Login extends React.Component {
     return (
       <div className="login">
         <div className="inner-content-wrapper">
-          <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
-            <div className="title-wrapper">Login</div>
             <CanonLogin redirect="/settings" />
             <div className="text-wrapper">
               <p>Don&apos;t have an account? <Link to="/signup">Sign up</Link></p>
