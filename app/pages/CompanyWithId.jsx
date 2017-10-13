@@ -89,19 +89,6 @@ class CompanyWithId extends React.Component {
             <div className="description-wrapper">
               <p>{company.description}</p>
             </div>
-            {company.ca_link
-              ? <a href={company.ca_link}>
-                <div className="link-wrapper">
-                  <div className="icon-wrapper color-ca">
-                    <img src="/images/icons/icon-ca.png" />
-                  </div>
-                  <div className="colored-wrapper">
-                    <div className="darker-color color-ca"></div>
-                    <p>ConnectAmericas</p>
-                  </div>
-                </div>
-              </a>
-              : null}
           </div>
         </Sidebar>
 
