@@ -1,5 +1,5 @@
 @import "../../Variables";
-#login, #signup {
+#login, #signup, #reset {
   margin: 25px 50px;
 }
 

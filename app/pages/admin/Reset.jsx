@@ -63,9 +63,7 @@ class Reset extends React.Component {
     return (
       <div className="login">
         <div className="inner-content-wrapper">
-          <Sidebar></Sidebar>
           <div className="center-content form-wrapper">
-            <div className="title-wrapper">Reset Password</div>
             <CanonReset location={ this.props.location } />
           </div>
         </div>
