@@ -9,15 +9,16 @@ module.exports = function(app) {
     db.Company.findOne({
       where: {slug},
       include: [db.Country]
-    }).then(company => {
-      const err = company ? null : "Not found";
+    })
+    .then(company => {
       db.Trade.findAll({
         where: {
           company_id: company.id
         },
         include: [db.Product, db.Country]
       }).then(trades => res.json(trades));
-    });
+    })
+    .catch(() => res.json([]));
   });
 
   app.post("/api/trades/company/:companyId", (req, res) => {
