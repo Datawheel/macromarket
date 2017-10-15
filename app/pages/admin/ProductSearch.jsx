@@ -35,7 +35,7 @@ class ProductSearch extends React.Component {
 
   render() {
     const {products} = this.props;
-    console.log("pRoducts", products)
+    // console.log("pRoducts", products)
 
     return (
       <div>
