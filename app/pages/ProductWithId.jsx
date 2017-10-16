@@ -108,11 +108,11 @@ class ProductWithId extends React.Component {
       .map(c => c.values[0].Company);
     const exportsByCountry = nest()
       .key(d => d.product_id)
-      .entries(trades.filter(t => t.trade_flow === "exports"))
+      .entries(trades.filter(t => t.trade_flow === "exports" && t.country_id))
       .map(c => c.values[0].Country);
     const importsByCountry = nest()
       .key(d => d.product_id)
-      .entries(trades.filter(t => t.trade_flow === "imports"))
+      .entries(trades.filter(t => t.trade_flow === "imports" && t.country_id))
       .map(c => c.values[0].Country);
 
     const numCompanies = tradesByCompany.length;
