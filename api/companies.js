@@ -9,7 +9,9 @@ module.exports = function(app) {
   const {db} = app.settings;
 
   app.get("/api/companies/", (req, res) => {
-    db.Company.findAll({limit: 100}).then(companies => res.json(companies));
+    db.Company.findAll({limit: 100})
+      .then(companies => res.json(companies))
+      .catch(err => res.json(err));
   });
 
   app.get("/api/companies/byUser/:uid", (req, res) => {
@@ -18,7 +20,9 @@ module.exports = function(app) {
       where: {uid},
       include: [db.Country],
       order: [["createdAt", "DESC"]]
-    }).then(companies => res.json(companies));
+    })
+    .then(companies => res.json(companies))
+    .catch(err => res.json(err));
   });
 
   // Instantiate a storage client
@@ -135,7 +139,8 @@ module.exports = function(app) {
         // }
 
         res.json(company);
-      });
+      })
+      .catch(err => res.json(err));
     }
   });
 
@@ -153,7 +158,8 @@ module.exports = function(app) {
           deleted: true,
           query: req.query
         });
-      });
+      })
+      .catch(err => res.json(err));
     });
   });
 

@@ -21,7 +21,8 @@ module.exports = function(app) {
         where: {
           id: userId
         }
-      }).then(user => {
+      })
+      .then(user => {
         const hashedPassword = bcrypt.hashSync(password, user.salt);
         if (user.password === hashedPassword) {
           db.users.update({
@@ -39,7 +40,8 @@ module.exports = function(app) {
         else {
           return res.status(400).json("The password you entered is Incorrect.");
         }
-      });
+      })
+      .catch(err => res.json(err));
     }
     else {
       return res.status(400).json("Not logged in!");

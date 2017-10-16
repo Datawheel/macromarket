@@ -38,7 +38,8 @@ module.exports = function(app) {
 
       Promise.all(tPromises).then(() => {
         res.json({msg: "done."});
-      });
+      })
+      .catch(err => res.json(err));
     });
   });
 
@@ -49,7 +50,8 @@ module.exports = function(app) {
       where: {company_id, product_id}
     }).then(() =>
       res.json({success: true})
-    );
+    )
+    .catch(err => res.json(err));
 
   });
 
@@ -61,7 +63,8 @@ module.exports = function(app) {
         country_id
       },
       include: [db.Product, db.Company]
-    }).then(trades => res.json(trades));
+    }).then(trades => res.json(trades))
+    .catch(err => res.json(err));
   });
 
   // TODO: rename to "/api/trades/byProduct/:productId"
@@ -72,7 +75,8 @@ module.exports = function(app) {
         product_id: {$ilike: `${product_id}%`}
       },
       include: [db.Country, db.Company]
-    }).then(trades => res.json(trades));
+    }).then(trades => res.json(trades))
+    .catch(err => res.json(err));
   });
 
   app.get("/api/trades/user/:uid", (req, res) => {
@@ -81,13 +85,15 @@ module.exports = function(app) {
       where: {uid}
     }).then(companies => {
       const companyIds = companies.reduce((arr, c) => arr.concat([c.id]), []);
-      db.Trade.findAll({
+      return db.Trade.findAll({
         where: {
           company_id: companyIds
         },
         include: [db.Country, db.Product]
-      }).then(trades => res.json(trades));
-    });
+      }).then(trades => res.json(trades))
+      .catch(err => res.json(err));
+    })
+    .catch(err => res.json(err));
   });
 
   app.get("/api/trades/ca_country/:countryId", (req, res) => {

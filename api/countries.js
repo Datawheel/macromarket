@@ -15,7 +15,8 @@ module.exports = function(app) {
         return res.json({error: "Country not found."});
       }
       return res.json(country);
-    });
+    })
+    .catch(err => res.json(err));
   });
 
 };

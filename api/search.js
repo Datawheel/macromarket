@@ -45,7 +45,8 @@ module.exports = function(app) {
       where
     }).then(results => {
       res.json(results);
-    });
+    })
+    .catch(err => res.json(err));
   });
 
 };
