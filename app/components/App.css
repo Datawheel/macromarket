@@ -221,6 +221,9 @@ button {
 .blue-loading {
   min-height: 100vh;
   background-color: #212831;
+  color: white;
+  padding-top: 100px;
+  text-align: center;
 }
 
 .fade-in {
