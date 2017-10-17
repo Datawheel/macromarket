@@ -16,6 +16,7 @@ import Dropdown from "../components/Dropdown";
 import {fetchData} from "datawheel-canon";
 import {url} from "../api";
 import {nest} from "d3-collection";
+import {NotFound} from "pages/NotFound";
 
 import Helmet from "react-helmet";
 import header from "../helmet.js";
@@ -160,6 +161,15 @@ class ProductWithId extends React.Component {
         <div className="blue-loading">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
+        </div>
+      );
+    }
+
+    if (product.error) {
+      return (
+        <div className="error-404">
+          <div className="error-gif"></div>
+          <p>OOPS! There's nothing here. But checkout the following pages that are here:</p>
         </div>
       );
     }

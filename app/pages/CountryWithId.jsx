@@ -126,6 +126,15 @@ class CountryWithId extends React.Component {
       );
     }
 
+    if (country.error) {
+      return (
+        <div className="error-404">
+          <div className="error-gif"></div>
+          <p>OOPS! There's nothing here. But checkout the following pages that are here:</p>
+        </div>
+      );
+    }
+
     const dropDownProducts = [];
 
     products.sort((a,b) => this.compare(a, b, "name"));

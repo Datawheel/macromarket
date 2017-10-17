@@ -43,20 +43,10 @@ class CompanyWithId extends React.Component {
     const {company, loading, error, trades} = this.props;
     // console.log("this.props.trades", this.props.trades, this.isEmptyObject(this.props.trades))
 
-    if (loading || !company) {
+    if (loading) {
       return (
-        <div className="detailed-content-wrapper company">
-          <Sidebar></Sidebar>
-          <div className="center-content">
-            <div className="header-image-wrapper">
-              <div className="background-image">
-                <div className="image-overlay-wrapper">
-                  <div className="image-overlay"></div>
-                  <div className="text-wrapper"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="blue-loading">
+          <div>loading...</div>
         </div>
       );
     }
@@ -66,6 +56,15 @@ class CompanyWithId extends React.Component {
         <div className="detailed-content-wrapper">
           <h2>Error</h2>
           <p>Please refresh the page.</p>
+        </div>
+      );
+    }
+
+    if (!company) {
+      return (
+        <div className="error-404">
+          <div className="error-gif"></div>
+          <p>OOPS! There's nothing here. But checkout the following pages that are here:</p>
         </div>
       );
     }
