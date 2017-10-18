@@ -21,8 +21,7 @@ module.exports = function(app) {
         where: {
           id: userId
         }
-      })
-      .then(user => {
+      }).then(user => {
         const hashedPassword = bcrypt.hashSync(password, user.salt);
         if (user.password === hashedPassword) {
           db.users.update({

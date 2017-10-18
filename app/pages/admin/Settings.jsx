@@ -86,8 +86,14 @@ class Settings extends React.Component {
 
           <Link to="/settings/change-password" role="button" className="pt-button pt-icon-lock">
             Change Password
-            <span className="pt-icon-standard pt-icon-key pt-align-right"></span>
           </Link>
+          <br />
+
+          {user.role === 2
+            ? <Link to="/settings/stats" role="button" className="pt-button pt-icon-timeline-line-chart">
+              View Stats
+            </Link>
+            : null}
 
         </Sidebar>
         <div className="center-content form-wrapper">
@@ -100,28 +106,6 @@ class Settings extends React.Component {
     );
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-//   deleteCompany: id => {
-//     dispatch(deleteCompany(id));
-//   },
-//   authenticateAndFetchCompany: () => {
-//     dispatch(authenticateAndFetchCompany());
-//   }
-// });
-// const mapDispatchToProps = dispatch => ({
-//   isAuthenticated: () => {
-//     dispatch(isAuthenticated());
-//   }
-// });
-//
-// const mapStateToProps = state => ({
-//   user: state.authentication.user,
-//   loading: state.authentication.loading,
-//   error: state.authentication.error
-// });
-//
-// export default connect(mapStateToProps)(Settings);
 
 const mapDispatchToProps = dispatch => ({
   isAuthenticated: () => {

@@ -1,4 +1,5 @@
 const axios = require("axios");
+const isAuthenticated = require("../api-helpers/authHelpers.js").isAuthenticated;
 
 module.exports = function(app) {
   const {db} = app.settings;
@@ -21,7 +22,7 @@ module.exports = function(app) {
     .catch(() => res.json([]));
   });
 
-  app.post("/api/trades/company/:companyId", (req, res) => {
+  app.post("/api/trades/company/:companyId", isAuthenticated, (req, res) => {
     const {companyId: company_id} = req.params;
     const {body: trades} = req;
 
@@ -43,7 +44,7 @@ module.exports = function(app) {
     });
   });
 
-  app.delete("/api/trades/company/:companyId/product/:productId", (req, res) => {
+  app.delete("/api/trades/company/:companyId/product/:productId", isAuthenticated, (req, res) => {
     const {companyId: company_id, productId: product_id} = req.params;
 
     db.Trade.destroy({

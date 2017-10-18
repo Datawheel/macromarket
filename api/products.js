@@ -23,9 +23,3 @@ module.exports = function(app) {
   });
 
 };
-
-// productRouter.get("/company/:id", (req, res) => {
-//   db.Trade.findProductsByCompany(db, req.params.id).then(trades => {
-//     res.send(trades);
-//   });
-// });

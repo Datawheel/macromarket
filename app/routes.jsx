@@ -8,6 +8,7 @@ import Privacy from "pages/Privacy";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
+import Stats from "pages/admin/Stats";
 import Login from "pages/admin/Login";
 import Signup from "pages/admin/Signup";
 import Reset from "pages/admin/Reset";
@@ -58,26 +59,26 @@ function checkForId(nextState, replace) {
 export default function RouteCreate() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
-
-      <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId}/>
-      <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId}/>
-      <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/signup" component={Signup}/>
+      <IndexRoute component={Home} />
+      <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId} />
+      <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId} />
+      <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
       <Route path="terms" component={Terms} />
       <Route path="privacy" component={Privacy} />
       <Route path="reset" component={Reset} />
       <Route path="activate" component={Activate} />
       <Route path="settings" component={Settings}>
-        <IndexRoute component={SettingsSummary}/>
-        <Route path="change-password" component={ChangePw}></Route>
+        <IndexRoute component={SettingsSummary} />
+        <Route path="stats" component={Stats} />
+        <Route path="change-password" component={ChangePw} />
         <Route path="company/:companySlug" component={CompanySummary}>
-          <IndexRoute component={EditCompany}/>
-          <Route path="products" component={EditProducts}></Route>
+          <IndexRoute component={EditCompany} />
+          <Route path="products" component={EditProducts} />
         </Route>
       </Route>
-      <Route path="/inbox" component={Inbox}></Route>
+      <Route path="/inbox" component={Inbox} />
       <Route path="*" exact={true} component={NotFound} />
     </Route>
   );

@@ -4,6 +4,7 @@ const path = require("path");
 const memoryStorage = multer.memoryStorage;
 const storage = require("@google-cloud/storage");
 const Op = require("sequelize").Op;
+const isAuthenticated = require("../api-helpers/authHelpers.js").isAuthenticated;
 
 module.exports = function(app) {
   const {db} = app.settings;
@@ -144,7 +145,7 @@ module.exports = function(app) {
     }
   });
 
-  app.delete("/api/companies/:id/:imgType", (req, res) => {
+  app.delete("/api/companies/:id/:imgType", isAuthenticated, (req, res) => {
     const {id, imgType} = req.params;
     const {file: filename} = req.query;
     const file = gcsBucket.file(filename);
@@ -171,7 +172,7 @@ module.exports = function(app) {
     /api/companies/1/image?imgType=profile|cover
   */
   const imgUpload = upload.single("image");
-  app.post("/api/companies/:id/:imgType", (req, res) => {
+  app.post("/api/companies/:id/:imgType", isAuthenticated, (req, res) => {
     const {id, imgType} = req.params;
     imgUpload(req, res, err => {
       if (err) return res.json({error: err});
@@ -232,7 +233,7 @@ module.exports = function(app) {
   });
 
   /** POST / - Create a new entity */
-  app.post("/api/companies", (req, res) => {
+  app.post("/api/companies", isAuthenticated, (req, res) => {
     const {id: uid} = req.user;
     const {body: company} = req;
     company.uid = uid;
@@ -249,7 +250,7 @@ module.exports = function(app) {
   /** GET /:id - Return a given entity */
 
   /** PUT /:id - Updates a given entity */
-  app.put("/api/companies/:id", (req, res) => {
+  app.put("/api/companies/:id", isAuthenticated, (req, res) => {
     const {id} = req.params;
     db.Company.update(
       req.body,
@@ -263,7 +264,7 @@ module.exports = function(app) {
         - ensure user has the proper permissions
         - delete any trades associated with this company
   */
-  app.delete("/api/companies/:id", (req, res) => {
+  app.delete("/api/companies/:id", isAuthenticated, (req, res) => {
     const {id} = req.params;
     db.Company.destroy({
       where: {id},
