@@ -147,7 +147,6 @@ module.exports = function(app) {
       }
       const file = gcsBucket.file(filename);
       file.delete().then(() => {
-        // res.json(delResp)
         company.update({
           [`${imgType}_image`]: null
         }).then(() =>
@@ -172,62 +171,71 @@ module.exports = function(app) {
   const imgUpload = upload.single("image");
   app.post("/api/companies/:id/:imgType", isAuthenticated, (req, res) => {
     const {id, imgType} = req.params;
-    imgUpload(req, res, err => {
-      if (err) return res.json({error: err});
-
-      if (!req.file) {
-        return res.json({error: "No file."});
+    db.Company.findOne({
+      where: {id}
+    }).then(company => {
+      if (!company) {
+        return res.json({error: "Company not found."});
       }
+      if (company.uid !== req.user.id) {
+        return res.json({error: "You do not have permission to edit this company."});
+      }
+      imgUpload(req, res, err => {
+        if (err) return res.json({error: err});
 
-      // Create a new blob in the bucket and upload the file data.
-      const fname = path.parse(req.file.originalname).name.replace(/\W+/g, "-").toLowerCase();
-      const extension = path.parse(req.file.originalname).ext.toLowerCase();
-      const fileName = `company/company${id}-${fname}${extension}`;
-      const fileTest = gcsBucket.file(fileName);
+        if (!req.file) {
+          return res.json({error: "No file."});
+        }
 
-      fileTest.exists().then(data => {
-        const exists = data[0];
-        console.log("exists?", exists);
-        // res.json({});
+        // Create a new blob in the bucket and upload the file data.
+        const fname = path.parse(req.file.originalname).name.replace(/\W+/g, "-").toLowerCase();
+        const extension = path.parse(req.file.originalname).ext.toLowerCase();
+        const fileName = `company/company${id}-${fname}${extension}`;
+        const fileTest = gcsBucket.file(fileName);
 
-        const blob = gcsBucket.file(fileName);
+        fileTest.exists().then(data => {
+          const exists = data[0];
+          // console.log("exists?", exists);
+          // res.json({});
 
-        // Make sure to set the contentType metadata for the browser to be able
-        // to render the image instead of downloading the file (default behavior)
-        const blobStream = blob.createWriteStream({
-          metadata: {
-            contentType: req.file.mimetype
-          }
-        });
+          const blob = gcsBucket.file(fileName);
 
-        blobStream.on("error", err => {
-          console.log("blobStream error\n\n");
-          console.log(err);
-        });
+          // Make sure to set the contentType metadata for the browser to be able
+          // to render the image instead of downloading the file (default behavior)
+          const blobStream = blob.createWriteStream({
+            metadata: {
+              contentType: req.file.mimetype
+            }
+          });
 
-        blobStream.on("finish", () => {
-          // The public URL can be used to directly access the file via HTTP.
-          const publicUrl = `https://storage.googleapis.com/${gcsBucket.name}/${blob.name}`;
+          blobStream.on("error", err => {
+            console.log("blobStream error\n\n");
+            console.log(err);
+          });
 
-          // Make the image public to the web (since we'll be displaying it in browser)
-          blob.makePublic().then(() => {
-            db.Company.update(
-              {[`${imgType}_image`]: publicUrl},
-              {where: {id}}
-            ).then(() => {
-              res.json({
-                msg: `Success! Image uploaded to ${publicUrl}`,
-                file: publicUrl
-              });
+          blobStream.on("finish", () => {
+            // The public URL can be used to directly access the file via HTTP.
+            const publicUrl = `https://storage.googleapis.com/${gcsBucket.name}/${blob.name}`;
+
+            // Make the image public to the web (since we'll be displaying it in browser)
+            blob.makePublic().then(() => {
+              company.update({
+                [`${imgType}_image`]: publicUrl
+              }).then(() =>
+                res.json({
+                  msg: `Success! Image uploaded to ${publicUrl}`,
+                  file: publicUrl
+                })
+              );
             });
           });
+
+          blobStream.end(req.file.buffer);
         });
 
-        blobStream.end(req.file.buffer);
       });
-
-    });
-
+    })
+    .catch(err => res.json(err));
   });
 
   /** POST / - Create a new entity */
@@ -252,9 +260,9 @@ module.exports = function(app) {
     const {id} = req.params;
     db.Company.update(
       req.body,
-      {where: {id}, individualHooks: true}
+      {where: {id, uid: req.user.id}, individualHooks: true}
     ).then(company => res.json(company))
-      .catch(err => res.json(err));
+      .catch(err => res.json({error: "Unable to edit this company.", errorResp: err}));
   });
 
   /** DELETE /:id - Deletes a given entity
