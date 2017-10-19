@@ -353,6 +353,9 @@
           text-align: left;
           display: inline-block;
         }
+        & p.country-name {
+          display: block;
+        }
         & button {
           color: white;
           background: transparent;

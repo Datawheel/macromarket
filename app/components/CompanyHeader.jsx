@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router";
 import "./Header.css";
 
 const CompanyHeader = ({company, connectamericas, profileImage}) => {
@@ -38,9 +39,7 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
                       ? `${company.city}, ${company.region}`
                       : null}
                   </p>
-                  <p>
-                    {company.Country ? company.Country.name : null}
-                  </p>
+                  {company.Country ? <p className="country-name"><Link to={`/country/${company.Country.id}`}>{company.Country.name}</Link></p> : null}
                 </div>
               </div>
             </div>
