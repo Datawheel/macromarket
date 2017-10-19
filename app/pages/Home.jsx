@@ -34,7 +34,7 @@ class HomeSimple extends React.Component {
         this.setState({searchResults: response.data});
       })
       .catch(response => {
-        console.log(response);
+        console.log("err:", response);
       });
   }
 

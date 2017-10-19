@@ -18,7 +18,6 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
     }
   }
 
-  console.log("Company:", company);
   const companyWebsite = !(/^https?:\/\//i).test(company.website) ? `http://${company.website}` : company.website;
   return (
     <div className="header-image-wrapper">

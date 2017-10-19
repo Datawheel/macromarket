@@ -9,7 +9,7 @@ export default class ProductHeader extends React.Component {
     super(props);
   }
 
-  nameLookup = (id) => {
+  nameLookup = id => {
     let result = ""
     const countries = this.props.countries;
     for (let i = 0; i < countries.length; i++) {
@@ -56,7 +56,6 @@ export default class ProductHeader extends React.Component {
     let topImporter;
     let exportName;
     let importName;
-    console.log(countries);
     if (productData) {
       productValue = `$${this.abbrNum(productData.export_val, 2)}`;
       topExporter = productData.top_exporter;
@@ -65,7 +64,6 @@ export default class ProductHeader extends React.Component {
       importName = this.nameLookup(topImporter);
     }
 
-    console.log(exportName, importName);
 
     const fallbackId = product.id.substring(0, 2);
     const img = product.flickr_link
@@ -78,25 +76,24 @@ export default class ProductHeader extends React.Component {
       <div className="header">
 
 
-          <div className="header-image-wrapper">
-            <div className="fade-in background-image" style={{
-              backgroundImage: `url(${img})`
-            }}><div className="image-overlay"></div>
-            </div>
-            <div className="header-info">
+        <div className="header-image-wrapper">
+          <div className="fade-in background-image" style={{backgroundImage: `url(${img})`}}>
+            <div className="image-overlay"></div>
+          </div>
+          <div className="header-info">
 
-              <div className="header-wrapper name page-title section-wrapper">
-                <div className="name-image">
-                  <img src={"/images/icons/icon-product-white.svg"}/>
-                </div>
-                <div className="name-text">
-                  <h2>{product.name}</h2>
-                  <h4 className="product-category">{productCategory}</h4>
-                </div>
-
-                <p>{product.description}</p>
+            <div className="header-wrapper name page-title section-wrapper">
+              <div className="name-image">
+                <img src={"/images/icons/icon-product-white.svg"}/>
               </div>
-              <div className="page-links">
+              <div className="name-text">
+                <h2>{product.name}</h2>
+                <h4 className="product-category">{productCategory}</h4>
+              </div>
+
+              <p>{product.description}</p>
+            </div>
+            <div className="page-links">
               <Link to={"/settings/product"}>
                 <button className="list-company">List Your Company</button>
               </Link>
@@ -104,48 +101,48 @@ export default class ProductHeader extends React.Component {
                 ? <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
                     View on the OEC <span className="chevron right"></span></a>
                 : null}
-              </div>
             </div>
-            {productValue
-              ? <div className="image-overlay-wrapper">
+          </div>
+          {productValue
+            ? <div className="image-overlay-wrapper">
 
-                  <div className="text-wrapper">
-                    <div className="section-wrapper total-data">
-                      <div className="data">
-                        <h4>Exports</h4>
-                        <p className="value">{productValue}</p>
-                      </div>
-                      <div className="data">
-                        <h4>Imports</h4>
-                        <p className="value">{productValue}</p>
-                      </div>
+              <div className="text-wrapper">
+                <div className="section-wrapper total-data">
+                  <div className="data">
+                    <h4>Exports</h4>
+                    <p className="value">{productValue}</p>
+                  </div>
+                  <div className="data">
+                    <h4>Imports</h4>
+                    <p className="value">{productValue}</p>
+                  </div>
+                </div>
+                <div className="section-wrapper top-data">
+                  <div className="data">
+                    <h4>Top Exporter</h4>
+                    <div className="top-country">
+                      <Link to={`/country/${topExporter}`}>
+                        <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
+                        <h3>{exportName}</h3>
+                      </Link>
                     </div>
-                    <div className="section-wrapper top-data">
-                      <div className="data">
-                        <h4>Top Exporter</h4>
-                        <div className="top-country">
-                          <Link to={`/country/${topExporter}`}>
-                            <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
-                            <h3>{exportName}</h3>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="data">
-                        <h4>Top Importer</h4>
-                        <div className="top-country">
-                          <Link to={`/country/${topImporter}`}>
-                            <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
-                            <h3>{importName}</h3>
-                          </Link>
-                        </div>
-                      </div>
+                  </div>
+                  <div className="data">
+                    <h4>Top Importer</h4>
+                    <div className="top-country">
+                      <Link to={`/country/${topImporter}`}>
+                        <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
+                        <h3>{importName}</h3>
+                      </Link>
                     </div>
                   </div>
                 </div>
-              : null}
+              </div>
+            </div>
+            : null}
 
-          </div>
         </div>
+      </div>
 
 
     );

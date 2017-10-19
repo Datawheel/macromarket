@@ -28,7 +28,9 @@ const CompanyCard = props => {
 
       <div className="content">
         <h2>
-          <Link to={`/settings/company/${company.slug}`} className="header">{company.name}</Link>
+          <Link to={`/settings/company/${company.slug}`} role="button" className="header pt-button pt-small pt-minimal pt-icon-edit">
+            {company.name}
+          </Link>
         </h2>
         <div className="meta">
           <span className="date">

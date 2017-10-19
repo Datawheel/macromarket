@@ -20,19 +20,18 @@ class SelectedCountries extends React.Component {
   }
 
   addCountry = country => {
-    const selectedCountries = []
+    const selectedCountries = [];
     this.props.selectedCountries.map(country => {
-      selectedCountries.push(country.name)
-
-    })
-
-    console.log(this.props.companyId, this.props.productId, country.value, this.props.tradeFlow, "HERERERERE")
+      selectedCountries.push(country.name);
+    });
 
     if (selectedCountries.length > 4) {
       this.setState({error: "You can only select 5 countries per product."});
-    } else if (selectedCountries.includes(country.label)) {
+    }
+    else if (selectedCountries.includes(country.label)) {
       this.setState({error: "This country is already selected."});
-    } else {
+    }
+    else {
       this.setState({error: null});
       this.props.createTrade(this.props.companyId, this.props.productId, country.value, this.props.tradeFlow);
     }
@@ -60,8 +59,8 @@ class SelectedCountries extends React.Component {
     return (
       <div>
         <div className="countries-error error-wrapper">{this.state.error
-            ? <p>{this.state.error}</p>
-            : null}</div>
+          ? <p>{this.state.error}</p>
+          : null}</div>
         <div>
           <Dropdown type="countries" select={this.addCountry} options={dropDownCountries}></Dropdown>
           <div className="selected-countries-wrapper">

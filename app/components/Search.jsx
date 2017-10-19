@@ -20,12 +20,10 @@ class Search extends React.Component {
     const {searchActive: prevSearchActive} = prevProps;
     const {searchActive} = this.props;
     if (prevSearchActive === false && searchActive === true) {
-      console.log("Opening search...");
       document.addEventListener("keydown", this.escFunc, false);
       this.searchInput.focus();
     }
     if (prevSearchActive === true && searchActive === false) {
-      console.log("Closing search...");
       document.removeEventListener("keydown", this.escFunc, false);
     }
   }
@@ -72,8 +70,6 @@ class Search extends React.Component {
     api.get(`/api/search/${filter.toLowerCase()}/${query}`)
       .then(response => {
         // dispatch(receiveSearch(response.data));
-        console.log("search results...");
-        console.log(response.data);
         this.setState({results: response.data});
       })
       .catch(response => {

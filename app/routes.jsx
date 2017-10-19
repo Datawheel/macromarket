@@ -46,8 +46,6 @@ function checkForId(nextState, replace) {
       ? `${reqestedUrl}${randId}`
       : `${reqestedUrl}/${randId}`;
 
-    console.log(reqestedUrl, randId, nextUrl);
-
     return replace({pathname: nextUrl});
   }
   else {

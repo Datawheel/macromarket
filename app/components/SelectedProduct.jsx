@@ -29,7 +29,6 @@ class ProductSelection extends React.Component {
         filteredProducts[product.product_id] = product
       }
     });
-    console.log(filteredProducts, "DONNNE");
 
     return (
       <div className="selection-wrapper">

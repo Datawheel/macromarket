@@ -58,7 +58,7 @@ class CountryHeader extends React.Component {
     let importValue;
     let importName;
     let exportName;
-    console.log(countryData);
+    
     if (countryData && importData && exportData) {
       importName = this.nameLookup(importData.hs92_id, products, "");
       exportName = this.nameLookup(exportData.hs92_id, products, "");
