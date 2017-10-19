@@ -124,64 +124,42 @@ module.exports = function(app) {
         include: [db.Country]
       }).then(company => {
         const err = company ? null : "Not found";
-        // const imgs = [];
-        //
-        // if (company.profile_image) {
-        //   // check if image is not from aws
-        //   if (company.profile_image.slice(0, 4) !== "http") {
-        //     imgs.push("profile_image");
-        //   }
-        // }
-        // if (company.cover_image) {
-        //   // check if image is not from aws
-        //   if (company.cover_image.slice(0, 4) !== "http") {
-        //     imgs.push("cover_image");
-        //   }
-        // }
-        //
-        // if (imgs.length > 0) {
-        //   imgs.forEach(img => {
-        //     const today = new Date();
-        //     const tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-        //     const config = {
-        //       action: "read",
-        //       expires: tomorrow
-        //     };
-        //     const gcsBucket = googleCloudStorage.bucket("mm-company");
-        //     const file = gcsBucket.file(company[img]);
-        //     file.getSignedUrl(config, (err, url) => {
-        //       if (err) {
-        //         console.error(err);
-        //         return;
-        //       }
-        //       company[img] = url;
-        //     });
-        //   });
-        // }
-
         res.json(company);
       })
-      .catch(err => res.json(err));
+        .catch(err => res.json(err));
     }
   });
 
   app.delete("/api/companies/:id/:imgType", isAuthenticated, (req, res) => {
     const {id, imgType} = req.params;
     const {file: filename} = req.query;
-    const file = gcsBucket.file(filename);
-    // console.log("file!!!", file)
-    file.delete().then(() => {
-      db.Company.update(
-        {[`${imgType}_image`]: null},
-        {where: {id}}
-      ).then(() => {
-        res.json({
-          deleted: true,
-          query: req.query
-        });
+    db.Company.findOne({
+      where: {id}
+    }).then(company => {
+      if (!company) {
+        return res.json({error: "Company not found."});
+      }
+      if (company.uid !== req.user.id) {
+        return res.json({error: "You do not have permission to edit this company."});
+      }
+      if (company[`${imgType}_image`].replace("https://storage.googleapis.com/mm-company/", "") !== filename) {
+        return res.json({error: "You do not have permission to delete this image."});
+      }
+      const file = gcsBucket.file(filename);
+      file.delete().then(() => {
+        // res.json(delResp)
+        company.update({
+          [`${imgType}_image`]: null
+        }).then(() =>
+          res.json({
+            deleted: true,
+            query: req.query
+          })
+        );
       })
-      .catch(err => res.json(err));
-    });
+      .catch(err => res.json({error: "File doesn't exist", resp: err}));
+    })
+    .catch(err => res.json(err));
   });
 
   /** POST /:id - Uploads new image to google storage and updates DB

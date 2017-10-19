@@ -206,13 +206,19 @@ class EditCompany extends React.Component {
     const imgType = imgStateKey.replace("Image", "");
     const {id: companyId} = this.props.company;
     const amount = 10;
-    const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-    const key = toast.show(this.renderProgress(amount));
+    const progressToast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+    const key = progressToast.show(this.renderProgress(amount));
     const f = this.state[imgStateKey].replace("https://storage.googleapis.com/mm-company/", "");
     api.delete(`/api/companies/${companyId}/${imgType}?file=${f}`).then(imgResp => {
-      toast.update(key, this.renderProgress(100));
-      // console.log("COMPLETED", imgResp.data);
-      this.setState({[imgStateKey]: null});
+      if (imgResp.data && imgResp.data.error) {
+        progressToast.dismiss(key);
+        const errToast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+        errToast.show({message: imgResp.data.error, intent: Intent.DANGER});
+      }
+      else {
+        progressToast.update(key, this.renderProgress(100));
+        this.setState({[imgStateKey]: null});
+      }
     });
   }
 
