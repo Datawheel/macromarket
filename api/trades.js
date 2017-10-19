@@ -37,9 +37,8 @@ module.exports = function(app) {
     db.Company.findOne({
       where: {slug},
       include: [db.Country]
-    })
-    .then(company => {
-      db.Trade.findAll({
+    }).then(company => {
+      return db.Trade.findAll({
         where: {
           company_id: company.id
         },
@@ -53,32 +52,54 @@ module.exports = function(app) {
     const {companyId: company_id} = req.params;
     const {body: trades} = req;
 
-    db.Trade.destroy({
-      where: {company_id}
-    }).then(() => {
-      const tPromises = trades.map(t => {
-        // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
-        const country_id = t.country ? t.country.id : null;
-        return db.Trade.findOrCreate({
-          where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id}
-        }).catch(err => console.log("err", err));
-      });
+    db.Company.findOne({
+      where: {id: company_id}
+    }).then(company => {
+      if (!company) {
+        return res.json({error: "Company not found."});
+      }
+      if (company.uid !== req.user.id) {
+        return res.json({error: "You do not have permission to edit trades for this company."});
+      }
+      return db.Trade.destroy({
+        where: {company_id}
+      }).then(() => {
+        const tPromises = trades.map(t => {
+          // console.log({trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id: t.country.id});
+          const country_id = t.country ? t.country.id : null;
+          return db.Trade.findOrCreate({
+            where: {trade_flow: t.tradeFlow, company_id, product_id: t.product.id, country_id}
+          }).catch(err => console.log("err", err));
+        });
 
-      Promise.all(tPromises).then(() => {
-        res.json({msg: "done."});
-      })
-      .catch(err => res.json(err));
-    });
+        Promise.all(tPromises).then(() => {
+          res.json({msg: "done."});
+        })
+        .catch(err => res.json(err));
+      });
+    })
+    .catch(err => res.json(err));
   });
 
   app.delete("/api/trades/company/:companyId/product/:productId", isAuthenticated, (req, res) => {
     const {companyId: company_id, productId: product_id} = req.params;
 
-    db.Trade.destroy({
-      where: {company_id, product_id}
-    }).then(() =>
-      res.json({success: true})
-    )
+    db.Company.findOne({
+      where: {id: company_id}
+    }).then(company => {
+      if (!company) {
+        return res.json({error: "Company not found."});
+      }
+      if (company.uid !== req.user.id) {
+        return res.json({error: "You do not have permission to delete trades for this company."});
+      }
+      return db.Trade.destroy({
+        where: {company_id, product_id}
+      }).then(() =>
+        res.json({success: true})
+      )
+      .catch(err => res.json(err));
+    })
     .catch(err => res.json(err));
 
   });

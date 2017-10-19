@@ -264,10 +264,23 @@ module.exports = function(app) {
   */
   app.delete("/api/companies/:id", isAuthenticated, (req, res) => {
     const {id} = req.params;
-    db.Company.destroy({
-      where: {id},
-      individualHooks: true
-    }).then(company => res.json(company))
-      .catch(err => res.json(err));
+    db.Company.findOne({
+      where: {id}
+    }).then(company => {
+      if (!company) {
+        return res.json({error: "Company not found."});
+      }
+      if (company.uid !== req.user.id) {
+        return res.json({error: "You do not have permission to delete this company."});
+      }
+      return company.destroy().then(() =>
+        res.json({
+          deleted: true,
+          query: req.query
+        })
+      )
+      .catch(err => res.json({error: "Unable to delete company.", resp: err}));
+    })
+    .catch(err => res.json(err));
   });
 };
