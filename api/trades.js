@@ -1,8 +1,35 @@
 const axios = require("axios");
 const isAuthenticated = require("../api-helpers/authHelpers.js").isAuthenticated;
+const Op = require("sequelize").Op;
 
 module.exports = function(app) {
   const {db} = app.settings;
+
+  app.get("/api/trades/", (req, res) => {
+    let {days} = req.query;
+    let daysAgo = new Date(1318781876406);
+    const today = new Date();
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    if (days && (/^\d+$/).test(days)) {
+      days = parseInt(days, 10);
+      daysAgo = new Date(today - new Date(oneDay * days));
+      daysAgo.setHours(23, 59, 59);
+    }
+
+    db.Trade.findAll({
+      where: {
+        createdAt: {
+          [Op.lt]: today,
+          [Op.gt]: daysAgo
+        }
+      },
+      order: [["createdAt", "DESC"]],
+      limit: 100,
+      include: [db.Product, db.Company, db.Country]
+    })
+      .then(trades => res.json(trades))
+      .catch(err => res.json(err));
+  });
 
   // TODO: rename to "/api/trades/byCompany/:companyId"
   app.get("/api/trades/company/:companySlug", (req, res) => {

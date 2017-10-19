@@ -101,6 +101,9 @@ module.exports = function(sequelize, db) {
       onDelete: "cascade",
       hooks: true
     });
+    Company.belongsTo(models.users, {
+      foreignKey: "uid"
+    });
   };
 
   return Company;
