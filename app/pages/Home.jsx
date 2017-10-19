@@ -5,7 +5,7 @@ import {browserHistory} from "react-router";
 import Select from "react-select";
 import api from "../api.js";
 
-class HomeSimple extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -214,4 +214,4 @@ class HomeSimple extends React.Component {
   }
 }
 
-export default HomeSimple;
+export default Home;

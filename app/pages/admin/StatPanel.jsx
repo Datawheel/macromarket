@@ -57,7 +57,7 @@ class StatPanel extends React.Component {
                   <td>{u.username}</td>
                   <td>{u.email}</td>
                   <td>{moment(u.createdAt).format("MMMM Do YYYY")}</td>
-                  <td>{u.activated ? <Icon iconName="delete" intent={Intent.DANGER} iconSize={Icon.SIZE_LARGE} /> : <Icon iconName="endorsed" intent={Intent.SUCCESS} iconSize={Icon.SIZE_LARGE} />}</td>
+                  <td>{u.activated ? <Icon iconName="endorsed" intent={Intent.SUCCESS} iconSize={Icon.SIZE_LARGE} /> : <Icon iconName="delete" intent={Intent.DANGER} iconSize={Icon.SIZE_LARGE} />}</td>
                 </tr>
               )}
             </tbody>
