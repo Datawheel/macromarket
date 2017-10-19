@@ -22,7 +22,7 @@ class Card extends React.Component {
     }
     if (this.content.profile_type === "company") {
       icon = "/images/icons/icon-company-yellow.svg";
-      img = this.content.image || this.content.profile_image;
+      img = this.content.image || this.content.profile_image || this.content.cover_image;
       id = this.content.slug;
       // if (id.toString().includes("company")) {
       //   id = id.replace("company", "");
