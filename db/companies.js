@@ -32,13 +32,13 @@ module.exports = function(sequelize, db) {
   }, {
     hooks: {
       afterCreate: company => {
-        sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
-          const document = response[0][0].to_tsvector
-          const name = company.dataValues.name
+        return sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
+          const document = response[0][0].to_tsvector;
+          const name = company.dataValues.name;
           const id = `company${company.dataValues.id}`;
           const image = company.dataValues.profile_image;
           const slug = company.dataValues.slug;
-          sequelize.models.Search.create({
+          return sequelize.models.Search.create({
             id, name, profile_type: "company", document, image, slug
           }).then(Search => {
             console.log("Success: New company created.");
@@ -67,20 +67,22 @@ module.exports = function(sequelize, db) {
         });
       },
       afterUpdate: company => {
-        sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`).then(response => {
-          const document = response[0][0].to_tsvector.replace(/'/g, "''");
-          const name = company.dataValues.name;
-          const id = `company${company.dataValues.id}`;
-          const image = company.dataValues.profile_image;
-          const slug = company.dataValues.slug;
-          sequelize.models.Search.update(
-            {name, document, image, slug},
-            {where: {id}}
-          ).then(company => console.log(company))
-            .catch(err => console.log(err));
-        }).catch(err => {
-          console.log(err);
-        });
+        return sequelize.query(`SELECT to_tsvector('english', '${company.dataValues.name.replace(/'/g, "''")}')`)
+          .then(response => {
+            const document = response[0][0].to_tsvector.replace(/'/g, "''");
+            const name = company.dataValues.name;
+            const id = `company${company.dataValues.id}`;
+            const image = company.dataValues.profile_image;
+            const slug = company.dataValues.slug;
+            return sequelize.models.Search.update(
+              {name, document, image, slug},
+              {where: {id}}
+            ).then(company => console.log(company))
+              .catch(err => console.log(err));
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     }
   });
