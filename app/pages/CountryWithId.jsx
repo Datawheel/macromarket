@@ -158,7 +158,10 @@ class CountryWithId extends React.Component {
 
     let allTrades;
     if (caTrades && trades) {
-      allTrades = caTrades.concat(trades);
+      // filter out duplicate countries
+      allTrades = trades.filter((trade, index, self) =>
+        self.findIndex(t => t.company_id === trade.company_id) === index
+      ).concat(caTrades);
     }
 
     return (
