@@ -27,6 +27,7 @@ class EditCompany extends React.Component {
       companyEmail: props.company.company_email || "",
       phone_number: props.company.phone_number || "",
       website: props.company.website || "",
+      contactName: props.company.contact_name || "",
       coverImage: props.company.cover_image,
       profileImage: props.company.profile_image,
       coverImagePreview: null,
@@ -51,6 +52,7 @@ class EditCompany extends React.Component {
       companyEmail: company.company_email || "",
       phone_number: company.phone_number || "",
       website: company.website || "",
+      contactName: company.contact_name || "",
       coverImage: company.cover_image,
       profileImage: company.profile_image,
       newCompany: company.id ? false : true,
@@ -117,6 +119,7 @@ class EditCompany extends React.Component {
       company_email: this.state.companyEmail || null,
       phone_number: this.state.phone_number || null,
       website: this.state.website || null,
+      contact_name: this.state.contactName || null,
       profile_image: this.state.profileImage,
       cover_image: this.state.coverImage
     };
@@ -237,7 +240,7 @@ class EditCompany extends React.Component {
   render() {
     const {company, countries} = this.props;
     const {isSaving, error, address, city, country, description, name, region,
-      companyEmail, phone_number, website, coverImage, profileImage,
+      companyEmail, phone_number, website, contactName, coverImage, profileImage,
       coverImagePreview, profileImagePreview, confirmDeleteOpen} = this.state;
     return (
       <div className="edit-company">
@@ -323,7 +326,7 @@ class EditCompany extends React.Component {
             </label>
             <div className="pt-form-content">
               <div className="pt-input-group">
-                <input id="input-contact-name" type="text" className="pt-input" placeholder="Contact Name" />
+                <input id="input-contact-name" name="contactName" onChange={this.handleChange} value={contactName} type="text" className="pt-input" placeholder="Contact Name" />
               </div>
             </div>
           </div>

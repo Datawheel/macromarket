@@ -24,6 +24,7 @@ module.exports = function(sequelize, db) {
     cover_image: db.STRING,
     description: db.TEXT,
     transporter: db.BOOLEAN,
+    contact_name: db.STRING,
     uid: {
       type: db.STRING,
       primaryKey: true,

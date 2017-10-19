@@ -80,7 +80,7 @@ class StatPanel extends React.Component {
               {companies.map(c =>
                 <tr key={c.id}>
                   <td><a href={`/company/${c.slug}`}>{c.name}</a></td>
-                  <td>{c.company_email}</td>
+                  <td>{c.website}</td>
                   <td>{c.Country ? <a href={`/country/${c.Country.id}`}>{c.Country.name}</a> : null}</td>
                   <td>{c.user.username}</td>
                   <td>{moment(c.createdAt).format("MMMM Do YYYY")}</td>
