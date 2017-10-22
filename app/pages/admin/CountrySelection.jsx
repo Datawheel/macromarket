@@ -1,6 +1,6 @@
 import React from "react";
 import "./TradeEdit.css";
-import {Classes, MenuItem} from "@blueprintjs/core";
+import {Classes, MenuItem, Intent, Position, Toaster} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/labs";
 
 class CountrySelection extends React.Component {
@@ -36,8 +36,18 @@ class CountrySelection extends React.Component {
 
   selectCountry = country => {
     const countries = [...this.state.countries, country];
-    this.props.selectCountry(countries);
-    this.setState({countries});
+    if (countries.length > 10) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({
+        timeout: 10000,
+        message: "Max origins exceeded. You may only list a product on 10 country pages.",
+        intent: Intent.DANGER
+      });
+    }
+    else {
+      this.props.selectCountry(countries);
+      this.setState({countries});
+    }
   }
 
   deselectCountry = index => {

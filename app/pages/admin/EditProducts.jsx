@@ -66,10 +66,9 @@ class EditProducts extends React.Component {
       });
     });
 
-    api.post(`/api/trades/company/${company.id}`, tradesForServer).then(tradesResponse => {
+    api.post(`/api/trades/company/${company.id}`, tradesForServer).then(() => {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
-      console.log(tradesResponse.data);
       this.setState({unsavedTrades: false});
       browserHistory.push("/settings/");
     });
@@ -77,13 +76,30 @@ class EditProducts extends React.Component {
 
   addProduct = product => {
     const trades = this.state.trades.filter(t => t.product);
-    const trade = {
-      product,
-      origins: [],
-      destinations: []
-    };
-    this.setState({newProduct: false, trades: trades.concat([trade])});
-    // this.saveTrades(trades.concat([trade]));
+    if (trades.length >= 10) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({
+        timeout: 10000,
+        message: "Max products exceeded. You may only list your company on 10 product pages.",
+        intent: Intent.DANGER
+      });
+    }
+    else if (trades.filter(t => t.product.id === product.id).length > 0) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({
+        timeout: 10000,
+        message: "This product is already listed.",
+        intent: Intent.DANGER
+      });
+    }
+    else {
+      const trade = {
+        product,
+        origins: [],
+        destinations: []
+      };
+      this.setState({newProduct: false, trades: trades.concat([trade])});
+    }
   }
 
   addOrigins = (origins, productId) => {
@@ -94,7 +110,6 @@ class EditProducts extends React.Component {
       }
       return t;
     });
-    console.log("ADDING ORIGIN", productId, origins);
     this.setState({trades: newTrades, unsavedTrades: true});
   }
 
@@ -106,7 +121,6 @@ class EditProducts extends React.Component {
       }
       return t;
     });
-    console.log("ADDING DESTS", productId, destinations);
     this.setState({trades: newTrades, unsavedTrades: true});
   }
 
