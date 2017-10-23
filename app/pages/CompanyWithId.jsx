@@ -81,9 +81,11 @@ class CompanyWithId extends React.Component {
         <Helmet title={ `${ header.title } - ${ company.name }` } />
         <Sidebar>
           <div className="profile-info">
-            <div className="profile-image-wrapper">
-              <div className="profile-image background-image" style={profileImage}></div>
-            </div>
+            { company.profile_image
+              ? <div className="profile-image-wrapper">
+                <div className="profile-image background-image" style={profileImage}></div>
+              </div>
+              : null }
             <h3>{company.name}</h3>
             <div className="description-wrapper">
               <p>{company.description}</p>
