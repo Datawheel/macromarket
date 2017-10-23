@@ -16,6 +16,27 @@ class Home extends React.Component {
       searchResults: [],
       filter: {value: "All", label: "All"}
     };
+    this.countries = [
+      {type: "country", name: "Chile", continent: "South America", id: "sachl", flickr_link: "https://flic.kr/p/g2TM9U"},
+      {type: "country", name: "USA", continent: "North America", id: "nausa", flickr_link: "https://flic.kr/p/8CZkZ7"},
+      {type: "country", name: "Italy", continent: "Europe", id: "euita", flickr_link: "https://flic.kr/p/gonJ3Y"},
+      {type: "country", name: "Vietnam", continent: "Asia", id: "asvnm", flickr_link: ""}
+    ];
+    this.products = [
+      {type: "product", name: "Wine", category: "Foodstuffs", id: "042204", flickr_link: "https://flic.kr/p/a7awbU"},
+      {type: "product", name: "Sheep and Goats", category: "Animal Products", id: "010104", flickr_link: null},
+      {type: "product", name: "Fork-Lifts", category: "Machines", id: "168427", flickr_link: "https://flic.kr/p/6ybFaY"},
+      {type: "product", name: "Coffee", category: "Foodstuffs", id: "020901", flickr_link: "https://flic.kr/p/aiHENe"},
+      {type: "product", name: "Computers", category: "Machines", id: "168471", flickr_link: "https://flic.kr/p/4jcppM"}
+    ];
+    this.companies = [
+      {type: "company", name: "OSSA Productos Orgánicos", id: "ossa-productos-organicos", logo: "https://storage.googleapis.com/mm-company/company/company198-ossa-2.jpg"},
+      {type: "company", name: "Shriki Luggageware", id: "shriji-luggageware-pvt-ltd", logo: "https://storage.googleapis.com/mm-company/company/company180-shriji-new-logo.jpg"},
+      {type: "company", name: "Azexporter", id: "azexporter", logo: "https://storage.googleapis.com/mm-company/company/company184-home-banner-shipping.jpg"},
+      {type: "company", name: "Sidick General Trading", id: "sidick-general-trading-m-sdn-bhd", logo: "https://storage.googleapis.com/mm-company/company/company195-fb-cover.jpg"},
+      {type: "company", name: "W3 Holding Trading Corp.", id: "w3-holding-trading-corp", logo: "https://storage.googleapis.com/mm-company/company/company162-logo-w3h-origami-02-copy.png"},
+      {type: "company", name: "TFO Canada", id: "ca_42795", logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png?itok=Yoc2G5W"}
+    ];
   }
 
   selectSuggestion = suggestion => {
@@ -130,81 +151,24 @@ class Home extends React.Component {
             <div className="logos-wrapper">
               <p>Created in Collaboration</p>
               <div className="img-wrapper">
-                <a href="https://connectamericas.com/" target="_blank"><img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" /></a>
-                <a href="https://www.media.mit.edu/groups/collective-learning/overview/" target="_blank"><img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" /></a>
-                <a href="https://www.media.mit.edu/" target="_blank"><img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" /></a>
-                <a href="http://www.datawheel.us/" target="_blank"><img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" /></a>
+                <a href="https://connectamericas.com/" rel="noopener noreferrer" target="_blank"><img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" /></a>
+                <a href="https://www.media.mit.edu/groups/collective-learning/overview/" rel="noopener noreferrer" target="_blank"><img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" /></a>
+                <a href="https://www.media.mit.edu/" rel="noopener noreferrer" target="_blank"><img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" /></a>
+                <a href="http://www.datawheel.us/" rel="noopener noreferrer" target="_blank"><img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" /></a>
               </div>
             </div>
             <div className="grid-wrapper">
               <div className="countries row">
                 <h3>Countries</h3>
-                <CardHome content={{
-                  type: "country",
-                  name: "Chile",
-                  continent: "South America",
-                  id: "sachl",
-                  flickr_link: "https://flic.kr/p/g2TM9U"
-                }}/>
-                <CardHome content={{
-                  type: "country",
-                  name: "USA",
-                  continent: "North America",
-                  id: "nausa",
-                  flickr_link: "https://flic.kr/p/8CZkZ7"
-                }}/>
-                <CardHome content={{
-                  type: "country",
-                  name: "Italy",
-                  continent: "Europe",
-                  id: "euita",
-                  flickr_link: "https://flic.kr/p/gonJ3Y"
-                }}/>
+                {this.countries.map(c => <CardHome key={c.id} content={c} />)}
               </div>
               <div className="products row">
                 <h3>Prdoucts</h3>
-                <CardHome content={{
-                  type: "product",
-                  name: "Wine",
-                  category: "Foodstuffs",
-                  id: "042204",
-                  flickr_link: "https://flic.kr/p/a7awbU"
-                }}/>
-                <CardHome content={{
-                  type: "product",
-                  name: "Sheep and Goats",
-                  category: "Animal Products",
-                  id: "010104",
-                  flickr_link: null
-                }}/>
-                <CardHome content={{
-                  type: "product",
-                  name: "Fork-Lifts",
-                  category: "Machines",
-                  id: "168427",
-                  flickr_link: "https://flic.kr/p/6ybFaY"
-                }}/>
+                {this.products.map(p => <CardHome key={p.id} content={p} />)}
               </div>
               <div className="companies row">
                 <h3>companies</h3>
-                <CardHome content={{
-                  type: "company",
-                  name: "Corporacion Stealth Sac.",
-                  id: "ca_66123",
-                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-66123-1498107298.png?itok=-foEqm3s"
-                }}/>
-                <CardHome content={{
-                  type: "company",
-                  name: "TFO Canada",
-                  id: "ca_42795",
-                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png?itok=Yoc2G5W"
-                }}/>
-                <CardHome content={{
-                  type: "company",
-                  name: "Visión Desarrollo Corporativo",
-                  id: "ca_20576",
-                  logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-20576-1460152553.png?itok=p3mAe-pg"
-                }}/>
+                {this.companies.map(c => <CardHome key={c.id} content={c} />)}
               </div>
             </div>
           </div>
