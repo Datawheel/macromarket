@@ -2,10 +2,11 @@ import React from "react";
 import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {fetchCompany} from "../actions/companyActions";
+import {fetchData} from "datawheel-canon";
+import {url} from "../api";
 import {fetchProfileTradesByCompany} from "../actions/tradesActions";
-import "./Detailed.css";
 import CompanyHeader from "../components/CompanyHeader";
+import "./Detailed.css";
 
 import Helmet from "react-helmet";
 import header from "../helmet.js";
@@ -17,11 +18,7 @@ class CompanyWithId extends React.Component {
 
   componentDidMount() {
     const slug = this.props.params.companySlug;
-    if (slug.slice(0, 3) === "ca_") {
-      this.props.fetchCompany(slug);
-    }
-    else {
-      this.props.fetchCompany(slug);
+    if (slug.slice(0, 3) !== "ca_") {
       this.props.fetchProfileTradesByCompany(slug);
     }
   }
@@ -29,7 +26,6 @@ class CompanyWithId extends React.Component {
   componentWillReceiveProps(newProps) {
     if (this.props.params.companySlug !== newProps.params.companySlug) {
       const slug = newProps.params.companySlug;
-      this.props.fetchCompany(slug);
       if (slug.slice(0, 3) !== "ca_") {
         this.props.fetchProfileTradesByCompany(slug);
       }
@@ -232,17 +228,18 @@ class CompanyWithId extends React.Component {
   }
 }
 
+CompanyWithId.preneed = [
+  fetchData("company", `${url}/api/companies/<companySlug>`, res => res)
+];
+
 const mapDispatchToProps = dispatch => ({
-  fetchCompany: slug => {
-    dispatch(fetchCompany(slug));
-  },
   fetchProfileTradesByCompany: slug => {
     dispatch(fetchProfileTradesByCompany(slug));
   }
 });
 
 const mapStateToProps = state => ({
-  company: state.companyProfile.company,
+  company: state.data.company,
   loading: state.companyProfile.loading,
   error: state.companyProfile.error || null,
   trades: state.trades.profileTrades,

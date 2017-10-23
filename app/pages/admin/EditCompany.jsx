@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
-import {authenticateAndFetchCompany} from "../../actions/companyActions";
 import CountrySearch from "./CountrySearch";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
@@ -466,9 +465,6 @@ EditCompany.preneed = [
 const mapDispatchToProps = dispatch => ({
   deleteCompany: id => {
     dispatch(deleteCompany(id));
-  },
-  authenticateAndFetchCompany: () => {
-    dispatch(authenticateAndFetchCompany());
   }
 });
 

@@ -3,7 +3,7 @@ import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import {authenticateAndFetchCompany} from "../actions/companyActions";
+// import {authenticateAndFetchCompany} from "../actions/companyActions";
 import Sidebar from "components/Sidebar";
 import "./ProductSelection.css";
 import {createTradeForProduct} from "../actions/tradesActions";
@@ -69,9 +69,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticateAndFetchCompany: () => {
-      dispatch(authenticateAndFetchCompany());
-    },
+    // authenticateAndFetchCompany: () => {
+    //   dispatch(authenticateAndFetchCompany());
+    // },
     createTradeForProduct: (companyId, productId, tradeFlow) => {
       dispatch(createTradeForProduct(companyId, productId, tradeFlow));
     }

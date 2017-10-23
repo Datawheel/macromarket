@@ -72,7 +72,7 @@ module.exports = function(app) {
           }).catch(err => console.log("err", err));
         });
 
-        Promise.all(tPromises).then(() => {
+        return Promise.all(tPromises).then(() => {
           res.json({msg: "done."});
         })
         .catch(err => res.json(err));
