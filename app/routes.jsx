@@ -31,7 +31,9 @@ function genRandId(path) {
     candidates = ["010104", "14710410", "11540232", "15730210", "115512", "11570292", "115903", "02080540", "041601", "042306", "020804", "01010420", "01020649", "01020750", "01030614", "010406", "02070960", "02071220", "020713", "15820220", "15830120", "15830610", "02071332", "02080710", "15731520", "157414", "16848350", "06284210", "16842541", "168427", "18902111", "14710420", "168425"];
   }
   else if (path.includes("company")) {
-    candidates = ["ca_21078", "ca_58962", "ca_4616", "ca_27687", "ca_56948", "ca_3855", "ca_9228", "ca_42430", "ca_62858", "ca_76847", "ca_76268", "ca_76847", "ca_76801", "ca_76460", "ca_77156", "ca_76579", "ca_5051", "ca_70762"];
+    const caCandidates = ["ca_21078", "ca_58962", "ca_4616", "ca_27687", "ca_56948", "ca_3855", "ca_9228", "ca_42430", "ca_62858", "ca_76847", "ca_76268", "ca_76847", "ca_76801", "ca_76460", "ca_77156", "ca_76579", "ca_5051", "ca_70762"];
+    const mmCandidates = ["pelican-international-trading-solutions", "carvalho-vernet-advogados", "standard-freight-incorporation", "akram-trading", "ems-shipping-and-logistics-agency", "shriji-luggageware-pvt-ltd", "al-ansari-teqmark-llc", "aureus-lubrico-trading-inc", "trinity-shipping-colombo-pvt-ltd", "w3-holding-trading-corp", "thundercom-technologies", "azexporter", "kariem-haddadin-farms", "mali-true-food", "kemal-ozgoren-textile-export-company", "sunbiz-services-and-solutions", "fruktville-delight-pvt-ltd", "sidick-general-trading-m-sdn-bhd", "ossa-productos-organicos", "globe-engineering", "crest-international"];
+    candidates = caCandidates.concat(mmCandidates);
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
