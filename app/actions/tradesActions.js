@@ -180,30 +180,6 @@ export function fetchSettingsTradesByCompany(companyId) {
       });
   };
 }
-export function fetchCaTradesByCountry(id) {
-  return function(dispatch) {
-    dispatch(requestCaTrades());
-    return api.get(`/api/trades/ca_country/${id}`)
-      .then(response => {
-        dispatch(receiveCaTrades(response.data));
-      })
-      .catch(response => {
-        dispatch(caTradesError(response.data));
-      });
-  };
-}
-export function fetchTradesByCountry(countryId) {
-  return function(dispatch) {
-    dispatch(requestTrades());
-    return api.get(`/api/trades/country/${countryId}`)
-      .then(response => {
-        dispatch(receiveTrades(response.data));
-      })
-      .catch(response => {
-        dispatch(tradesError(response.data));
-      });
-  };
-}
 
 export function fetchTradesByProduct(productId) {
   return function(dispatch) {

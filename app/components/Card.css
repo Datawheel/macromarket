@@ -6,13 +6,11 @@
     display: flex;
     flex-wrap: wrap;
     padding: 55px 0px;
-    width: 75%;
     margin: 0 40px;
-    max-width: 1200px;
+    max-width: 1400px;
     min-height: 300px;
     & .card {
-        width: 23%;
-        margin: 1%;
+        width: 250px;
         height: 285px;
         & .text-wrapper {
             position: relative;

@@ -1,21 +1,18 @@
 import React from "react";
-import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {fetchCountry} from '../actions/countryActions';
-import {fetchProducts} from '../actions/productsActions';
-import {fetchTradesByCountry} from "../actions/tradesActions";
-import {fetchCaTradesByCountry} from "../actions/tradesActions";
+// import {fetchCountry} from "../actions/countryActions";
+// import {fetchProducts} from "../actions/productsActions";
 import Card from "../components/Card.jsx";
 import AnchorList from "../components/AnchorList.jsx";
-import "./Detailed.css";
-import "../components/Dropdown.css";
-import Select from "react-select";
 import Dropdown from "../components/Dropdown";
 import {fetchData} from "datawheel-canon";
 import {url} from "../api";
 import CountryHeader from "../components/CountryHeader";
 import {nest} from "d3-collection";
+import "./Detailed.css";
+import "../components/Dropdown.css";
+import {ascending} from "d3-array";
 
 import Helmet from "react-helmet";
 import header from "../helmet.js";
@@ -30,23 +27,6 @@ class CountryWithId extends React.Component {
         value: "all"
       }
     };
-  }
-
-  componentWillMount() {
-    const id = this.props.params.countryWithId;
-    this.props.fetchProducts();
-    this.props.fetchCountry(id);
-    this.props.fetchTradesByCountry(id);
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.params.countryWithId !== this.props.params.countryWithId) {
-      const id = newProps.params.countryWithId;
-      this.props.fetchProducts();
-      this.props.fetchTradesByCountry(id);
-      this.props.fetchCountry(id);
-      this.removeSelection();
-    }
   }
 
   handleOptionChange = selectedOption => {
@@ -97,6 +77,7 @@ class CountryWithId extends React.Component {
     const numCompanies = tradesByCompany.length;
     return numCompanies
       ? <p>
+        <span>The following is a list of all the companies that export or import products or services from {country.name}. </span>
         {numCompanies === 1
           ? <span>There is one company exporting or importing from {country.name} named <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>
           : <span>There are {tradesByCompany.length} companies exporting and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>}
@@ -115,7 +96,7 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {loading, error, products, trades, caTrades, tradesLoading, caTradesLoading} = this.props;
+    const {loading, error, products, trades, caTrades} = this.props;
     const {country, countryData, importData, exportData} = this.props.data;
 
     if (!country || !products) {
@@ -194,27 +175,26 @@ class CountryWithId extends React.Component {
           </div>
         </div>
 
-        <div className="intro-text">
-          <section>
-            {this.introParagraph()}
-          </section>
-        </div>
-
         <div className="result-wrapper-outer">
+          <div className="intro-text">
+            <section>
+              {this.introParagraph()}
+            </section>
+          </div>
           {!allTrades
             ? <div className="result-wrapper loading-wrapper"><p>Loading...</p></div>
             : <div className="result-wrapper">
-              {allTrades.length > 0 ? allTrades.map((trade, index) => {
+              {allTrades.length > 0 ? allTrades.map(trade => {
                 if (!trade.profile_type) {
                   const content = trade.Company;
                   content.profile_type = "company";
                   if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
-                    return <Card key={index} content={content}/>;
+                    return <Card key={trade.id} content={content}/>;
                   }
                 }
                 else {
                   if (this.state.selectedOption === "all" && this.state.product.value === "all") {
-                    return <Card key={index} content={trade}/>;
+                    return <Card key={trade.id} content={trade}/>;
                   }
                 }
               }) : <div className="result-wrapper no-companies">
@@ -231,38 +211,61 @@ class CountryWithId extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCountry: id => {
-      dispatch(fetchCountry(id))
-    },
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    },
-    fetchTradesByCountry: id => {
-      dispatch(fetchTradesByCountry(id));
-    },
-    fetchCaTradesByCountry: id => {
-      dispatch(fetchCaTradesByCountry(id));
-    }
-  };
-}
-
 CountryWithId.preneed = [
   fetchData("country", `${url}/api/countries/<countryWithId>`, res => res),
-  fetchData("trades", `${url}/api/trades/country/<countryWithId>`, res => res)
+  fetchData("products", `${url}/api/products`, res => {
+    return nest()
+      .key(d => d.id.substring(0, 2))
+      .sortKeys(ascending)
+      .key(d => d.id.substring(2, 4))
+      .sortKeys(ascending)
+      .key(d => d.id.substring(4, 6))
+      .sortKeys(ascending)
+      .entries(res)
+      .map(d => {
+        const myHs2 = d.values.shift();
+        const myNewValues = d.values.map(dd => {
+          const myHs4 = dd.values.shift();
+          const innerValues = dd.values.map(ddd => {
+            const myHs6 = ddd.values.shift();
+            return {
+              key: ddd.key,
+              values: ddd.values,
+              name: myHs6.name
+            };
+          });
+          return {
+            key: dd.key,
+            values: innerValues,
+            name: myHs4.values[0].name
+          };
+        });
+        const returnData = {
+          key: d.key,
+          values: myNewValues,
+          name: myHs2.values[0].values[0].name
+
+        };
+
+        return returnData;
+      });
+  })
 ];
 
-CountryWithId.need = [fetchData("countryData", "http://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
-  const response = res.data[0];
+CountryWithId.need = [
+  fetchData("trades", `${url}/api/trades/country/<country.id>`, res => res),
+  fetchData("caTrades", `${url}/api/trades/ca_country/<country.id_ca>`, res => res),
+  fetchData("countryData", "http://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
+    const response = res.data[0];
 
-  const importId = response.top_export_hs4.slice(2, response.length);
-  const exportId = response.top_import_hs4.slice(2, response.length);
-  response.import = importId;
-  response.export = exportId;
-  return response;
+    const importId = response.top_export_hs4.slice(2, response.length);
+    const exportId = response.top_import_hs4.slice(2, response.length);
+    response.import = importId;
+    response.export = exportId;
+    return response;
 
-})];
+  })
+];
 
 CountryWithId.postneed = [
   fetchData("importData", "http://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.import>/", res => res.data[0]),
@@ -275,13 +278,11 @@ const mapStateToProps = state => {
     country: state.countryProfile.country,
     loading: state.countryProfile.loading,
     error: state.countryProfile.error || null,
-    products: state.products.products,
-    trades: state.trades.trades,
-    tradesLoading: state.trades.loading,
-    caTrades: state.trades.caTrades,
-    caTradesLoading: state.trades.loading,
+    products: state.data.products,
+    trades: state.data.trades,
+    caTrades: state.data.caTrades,
     tradesError: state.trades.error
   };
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountryWithId)
+export default connect(mapStateToProps)(CountryWithId);
