@@ -55,7 +55,7 @@ class Card extends React.Component {
           : this.content.profile_type}/${id}`} onClick={() => {this.props.activateSearch(false)}}>
           <div className="image-wrapper">
             <div style={{
-              backgroundImage: `url(${img})`
+              backgroundImage: img ? `url(${img})` : "url('/images/default-business.png')"
             }} className="image"></div>
           </div>
           <div className="text-wrapper">
