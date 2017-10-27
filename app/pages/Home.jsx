@@ -30,12 +30,12 @@ class Home extends React.Component {
       {type: "product", name: "Computers", category: "Machines", id: "168471", flickr_link: "https://flic.kr/p/4jcppM"}
     ];
     this.companies = [
-      {type: "company", name: "OSSA Productos Orgánicos", id: "ossa-productos-organicos", logo: "https://storage.googleapis.com/mm-company/company/company198-ossa-2.jpg"},
       {type: "company", name: "Shriki Luggageware", id: "shriji-luggageware-pvt-ltd", logo: "https://storage.googleapis.com/mm-company/company/company180-shriji-new-logo.jpg"},
       {type: "company", name: "Azexporter", id: "azexporter", logo: "https://storage.googleapis.com/mm-company/company/company184-home-banner-shipping.jpg"},
+      {type: "company", name: "OSSA Productos Orgánicos", id: "ossa-productos-organicos", logo: "https://storage.googleapis.com/mm-company/company/company198-ossa-2.jpg"},
       {type: "company", name: "Sidick General Trading", id: "sidick-general-trading-m-sdn-bhd", logo: "https://storage.googleapis.com/mm-company/company/company195-fb-cover.jpg"},
       {type: "company", name: "W3 Holding Trading Corp.", id: "w3-holding-trading-corp", logo: "https://storage.googleapis.com/mm-company/company/company162-logo-w3h-origami-02-copy.png"},
-      {type: "company", name: "TFO Canada", id: "ca_42795", logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png?itok=Yoc2G5W"}
+      {type: "company", name: "TFO Canada", id: "ca_42795", logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png"}
     ];
   }
 
