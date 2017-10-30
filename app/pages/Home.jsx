@@ -20,17 +20,20 @@ class Home extends React.Component {
       {type: "country", name: "Chile", continent: "South America", id: "sachl", flickr_link: "https://flic.kr/p/g2TM9U"},
       {type: "country", name: "USA", continent: "North America", id: "nausa", flickr_link: "https://flic.kr/p/8CZkZ7"},
       {type: "country", name: "Italy", continent: "Europe", id: "euita", flickr_link: "https://flic.kr/p/gonJ3Y"},
-      {type: "country", name: "Vietnam", continent: "Asia", id: "asvnm", flickr_link: ""}
+      {type: "country", name: "Vietnam", continent: "Asia", id: "asvnm", flickr_link: ""},
+      {type: "country", name: "Azerbaijan", continent: "Asia", id: "asaze", flickr_link: ""}
     ];
     this.products = [
       {type: "product", name: "Wine", category: "Foodstuffs", id: "042204", flickr_link: "https://flic.kr/p/a7awbU"},
       {type: "product", name: "Sheep and Goats", category: "Animal Products", id: "010104", flickr_link: null},
       {type: "product", name: "Fork-Lifts", category: "Machines", id: "168427", flickr_link: "https://flic.kr/p/6ybFaY"},
       {type: "product", name: "Coffee", category: "Foodstuffs", id: "020901", flickr_link: "https://flic.kr/p/aiHENe"},
-      {type: "product", name: "Computers", category: "Machines", id: "168471", flickr_link: "https://flic.kr/p/4jcppM"}
+      {type: "product", name: "Computers", category: "Machines", id: "168471", flickr_link: "https://flic.kr/p/4jcppM"},
+      {type: "product", name: "Electrical Transformers", category: "Machines", id: "168504", flickr_link: "https://flic.kr/p/6Bfnmw"}
     ];
     this.companies = [
-      {type: "company", name: "Shriki Luggageware", id: "shriji-luggageware-pvt-ltd", logo: "https://storage.googleapis.com/mm-company/company/company180-shriji-new-logo.jpg"},
+      {type: "company", name: "Alk Trading LLC", id: "alk-trading-llc", logo: "https://storage.googleapis.com/mm-company/company/company223-6_primary_logo_on_color2_5000.png"},
+      {type: "company", name: "Apu Café", id: "apu-sas", logo: "https://storage.googleapis.com/mm-company/company/company222-logo-apu.png"},
       {type: "company", name: "Azexporter", id: "azexporter", logo: "https://storage.googleapis.com/mm-company/company/company184-home-banner-shipping.jpg"},
       {type: "company", name: "OSSA Productos Orgánicos", id: "ossa-productos-organicos", logo: "https://storage.googleapis.com/mm-company/company/company198-ossa-2.jpg"},
       {type: "company", name: "Sidick General Trading", id: "sidick-general-trading-m-sdn-bhd", logo: "https://storage.googleapis.com/mm-company/company/company195-fb-cover.jpg"},
