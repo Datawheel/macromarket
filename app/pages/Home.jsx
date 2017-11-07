@@ -32,13 +32,16 @@ class Home extends React.Component {
       {type: "product", name: "Electrical Transformers", category: "Machines", id: "168504", flickr_link: "https://flic.kr/p/6Bfnmw"}
     ];
     this.companies = [
+      {type: "company", name: "Kandil Egypt Lighting", id: "kandil-egypt-for-chandeliers-and-decorative-lighting", logo: "https://storage.googleapis.com/mm-company/company/company255-kandil-logo-english.jpg"},
+      {type: "company", name: "Al Hafar Transport", id: "al-hafar-transport-and-cont-llc-1", logo: "https://storage.googleapis.com/mm-company/company/company259-cat-966h.jpg"},
+      {type: "company", name: "SML Fibrex", id: "sml-fibrex", logo: "https://storage.googleapis.com/mm-company/company/company261-sml-fibrex-logo.png"},
       {type: "company", name: "Alk Trading LLC", id: "alk-trading-llc", logo: "https://storage.googleapis.com/mm-company/company/company223-6_primary_logo_on_color2_5000.png"},
       {type: "company", name: "Apu Café", id: "apu-sas", logo: "https://storage.googleapis.com/mm-company/company/company222-logo-apu.png"},
       {type: "company", name: "Azexporter", id: "azexporter", logo: "https://storage.googleapis.com/mm-company/company/company184-home-banner-shipping.jpg"},
       {type: "company", name: "OSSA Productos Orgánicos", id: "ossa-productos-organicos", logo: "https://storage.googleapis.com/mm-company/company/company198-ossa-2.jpg"},
-      {type: "company", name: "Sidick General Trading", id: "sidick-general-trading-m-sdn-bhd", logo: "https://storage.googleapis.com/mm-company/company/company195-fb-cover.jpg"},
-      {type: "company", name: "W3 Holding Trading Corp.", id: "w3-holding-trading-corp", logo: "https://storage.googleapis.com/mm-company/company/company162-logo-w3h-origami-02-copy.png"},
-      {type: "company", name: "TFO Canada", id: "ca_42795", logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png"}
+      // {type: "company", name: "Sidick General Trading", id: "sidick-general-trading-m-sdn-bhd", logo: "https://storage.googleapis.com/mm-company/company/company195-fb-cover.jpg"},
+      // {type: "company", name: "W3 Holding Trading Corp.", id: "w3-holding-trading-corp", logo: "https://storage.googleapis.com/mm-company/company/company162-logo-w3h-origami-02-copy.png"},
+      // {type: "company", name: "TFO Canada", id: "ca_42795", logo: "https://d3pl7mm70gk6ic.cloudfront.net/sites/default/files/styles/mobile_full_width/public/company-42795-1478811748.png"}
     ];
   }
 
