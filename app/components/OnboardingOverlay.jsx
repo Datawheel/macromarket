@@ -5,14 +5,18 @@ import OnboardingSlide from "./OnboardingSlide";
 class OnboardingOverlay extends React.Component {
   constructor(props) {
     super(props);
+    const {source} = props.query;
+    const isVisible = source && source === "oec";
+    this.state = {isVisible};
   }
 
-  componentDidMount() {}
-
   render() {
-    const {product} = this.props;
-    console.log(product);
-    return (<OnboardingSlide></OnboardingSlide>);
+    return (
+      <div style={{display: this.state.isVisible ? "inline" : "none"}}>
+          <p>Sup Sabrina! :)</p>
+          return (<OnboardingSlide></OnboardingSlide>);
+      </div>
+    );
   }
 }
 
