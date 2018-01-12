@@ -11,6 +11,12 @@ async function getProduct(productId) {
 }
 
 class OnboardingOverlay extends React.Component {
+  constructor(props) {
+    super(props);
+    const {source} = props.query;
+    const isVisible = source && source === "oec";
+    this.state = {isVisible};
+  }
 
   async componentWillMount() {
     if (this.props.product) {

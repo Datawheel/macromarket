@@ -23,8 +23,8 @@ class App extends React.Component {
       <div className={isOpen ? "overlayOpen overlay-bg" : "overlay-bg"}>
         <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
         <NavBar location={this.props.location} />
-        <OnboardingOverlay query={this.props.location.query}/>
         <div className="main-content">
+          <OnboardingOverlay query={this.props.location && this.props.location.query} />
           {this.props.children}
           <Footer />
         </div>
