@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {isAuthenticated} from "datawheel-canon";
 import NavBar from "./NavBar.jsx";
 import Footer from "./Footer.jsx";
+import OnboardingOverlay from "./OnboardingOverlay";
 import "./App.css";
 
 import Helmet from "react-helmet";
@@ -19,6 +20,7 @@ class App extends React.Component {
         <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
         <NavBar location={this.props.location} />
         <div className="main-content">
+          <OnboardingOverlay></OnboardingOverlay>
           {this.props.children}
           <Footer />
         </div>
