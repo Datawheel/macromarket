@@ -50,3 +50,5 @@ static/assets
 
 # ignore private key file
 mm-keyfile.json
+
+\.idea/
