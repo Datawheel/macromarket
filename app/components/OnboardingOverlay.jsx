@@ -1,16 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
+import OnboardingSlide from "./OnboardingSlide";
 
-class App extends React.Component {
+class OnboardingOverlay extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {}
+
   render() {
-    return (
-      <div><p>Sup Sabrina! :)</p></div>
-    );
+    const {product} = this.props;
+    console.log(product);
+    return (<OnboardingSlide></OnboardingSlide>);
   }
 }
 
-export default connect()(App);
+const mapDispatchToProps = dispatch => ({
+});
+
+const mapStateToProps = state => ({product: state.data.product});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OnboardingOverlay);
