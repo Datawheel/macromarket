@@ -43,8 +43,6 @@ jspm_packages
 .env
 .envrc
 
-.eslintrc
-
 static/assets
 
 # production build
