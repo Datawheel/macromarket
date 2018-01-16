@@ -1,13 +1,9 @@
 import api from "../api";
 
-function requestUpdateSlide() {
-  return {type: "SLIDE_PENDING"};
+function updateSlideOverlay(json) {
+  return {type: "ONBOARDING_OVERLAY_SLIDE_UPDATE", data: json};
 }
 
-function receiveUpdateSlide(json) {
-  return {type: "SLIDE_FULFILLED", data: json};
-}
-
-function updateSlideError(json) {
-  return {type: "SLIDE_REJECTED", data: json};
+function toggleOverlay() {
+  return {type: "ONBOARDING_OVERLAY_TOGGLE"};
 }

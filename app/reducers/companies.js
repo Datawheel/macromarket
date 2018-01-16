@@ -1,9 +1,9 @@
-const ACTION_TYPE = 'COMPANIES';
+const ACTION_TYPE = "COMPANIES";
 
-export default (state = {companies:null, loading:false}, action) => {
+export default (state = {companies: null, loading: false}, action) => {
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
-      return {companies:null, loading:true};
+      return {companies: null, loading: true};
 
     case `${ACTION_TYPE}_FULFILLED`:
       return {
@@ -18,4 +18,4 @@ export default (state = {companies:null, loading:false}, action) => {
       };
     default: return state;
   }
-}
+};

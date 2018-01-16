@@ -9,6 +9,7 @@ import authentication from "./authentication";
 import user from "./user";
 import trades from "./trades";
 import search from "./search";
+import onboarding from "./onboarding";
 
 
 const searchActive = (state = false, action) => {
@@ -33,5 +34,6 @@ export default {
   user,
   trades,
   search,
-  searchActive
+  searchActive,
+  onboarding
 };
