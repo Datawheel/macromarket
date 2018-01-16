@@ -8,7 +8,6 @@ export default (state = {
 }, action) => {
   switch (action.type) {
     case "SET_SEARCH":
-      console.log(action.data, "action");
       return {...state,
         keyword: action.data.keyword,
         filter: action.data.filter
