@@ -1,13 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
+import {toggleOverlay} from "../actions/onboardingActions";
 
 class OnboardingOverlay extends React.Component {
   constructor(props) {
     super(props);
-    const {source} = props.query;
-    const isVisible = source && source === "oec";
-    this.state = {isVisible};
+    const {source, toggleOverlay} = props.query;
+    if (source && source === "oec") {
+      toggleOverlay();
+    }
   }
 
   render() {
@@ -20,8 +22,14 @@ class OnboardingOverlay extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  toggleOverlay: () => {
+    dispatch(toggleOverlay());
+  }
 });
 
-const mapStateToProps = state => ({product: state.data.product});
+const mapStateToProps = state => ({
+  product: state.data.product,
+  isOpen: state.onboarding.isOverlayOpen
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingOverlay);
