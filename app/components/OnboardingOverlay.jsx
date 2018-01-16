@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
+import {toggleOverlay} from "../actions/onboardingActions";
 import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
 import api from "../api";
@@ -13,9 +14,10 @@ async function getProduct(productId) {
 class OnboardingOverlay extends React.Component {
   constructor(props) {
     super(props);
-    const {source} = props.query;
-    const isVisible = source && source === "oec";
-    this.state = {isVisible};
+    const {source, toggleOverlay} = props.query;
+    if (source && source === "oec") {
+      toggleOverlay();
+    }
   }
 
   async componentWillMount() {
