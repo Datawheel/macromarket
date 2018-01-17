@@ -7,6 +7,8 @@ import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import TradeEdit from "./TradeEdit";
+import {fetchUnNestedProducts} from "../../actions/productsActions";
+import {fetchUnNestedCountries} from "../../actions/countriesActions";
 
 class EditProducts extends React.Component {
   constructor(props) {
@@ -19,23 +21,30 @@ class EditProducts extends React.Component {
   }
 
   componentDidMount() {
-    const {companySlug} = this.props.params;
-    api.get(`/api/trades/company/${companySlug}`).then(res => {
-      const trades = [];
-      res.data.forEach(t => {
-        const prodRow = trades.find(tt => tt.product.id === t.product_id);
-        const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
-        const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
-        const country = t.Country ? [t.Country] : [];
-        if (prodRow && country) {
-          prodRow[tKey] = prodRow[tKey].concat(country);
-        }
-        else {
-          trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
-        }
+
+    // const {companySlug} = this.props.params;
+    // here add fix to not fetch trades if coming from form
+    const from = 2;
+    if (from === 1) {
+      api.get(`/api/trades/company/${companySlug}`).then(res => {
+        const trades = [];
+        res.data.forEach(t => {
+          const prodRow = trades.find(tt => tt.product.id === t.product_id);
+          const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
+          const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
+          const country = t.Country ? [t.Country] : [];
+          if (prodRow && country) {
+            prodRow[tKey] = prodRow[tKey].concat(country);
+          }
+          else {
+            trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
+          }
+        });
+        this.setState({trades});
       });
-      this.setState({trades});
-    });
+    }
+    this.props.fetchCountries();
+    this.props.fetchProducts();
   }
 
   handleChange = e => {
@@ -195,9 +204,7 @@ class EditProducts extends React.Component {
           </button>
           {/* <ProductPicker isOpen={isOpen} toggleProductMenu={this.toggleProductMenu} /> */}
         </div>
-
         <hr />
-
         <div className="button-group">
           <Link role="button" className="pt-button pt-large" to="/settings">
             Cancel
@@ -208,22 +215,24 @@ class EditProducts extends React.Component {
             <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
           </button>
         </div>
-
       </div>
     );
   }
 }
-
-EditProducts.need = [
-  fetchData("countries", `${url}/api/countries`, res => res),
-  fetchData("products", `${url}/api/products`, res => res)
-];
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: () => {
+    dispatch(fetchUnNestedProducts());
+  },
+  fetchCountries: () => {
+    dispatch(fetchUnNestedCountries());
+  }
+});
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  countries: state.data.countries,
-  products: state.data.products,
+  countries: state.countries.countries,
+  products: state.products.products,
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(EditProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProducts);

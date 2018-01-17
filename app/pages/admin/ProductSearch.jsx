@@ -57,7 +57,7 @@ class ProductSearch extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.data.products
+  products: state.products.productsForSearch
 });
 
 export default connect(mapStateToProps)(ProductSearch);
