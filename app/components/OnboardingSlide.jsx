@@ -11,33 +11,32 @@ class OnboardingSlide extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.params);
+    console.log(this.props);
   }
 
   render() {
     const slideNum = 4;
-    const productName = "Bovine";
-    if (slideNum === 0) {
+    if (this.props.slideNumber === 0) {
       return (
         <div className="slide">
           <div className="product-wrapper">
-            <p>Interested in being listed under {productName} ?</p>
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
           <button>Sign up</button>
           <button>Login</button>
         </div>
       );
     }
-    else if (slideNum === 1) {
+    else if (this.props.slideNumber === 1) {
       return (
         <div className="slide">
           <div className="product-wrapper">
-            <p>Interested in being listed under {productName} ?</p>
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
           <SignUp/>
         </div>);
     }
-    else if (slideNum === 2) {
+    else if (this.props.slideNumber === 2) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -45,7 +44,7 @@ class OnboardingSlide extends React.Component {
           </div>
         </div>);
     }
-    else if (slideNum === 3) {
+    else if (this.props.slideNumber === 3) {
       return (
         <div className="slide">
           <CanonLogin />
@@ -55,7 +54,7 @@ class OnboardingSlide extends React.Component {
       return (
         <div className="slide">
           <div className="company-dropdown"></div>
-  
+          <EditProducts/>
         </div>
       );
     }
