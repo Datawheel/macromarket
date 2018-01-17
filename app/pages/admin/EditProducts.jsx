@@ -21,11 +21,10 @@ class EditProducts extends React.Component {
   }
 
   componentDidMount() {
-
-    // const {companySlug} = this.props.params;
-    // here add fix to not fetch trades if coming from form
-    const from = 2;
-    if (from === 1) {
+    this.props.fetchCountries();
+    this.props.fetchProducts();
+    if (!this.props.isOverlay) {
+      const {companySlug} = this.props.params;
       api.get(`/api/trades/company/${companySlug}`).then(res => {
         const trades = [];
         res.data.forEach(t => {
@@ -43,8 +42,6 @@ class EditProducts extends React.Component {
         this.setState({trades});
       });
     }
-    this.props.fetchCountries();
-    this.props.fetchProducts();
   }
 
   handleChange = e => {
@@ -159,7 +156,6 @@ class EditProducts extends React.Component {
   render() {
     const {auth, products, countries} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
-
     return (
       <div>
 
@@ -232,7 +228,8 @@ const mapStateToProps = state => ({
   company: state.data.company,
   countries: state.countries.countries,
   products: state.products.products,
-  auth: state.auth
+  auth: state.auth,
+  isOverlay: state.onboarding.isOverlayOpen
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProducts);
