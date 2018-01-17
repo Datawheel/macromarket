@@ -13,12 +13,12 @@ class OnboardingOverlay extends React.Component {
   }
 
   render() {
-    return (
-      <div style={{display: this.props.isOpen ? "inline" : "none"}}>
-        <p>Sup Sabrina! :)</p>
+
+
+    return( 
+       <div style={{display: this.props.isOpen ? "inline" : "none"}}>
         <OnboardingSlide></OnboardingSlide>
-      </div>
-    );
+    </div>);
   }
 }
 
