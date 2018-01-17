@@ -20,7 +20,7 @@ class App extends React.Component {
         <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
         <NavBar location={this.props.location} />
         <div className="main-content">
-          <OnboardingOverlay></OnboardingOverlay>
+          <OnboardingOverlay query={this.props.location && this.props.location.query} />
           {this.props.children}
           <Footer />
         </div>

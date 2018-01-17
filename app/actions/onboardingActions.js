@@ -1,9 +1,7 @@
-import api from "../api";
-
-function updateSlideOverlay(json) {
-  return {type: "ONBOARDING_OVERLAY_SLIDE_UPDATE", data: json};
+export function updateSlideOverlay(slideNumber) {
+  return {type: "ONBOARDING_OVERLAY_SLIDE_UPDATE", data: slideNumber};
 }
 
-function toggleOverlay() {
+export function toggleOverlay() {
   return {type: "ONBOARDING_OVERLAY_TOGGLE"};
 }
