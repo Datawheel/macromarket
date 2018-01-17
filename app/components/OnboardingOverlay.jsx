@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
-import {toggleOverlay} from "../actions/onboardingActions";
 import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
 import api from "../api";
@@ -14,7 +13,8 @@ async function getProduct(productId) {
 class OnboardingOverlay extends React.Component {
   constructor(props) {
     super(props);
-    const {source, toggleOverlay} = props.query;
+    const {toggleOverlay} = props;
+    const {source} = props.query;
     if (source && source === "oec") {
       toggleOverlay();
     }
@@ -62,7 +62,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   product: state.data.product,
   isUserLoggedIn: state.auth.user !== null,
-  slideNumber: state.onboarding.slideOverlayNumber
+  slideNumber: state.onboarding.slideOverlayNumber,
+  isOpen: state.onboarding.isOverlayOpen
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingOverlay);
