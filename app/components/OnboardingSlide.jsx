@@ -1,49 +1,99 @@
 import React from "react";
+import {Login as CanonLogin} from "datawheel-canon";
+import {SignUp} from "datawheel-canon";
+import {OnboardingSignUp} from "./OnboardingSignUp";
+import {OnboardingLogin} from "./OnboardingLogin";
 import {connect} from "react-redux";
-import OnboardingProducts from "./OnboardingProducts";
-import OnboardingGetStarted from "./OnboardingGetStarted";
-import OnboardingCompany from "./OnboardingCompany";
+import EditProducts from "../pages/admin/EditProducts";
+import {CompanyDropdown} from "./CompanyDropdown";
+import api from "../api.js";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isSignupFormVisible: false,
+      isLoginFormVisible: false
+    };
   }
 
+  componentDidMount() {
+
+  }
 
   render() {
-    return (
-      <div className="slider-wrapper">
-        <div className="tabs">
-          <div className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
-            <div className="line"></div>
+    const {isSignupFormVisible, isLoginFormVisible} = this.state;
+    const slideNum = 0;
+    const productName = "Bovine";
+    if (slideNum === 0) {
+      return (
+        <div className="slide">
+          <div className="product-wrapper">
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
-          <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
-            <div className="line"></div>
-          </div>
+          {!isSignupFormVisible && !isLoginFormVisible &&
+                <div>
+                  <button onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
+                  <button onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+                </div>
+          }
+          {isSignupFormVisible &&
+                <OnboardingSignUp/>
+          }
+          {isLoginFormVisible &&
+            <OnboardingLogin/>
+          }
+          {(isSignupFormVisible || isLoginFormVisible) &&
+                <button onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
+          }
+
         </div>
-        <button className="close" onClick={this.props.toggleOverlay}></button>
-        <div className={`slide-container slide-container-${this.props.slideNumber}`}>
-          <div className="slide slide-0">
-            <div className="logo-wrapper">
-              <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
-              <img src="/images/icons/logos/orange-market-logo.svg"></img>
-            </div>
-            <OnboardingGetStarted product={this.props.product}/>
+      );
+    }
+    else if (slideNum === 1) {
+      return (
+        <div className="slide">
+          <div className="product-wrapper">
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
-          <div className="slide slide-1" >
-            <OnboardingCompany/>
+          <SignUp/>
+        </div>);
+    }
+    else if (slideNum === 2) {
+      return (
+        <div className="slide">
+          <div className="product-wrapper">
+            <p>Create a Company</p>
           </div>
-          <div className="slide slide-2">
-            <OnboardingProducts/>
-          </div>
+        </div>);
+    }
+    else if (slideNum === 3) {
+      return (
+        <div className="slide">
+          <CanonLogin />
+        </div>);
+    }
+    else if (slideNum === 4) {
+      return (
+        <div className="slide">
+          <div className="company-dropdown"></div>
+          <EditProducts/>
         </div>
-      </div>
-    );
+      );
+    }
+    else {
+      return(<div></div>);
+    }
   }
 }
 
-const mapDispatchToProps = dispatch => ({});
 
-const mapStateToProps = state => ({products: state.data.products, user: state.auth.user});
+const mapDispatchToProps = dispatch => ({
+});
+
+const mapStateToProps = state => ({
+  products: state.data.products,
+  user: state.auth.user
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingSlide);
