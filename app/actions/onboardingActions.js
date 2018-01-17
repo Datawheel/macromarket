@@ -17,6 +17,9 @@ export const onboardingSignup = userData => dispatch => {
       console.log("DATA: ", resp.data);
       dispatch({type: "SIGNUP_SUCCESS", payload: resp.data});
     })
+    .then(() => {
+      dispatch(updateSlideOverlay(1));
+    })
     .catch(() => dispatch({type: "SIGNUP_FAILURE", payload: {type: "SIGNUP_EXISTS", payload: userData}}));
 
 };
@@ -28,6 +31,9 @@ export const onboardingLogin = userData => dispatch => {
   axios.post("/auth/local/login", userData)
     .then(resp => {
       dispatch({type: "LOGIN_SUCCESS", payload: resp.data});
+    })
+    .then(() => {
+      dispatch(updateSlideOverlay(1));
     })
     .catch(() => dispatch({type: "LOGIN_FAILURE", payload: {type: "WRONG_PW", email: userData.email}}));
 
