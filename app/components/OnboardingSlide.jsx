@@ -11,6 +11,10 @@ import api from "../api.js";
 class OnboardingSlide extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isSignupFormVisible: false,
+      isLoginFormVisible: false
+    };
   }
 
   componentDidMount() {
@@ -18,6 +22,7 @@ class OnboardingSlide extends React.Component {
   }
 
   render() {
+    const {isSignupFormVisible, isLoginFormVisible} = this.state;
     const slideNum = 0;
     const productName = "Bovine";
     if (slideNum === 0) {
@@ -26,10 +31,22 @@ class OnboardingSlide extends React.Component {
           <div className="product-wrapper">
             <p>Interested in being listed under {this.props.product} ?</p>
           </div>
-          <button>Sign Up</button>
-          <button>Log In</button>
-          <OnboardingSignUp/>
-          <OnboardingLogin/>
+          {!isSignupFormVisible && !isLoginFormVisible &&
+                <div>
+                  <button onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
+                  <button onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+                </div>
+          }
+          {isSignupFormVisible &&
+                <OnboardingSignUp/>
+          }
+          {isLoginFormVisible &&
+            <OnboardingLogin/>
+          }
+          {(isSignupFormVisible || isLoginFormVisible) &&
+                <button onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
+          }
+
         </div>
       );
     }
