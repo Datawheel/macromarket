@@ -12,7 +12,7 @@ class OnboardingOverlay extends React.Component {
   render() {
     const {product} = this.props;
     console.log(product);
-    return (<OnboardingSlide></OnboardingSlide>);
+    return <OnboardingSlide></OnboardingSlide>;
   }
 }
 
