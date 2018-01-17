@@ -14,7 +14,6 @@ class OnboardingSignUp extends Component {
       password: "",
       passwordAgain: "",
       email: null,
-      labelUp: [],
       submitted: false,
       toast: typeof window !== "undefined" ? Toaster.create() : null
     };
@@ -23,21 +22,12 @@ class OnboardingSignUp extends Component {
 
   onChange(e) {
     const val = e.target.name === "agreedToTerms" ? e.target.checked : e.target.value;
-    this.setState({
-      [e.target.name]: val,
-      labelUp: this.state.labelUp.concat([e.target.name])
-    });
+    this.setState({[e.target.name]: val});
   }
-  onBlur(e) {
-    console.log(this.state);
-    if (e.target.value === "") {
-      const index = this.state.labelUp.indexOf(e.target.name);
-      this.setState({labelUp: this.state.labelUp.filter((_, i) => i !== index)})
-    }
-  }
+
   onSubmit(e) {
     e.preventDefault();
-    const {legal, t} = this.props;
+    const {legal, redirect, t} = this.props;
     const {agreedToTerms, email, password, passwordAgain, username} = this.state;
 
     if (password !== passwordAgain) {
@@ -50,7 +40,7 @@ class OnboardingSignUp extends Component {
       this.setState({error: {iconName: "saved", message: t("SignUp.error.TermsAgree")}});
     }
     else {
-      this.props.signup({username, email, password});
+      this.props.signup({username, email, password, redirect});
       this.setState({submitted: true});
     }
 
@@ -85,25 +75,25 @@ class OnboardingSignUp extends Component {
     const {auth, legal, t} = this.props;
     const {agreedToTerms} = this.state;
     const email = this.state.email === null ? auth.error && auth.error.email ? auth.error.email : "" : this.state.email;
-    console.log(this.state.labelUp);
+
     return (
       <div>
         <form id="signup" onSubmit={this.onSubmit.bind(this)} className="login-container">
-          <div className={this.state.labelUp.includes("email") ? "input-wrapper labelUp" : "input-wrapper" }>
-            <label>Email</label>
-            <input value={email} type="email" name="email" onFocus={this.onChange} onBlur={this.onBlur.bind(this)} onChange={this.onChange} tabIndex="1" />
+          <div className="pt-input-group">
+            <span className="pt-icon pt-icon-envelope"></span>
+            <input className="pt-input" placeholder={ t("SignUp.E-mail") } value={email} type="email" name="email" onChange={this.onChange} tabIndex="1" />
           </div>
-          <div className={this.state.labelUp.includes("username") ? "input-wrapper labelUp" : "input-wrapper" }>
-            <label>Username</label>
-            <input value={this.state.username} type="text" name="username" onFocus={this.onChange} onBlur={this.onBlur.bind(this)} onChange={this.onChange} tabIndex="2" />
+          <div className="pt-input-group">
+            <span className="pt-icon pt-icon-user"></span>
+            <input className="pt-input" placeholder={ t("SignUp.Username") } value={this.state.username} type="text" name="username" onFocus={this.onChange} onChange={this.onChange} tabIndex="2" />
           </div>
-          <div className={this.state.labelUp.includes("password") ? "input-wrapper labelUp" : "input-wrapper" }>
-            <label>Password</label>
-            <input value={this.state.password} type="password" name="password" onFocus={this.onChange} onBlur={this.onBlur.bind(this)} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
+          <div className="pt-input-group">
+            <span className="pt-icon pt-icon-lock"></span>
+            <input className="pt-input" placeholder={ t("SignUp.Password") } value={this.state.password} type="password" name="password" onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
           </div>
-          <div className={this.state.labelUp.includes("passwordAgain") ? "input-wrapper labelUp" : "input-wrapper" }>
-            <label>Confirm Password</label>
-            <input value={this.state.passwordAgain} type="password" name="passwordAgain" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="4" />
+          <div className="pt-input-group">
+            <span className="pt-icon pt-icon-lock"></span>
+            <input className="pt-input" placeholder={ t("SignUp.Confirm Password") } value={this.state.passwordAgain} type="password" name="passwordAgain" onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="4" />
           </div>
           { legal.privacy || legal.terms
             ? <label className="pt-control pt-checkbox" htmlFor="ppcbox">
@@ -112,7 +102,7 @@ class OnboardingSignUp extends Component {
               <span dangerouslySetInnerHTML={{__html: legal.privacy && legal.terms ? t("SignUp.PrivacyTermsText") : legal.privacy ? t("SignUp.PrivacyText") : t("SignUp.TermsText"), legal}}></span>
             </label>
             : null }
-          <button className="onboarding-button" type="submit" tabIndex="5">{ t("SignUp.Sign Up") }</button>
+          <button type="submit" className="pt-button pt-fill" tabIndex="5">{ t("SignUp.Sign Up") }</button>
         </form>
       </div>
     );
