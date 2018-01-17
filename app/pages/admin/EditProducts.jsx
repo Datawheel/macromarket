@@ -1,14 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
+import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import TradeEdit from "./TradeEdit";
 import {fetchUnNestedProducts} from "../../actions/productsActions";
-import {fetchCountries} from "../../actions/countriesActions";
-import {updateSlideOverlay} from "../../actions/onboardingActions";
+import {fetchUnNestedCountries} from "../../actions/countriesActions";
 
 class EditProducts extends React.Component {
   constructor(props) {
@@ -20,16 +20,11 @@ class EditProducts extends React.Component {
     };
   }
 
-  getCompany = () => {
-    const {isOverlay, company, onboardingCompany} = this.props;
-    return isOverlay ? onboardingCompany : company;
-  };
-
   componentDidMount() {
     this.props.fetchCountries();
     this.props.fetchProducts();
-    const {companySlug} = this.props.isOverlay ? this.props : this.props.params;
-    if (companySlug) {
+    if (!this.props.isOverlay) {
+      const {companySlug} = this.props.params;
       api.get(`/api/trades/company/${companySlug}`).then(res => {
         const trades = [];
         res.data.forEach(t => {
@@ -44,9 +39,6 @@ class EditProducts extends React.Component {
             trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
           }
         });
-        if (this.props.onboardingProduct) {
-          trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
-        }
         this.setState({trades});
       });
     }
@@ -63,7 +55,7 @@ class EditProducts extends React.Component {
 
   saveTrades = () => {
     const {newProduct, trades, unsavedTrades} = this.state;
-    const company = this.getCompany();
+    const {company} = this.props;
     const tradesForServer = [];
     if (!unsavedTrades || newProduct) {
       return;
@@ -84,23 +76,9 @@ class EditProducts extends React.Component {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       this.setState({unsavedTrades: false});
-      if (this.props.isOverlay) {
-        this.props.updateSlideOverlay(3);
-      }
-      else {
-        browserHistory.push("/settings/");
-      }
-    });
-  };
-
-  cancel = () => {
-    if (this.props.isOverlay) {
-      this.props.updateSlideOverlay(1);
-    }
-    else {
       browserHistory.push("/settings/");
-    }
-  };
+    });
+  }
 
   addProduct = product => {
     const trades = this.state.trades.filter(t => t.product);
@@ -153,7 +131,7 @@ class EditProducts extends React.Component {
   }
 
   deleteProduct = p => {
-    const company = this.getCompany();
+    const {company} = this.props;
     const {trades} = this.state;
 
     api.delete(`/api/trades/company/${company.id}/product/${p.id}`).then(() => {
@@ -224,10 +202,10 @@ class EditProducts extends React.Component {
         </div>
         <hr />
         <div className="button-group">
-          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
+          <Link role="button" className="pt-button pt-large" to="/settings">
             Cancel
             <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
-          </button>
+          </Link>
           <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
             Save
             <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
@@ -242,16 +220,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchUnNestedProducts());
   },
   fetchCountries: () => {
-    dispatch(fetchCountries());
-  },
-  updateSlideOverlay: slideNumber => {
-    dispatch(updateSlideOverlay(slideNumber));
+    dispatch(fetchUnNestedCountries());
   }
 });
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  countries: state.countries.unnestedCountries,
+  countries: state.countries.countries,
   products: state.products.products,
   auth: state.auth,
   isOverlay: state.onboarding.isOverlayOpen
