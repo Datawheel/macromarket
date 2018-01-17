@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
   product: state.data.product,
   isOpen: state.onboarding.isOverlayOpen,
   isUserLoggedIn: state.auth.user !== null,
-  slideNumber: state.slideOverlayNumber
+  slideNumber: state.onboarding.slideOverlayNumber
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingOverlay);

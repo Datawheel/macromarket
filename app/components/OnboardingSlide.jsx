@@ -3,7 +3,8 @@ import {Login as CanonLogin} from "datawheel-canon";
 import {SignUp} from "datawheel-canon";
 import {connect} from "react-redux";
 import EditProducts from "../pages/admin/EditProducts";
-
+import {CompanyDropdown} from "./CompanyDropdown";
+import api from "../api.js";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
@@ -11,12 +12,12 @@ class OnboardingSlide extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+
   }
 
   render() {
-    const slideNum = 4;
-    if (this.props.slideNumber === 0) {
+    const slideNum = 5;
+    if (this.props.slideNumber === 10) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -27,7 +28,7 @@ class OnboardingSlide extends React.Component {
         </div>
       );
     }
-    else if (this.props.slideNumber === 1) {
+    else if (this.props.slideNumber === 11) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -36,7 +37,7 @@ class OnboardingSlide extends React.Component {
           <SignUp/>
         </div>);
     }
-    else if (this.props.slideNumber === 2) {
+    else if (this.props.slideNumber === 21) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -44,16 +45,22 @@ class OnboardingSlide extends React.Component {
           </div>
         </div>);
     }
-    else if (this.props.slideNumber === 3) {
+    else if (this.props.slideNumber === 13) {
       return (
         <div className="slide">
           <CanonLogin />
         </div>);
     }
-    else if (slideNum === 4) {
+    else if (this.props.slideNumber === 14) {
       return (
         <div className="slide">
-          <div className="company-dropdown"></div>
+          <CanonLogin />
+        </div>);
+    }
+    else if (slideNum === 5) {
+      return (
+        <div className="slide">
+
           <EditProducts/>
         </div>
       );
@@ -68,6 +75,9 @@ class OnboardingSlide extends React.Component {
 const mapDispatchToProps = dispatch => ({
 });
 
-const mapStateToProps = state => ({products: state.data.products});
+const mapStateToProps = state => ({
+  products: state.data.products,
+  user: state.auth.user
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingSlide);
