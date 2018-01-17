@@ -23,9 +23,9 @@ class OnboardingSlide extends React.Component {
 
   render() {
     const {isSignupFormVisible, isLoginFormVisible} = this.state;
-    const slideNum = 0;
+    const {slideNumber} = this.props;
     const productName = "Bovine";
-    if (slideNum === 0) {
+    if (slideNumber === 0) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -50,7 +50,7 @@ class OnboardingSlide extends React.Component {
         </div>
       );
     }
-    else if (slideNum === 1) {
+    else if (slideNumber === 1) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -59,7 +59,7 @@ class OnboardingSlide extends React.Component {
           <SignUp/>
         </div>);
     }
-    else if (slideNum === 2) {
+    else if (slideNumber === 2) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -67,13 +67,13 @@ class OnboardingSlide extends React.Component {
           </div>
         </div>);
     }
-    else if (slideNum === 3) {
+    else if (slideNumber === 3) {
       return (
         <div className="slide">
           <CanonLogin />
         </div>);
     }
-    else if (slideNum === 4) {
+    else if (slideNumber === 4) {
       return (
         <div className="slide">
           <div className="company-dropdown"></div>

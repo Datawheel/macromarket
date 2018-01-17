@@ -23,9 +23,8 @@ class OnboardingLogin extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const {redirect} = this.props;
     const {email, password} = this.state;
-    this.props.login({email, password, redirect});
+    this.props.login({email, password});
     this.setState({submitted: true});
   }
 

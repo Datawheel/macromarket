@@ -17,7 +17,6 @@ class OnboardingOverlay extends React.Component {
     const {product, isOpen, isUserLoggedIn, slideNumber, updateSlideOverlay} = this.props;
     return (
       <div style={{display: isOpen ? "inline" : "none"}}>
-        <p>Sup Sabrina! :)</p>
         <OnboardingSlide
           product={product}
           isUserLoggedIn={isUserLoggedIn}
