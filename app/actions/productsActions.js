@@ -46,19 +46,7 @@ export function fetchUnNestedProducts() {
     dispatch(requestSearchProducts());
     return api.get("/api/products")
       .then(response => {
-        const result = {};
-        response.data.map(product => {
-          if (result[product.name.toLowerCase().substring(0, 1)]) {
-            result[product.name.toLowerCase().substring(0, 1)].values.push(product);
-          }
-          else {
-            result[product.name.toLowerCase().substring(0, 1)] = {
-              values: []
-            };
-          }
-        });
-
-        dispatch(receiveSearchProducts(result));
+        dispatch(receiveSearchProducts(response.data));
       })
       .catch(response => {
         dispatch(searchProductsError(response.data));

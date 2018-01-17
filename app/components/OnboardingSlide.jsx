@@ -3,7 +3,8 @@ import {Login as CanonLogin} from "datawheel-canon";
 import {SignUp} from "datawheel-canon";
 import {connect} from "react-redux";
 import EditProducts from "../pages/admin/EditProducts";
-
+import {CompanyDropdown} from "./CompanyDropdown";
+import api from "../api.js";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
@@ -11,33 +12,32 @@ class OnboardingSlide extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.params);
+
   }
 
   render() {
-    const slideNum = 4;
-    const productName = "Bovine";
-    if (slideNum === 0) {
+    const slideNum = 5;
+    if (this.props.slideNumber === 10) {
       return (
         <div className="slide">
           <div className="product-wrapper">
-            <p>Interested in being listed under {productName} ?</p>
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
           <button>Sign up</button>
           <button>Login</button>
         </div>
       );
     }
-    else if (slideNum === 1) {
+    else if (this.props.slideNumber === 11) {
       return (
         <div className="slide">
           <div className="product-wrapper">
-            <p>Interested in being listed under {productName} ?</p>
+            <p>Interested in being listed under {this.props.product} ?</p>
           </div>
           <SignUp/>
         </div>);
     }
-    else if (slideNum === 2) {
+    else if (this.props.slideNumber === 21) {
       return (
         <div className="slide">
           <div className="product-wrapper">
@@ -45,17 +45,23 @@ class OnboardingSlide extends React.Component {
           </div>
         </div>);
     }
-    else if (slideNum === 3) {
+    else if (this.props.slideNumber === 13) {
       return (
         <div className="slide">
           <CanonLogin />
         </div>);
     }
-    else if (slideNum === 4) {
+    else if (this.props.slideNumber === 14) {
       return (
         <div className="slide">
-          <div className="company-dropdown"></div>
-  
+          <CanonLogin />
+        </div>);
+    }
+    else if (slideNum === 5) {
+      return (
+        <div className="slide">
+
+          <EditProducts/>
         </div>
       );
     }
@@ -69,6 +75,9 @@ class OnboardingSlide extends React.Component {
 const mapDispatchToProps = dispatch => ({
 });
 
-const mapStateToProps = state => ({products: state.data.products});
+const mapStateToProps = state => ({
+  products: state.data.products,
+  user: state.auth.user
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingSlide);
