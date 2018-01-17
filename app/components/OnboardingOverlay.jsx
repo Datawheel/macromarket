@@ -1,14 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
-import "./Onboarding.css";
-import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
-import api from "../api";
-
-async function getProduct(productId) {
-  const productResponse = await api.get(`api/products/${productId}`);
-  return productResponse.data;
-}
+import {toggleOverlay, updateSlideOverlay} from "../actions/onboardingActions";
 
 class OnboardingOverlay extends React.Component {
   constructor(props) {
@@ -20,23 +13,11 @@ class OnboardingOverlay extends React.Component {
     }
   }
 
-  async componentWillMount() {
-    if (this.props.product) {
-      const {id} = this.props.product;
-      if (id) {
-        const product = await getProduct(id);
-        this.props.setOnboardingProduct(product);
-      }
-    }
-  }
-
   render() {
-    const {product, isUserLoggedIn, slideNumber, updateSlideOverlay, toggleOverlay} = this.props;
+    const {product, isOpen, isUserLoggedIn, slideNumber, updateSlideOverlay} = this.props;
     return (
-      <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
-        <div className="onboarding-overlay"></div>
+      <div style={{display: isOpen ? "inline" : "none"}}>
         <OnboardingSlide
-          toggleOverlay={toggleOverlay}
           product={product}
           isUserLoggedIn={isUserLoggedIn}
           slideNumber={slideNumber}
@@ -53,9 +34,6 @@ const mapDispatchToProps = dispatch => ({
   },
   updateSlideOverlay: newSlideNumber => {
     dispatch(updateSlideOverlay(newSlideNumber));
-  },
-  setOnboardingProduct: company => {
-    dispatch(setOnboardingProduct(company));
   }
 });
 

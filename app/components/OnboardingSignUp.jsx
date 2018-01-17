@@ -27,7 +27,7 @@ class OnboardingSignUp extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const {legal, redirect, t} = this.props;
+    const {legal, t} = this.props;
     const {agreedToTerms, email, password, passwordAgain, username} = this.state;
 
     if (password !== passwordAgain) {
@@ -40,7 +40,7 @@ class OnboardingSignUp extends Component {
       this.setState({error: {iconName: "saved", message: t("SignUp.error.TermsAgree")}});
     }
     else {
-      this.props.signup({username, email, password, redirect});
+      this.props.signup({username, email, password});
       this.setState({submitted: true});
     }
 
