@@ -1,18 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
+import {Button, Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
 import {Link, browserHistory} from "react-router";
 import CountrySearch from "../pages/admin/CountrySearch";
-import {fetchCountries} from "../actions/countriesActions";
+import {fetchUnNestedCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
-import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
-import {Select} from "@blueprintjs/labs";
-import {Classes, MenuItem} from "@blueprintjs/core";
-
-async function getCompaniesByUser(userId) {
-  const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
-  return companiesResponse.data;
-}
 
 class OnboardingCompany extends React.Component {
   constructor(props) {
@@ -22,30 +14,12 @@ class OnboardingCompany extends React.Component {
       name: "",
       country_id: "",
       country: "",
-      labelUp: [],
-      addNewCompany: false,
-      isSaving: false,
-      companies: [],
-      company: ""
+      isSaving: false
     };
   }
 
-  async componentDidMount() {
-    this.props.fetchCountries();
-
-    const {user} = this.props;
-    if (user && user.id) {
-      const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].slug});
-    }
-  }
-
-  async componentWillReceiveProps(nextProps) {
-    if (nextProps.user && nextProps.user.id && nextProps.user !== this.props.user) {
-      const {user} = nextProps;
-      const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].slug});
-    }
+  componentDidMount() {
+    this.props.fetchUnNestedCountries();
   }
 
   handleChange = e => {
@@ -53,8 +27,7 @@ class OnboardingCompany extends React.Component {
       ? e.target.checked
       : e.target.value;
     this.setState({
-      [e.target.name]: value,
-      labelUp: this.state.labelUp.concat([e.target.name])
+      [e.target.name]: value
     });
   };
 
@@ -62,9 +35,6 @@ class OnboardingCompany extends React.Component {
     this.setState({
       country_id: country.id
     });
-  };
-  switchToNewCompany = () => {
-    this.setState({addNewCompany: !this.state.addNewCompany});
   };
 
   validate = company => {
@@ -94,108 +64,57 @@ class OnboardingCompany extends React.Component {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       api.post("api/companies/", {...company}).then(companyResponse => {
-        this.setState({isSaving: false});
-        const companySlug = companyResponse.data.slug;
-        this.props.setOnboardingCompany(companySlug);
-        this.props.updateSlideOverlay(2);
-      })
-        .catch(error => {
-          console.log(error);
-        });
+        const {id: newCompanyId} = companyResponse.data;
+      });
     }
   };
 
-  selectCompany = () => {
-    this.setState({isSaving: true});
-    this.props.setOnboardingCompany(this.state.company);
-    this.props.updateSlideOverlay(2);
-  };
-
-
   render() {
     const {countries} = this.props;
-    const {isSaving, error, country, name, companies} = this.state;
-
-    const companiesOptions = companies.map(company =>
-      <option key={company.id} value={company.slug}>{company.name}</option>
-    );
+    const {isSaving, error, country, name} = this.state;
 
     return (
-      <div className="slide-inner company-onboarding">
-        {companies.length && !this.state.addNewCompany ?
-          <div className="existing-company-container">
-            <h2>Choose an Existing Company</h2>
-            <p className="description-text">
-              Select one of your companies to be listed under product.
-            </p>
-            <div className="labelUp input-wrapper">
-              <label>Company</label>
-              <div className="pt-select">
-              <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select></div>
+      <div className="slide">
+        <h1>List Your Company</h1>
+        <div className="onboarding-company-form">
+          <div className={error && error.names.includes("name") ? "pt-form-group pt-intent-danger" : "pt-form-group"}>
+            <label className="pt-label" htmlFor="input-company-name">
+              <span className="pt-icon pt-icon-edit"></span> Company Name <span className="pt-text-muted">(required)</span>
+            </label>
+            <div className="pt-form-content">
+              <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : "pt-input-group"}>
+                <input name="name" onChange={this.handleChange} id="input-company-name" value={name} className="pt-input" placeholder="My Company" type="text" dir="auto" />
+              </div>
+              {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
             </div>
-            <div onClick={this.switchToNewCompany}>Create a New Company</div>
-            <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
-                Continue
-            </button>
-
           </div>
-          : <div className="create-company-container">
-            <h2>Create a Company</h2>
-            <p className="description-text">
-            This information will be listed on your company’s profile. You can update this information and add more  later!
-            </p>
-            <div className="onboarding-company-form">
-              <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
-                <label  htmlFor="input-company-name">
-                  Company Name *
-                </label>
-                <div>
-                  <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
-                    <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
-                  </div>
-                  {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
-                </div>
-              </div>
-              <div className="labelUp input-wrapper">
-                <label htmlFor="input-address-country">
-                  Country Of Origin
-                </label>
-                <div>
-                  <div>
-                    { countries
-                      ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
-                      : <span>Loading country list...</span>
-                    }
-                  </div>
-                </div>
+          <div className="pt-form-group pt-inline">
+            <label className="pt-label" htmlFor="input-address-country">
+                    Country
+            </label>
+            <div className="pt-form-content">
+              <div className="pt-input-group">
+                { countries
+                  ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
+                  : <span>Loading country list...</span>
+                }
               </div>
             </div>
-            {companies.length && <div  onClick={this.switchToNewCompany}> Select an existing Company</div> }
-            <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
-                  Create Company
-            </button>
-          </div>}
-
-
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  countries: state.countries.unnestedCountries,
+  countries: state.countries.countries,
   user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchCountries: () => {
-    dispatch(fetchCountries());
-  },
-  setOnboardingCompany: companyId => {
-    dispatch(setOnboardingCompany(companyId));
-  },
-  updateSlideOverlay: slideNumber => {
-    dispatch(updateSlideOverlay(slideNumber));
+  fetchUnNestedCountries: () => {
+    dispatch(fetchUnNestedCountries());
   }
 });
 
