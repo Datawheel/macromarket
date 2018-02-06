@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Button, Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
+import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
 import {Link, browserHistory} from "react-router";
 import CountrySearch from "../pages/admin/CountrySearch";
 import {fetchUnNestedCountries} from "../actions/countriesActions";
@@ -64,8 +64,11 @@ class OnboardingCompany extends React.Component {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       api.post("api/companies/", {...company}).then(companyResponse => {
-        const {id: newCompanyId} = companyResponse.data;
-      });
+        this.setState({isSaving: false});
+      })
+        .catch(error => {
+          console.log(error);
+        });
     }
   };
 
@@ -102,6 +105,10 @@ class OnboardingCompany extends React.Component {
             </div>
           </div>
         </div>
+        <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.saveCompany : null}>
+              Save
+          <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+        </button>
       </div>
     );
   }
