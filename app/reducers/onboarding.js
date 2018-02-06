@@ -1,7 +1,7 @@
 const ACTION_TYPE = "ONBOARDING_OVERLAY";
 
 export default(state = {
-  slideOverlayNumber: 0,
+  slideOverlayNumber: 1,
   isOverlayOpen: false
 }, action) => {
   switch (action.type) {
