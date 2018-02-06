@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import EditProducts from "../pages/admin/EditProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
-import {CompanyDropdown} from "./CompanyDropdown";
+import OnboardingCompany from "./OnboardingCompany";
 import api from "../api.js";
 
 class OnboardingSlide extends React.Component {
@@ -24,10 +24,8 @@ class OnboardingSlide extends React.Component {
     }
     else if (slideNumber === 1) {
       return (
-        <div className="slide">
-          <h1>List Your Company</h1>
-
-        </div>);
+        <OnboardingCompany/>
+      );
     }
     else if (slideNumber === 2) {
       return (
