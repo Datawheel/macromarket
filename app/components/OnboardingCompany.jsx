@@ -32,7 +32,7 @@ class OnboardingCompany extends React.Component {
     const {user} = this.props;
     if (user && user.id) {
       const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].id});
+      this.setState({companies, company: companies && companies.length && companies[0].slug});
     }
   }
 
@@ -40,7 +40,7 @@ class OnboardingCompany extends React.Component {
     if (nextProps.user && nextProps.user.id && nextProps.user !== this.props.user) {
       const {user} = nextProps;
       const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].id});
+      this.setState({companies, company: companies && companies.length && companies[0].slug});
     }
   }
 
@@ -87,8 +87,8 @@ class OnboardingCompany extends React.Component {
       toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       api.post("api/companies/", {...company}).then(companyResponse => {
         this.setState({isSaving: false});
-        const companyId = companyResponse.data.id;
-        this.props.setOnboardingCompany(companyId);
+        const companySlug = companyResponse.data.slug;
+        this.props.setOnboardingCompany(companySlug);
         this.props.updateSlideOverlay(2);
       })
         .catch(error => {
@@ -108,7 +108,7 @@ class OnboardingCompany extends React.Component {
     const {isSaving, error, country, name, companies} = this.state;
 
     const companiesOptions = companies.map(company =>
-      <option key={company.id} value={company.id}>{company.name}</option>
+      <option key={company.id} value={company.slug}>{company.name}</option>
     );
 
     return (

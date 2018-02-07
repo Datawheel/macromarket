@@ -3,7 +3,7 @@ const ACTION_TYPE = "ONBOARDING_OVERLAY";
 export default(state = {
   slideOverlayNumber: 1,
   isOverlayOpen: false,
-  companyId: ""
+  companySlug: ""
 }, action) => {
   switch (action.type) {
 
@@ -16,7 +16,7 @@ export default(state = {
     case `${ACTION_TYPE}_SET_COMPANY`:
       return {
         ...state,
-        companyId: action.data
+        companySlug: action.data
       };
 
     case `${ACTION_TYPE}_TOGGLE`:
