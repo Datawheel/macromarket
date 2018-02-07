@@ -7,6 +7,11 @@ import {fetchUnNestedCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 
+async function getCompaniesByUser(userId) {
+  const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
+  return companiesResponse.data;
+}
+
 class OnboardingCompany extends React.Component {
   constructor(props) {
     super(props);
@@ -15,12 +20,28 @@ class OnboardingCompany extends React.Component {
       name: "",
       country_id: "",
       country: "",
-      isSaving: false
+      isSaving: false,
+      companies: [],
+      company: ""
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchUnNestedCountries();
+
+    const {user} = this.props;
+    if (user && user.id) {
+      const companies = await getCompaniesByUser(user.id);
+      this.setState({companies, company: companies && companies.length && companies[0].id});
+    }
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    if (nextProps.user && nextProps.user.id && nextProps.user !== this.props.user) {
+      const {user} = nextProps;
+      const companies = await getCompaniesByUser(user.id);
+      this.setState({companies, company: companies && companies.length && companies[0].id});
+    }
   }
 
   handleChange = e => {
@@ -76,9 +97,19 @@ class OnboardingCompany extends React.Component {
     }
   };
 
+  selectCompany = () => {
+    this.setState({isSaving: true});
+    this.props.setOnboardingCompany(this.state.company);
+    this.props.updateSlideOverlay(2);
+  };
+
   render() {
     const {countries} = this.props;
-    const {isSaving, error, country, name} = this.state;
+    const {isSaving, error, country, name, companies} = this.state;
+
+    const companiesOptions = companies.map(company =>
+      <option key={company.id} value={company.id}>{company.name}</option>
+    );
 
     return (
       <div className="slide">
@@ -110,9 +141,19 @@ class OnboardingCompany extends React.Component {
           </div>
         </div>
         <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.saveCompany : null}>
-              Save
+              Create New Company & Continue
           <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
         </button>
+        {companies.length &&
+          <div className="existing-company-container">
+            <h4>Or choose an existing company</h4>
+            <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select>
+            <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.selectCompany : null}>
+                  Select Existing Company & Continue
+              <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+            </button>
+          </div>
+        }
       </div>
     );
   }
