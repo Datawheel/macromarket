@@ -5,6 +5,7 @@ import {Link, browserHistory} from "react-router";
 import CountrySearch from "../pages/admin/CountrySearch";
 import {fetchUnNestedCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
+import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 
 class OnboardingCompany extends React.Component {
   constructor(props) {
@@ -65,6 +66,9 @@ class OnboardingCompany extends React.Component {
       toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       api.post("api/companies/", {...company}).then(companyResponse => {
         this.setState({isSaving: false});
+        const companyId = companyResponse.data.id;
+        this.props.setOnboardingCompany(companyId);
+        this.props.updateSlideOverlay(2);
       })
         .catch(error => {
           console.log(error);
@@ -122,6 +126,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUnNestedCountries: () => {
     dispatch(fetchUnNestedCountries());
+  },
+  setOnboardingCompany: companyId => {
+    dispatch(setOnboardingCompany(companyId));
+  },
+  updateSlideOverlay: slideNumber => {
+    dispatch(updateSlideOverlay(slideNumber));
   }
 });
 
