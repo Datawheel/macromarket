@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import EditProducts from "../pages/admin/EditProducts";
+import OnboardingProducts from "./OnboardingProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
 import OnboardingCompany from "./OnboardingCompany";
 import api from "../api.js";
@@ -28,10 +28,8 @@ class OnboardingSlide extends React.Component {
     }
     else if (slideNumber === 2) {
       return (
-        <div className="slide">
-          <div className="company-dropdown"></div>
-          <EditProducts/>
-        </div>);
+        <OnboardingProducts/>
+      );
     }
     else {
       return <div></div>;
