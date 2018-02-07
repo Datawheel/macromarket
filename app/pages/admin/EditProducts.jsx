@@ -8,6 +8,7 @@ import "./Settings.css";
 import TradeEdit from "./TradeEdit";
 import {fetchUnNestedProducts} from "../../actions/productsActions";
 import {fetchUnNestedCountries} from "../../actions/countriesActions";
+import {updateSlideOverlay} from "../../actions/onboardingActions";
 
 class EditProducts extends React.Component {
   constructor(props) {
@@ -19,11 +20,16 @@ class EditProducts extends React.Component {
     };
   }
 
+  getCompany = () => {
+    const {isOverlay, company, onboardingCompany} = this.props;
+    return isOverlay ? onboardingCompany : company;
+  };
+
   componentDidMount() {
     this.props.fetchCountries();
     this.props.fetchProducts();
-    if (!this.props.isOverlay) {
-      const {companySlug} = this.props.params;
+    const {companySlug} = this.props.isOverlay ? this.props : this.props.params;
+    if (companySlug) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
         const trades = [];
         res.data.forEach(t => {
@@ -54,7 +60,7 @@ class EditProducts extends React.Component {
 
   saveTrades = () => {
     const {newProduct, trades, unsavedTrades} = this.state;
-    const {company} = this.props;
+    const company = this.getCompany();
     const tradesForServer = [];
     if (!unsavedTrades || newProduct) {
       return;
@@ -75,9 +81,23 @@ class EditProducts extends React.Component {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       this.setState({unsavedTrades: false});
-      browserHistory.push("/settings/");
+      if (this.props.isOverlay) {
+        this.props.updateSlideOverlay(3);
+      }
+      else {
+        browserHistory.push("/settings/");
+      }
     });
-  }
+  };
+
+  cancel = () => {
+    if (this.props.isOverlay) {
+      this.props.updateSlideOverlay(2);
+    }
+    else {
+      browserHistory.push("/settings/");
+    }
+  };
 
   addProduct = product => {
     const trades = this.state.trades.filter(t => t.product);
@@ -130,7 +150,7 @@ class EditProducts extends React.Component {
   }
 
   deleteProduct = p => {
-    const {company} = this.props;
+    const company = this.getCompany();
     const {trades} = this.state;
 
     api.delete(`/api/trades/company/${company.id}/product/${p.id}`).then(() => {
@@ -201,10 +221,10 @@ class EditProducts extends React.Component {
         </div>
         <hr />
         <div className="button-group">
-          <Link role="button" className="pt-button pt-large" to="/settings">
+          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
             Cancel
             <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
-          </Link>
+          </button>
           <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
             Save
             <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
@@ -220,6 +240,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchCountries: () => {
     dispatch(fetchUnNestedCountries());
+  },
+  updateSlideOverlay: slideNumber => {
+    dispatch(updateSlideOverlay(slideNumber));
   }
 });
 
