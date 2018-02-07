@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import OnboardingProducts from "./OnboardingProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
 import OnboardingCompany from "./OnboardingCompany";
-import api from "../api.js";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
