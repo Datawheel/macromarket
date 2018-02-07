@@ -5,7 +5,7 @@ export function updateSlideOverlay(slideNumber) {
 }
 
 export function setOnboardingCompany(companyId) {
-  return {type: "ONBOARDING_SET_COMPANY", data: companyId};
+  return {type: "ONBOARDING_OVERLAY_SET_COMPANY", data: companyId};
 }
 
 export function toggleOverlay() {
