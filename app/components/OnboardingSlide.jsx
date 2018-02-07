@@ -16,7 +16,6 @@ class OnboardingSlide extends React.Component {
 
   render() {
     const {slideNumber} = this.props;
-    const productName = "Bovine";
     if (slideNumber === 0) {
       return (
         <OnboardingGetStarted product={this.props.product}/>
@@ -30,23 +29,9 @@ class OnboardingSlide extends React.Component {
     else if (slideNumber === 2) {
       return (
         <div className="slide">
-          <div className="product-wrapper">
-            <p>Create a Company</p>
-          </div>
-        </div>);
-    }
-    else if (slideNumber === 3) {
-      return (
-        <div className="slide">
-        </div>);
-    }
-    else if (slideNumber === 4) {
-      return (
-        <div className="slide">
           <div className="company-dropdown"></div>
           <EditProducts/>
-        </div>
-      );
+        </div>);
     }
     else {
       return <div></div>;
