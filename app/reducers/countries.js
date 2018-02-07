@@ -1,4 +1,4 @@
-const ACTION_TYPE = 'COUNTRIES';
+const ACTION_TYPE = "COUNTRIES";
 
 export default (state = {countries:null, loading:false}, action) => {
   switch (action.type) {

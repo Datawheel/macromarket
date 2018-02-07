@@ -4,6 +4,10 @@ export function updateSlideOverlay(slideNumber) {
   return {type: "ONBOARDING_OVERLAY_SLIDE_UPDATE", data: slideNumber};
 }
 
+export function setOnboardingCompany(companySlug) {
+  return {type: "ONBOARDING_OVERLAY_SET_COMPANY", data: companySlug};
+}
+
 export function toggleOverlay() {
   return {type: "ONBOARDING_OVERLAY_TOGGLE"};
 }
