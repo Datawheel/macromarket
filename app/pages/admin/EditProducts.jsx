@@ -92,7 +92,7 @@ class EditProducts extends React.Component {
 
   cancel = () => {
     if (this.props.isOverlay) {
-      this.props.updateSlideOverlay(2);
+      this.props.updateSlideOverlay(1);
     }
     else {
       browserHistory.push("/settings/");
