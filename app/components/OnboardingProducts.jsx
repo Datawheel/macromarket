@@ -32,9 +32,11 @@ class OnboardingProducts extends React.Component {
 
   render() {
     const {company} = this.state;
+    const {product} = this.props;
+
     return (
       <div>
-        <EditProducts onboardingCompany={company} companySlug={this.props.companySlug}/>
+        <EditProducts onboardingCompany={company} onboardingProduct={product} companySlug={this.props.companySlug}/>
       </div>
     );
   }
@@ -42,6 +44,7 @@ class OnboardingProducts extends React.Component {
 
 const mapStateToProps = state => ({
   companySlug: state.onboarding.companySlug,
+  product: state.onboarding.product,
   user: state.auth.user
 });
 
