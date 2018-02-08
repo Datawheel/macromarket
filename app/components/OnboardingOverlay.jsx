@@ -1,7 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
-import {toggleOverlay, updateSlideOverlay} from "../actions/onboardingActions";
+import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
+import api from "../api";
+
+async function getProduct(productId) {
+  const productResponse = await api.get(`api/products/${productId}`);
+  return productResponse.data;
+}
 
 class OnboardingOverlay extends React.Component {
   constructor(props) {
@@ -10,6 +16,14 @@ class OnboardingOverlay extends React.Component {
     const {source} = props.query;
     if (source && source === "oec") {
       toggleOverlay();
+    }
+  }
+
+  async componentWillMount() {
+    const {productId} = this.props.query;
+    if (productId) {
+      const product = await getProduct(productId);
+      this.props.setOnboardingProduct(product);
     }
   }
 
@@ -34,6 +48,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateSlideOverlay: newSlideNumber => {
     dispatch(updateSlideOverlay(newSlideNumber));
+  },
+  setOnboardingProduct: company => {
+    dispatch(setOnboardingProduct(company));
   }
 });
 
