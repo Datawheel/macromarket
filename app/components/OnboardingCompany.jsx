@@ -114,50 +114,60 @@ class OnboardingCompany extends React.Component {
     );
 
     return (
-      <div className="slide-inner">
-        <h2>List Your Company</h2>
-        <p className="description-text">
-        This information will be listed on your company’s profile. You can update this information and add more  later!
-        </p>
-        <div className="onboarding-company-form">
-          <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
-            <label  htmlFor="input-company-name">
-              Company Name *
-            </label>
-            <div>
-              <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
-                <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
-              </div>
-              {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
-            </div>
-          </div>
-          <div className="labelUp input-wrapper">
-            <label htmlFor="input-address-country">
-              Country Of Origin
-            </label>
-            <div>
-              <div>
-                { countries
-                  ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
-                  : <span>Loading country list...</span>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-        <button type="button" onClick={!isSaving ? this.saveCompany : null}>
-              Create Company
-        </button>
-        {companies.length &&
+      <div className="slide-inner company-onboarding">
+        {companies.length ?
           <div className="existing-company-container">
-            <h4>Or choose an existing company</h4>
-            <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select>
-            <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.selectCompany : null}>
-                  Select Existing Company & Continue
-              <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+            <h2>Choose an Existing Company</h2>
+            <p className="description-text">
+              Select one of your companies to be listed under product.
+            </p>
+            <div className="labelUp input-wrapper">
+              <label>Company</label>
+              <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select>
+            </div>
+            <p>Create a New Company</p>
+            <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
+                Continue
             </button>
+
           </div>
-        }
+          : <div className="create-company-container">
+            <h2>Create a Company</h2>
+            <p className="description-text">
+            This information will be listed on your company’s profile. You can update this information and add more  later!
+            </p>
+            <div className="onboarding-company-form">
+              <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
+                <label  htmlFor="input-company-name">
+                  Company Name *
+                </label>
+                <div>
+                  <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
+                    <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
+                  </div>
+                  {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
+                </div>
+              </div>
+              <div className="labelUp input-wrapper">
+                <label htmlFor="input-address-country">
+                  Country Of Origin
+                </label>
+                <div>
+                  <div>
+                    { countries
+                      ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
+                      : <span>Loading country list...</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button className="button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
+                  Create Company
+            </button>
+          </div>}
+
+
       </div>
     );
   }
