@@ -1,28 +1,9 @@
 @import "../Variables";
 /* Onboarding Wrapper*/
-
 ul.pt-menu {
   height: 150px;
   max-height: 160px !important;
 }
-
-/* Change Autocomplete styles in Chrome*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-
-  -webkit-text-fill-color: white;
-  box-shadow: 0 0 0px 1000px #000 inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
 .onboarding-wrapper {
   position: absolute;
   z-index: 100;
@@ -46,6 +27,10 @@ select:-webkit-autofill:focus {
     max-height: 160px !important;
   }
   & .tabs {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     margin: 20px 10% 0px;
     & .tab {
@@ -71,24 +56,13 @@ select:-webkit-autofill:focus {
       }
     }
   }
-  /* Get Started Logo */
-  & .logo-wrapper {
-    margin-bottom: 20px;
-    text-align: center;
-    & .mm-logo {
-      display: block;
-      margin: 0 auto;
-      padding-bottom: 8px;
-    }
-  }
-  & .onboarding-button {
+  & button {
     background: var(--accent-color);
     border: none;
     border-radius: 0px;
     height: 48px;
     box-shadow: none;
     outline: none;
-    width: 100%;
   }
   & input:focus {
     box-shadow: none !important;
@@ -103,6 +77,12 @@ select:-webkit-autofill:focus {
       z-index: 1;
       position: absolute;
       /* Top Transition */
+      -webkit-transition: .2s transform ease-in-out, font-size 150ms ease-out;
+      -moz-transition: .2s transform ease-in-out, font-size 150ms ease-out;
+      -moz-transition: .2s transform ease-in-out, font-size 150ms ease-out;
+      -ms-transition: .2s transform ease-in-out, font-size 150ms ease-out;
+      -o-transition: .2s transform ease-in-out, font-size 150ms ease-out;
+      transition: .2s transform ease-in-out, font-size 150ms ease-out;
       transition: transform 150ms ease-out, font-size 150ms ease-out;
       /* Styles */
       text-transform: uppercase;
@@ -123,7 +103,10 @@ select:-webkit-autofill:focus {
   }
   & .input-wrapper.labelUp {
     & label {
-      transform: translate(0, -15px);
+      -webkit-transform: translate(0, -15px);
+      -moz-transform: translate(0, -15px);
+      -o-transform: translate(0, -15px);
+      -ms-transform: translate(0, -15px);
       font-size: 9px;
     }
   }
@@ -145,6 +128,11 @@ select:-webkit-autofill:focus {
     width: 600px;
     overflow: hidden;
     /* Width Transition */
+    -webkit-transition: .2s width ease-in-out;
+    -moz-transition: .2s width ease-in-out;
+    -moz-transition: .2s width ease-in-out;
+    -ms-transition: .2s width ease-in-out;
+    -o-transition: .2s width ease-in-out;
     transition: .2s width ease-in-out;
     /* Design */
     background: rgba(36, 47, 56, .75);
@@ -165,6 +153,11 @@ select:-webkit-autofill:focus {
     /* Left Transition */
     left: 0px;
     position: relative;
+    -webkit-transition: .4s left ease-in-out;
+    -moz-transition: .4s left ease-in-out;
+    -moz-transition: .4s left ease-in-out;
+    -ms-transition: .4s left ease-in-out;
+    -o-transition: .4s left ease-in-out;
     transition: .4s left ease-in-out;
     & .slide {
       position: relative;
@@ -175,6 +168,10 @@ select:-webkit-autofill:focus {
       & .slide-inner {
         width: 80%;
         margin: 0 auto;
+      }
+      & button {
+        width: 100%;
+        margin: 2px 0px;
       }
       & .button-right {
         width: 25%;
@@ -221,12 +218,12 @@ select:-webkit-autofill:focus {
 /* Slide  */
 
 .slide-2 {
-  width: 900px;
+  width: 800px;
 }
 
 .onboarding-wrapper-2 {
   & .slider-wrapper {
-    width: 900px;
+    width: 800px;
   }
   /* Slide Left */
   & .slide-container-2 {
@@ -238,6 +235,10 @@ select:-webkit-autofill:focus {
 
 .company-onboarding {
   & .onboarding-company-form {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     margin: 25px 0px;
   }

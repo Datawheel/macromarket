@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
+// import {toggleOverlay, updateSlideOverlay} from "../actions/onboardingActions";
+import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
 import api from "../api";
 
@@ -10,14 +12,6 @@ async function getProduct(productId) {
 }
 
 class OnboardingOverlay extends React.Component {
-  constructor(props) {
-    super(props);
-    const {toggleOverlay} = props;
-    const {source} = props.query;
-    if (source && source === "oec") {
-      toggleOverlay();
-    }
-  }
 
   async componentWillMount() {
     const {productId} = this.props.query;
@@ -28,10 +22,12 @@ class OnboardingOverlay extends React.Component {
   }
 
   render() {
-    const {product, isOpen, isUserLoggedIn, slideNumber, updateSlideOverlay} = this.props;
+    const {product, isUserLoggedIn, slideNumber, updateSlideOverlay, toggleOverlay} = this.props;
     return (
-      <div style={{display: isOpen ? "inline" : "none"}}>
+      <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
+        <div className="onboarding-overlay"></div>
         <OnboardingSlide
+          toggleOverlay={toggleOverlay}
           product={product}
           isUserLoggedIn={isUserLoggedIn}
           slideNumber={slideNumber}
@@ -56,7 +52,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   product: state.data.product,
-  isOpen: state.onboarding.isOverlayOpen,
   isUserLoggedIn: state.auth.user !== null,
   slideNumber: state.onboarding.slideOverlayNumber
 });
