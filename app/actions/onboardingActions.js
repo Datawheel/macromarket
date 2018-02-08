@@ -8,6 +8,10 @@ export function setOnboardingCompany(companySlug) {
   return {type: "ONBOARDING_OVERLAY_SET_COMPANY", data: companySlug};
 }
 
+export function setOnboardingProduct(product) {
+  return {type: "ONBOARDING_OVERLAY_SET_PRODUCT", data: product};
+}
+
 export function toggleOverlay() {
   return {type: "ONBOARDING_OVERLAY_TOGGLE"};
 }
