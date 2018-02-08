@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import EditProducts from "../pages/admin/EditProducts";
+import EditProducts from "./OnboardingEditProducts";
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 import api from "../api";
 
