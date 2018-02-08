@@ -1,7 +1,7 @@
 const ACTION_TYPE = "ONBOARDING_OVERLAY";
 
 export default(state = {
-  slideOverlayNumber: 1,
+  slideOverlayNumber: 0,
   isOverlayOpen: false,
   companySlug: "",
   product: null
