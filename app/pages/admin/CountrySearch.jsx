@@ -51,7 +51,7 @@ class CountrySearch extends React.Component {
       inputValueRenderer={c => c.name}
       itemRenderer={this.renderCountry}
       itemListPredicate={this.filterCountries}
-      items={countries.filter(p => p.id.length === 5)}
+      items={countries.filter(p => p.id && p.id.length === 5)}
       onItemSelect={this.selectCountry}
       resetOnSelect={true}
       resetOnClose={true}
