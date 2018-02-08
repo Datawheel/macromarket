@@ -14,55 +14,32 @@ class OnboardingSlide extends React.Component {
 
   render() {
     console.log(this.props.slideNumber);
-    const {slideNumber} = this.props;
-    const slide0 = {width: "600px"};
-    const slide1 = {width: "700px"};
-    const slide2 = {width: "800px"};
     return (
       <div className="slider-wrapper">
+        <div className="tabs">
+          <div className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
+            <div className="line"></div>
+          </div>
+          <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
+            <div className="line"></div>
+          </div>
+        </div>
         <button className="close" onClick={this.props.toggleOverlay}></button>
         <div className={`slide-container slide-container-${this.props.slideNumber}`}>
-          <div className="slide" style={slide0}>
+          <div className="slide slide-0">
             <OnboardingGetStarted product={this.props.product}/>
             <button onClick={this.props.updateSlideOverlay.bind(this, 1)}>Next Slide</button>
 
           </div>
-          <div className="slide" style={slide1}>
+          <div className="slide slide-1" >
             <OnboardingCompany/>
           </div>
-          <div className="slide" style={slide2}>
+          <div className="slide slide-2">
             <OnboardingProducts/>
           </div>
         </div>
       </div>
     );
-    // if (slideNumber === 0) {
-    //   return (
-    //     <div className="slide slide0">
-    //       <button className="close" onClick={this.props.toggleOverlay}>close</button>
-    //       <OnboardingGetStarted product={this.props.product}/>
-    //     </div>
-    //   );
-    // }
-    // else if (slideNumber === 1) {
-    //   return (
-    //     <div className="slide slide1">
-    //       <button className="close" onClick={this.props.toggleOverlay}>close</button>
-    //       <OnboardingCompany/>
-    //     </div>
-    //   );
-    // }
-    // else if (slideNumber === 2) {
-    //   return (
-    //     <div className="slide slide2">
-    //       <button className="close" onClick={this.props.toggleOverlay}>close</button>
-    //       <OnboardingProducts/>
-    //     </div>
-    //   );
-    // }
-    // else {
-    //   return <div></div>;
-    // }
   }
 }
 
