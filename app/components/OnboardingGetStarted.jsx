@@ -18,7 +18,7 @@ class OnboardingGetStarted extends React.Component {
     const {user, updateSlideOverlay} = this.props;
 
     return (
-      <div className="slide">
+      <div className="slide-inner">
         <div className="product-wrapper">
           <p>Interested in being listed under {this.props.product} ?</p>
         </div>

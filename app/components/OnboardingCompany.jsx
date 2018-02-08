@@ -20,6 +20,7 @@ class OnboardingCompany extends React.Component {
       name: "",
       country_id: "",
       country: "",
+      labelUp: [],
       isSaving: false,
       companies: [],
       company: ""
@@ -49,7 +50,8 @@ class OnboardingCompany extends React.Component {
       ? e.target.checked
       : e.target.value;
     this.setState({
-      [e.target.name]: value
+      [e.target.name]: value,
+      labelUp: this.state.labelUp.concat([e.target.name])
     });
   };
 
@@ -112,26 +114,29 @@ class OnboardingCompany extends React.Component {
     );
 
     return (
-      <div className="slide">
-        <h1>List Your Company</h1>
+      <div className="slide-inner">
+        <h2>List Your Company</h2>
+        <p className="description-text">
+        This information will be listed on your company’s profile. You can update this information and add more  later!
+        </p>
         <div className="onboarding-company-form">
-          <div className={error && error.names.includes("name") ? "pt-form-group pt-intent-danger" : "pt-form-group"}>
-            <label className="pt-label" htmlFor="input-company-name">
-              <span className="pt-icon pt-icon-edit"></span> Company Name <span className="pt-text-muted">(required)</span>
+          <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
+            <label  htmlFor="input-company-name">
+              Company Name *
             </label>
-            <div className="pt-form-content">
-              <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : "pt-input-group"}>
-                <input name="name" onChange={this.handleChange} id="input-company-name" value={name} className="pt-input" placeholder="My Company" type="text" dir="auto" />
+            <div>
+              <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
+                <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
               </div>
               {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
             </div>
           </div>
-          <div className="pt-form-group pt-inline">
-            <label className="pt-label" htmlFor="input-address-country">
-                    Country
+          <div className="labelUp input-wrapper">
+            <label htmlFor="input-address-country">
+              Country Of Origin
             </label>
-            <div className="pt-form-content">
-              <div className="pt-input-group">
+            <div>
+              <div>
                 { countries
                   ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
                   : <span>Loading country list...</span>
@@ -140,9 +145,8 @@ class OnboardingCompany extends React.Component {
             </div>
           </div>
         </div>
-        <button type="button" className={isSaving ? "pt-button pt-intent-success pt-large pt-disabled" : "pt-button pt-intent-success pt-large"} onClick={!isSaving ? this.saveCompany : null}>
-              Create New Company & Continue
-          <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+        <button type="button" onClick={!isSaving ? this.saveCompany : null}>
+              Create Company
         </button>
         {companies.length &&
           <div className="existing-company-container">

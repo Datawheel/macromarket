@@ -39,6 +39,71 @@ ul {
   list-style-type: none;
 }
 
+/* Overlay Background Blur*/
+
+.overlay-bg {
+  & .main-content, & .nav-bar {
+    filter: blur(0px);
+    /* -webkit-transition: .7s -webkit-filter ease-in-out;
+    -moz-transition: .7s  -moz-filter ease-in-out;
+    -moz-transition: .7s   filter ease-in-out;
+    -ms-transition: .7s   -ms-filter ease-in-out;
+    -o-transition: .7s   -o-filter ease-in-out;
+    transition: .7s  filter ease-in-out, .3s -webkit-filter ease-in-out; */
+  }
+  & .onboarding-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
+    transition: opacity 600ms ease-in-out, visibility 600ms;
+  }
+
+
+}
+
+.overlayOpen {
+  /* Override Scrolling*/
+  overflow-y: hidden;
+  position: fixed;
+  width: 100%;
+  /* Background Blur*/
+  & .main-content, & .nav-bar {
+    filter: blur(3px);
+
+  }
+  & .onboarding-wrapper {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
+    transition: opacity 600ms ease-in-out, visibility 600ms;
+  }
+}
+.close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  top: 0px;
+  background-color: #ffffff;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+
 .chevron::before {
   border-style: solid;
   border-width: 0.1em 0.1em 0 0;
@@ -112,7 +177,7 @@ ul {
 }
 
 .visible {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 
 .Select, .Select-control {
@@ -305,23 +370,50 @@ button {
 }
 
 @-moz-keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 
 @-o-keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 
 @keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 
