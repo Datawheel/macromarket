@@ -5,7 +5,8 @@ import api from "../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "../pages/admin/Admin.css";
 import "../pages/admin/Settings.css";
-import TradeEdit from "../pages/admin/TradeEdit";
+import "./OnboardingEditProducts.css";
+import TradeEdit from "./OnboardingTradeEdit";
 import {fetchUnNestedProducts} from "../actions/productsActions";
 import {fetchUnNestedCountries} from "../actions/countriesActions";
 import {updateSlideOverlay} from "../actions/onboardingActions";
@@ -208,7 +209,7 @@ class EditProducts extends React.Component {
     const {auth, products, countries} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
     return (
-      <div>
+      <div className="onboarding-edit-products">
 
         {/*
         <div className="pt-form-group">
@@ -218,12 +219,12 @@ class EditProducts extends React.Component {
         */}
 
         { trades.length
-          ? <table className="pt-table pt-bordered trades">
+          ? <table className="onboarding-edit-products-table">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Export Destinations</th>
-                <th>Import Origins</th>
+                <th>PRODUCT</th>
+                <th>EXPORT DESTINATIONS</th>
+                <th>IMPORT ORIGINS</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
