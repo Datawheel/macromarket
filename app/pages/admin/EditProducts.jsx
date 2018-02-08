@@ -44,6 +44,9 @@ class EditProducts extends React.Component {
             trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
           }
         });
+        if (this.props.onboardingProduct) {
+          trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
+        }
         this.setState({trades});
       });
     }
