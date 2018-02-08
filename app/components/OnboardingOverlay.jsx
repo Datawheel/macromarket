@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
-// import {toggleOverlay, updateSlideOverlay} from "../actions/onboardingActions";
 import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
 import api from "../api";
@@ -24,7 +23,7 @@ class OnboardingOverlay extends React.Component {
   render() {
     const {product, isUserLoggedIn, slideNumber, updateSlideOverlay, toggleOverlay} = this.props;
     return (
-      <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
+      <div className="onboarding-wrapper">
         <div className="onboarding-overlay"></div>
         <OnboardingSlide
           toggleOverlay={toggleOverlay}
