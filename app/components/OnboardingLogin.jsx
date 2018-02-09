@@ -92,7 +92,7 @@ class OnboardingLogin extends Component {
             <label>Password</label>
             <input className="pt-input" value={password} type="password" name="password" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
           </div>
-          <button  type="submit" tabIndex="5">{ t("Login.Login") }</button>
+          <button className="onboarding-button" type="submit" tabIndex="5">{ t("Login.Login") }</button>
         </form>
       </div>
     );
