@@ -1,0 +1,9 @@
+.trade {
+  & input {
+    display: block;
+    width: 100% !important;
+    padding: 10px !important;
+    margin-top: 10px;
+    background-color: #303F4A;
+  }
+}

@@ -1,0 +1,37 @@
+.onboarding-edit-products {
+  & button {
+    background: none;
+  }
+}
+
+.onboarding-edit-products-table {
+  background-color: #25313A;
+  width: 100%;
+  color: #888E93;
+  border-collapse: collapse;
+
+  & thead {
+    & tr {
+      border-bottom: solid #212A31 3px;
+
+      & th {
+        font-weight: 300;
+        padding: 15px;
+        border-right: solid #212A31 3px;
+      }
+    }
+  }
+
+  & tbody {
+    color: #fff;
+
+    & tr {
+      border-bottom: solid #212A31 3px;
+
+      & td {
+        padding: 15px;
+        border-right: solid #212A31 3px;
+      }
+    }
+  }
+}
