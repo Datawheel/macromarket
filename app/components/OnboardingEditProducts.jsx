@@ -30,9 +30,10 @@ class EditProducts extends React.Component {
     this.props.fetchCountries();
     this.props.fetchProducts();
     const {companySlug} = this.props.isOverlay ? this.props : this.props.params;
-    if (companySlug) {
+    const trades = [];
+    if (companySlug && !this.props.isOverlay) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
-        const trades = [];
+
         res.data.forEach(t => {
           const prodRow = trades.find(tt => tt.product.id === t.product_id);
           const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
@@ -45,12 +46,12 @@ class EditProducts extends React.Component {
             trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
           }
         });
-        if (this.props.onboardingProduct) {
-          trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
-        }
-        this.setState({trades});
       });
     }
+    if (this.props.onboardingProduct) {
+      trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
+    }
+    this.setState({trades});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,9 +59,9 @@ class EditProducts extends React.Component {
       this.props.fetchCountries();
       this.props.fetchProducts();
       const {companySlug} = nextProps.isOverlay ? nextProps : nextProps.params;
-      if (companySlug) {
+      const trades = [];
+      if (companySlug && !nextProps.isOverlay) {
         api.get(`/api/trades/company/${companySlug}`).then(res => {
-          const trades = [];
           res.data.forEach(t => {
             const prodRow = trades.find(tt => tt.product.id === t.product_id);
             const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
@@ -73,12 +74,12 @@ class EditProducts extends React.Component {
               trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
             }
           });
-          if (nextProps.onboardingProduct) {
-            trades.push({product: nextProps.onboardingProduct, origins: [], destinations: []});
-          }
-          this.setState({trades});
         });
       }
+      if (nextProps.onboardingProduct) {
+        trades.push({product: nextProps.onboardingProduct, origins: [], destinations: []});
+      }
+      this.setState({trades});
     }
   }
 
