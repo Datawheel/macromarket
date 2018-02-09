@@ -23,7 +23,7 @@ class OnboardingOverlay extends React.Component {
   render() {
     const {product, isUserLoggedIn, slideNumber, updateSlideOverlay, toggleOverlay} = this.props;
     return (
-      <div className="onboarding-wrapper">
+      <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
         <div className="onboarding-overlay"></div>
         <OnboardingSlide
           toggleOverlay={toggleOverlay}

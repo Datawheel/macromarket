@@ -1,4 +1,9 @@
+
 @import "../../Variables";
+ul.pt-menu {
+  height: 150px;
+  max-height: 160px !important;
+}
 .settings, .login, .signup {
   background-image: url("/images/settings-bg.png");
   padding: 60px 0;
