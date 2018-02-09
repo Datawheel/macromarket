@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import OnboardingSlide from "./OnboardingSlide";
-// import {toggleOverlay, updateSlideOverlay} from "../actions/onboardingActions";
 import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
 import api from "../api";
