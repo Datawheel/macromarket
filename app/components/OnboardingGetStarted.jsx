@@ -24,8 +24,8 @@ class OnboardingGetStarted extends React.Component {
         </div>
         {!user && !isSignupFormVisible && !isLoginFormVisible &&
             <div>
-              <button onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
-              <button onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+              <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
+              <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
             </div>
         }
         {isSignupFormVisible &&
@@ -35,10 +35,10 @@ class OnboardingGetStarted extends React.Component {
             <OnboardingLogin/>
         }
         {(isSignupFormVisible || isLoginFormVisible) &&
-            <button onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
+            <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
         }
         {user &&
-            <button onClick={() => updateSlideOverlay(1)}>Get Started</button>
+            <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
         }
 
       </div>

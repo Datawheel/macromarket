@@ -135,7 +135,7 @@ class OnboardingCompany extends React.Component {
               <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select></div>
             </div>
             <div onClick={this.switchToNewCompany}>Create a New Company</div>
-            <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
+            <button className="onboarding-button" type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
                 Continue
             </button>
 
@@ -172,7 +172,7 @@ class OnboardingCompany extends React.Component {
               </div>
             </div>
             {companies.length && <div  onClick={this.switchToNewCompany}> Select an existing Company</div> }
-            <button className="button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
+            <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
                   Create Company
             </button>
           </div>}
