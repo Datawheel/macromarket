@@ -33,7 +33,7 @@ class TradeEdit extends React.Component {
         </td>
         <td className="trade-dest">
           {
-            trade.product && allCountries
+            trade.product && allCountries && trade.destinations
               ? <CountrySelection
                 countries={trade.destinations}
                 allCountries={allCountries}
@@ -44,7 +44,7 @@ class TradeEdit extends React.Component {
         </td>
         <td className="trade-origin">
           {
-            trade.product && allCountries
+            trade.product && allCountries && trade.origins
               ? <CountrySelection
                 countries={trade.origins}
                 allCountries={allCountries}

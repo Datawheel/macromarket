@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
 import {Link, browserHistory} from "react-router";
 import CountrySearch from "../pages/admin/CountrySearch";
-import {fetchUnNestedCountries} from "../actions/countriesActions";
+import {fetchCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 import {Select} from "@blueprintjs/labs";
@@ -31,7 +31,7 @@ class OnboardingCompany extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.fetchUnNestedCountries();
+    this.props.fetchCountries();
 
     const {user} = this.props;
     if (user && user.id) {
@@ -183,13 +183,13 @@ class OnboardingCompany extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  countries: state.countries.countries,
+  countries: state.countries.unnestedCountries,
   user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUnNestedCountries: () => {
-    dispatch(fetchUnNestedCountries());
+    fetchCountries: () => {
+    dispatch(fetchCountries());
   },
   setOnboardingCompany: companyId => {
     dispatch(setOnboardingCompany(companyId));
