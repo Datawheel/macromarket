@@ -23,9 +23,11 @@ class OnboardingCompany extends React.Component {
       country_id: "",
       country: "",
       labelUp: [],
+      addNewCompany: false,
       isSaving: false,
       companies: [],
       company: ""
+
     };
   }
 
@@ -62,7 +64,10 @@ class OnboardingCompany extends React.Component {
       country_id: country.id
     });
   };
+  switchToNewCompany = () => {
+    this.setState({addNewCompany: !this.state.addNewCompany});
 
+  }
   validate = company => {
     const errorNames = [];
     if (!company.name || company.name === "") {
@@ -118,7 +123,7 @@ class OnboardingCompany extends React.Component {
 
     return (
       <div className="slide-inner company-onboarding">
-        {companies.length ?
+        {companies.length && !this.state.addNewCompany ?
           <div className="existing-company-container">
             <h2>Choose an Existing Company</h2>
             <p className="description-text">
@@ -126,11 +131,10 @@ class OnboardingCompany extends React.Component {
             </p>
             <div className="labelUp input-wrapper">
               <label>Company</label>
-      
               <div className="pt-select">
               <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select></div>
             </div>
-            <p>Create a New Company</p>
+            <div onClick={this.switchToNewCompany}>Create a New Company</div>
             <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
                 Continue
             </button>
@@ -167,6 +171,7 @@ class OnboardingCompany extends React.Component {
                 </div>
               </div>
             </div>
+            {companies.length && <div  onClick={this.switchToNewCompany}> Select an existing Company</div> }
             <button className="button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
                   Create Company
             </button>
