@@ -112,7 +112,7 @@ class OnboardingSignUp extends Component {
               <span dangerouslySetInnerHTML={{__html: legal.privacy && legal.terms ? t("SignUp.PrivacyTermsText") : legal.privacy ? t("SignUp.PrivacyText") : t("SignUp.TermsText"), legal}}></span>
             </label>
             : null }
-          <button type="submit" tabIndex="5">{ t("SignUp.Sign Up") }</button>
+          <button className="onboarding-button" type="submit" tabIndex="5">{ t("SignUp.Sign Up") }</button>
         </form>
       </div>
     );
