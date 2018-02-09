@@ -8,7 +8,7 @@ import "../pages/admin/Settings.css";
 import "./OnboardingEditProducts.css";
 import TradeEdit from "./OnboardingTradeEdit";
 import {fetchUnNestedProducts} from "../actions/productsActions";
-import {fetchCountries} from "../actions/countriesActions";
+import {fetchUnNestedCountries} from "../actions/countriesActions";
 import {updateSlideOverlay} from "../actions/onboardingActions";
 
 class EditProducts extends React.Component {
@@ -29,11 +29,10 @@ class EditProducts extends React.Component {
   componentDidMount() {
     this.props.fetchCountries();
     this.props.fetchProducts();
-    const {companySlug} = this.props;
-    const trades = [];
-    if (companySlug && !this.props.isOverlay) {
+    const {companySlug} = this.props.isOverlay ? this.props : this.props.params;
+    if (companySlug) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
-
+        const trades = [];
         res.data.forEach(t => {
           const prodRow = trades.find(tt => tt.product.id === t.product_id);
           const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
@@ -46,22 +45,22 @@ class EditProducts extends React.Component {
             trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
           }
         });
+        if (this.props.onboardingProduct) {
+          trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
+        }
+        this.setState({trades});
       });
     }
-    if (this.props.onboardingProduct) {
-      trades.push({product: this.props.onboardingProduct, origins: [], destinations: []});
-    }
-    this.setState({trades});
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.companySlug !== this.props.companySlug || nextProps.onboardingProduct !== this.props.onboardingProduct) {
       this.props.fetchCountries();
       this.props.fetchProducts();
-      const {companySlug} = nextProps;
-      const trades = [];
-      if (companySlug && !nextProps.isOverlay) {
+      const {companySlug} = nextProps.isOverlay ? nextProps : nextProps.params;
+      if (companySlug) {
         api.get(`/api/trades/company/${companySlug}`).then(res => {
+          const trades = [];
           res.data.forEach(t => {
             const prodRow = trades.find(tt => tt.product.id === t.product_id);
             const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
@@ -74,12 +73,12 @@ class EditProducts extends React.Component {
               trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
             }
           });
+          if (nextProps.onboardingProduct) {
+            trades.push({product: nextProps.onboardingProduct, origins: [], destinations: []});
+          }
+          this.setState({trades});
         });
       }
-      if (nextProps.onboardingProduct) {
-        trades.push({product: nextProps.onboardingProduct, origins: [], destinations: []});
-      }
-      this.setState({trades});
     }
   }
 
@@ -227,7 +226,7 @@ class EditProducts extends React.Component {
                   <th>PRODUCT</th>
                   <th>EXPORT DESTINATIONS</th>
                   <th>IMPORT ORIGINS</th>
-                  <th className="small-table-column">&nbsp;</th>
+                  <th>&nbsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -249,7 +248,7 @@ class EditProducts extends React.Component {
         }
 
         <div>
-          <button type="button" className={newProduct ? "add-product-button add-product-button-disabled" : "add-product-button"} onClick={this.appendProductRow}>
+          <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>
             <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
             Add product
           </button>
@@ -257,8 +256,13 @@ class EditProducts extends React.Component {
         </div>
         <hr />
         <div className="button-group">
-          <button type="button" className="onboarding-button button-right" onClick={this.saveTrades}>
+          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
+            Cancel
+            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
+          </button>
+          <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
             Save
+            <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
           </button>
         </div>
       </div>
@@ -270,7 +274,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchUnNestedProducts());
   },
   fetchCountries: () => {
-    dispatch(fetchCountries());
+    dispatch(fetchUnNestedCountries());
   },
   updateSlideOverlay: slideNumber => {
     dispatch(updateSlideOverlay(slideNumber));
@@ -279,7 +283,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  countries: state.countries.unnestedCountries,
+  countries: state.countries.countries,
   products: state.products.products,
   auth: state.auth,
   isOverlay: state.onboarding.isOverlayOpen
