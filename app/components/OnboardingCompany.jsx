@@ -7,7 +7,7 @@ import {fetchCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 import {Select} from "@blueprintjs/labs";
-import {Classes, MenuItem} from "@blueprintjs/core";
+import {MenuItem, Classes} from "@blueprintjs/core";
 
 async function getCompaniesByUser(userId) {
   const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
@@ -26,7 +26,12 @@ class OnboardingCompany extends React.Component {
       addNewCompany: false,
       isSaving: false,
       companies: [],
+<<<<<<< HEAD
       company: ""
+=======
+      company: null
+
+>>>>>>> styled select dropdown
     };
   }
 
@@ -36,7 +41,7 @@ class OnboardingCompany extends React.Component {
     const {user} = this.props;
     if (user && user.id) {
       const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].slug});
+      this.setState({companies, company: companies && companies.length && companies[0]});
     }
   }
 
@@ -44,7 +49,7 @@ class OnboardingCompany extends React.Component {
     if (nextProps.user && nextProps.user.id && nextProps.user !== this.props.user) {
       const {user} = nextProps;
       const companies = await getCompaniesByUser(user.id);
-      this.setState({companies, company: companies && companies.length && companies[0].slug});
+      this.setState({companies, company: companies && companies.length && companies[0]});
     }
   }
 
@@ -107,9 +112,26 @@ class OnboardingCompany extends React.Component {
 
   selectCompany = () => {
     this.setState({isSaving: true});
-    this.props.setOnboardingCompany(this.state.company);
+    this.props.setOnboardingCompany(this.state.company.slug);
     this.props.updateSlideOverlay(2);
   };
+
+  handleCompanySelect = company => {
+    this.setState({company});
+  }
+
+  renderCompanies = ({handleClick, isActive, item: company}) => {
+    console.log(company, "herer");
+    return (
+      <MenuItem
+        className={isActive ? Classes.ACTIVE : ""}
+        key={company.name}
+        onClick={handleClick}
+        text={company.name}
+        shouldDismissPopover={false}
+      />
+    );
+  }
 
 
   render() {
@@ -121,6 +143,7 @@ class OnboardingCompany extends React.Component {
     );
 
     return (
+
       <div className="slide-inner company-onboarding">
         {companies.length && !this.state.addNewCompany ?
           <div className="existing-company-container">
@@ -128,13 +151,20 @@ class OnboardingCompany extends React.Component {
             <p className="description-text">
               Select one of your companies to be listed under product.
             </p>
-            <div className="labelUp input-wrapper">
-              <label>Company</label>
-              <div className="pt-select">
-              <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select></div>
-            </div>
+            <Select filterable={false} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
+              <div className="labelUp input-wrapper">
+                <label>Company</label>
+                <input value={this.state.company && this.state.company.name }/>
+              </div>
+            </Select>
+
+
             <div onClick={this.switchToNewCompany}>Create a New Company</div>
+<<<<<<< HEAD
             <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
+=======
+            <button className="onboarding-button" type="button" className="onboarding-button button-right" onClick={!isSaving ? this.selectCompany : null}>
+>>>>>>> styled select dropdown
                 Continue
             </button>
 
