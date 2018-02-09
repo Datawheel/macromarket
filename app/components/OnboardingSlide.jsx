@@ -7,13 +7,10 @@ import OnboardingCompany from "./OnboardingCompany";
 class OnboardingSlide extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
-  componentDidMount() {}
 
   render() {
-    console.log(this.props.slideNumber);
     return (
       <div className="slider-wrapper">
         <div className="tabs">
@@ -27,9 +24,11 @@ class OnboardingSlide extends React.Component {
         <button className="close" onClick={this.props.toggleOverlay}></button>
         <div className={`slide-container slide-container-${this.props.slideNumber}`}>
           <div className="slide slide-0">
+            <div className="logo-wrapper">
+              <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
+              <img src="/images/icons/logos/orange-market-logo.svg"></img>
+            </div>
             <OnboardingGetStarted product={this.props.product}/>
-            <button onClick={this.props.updateSlideOverlay.bind(this, 1)}>Next Slide</button>
-
           </div>
           <div className="slide slide-1" >
             <OnboardingCompany/>

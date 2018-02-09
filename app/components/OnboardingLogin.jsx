@@ -11,6 +11,7 @@ class OnboardingLogin extends Component {
     this.state = {
       password: "",
       email: "",
+      labelUp: [],
       submitted: false,
       toast: typeof window !== "undefined" ? Toaster.create() : null
     };
@@ -18,7 +19,17 @@ class OnboardingLogin extends Component {
   }
 
   onChange(e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({
+      [e.target.name]: e.target.value,
+      labelUp: this.state.labelUp.concat([e.target.name])
+    });
+  }
+  onBlur(e) {
+    console.log(this.state);
+    if (e.target.value === "") {
+      const index = this.state.labelUp.indexOf(e.target.name);
+      this.setState({labelUp: this.state.labelUp.filter((_, i) => i !== index)})
+    }
   }
 
   onSubmit(e) {
@@ -73,15 +84,15 @@ class OnboardingLogin extends Component {
     return (
       <div>
         <form id="login" onSubmit={this.onSubmit.bind(this)} className="login-container">
-          <div className="pt-input-group">
-            <span className="pt-icon pt-icon-envelope"></span>
-            <input className="pt-input" placeholder={ t("Login.E-mail") } value={email} type="email" name="email" onChange={this.onChange} tabIndex="1" />
+          <div className={this.state.labelUp.includes("email") ? "input-wrapper labelUp" : "input-wrapper" }>
+            <label>Email</label>
+            <input className="pt-input" value={email} type="email" name="email" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} tabIndex="1" />
           </div>
-          <div className="pt-input-group">
-            <span className="pt-icon pt-icon-lock"></span>
-            <input className="pt-input" placeholder={ t("Login.Password") } value={password} type="password" name="password" onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
+          <div className={this.state.labelUp.includes("password") ? "input-wrapper labelUp" : "input-wrapper" }>
+            <label>Password</label>
+            <input className="pt-input" value={password} type="password" name="password" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
           </div>
-          <button className="pt-button pt-fill" type="submit" tabIndex="5">{ t("Login.Login") }</button>
+          <button className="onboarding-button" type="submit" tabIndex="5">{ t("Login.Login") }</button>
         </form>
       </div>
     );
