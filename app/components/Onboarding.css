@@ -19,7 +19,6 @@ ul.pt-menu {
     opacity: .6;
     line-height: 1.5em;
   }
-  /* Please make a class for this
   & p, & h2 {
     color: white;
   }
@@ -57,15 +56,16 @@ ul.pt-menu {
       }
     }
   }
-  & button {
-    background: var(--accent-color);
-    border: none;
-    border-radius: 0px;
-    height: 48px;
-    box-shadow: none;
-    outline: none;
-  }
-  */
+  /* Let's make a class for this
+& button {
+  background: var(--accent-color);
+  border: none;
+  border-radius: 0px;
+  height: 48px;
+  box-shadow: none;
+  outline: none;
+}
+*/
   & input:focus {
     box-shadow: none !important;
     outline: none !important;
