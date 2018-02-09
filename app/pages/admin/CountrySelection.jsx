@@ -74,7 +74,7 @@ class CountrySelection extends React.Component {
     const {countries} = this.state;
     return (
       <MultiSelect
-        items={allCountries.sort((a, b) => a.name.localeCompare(b.name))}
+        items={allCountries.sort((a, b) => a.name && a.name.localeCompare(b.name))}
         itemRenderer={this.renderCountry}
         itemPredicate={this.filterCountry}
         noResults={<MenuItem disabled text="No results." />}
