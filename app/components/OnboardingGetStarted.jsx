@@ -20,7 +20,7 @@ class OnboardingGetStarted extends React.Component {
     return (
       <div className="slide">
         <div className="product-wrapper">
-          <p>Interested in being listed under {this.props.product} ?</p>
+          <p>Interested in being listed under {this.props.product.name} ?</p>
         </div>
         {!user && !isSignupFormVisible && !isLoginFormVisible &&
             <div>
