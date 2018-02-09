@@ -226,7 +226,7 @@ class EditProducts extends React.Component {
                   <th>PRODUCT</th>
                   <th>EXPORT DESTINATIONS</th>
                   <th>IMPORT ORIGINS</th>
-                  <th>&nbsp;</th>
+                  <th className="small-table-column">&nbsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -248,7 +248,7 @@ class EditProducts extends React.Component {
         }
 
         <div>
-          <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>
+          <button type="button" className={newProduct ? "add-product-button add-product-button-disabled" : "add-product-button"} onClick={this.appendProductRow}>
             <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
             Add product
           </button>
@@ -256,13 +256,8 @@ class EditProducts extends React.Component {
         </div>
         <hr />
         <div className="button-group">
-          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
-            Cancel
-            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
-          </button>
-          <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
+          <button type="button" className="onboarding-button button-right" onClick={this.saveTrades}>
             Save
-            <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
           </button>
         </div>
       </div>
