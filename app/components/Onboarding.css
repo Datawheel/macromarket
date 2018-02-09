@@ -1,9 +1,11 @@
 @import "../Variables";
 /* Onboarding Wrapper*/
+
 ul.pt-menu {
   height: 150px;
   max-height: 160px !important;
 }
+
 .onboarding-wrapper {
   position: absolute;
   z-index: 100;
@@ -56,16 +58,24 @@ ul.pt-menu {
       }
     }
   }
-  /* Let's make a class for this
-& button {
-  background: var(--accent-color);
-  border: none;
-  border-radius: 0px;
-  height: 48px;
-  box-shadow: none;
-  outline: none;
-}
-*/
+  /* Get Started Logo */
+  & .logo-wrapper {
+    margin-bottom: 20px;
+    text-align: center;
+    & .mm-logo {
+      display: block;
+      margin: 0 auto;
+      padding-bottom: 8px;
+    }
+  }
+  & onboarding-button {
+    background: var(--accent-color);
+    border: none;
+    border-radius: 0px;
+    height: 48px;
+    box-shadow: none;
+    outline: none;
+  }
   & input:focus {
     box-shadow: none !important;
     outline: none !important;
