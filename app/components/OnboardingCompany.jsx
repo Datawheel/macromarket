@@ -6,6 +6,8 @@ import CountrySearch from "../pages/admin/CountrySearch";
 import {fetchUnNestedCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
+import {Select} from "@blueprintjs/labs";
+import {Classes, MenuItem} from "@blueprintjs/core";
 
 async function getCompaniesByUser(userId) {
   const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
@@ -105,6 +107,7 @@ class OnboardingCompany extends React.Component {
     this.props.updateSlideOverlay(2);
   };
 
+
   render() {
     const {countries} = this.props;
     const {isSaving, error, country, name, companies} = this.state;
@@ -123,7 +126,9 @@ class OnboardingCompany extends React.Component {
             </p>
             <div className="labelUp input-wrapper">
               <label>Company</label>
-              <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select>
+      
+              <div className="pt-select">
+              <select name="company" value={this.state.company} onChange={this.handleChange}>{companiesOptions}</select></div>
             </div>
             <p>Create a New Company</p>
             <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
