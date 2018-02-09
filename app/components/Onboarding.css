@@ -227,12 +227,12 @@ select:-webkit-autofill:focus {
 /* Slide  */
 
 .slide-2 {
-  width: 800px;
+  width: 900px;
 }
 
 .onboarding-wrapper-2 {
   & .slider-wrapper {
-    width: 800px;
+    width: 900px;
   }
   /* Slide Left */
   & .slide-container-2 {
