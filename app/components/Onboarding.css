@@ -5,19 +5,13 @@ ul.pt-menu {
   height: 150px;
   max-height: 160px !important;
 }
+.pt-popover {
+  width: 300px;
+}
 
 /* Change Autocomplete styles in Chrome*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
 
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
   -webkit-text-fill-color: white;
   box-shadow: 0 0 0px 1000px #000 inset;
   transition: background-color 5000s ease-in-out 0s;
@@ -89,6 +83,7 @@ select:-webkit-autofill:focus {
     box-shadow: none;
     outline: none;
     width: 100%;
+    margin: 3px 0px;
   }
   & input:focus {
     box-shadow: none !important;
@@ -147,6 +142,7 @@ select:-webkit-autofill:focus {
     /* Width Transition */
     transition: .2s width ease-in-out;
     /* Design */
+    box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.1);
     background: rgba(36, 47, 56, .75);
   }
   & .close {
@@ -249,5 +245,10 @@ select:-webkit-autofill:focus {
   }
   & .pt-popover-target {
     width: 100%;
+  }
+  & .existing-company-select {
+    display: block;
+    margin: 20px auto 40px;
+
   }
 }
