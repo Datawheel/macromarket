@@ -19,6 +19,7 @@ ul.pt-menu {
     opacity: .6;
     line-height: 1.5em;
   }
+  /* Please make a class for this
   & p, & h2 {
     color: white;
   }
@@ -64,6 +65,7 @@ ul.pt-menu {
     box-shadow: none;
     outline: none;
   }
+  */
   & input:focus {
     box-shadow: none !important;
     outline: none !important;
@@ -169,10 +171,12 @@ ul.pt-menu {
         width: 80%;
         margin: 0 auto;
       }
+      /* Add to class to apply to buttons
       & button {
         width: 100%;
         margin: 2px 0px;
       }
+      */
       & .button-right {
         width: 25%;
         position: absolute;
