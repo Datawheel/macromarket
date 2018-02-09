@@ -6,6 +6,7 @@ ul.pt-menu {
   max-height: 160px !important;
 }
 
+
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -81,7 +82,7 @@ select:-webkit-autofill:focus {
       padding-bottom: 8px;
     }
   }
-  & .onboarding-button {
+  & onboarding-button {
     background: var(--accent-color);
     border: none;
     border-radius: 0px;
