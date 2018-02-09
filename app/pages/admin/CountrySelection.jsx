@@ -79,7 +79,7 @@ class CountrySelection extends React.Component {
         itemPredicate={this.filterCountry}
         noResults={<MenuItem disabled text="No results." />}
         onItemSelect={this.handleCountrySelect}
-        tagInputProps={{tagProps: a => ({className: a.props.className}), onRemove: this.deleteTag, placeholder: "Add a country"}}
+        tagInputProps={{tagProps: a => ({className: a.props.className}), onRemove: this.deleteTag, placeholder: "Add a country", inputProps: {placeholder: "Add a country"}}}
         tagRenderer={this.renderTag}
         selectedItems={countries}
         resetOnClose={true}
