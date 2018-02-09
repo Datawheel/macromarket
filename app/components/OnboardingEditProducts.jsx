@@ -8,7 +8,7 @@ import "../pages/admin/Settings.css";
 import "./OnboardingEditProducts.css";
 import TradeEdit from "./OnboardingTradeEdit";
 import {fetchUnNestedProducts} from "../actions/productsActions";
-import {fetchUnNestedCountries} from "../actions/countriesActions";
+import {fetchCountries} from "../actions/countriesActions";
 import {updateSlideOverlay} from "../actions/onboardingActions";
 
 class EditProducts extends React.Component {
@@ -29,7 +29,7 @@ class EditProducts extends React.Component {
   componentDidMount() {
     this.props.fetchCountries();
     this.props.fetchProducts();
-    const {companySlug} = this.props.isOverlay ? this.props : this.props.params;
+    const {companySlug} = this.props;
     const trades = [];
     if (companySlug && !this.props.isOverlay) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
@@ -58,7 +58,7 @@ class EditProducts extends React.Component {
     if (nextProps.companySlug !== this.props.companySlug || nextProps.onboardingProduct !== this.props.onboardingProduct) {
       this.props.fetchCountries();
       this.props.fetchProducts();
-      const {companySlug} = nextProps.isOverlay ? nextProps : nextProps.params;
+      const {companySlug} = nextProps;
       const trades = [];
       if (companySlug && !nextProps.isOverlay) {
         api.get(`/api/trades/company/${companySlug}`).then(res => {
@@ -270,7 +270,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchUnNestedProducts());
   },
   fetchCountries: () => {
-    dispatch(fetchUnNestedCountries());
+    dispatch(fetchCountries());
   },
   updateSlideOverlay: slideNumber => {
     dispatch(updateSlideOverlay(slideNumber));
@@ -279,7 +279,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  countries: state.countries.countries,
+  countries: state.countries.unnestedCountries,
   products: state.products.products,
   auth: state.auth,
   isOverlay: state.onboarding.isOverlayOpen

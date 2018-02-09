@@ -14,10 +14,12 @@ async function getProduct(productId) {
 class OnboardingOverlay extends React.Component {
 
   async componentWillMount() {
-    const {productId} = this.props.query;
-    if (productId) {
-      const product = await getProduct(productId);
-      this.props.setOnboardingProduct(product);
+    if (this.props.product) {
+      const {id} = this.props.product;
+      if (id) {
+        const product = await getProduct(id);
+        this.props.setOnboardingProduct(product);
+      }
     }
   }
 
