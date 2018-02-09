@@ -15,13 +15,15 @@ class OnboardingGetStarted extends React.Component {
 
   render() {
     const {isSignupFormVisible, isLoginFormVisible} = this.state;
-    const {user, updateSlideOverlay} = this.props;
+    const {user, updateSlideOverlay, product} = this.props;
 
     return (
       <div className="slide-inner">
-        <div className="product-wrapper">
-          <p>Interested in being listed under {this.props.product.name} ?</p>
-        </div>
+        {product &&
+              <div className="product-wrapper">
+                <p>Interested in being listed under {product.name} ?</p>
+              </div>
+        }
         {!user && !isSignupFormVisible && !isLoginFormVisible &&
             <div>
               <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
