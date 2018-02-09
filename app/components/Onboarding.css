@@ -81,7 +81,7 @@ select:-webkit-autofill:focus {
       padding-bottom: 8px;
     }
   }
-  & .onboarding-button {
+  & onboarding-button {
     background: var(--accent-color);
     border: none;
     border-radius: 0px;
@@ -176,12 +176,6 @@ select:-webkit-autofill:focus {
         width: 80%;
         margin: 0 auto;
       }
-      /* Add to class to apply to buttons
-      & button {
-        width: 100%;
-        margin: 2px 0px;
-      }
-      */
       & .button-right {
         width: 25%;
         position: absolute;
@@ -227,12 +221,12 @@ select:-webkit-autofill:focus {
 /* Slide  */
 
 .slide-2 {
-  width: 800px;
+  width: 900px;
 }
 
 .onboarding-wrapper-2 {
   & .slider-wrapper {
-    width: 800px;
+    width: 900px;
   }
   /* Slide Left */
   & .slide-container-2 {

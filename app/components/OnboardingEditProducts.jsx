@@ -219,34 +219,36 @@ class EditProducts extends React.Component {
         */}
 
         { trades.length
-          ? <table className="onboarding-edit-products-table">
-            <thead>
-              <tr>
-                <th>PRODUCT</th>
-                <th>EXPORT DESTINATIONS</th>
-                <th>IMPORT ORIGINS</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {trades.map((trade, i) =>
-                <TradeEdit
-                  key={i}
-                  trade={trade}
-                  countries={countries}
-                  selectProduct={this.addProduct}
-                  selectDestinations={this.addDestinations}
-                  selectOrigins={this.addOrigins}
-                  deleteProduct={this.deleteProduct}
-                />
-              )}
-            </tbody>
-          </table>
+          ? <div className="onboarding-edit-products-table-container">
+            <table className="onboarding-edit-products-table">
+              <thead>
+                <tr>
+                  <th>PRODUCT</th>
+                  <th>EXPORT DESTINATIONS</th>
+                  <th>IMPORT ORIGINS</th>
+                  <th className="small-table-column">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {trades.map((trade, i) =>
+                  <TradeEdit
+                    key={i}
+                    trade={trade}
+                    countries={countries}
+                    selectProduct={this.addProduct}
+                    selectDestinations={this.addDestinations}
+                    selectOrigins={this.addOrigins}
+                    deleteProduct={this.deleteProduct}
+                  />
+                )}
+              </tbody>
+            </table>
+          </div>
           : null
         }
 
         <div>
-          <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>
+          <button type="button" className={newProduct ? "add-product-button add-product-button-disabled" : "add-product-button"} onClick={this.appendProductRow}>
             <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
             Add product
           </button>
@@ -254,13 +256,8 @@ class EditProducts extends React.Component {
         </div>
         <hr />
         <div className="button-group">
-          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
-            Cancel
-            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
-          </button>
-          <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
+          <button type="button" className="onboarding-button button-right" onClick={this.saveTrades}>
             Save
-            <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
           </button>
         </div>
       </div>
