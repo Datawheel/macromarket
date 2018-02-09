@@ -176,12 +176,6 @@ select:-webkit-autofill:focus {
         width: 80%;
         margin: 0 auto;
       }
-      /* Add to class to apply to buttons
-      & button {
-        width: 100%;
-        margin: 2px 0px;
-      }
-      */
       & .button-right {
         width: 25%;
         position: absolute;
