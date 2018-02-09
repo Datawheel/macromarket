@@ -7,7 +7,7 @@ import "./Admin.css";
 import "./Settings.css";
 import TradeEdit from "./TradeEdit";
 import {fetchUnNestedProducts} from "../../actions/productsActions";
-import {fetchUnNestedCountries} from "../../actions/countriesActions";
+import {fetchCountries} from "../../actions/countriesActions";
 import {updateSlideOverlay} from "../../actions/onboardingActions";
 
 class EditProducts extends React.Component {
@@ -242,7 +242,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchUnNestedProducts());
   },
   fetchCountries: () => {
-    dispatch(fetchUnNestedCountries());
+    dispatch(fetchCountries());
   },
   updateSlideOverlay: slideNumber => {
     dispatch(updateSlideOverlay(slideNumber));
@@ -251,7 +251,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  countries: state.countries.countries,
+  countries: state.countries.unnestedCountries,
   products: state.products.products,
   auth: state.auth,
   isOverlay: state.onboarding.isOverlayOpen
