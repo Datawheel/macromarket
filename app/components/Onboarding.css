@@ -81,7 +81,7 @@ select:-webkit-autofill:focus {
       padding-bottom: 8px;
     }
   }
-  & onboarding-button {
+  & .onboarding-button {
     background: var(--accent-color);
     border: none;
     border-radius: 0px;
