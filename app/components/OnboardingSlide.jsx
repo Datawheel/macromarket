@@ -4,6 +4,7 @@ import OnboardingProducts from "./OnboardingProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
 import OnboardingCompany from "./OnboardingCompany";
 import OnboardingSuccess from "./OnboardingSuccess";
+import {updateSlideOverlay} from "../actions/onboardingActions";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
@@ -15,9 +16,9 @@ class OnboardingSlide extends React.Component {
     return (
       <div className="slider-wrapper">
         <div className={this.props.slideNumber > 0 && this.props.slideNumber < 3 ? "tabs" : "tabs hidden"}>
-          <div className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
+          <div onClick={this.props.updateSlideOverlay.bind(this, 1)} className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
           </div>
-          <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
+          <div  className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
           </div>
           <div className={`line line-${this.props.slideNumber}`}></div>
         </div>
@@ -45,7 +46,11 @@ class OnboardingSlide extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  updateSlideOverlay: slideNumber => {
+    dispatch(updateSlideOverlay(slideNumber));
+  }
+});
 
 const mapStateToProps = state => ({products: state.data.products, user: state.auth.user});
 

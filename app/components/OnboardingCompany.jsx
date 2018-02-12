@@ -63,8 +63,17 @@ class OnboardingCompany extends React.Component {
       country_id: country.id
     });
   };
-  switchToNewCompany = () => {
-    this.setState({addNewCompany: !this.state.addNewCompany});
+
+  toggleNewCompany = () => {
+    if (this.state.addNewCompany) {
+      const {user} = this.props;
+      api.get(`api/companies/byUser/${user.id}`).then(companiesResponse => {
+        const companies = companiesResponse.data
+        this.setState({companies, company: companies && companies.length && companies[0]});
+      });
+    }
+
+    this.setState({name: "", labelUp: [], addNewCompany: !this.state.addNewCompany});
   };
 
   validate = company => {
@@ -97,7 +106,10 @@ class OnboardingCompany extends React.Component {
         this.setState({isSaving: false});
         const companySlug = companyResponse.data.slug;
         this.props.setOnboardingCompany(companySlug);
+        this.toggleNewCompany();
+
         this.props.updateSlideOverlay(2);
+
       })
         .catch(error => {
           console.log(error);
@@ -106,7 +118,6 @@ class OnboardingCompany extends React.Component {
   };
 
   selectCompany = () => {
-    this.setState({isSaving: true});
     this.props.setOnboardingCompany(this.state.company.slug);
     this.props.updateSlideOverlay(2);
   };
@@ -116,7 +127,6 @@ class OnboardingCompany extends React.Component {
   }
 
   renderCompanies = ({handleClick, isActive, item: company}) => {
-    console.log(company, "herer");
     return (
       <MenuItem
         className={isActive ? Classes.ACTIVE : ""}
@@ -153,7 +163,7 @@ class OnboardingCompany extends React.Component {
                 <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
               </div>
             </Select>
-            <div className="description-text"onClick={this.switchToNewCompany}>Create a New Company</div>
+            <div className="description-text"onClick={this.toggleNewCompany}>Create a New Company</div>
             <button className="onboarding-button" type="button" className="onboarding-button button-right" onClick={!isSaving ? this.selectCompany : null}>
                 Continue
             </button>
@@ -191,7 +201,7 @@ class OnboardingCompany extends React.Component {
                 <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
               </div>
             </div>
-            {companies.length > 0&& <div onClick={this.switchToNewCompany}> Select an existing Company</div> }
+            {companies.length > 0 ? <div className="description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
             <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
                   Create Company
             </button>
