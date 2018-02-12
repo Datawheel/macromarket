@@ -45,13 +45,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   }
   & .tabs {
     display: flex;
-    margin: 20px 8% 35px;
+    margin: 20px 8% 40px;
     width: 30%;
     position: relative;
     & .tab {
       opacity: .5;
       margin: 15px 0px 10px;
-      padding: 0px 4px;
+      padding: 0px 5px;
       width: 50%;
       & p {
         font-size: 14px;
@@ -165,6 +165,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     background: none;
     border: none;
     outline: none;
+    cursor: pointer;
     /* Absolute Postioning */
     top: 15px;
     right: 15px;
@@ -181,7 +182,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       position: relative;
       vertical-align: top;
       display: inline-block;
-      min-height: 300px;
+      min-height: 330px;
       color: white;
       & .slide-inner {
         width: 84%;
