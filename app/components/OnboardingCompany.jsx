@@ -26,12 +26,7 @@ class OnboardingCompany extends React.Component {
       addNewCompany: false,
       isSaving: false,
       companies: [],
-<<<<<<< HEAD
-      company: ""
-=======
       company: null
-
->>>>>>> styled select dropdown
     };
   }
 
@@ -155,16 +150,11 @@ class OnboardingCompany extends React.Component {
               <div className="labelUp input-wrapper">
                 <label>Company</label>
                 <input value={this.state.company && this.state.company.name }/>
+                <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
               </div>
             </Select>
-
-
-            <div onClick={this.switchToNewCompany}>Create a New Company</div>
-<<<<<<< HEAD
-            <button type="button" className="button-right" onClick={!isSaving ? this.selectCompany : null}>
-=======
+            <div className="description-text"onClick={this.switchToNewCompany}>Create a New Company</div>
             <button className="onboarding-button" type="button" className="onboarding-button button-right" onClick={!isSaving ? this.selectCompany : null}>
->>>>>>> styled select dropdown
                 Continue
             </button>
 
@@ -198,9 +188,10 @@ class OnboardingCompany extends React.Component {
                     }
                   </div>
                 </div>
+                <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
               </div>
             </div>
-            {companies.length && <div  onClick={this.switchToNewCompany}> Select an existing Company</div> }
+            {companies.length > 0&& <div onClick={this.switchToNewCompany}> Select an existing Company</div> }
             <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
                   Create Company
             </button>

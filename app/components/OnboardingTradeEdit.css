@@ -5,5 +5,15 @@
     padding: 10px !important;
     margin-top: 10px;
     background-color: #303F4A;
+    color:white;
   }
+
+    & input::placeholder {
+      color:white;
+      opacity: .7;
+    }
+
+    & .trade-product {
+
+    }
 }

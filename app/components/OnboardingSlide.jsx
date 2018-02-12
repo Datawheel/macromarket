@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import OnboardingProducts from "./OnboardingProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
 import OnboardingCompany from "./OnboardingCompany";
+import OnboardingSuccess from "./OnboardingSuccess";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
@@ -13,13 +14,12 @@ class OnboardingSlide extends React.Component {
   render() {
     return (
       <div className="slider-wrapper">
-        <div className="tabs">
+        <div className={this.props.slideNumber > 0 && this.props.slideNumber < 3 ? "tabs" : "tabs hidden"}>
           <div className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
-            <div className="line"></div>
           </div>
           <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
-            <div className="line"></div>
           </div>
+          <div className={`line line-${this.props.slideNumber}`}></div>
         </div>
         <button className="close" onClick={this.props.toggleOverlay}></button>
         <div className={`slide-container slide-container-${this.props.slideNumber}`}>
@@ -35,6 +35,9 @@ class OnboardingSlide extends React.Component {
           </div>
           <div className="slide slide-2">
             <OnboardingProducts/>
+          </div>
+          <div className="slide slide-3">
+            <OnboardingSuccess/>
           </div>
         </div>
       </div>
