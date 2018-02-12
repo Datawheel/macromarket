@@ -68,7 +68,8 @@ ul {
   width: 100%;
   /* Background Blur*/
   & .main-content, & .nav-bar {
-    filter: blur(3px);
+    filter: blur(4px) brightness(.8);
+    
 
   }
   & .onboarding-wrapper {

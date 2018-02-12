@@ -210,7 +210,7 @@ class EditProducts extends React.Component {
     const {auth, products, countries} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
     return (
-      <div className="onboarding-edit-products">
+      <div className="slide-inner onboarding-edit-products">
 
         {/*
         <div className="pt-form-group">
@@ -248,7 +248,7 @@ class EditProducts extends React.Component {
           : null
         }
 
-        <div>
+        <div className="picker-wrapper">
           <button type="button" className={newProduct ? "add-product-button add-product-button-disabled" : "add-product-button"} onClick={this.appendProductRow}>
             <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
             Add product

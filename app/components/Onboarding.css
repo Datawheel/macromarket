@@ -5,6 +5,7 @@ ul.pt-menu {
   height: 150px;
   max-height: 160px !important;
 }
+
 .pt-popover {
   width: 300px;
 }
@@ -39,15 +40,21 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     height: 150px;
     max-height: 160px !important;
   }
+  & .hidden.tabs {
+    visibility: hidden;
+  }
   & .tabs {
     display: flex;
-    margin: 20px 10% 0px;
+    margin: 20px 8% 35px;
+    width: 30%;
+    position: relative;
     & .tab {
-      margin: 20px;
       opacity: .5;
+      margin: 15px 0px 10px;
+      padding: 0px 4px;
+      width: 50%;
       & p {
         font-size: 14px;
-        padding: 0px 5px;
         color: white;
         margin-bottom: 5px;
         text-transform: uppercase;
@@ -58,11 +65,19 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     }
     & .tab.active {
       opacity: 1;
-      & .line {
-        width: 100%;
-        height: 2px;
-        background: var(--accent-color);
-      }
+    }
+    & .line {
+      width: 32%;
+      left: 0px;
+      transition: .2s left ease-in-out;
+      position: absolute;
+      bottom: 0px;
+      height: 2px;
+      background: var(--accent-color);
+    }
+    /* Tab Line Animation */
+    & .line-2 {
+      left: 50%;
     }
   }
   /* Get Started Logo */
@@ -135,15 +150,15 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     /* Positioning Slide Above Overlay */
     position: relative;
     z-index: 101;
-    margin: 10% auto;
-    height: 500px;
+    margin: 8% auto;
+    height: 550px;
     width: 600px;
     overflow: hidden;
     /* Width Transition */
     transition: .2s width ease-in-out;
     /* Design */
     box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.1);
-    background: rgba(36, 47, 56, .75);
+    background: rgb(34, 45, 54, .75)
   }
   & .close {
     /* Button Overrides */
@@ -156,7 +171,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     opacity: .5;
   }
   & .slide-container {
-    width: 3000px;
+    width: 4000px;
     margin: 20px 0px;
     /* Left Transition */
     left: 0px;
@@ -169,13 +184,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       min-height: 300px;
       color: white;
       & .slide-inner {
-        width: 80%;
+        width: 84%;
         margin: 0 auto;
       }
       & .button-right {
-        width: 25%;
+        width: 165px;
         position: absolute;
-        right: 10%;
+        right: 8%;
         bottom: 0px;
       }
     }
@@ -230,6 +245,22 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   }
 }
 
+/* Slide  */
+
+.slide-3 {
+  width: 500px;
+}
+
+.onboarding-wrapper-3 {
+  & .slider-wrapper {
+    width: 500px;
+  }
+  /* Slide Left */
+  & .slide-container-3 {
+    left: -2200px;
+  }
+}
+
 /* Slide Specific Styles*/
 
 .company-onboarding {
@@ -239,6 +270,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   }
   & .input-wrapper {
     width: 100%;
+    & .pt-icon-standard {
+      position: absolute;
+      font-size: 24px;
+      right: 12px;
+      top: 18px;
+      opacity: .7;
+    }
   }
   & .input-wrapper:first-child {
     margin-right: 4px;
@@ -249,6 +287,5 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   & .existing-company-select {
     display: block;
     margin: 20px auto 40px;
-
   }
 }
