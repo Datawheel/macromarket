@@ -2,10 +2,12 @@ import React from "react";
 import {connect} from "react-redux";
 import {Activate as CanonActivate} from "datawheel-canon";
 import {NonIdealState} from "@blueprintjs/core";
-
+import {isAuthenticated} from "datawheel-canon";
 class OnboardingSuccess extends React.Component {
 
-
+  componentDidMount() {
+    this.props.isAuthenticated();
+  }
   render() {
     const user = this.props.auth ? this.props.auth.user : null;
 
@@ -15,12 +17,12 @@ class OnboardingSuccess extends React.Component {
         <p className="description-text">
           Select one of your companies to be listed under product.
         </p>
-        {user && user.activated !== undefined ?
-          <div>
+        {user && user.activated !== undefined
+          ? <div>
             <div className="title-wrapper">Verify Email</div>
             <CanonActivate />
           </div>
-        : null}
+          : null}
       </div>
     );
   }
@@ -31,6 +33,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  isAuthenticated: () => {
+    dispatch(isAuthenticated());
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingSuccess);
