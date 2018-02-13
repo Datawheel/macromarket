@@ -29,7 +29,12 @@ class EditProducts extends React.Component {
   componentDidMount() {
     this.props.fetchCountries();
     this.props.fetchProducts();
+<<<<<<< HEAD
     const {companySlug} = this.props;
+=======
+    console.log(this.props.isOverlay, this.props, this.props.params);
+    const {companySlug} = this.props.isOverlay ? this.props : {companySlug: null};
+>>>>>>> sucess form and edit products bug
     const trades = [];
     if (companySlug && !this.props.isOverlay) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {

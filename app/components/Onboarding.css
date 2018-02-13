@@ -27,6 +27,26 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   & #login, & #signup {
     margin: 0px
   }
+  & .pt-callout.pt-intent-danger {
+    background: #303F4A;
+    padding: 20px 0px;
+  }
+  & .pt-button.pt-intent-danger {
+    box-shadow: none;
+    background-image: none;
+    background: var(--red);
+    height: 48px;
+    border-radius: 0;
+    display: block;
+    margin: 0 auto;
+  }
+  .pt-callout.pt-intent-danger h5 {
+    color: white;
+    font-weight: 300;
+    font-size: 13px;
+    text-align: center;
+    padding-bottom: 15px;
+  }
   /* Generic Styles */
   & .description-text {
     font-size: 13px;
@@ -165,7 +185,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     background: none;
     border: none;
     outline: none;
-    cursor: pointer;
     /* Absolute Postioning */
     top: 15px;
     right: 15px;
@@ -191,7 +210,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       & .button-right {
         width: 165px;
         position: absolute;
-        right: 8%;
+        right: 0;
         bottom: 0px;
       }
     }
@@ -259,34 +278,5 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   /* Slide Left */
   & .slide-container-3 {
     left: -2200px;
-  }
-}
-
-/* Slide Specific Styles*/
-
-.company-onboarding {
-  & .onboarding-company-form {
-    display: flex;
-    margin: 25px 0px;
-  }
-  & .input-wrapper {
-    width: 100%;
-    & .pt-icon-standard {
-      position: absolute;
-      font-size: 24px;
-      right: 12px;
-      top: 18px;
-      opacity: .7;
-    }
-  }
-  & .input-wrapper:first-child {
-    margin-right: 4px;
-  }
-  & .pt-popover-target {
-    width: 100%;
-  }
-  & .existing-company-select {
-    display: block;
-    margin: 20px auto 40px;
   }
 }

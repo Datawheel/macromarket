@@ -4,21 +4,71 @@ import OnboardingProducts from "./OnboardingProducts";
 import OnboardingGetStarted from "./OnboardingGetStarted";
 import OnboardingCompany from "./OnboardingCompany";
 import OnboardingSuccess from "./OnboardingSuccess";
-import {updateSlideOverlay} from "../actions/onboardingActions";
+import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
+import {Intent, Position,  Toaster} from "@blueprintjs/core";
+import api from "../api";
 
 class OnboardingSlide extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      addNewCompany: true,
+      company: null
+    }
   }
 
+  // updateCompanySlideOverlay = () => {
+  //
+  //   if (this.state.addNewCompany) {
+  //
+  //   }
+  //   else {
+  //     this.props.updateSlideOverlay.bind(this, 2)
+  //   }
+  // }
+
+  validate = company => {
+    const errorNames = [];
+    if (!company.name || company.name === "") {
+      errorNames.push("name");
+    }
+    if (errorNames.length) {
+      this.setState({error: {names: errorNames}, isSaving: false});
+      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
+      return false;
+    }
+    else {
+      this.setState({error: null});
+      return true;
+    }
+  };
+
+  saveCompany = company => {
+    this.setState({isSaving: true});
+    if (this.validate(company)) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
+      api.post("api/companies/", {...company}).then(companyResponse => {
+        this.setState({isSaving: false});
+        const companySlug = companyResponse.data.slug;
+        this.props.setOnboardingCompany(companySlug);
+        this.toggleNewCompany();
+        this.props.updateSlideOverlay(2);
+      })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
 
   render() {
     return (
       <div className="slider-wrapper">
         <div className={this.props.slideNumber > 0 && this.props.slideNumber < 3 ? "tabs" : "tabs hidden"}>
-          <div onClick={this.props.updateSlideOverlay.bind(this, 1)} className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
+          <div onClick={this.props.slideNumber !== 1 ? this.props.updateSlideOverlay.bind(this, 1) : null} className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
           </div>
-          <div  className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
+          <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
           </div>
           <div className={`line line-${this.props.slideNumber}`}></div>
         </div>
@@ -32,7 +82,7 @@ class OnboardingSlide extends React.Component {
             <OnboardingGetStarted product={this.props.product}/>
           </div>
           <div className="slide slide-1" >
-            <OnboardingCompany/>
+            <OnboardingCompany saveCompany={this.saveCompany}/>
           </div>
           <div className="slide slide-2">
             <OnboardingProducts/>
@@ -49,6 +99,9 @@ class OnboardingSlide extends React.Component {
 const mapDispatchToProps = dispatch => ({
   updateSlideOverlay: slideNumber => {
     dispatch(updateSlideOverlay(slideNumber));
+  },
+  setOnboardingCompany: companyId => {
+    dispatch(setOnboardingCompany(companyId));
   }
 });
 
