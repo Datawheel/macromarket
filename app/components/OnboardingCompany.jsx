@@ -1,17 +1,25 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
+import {Link, browserHistory} from "react-router";
 import CountrySearch from "../pages/admin/CountrySearch";
 <<<<<<< HEAD
 import {fetchCountries} from "../actions/countriesActions";
 import api, {url} from "../api";
 =======
 import {fetchUnNestedCountries} from "../actions/countriesActions";
+<<<<<<< HEAD
 import api from "../api";
 >>>>>>> sucess form and edit products bug
+=======
+import api, {url} from "../api";
+>>>>>>> company slide fixes
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 import {Select} from "@blueprintjs/labs";
 import {MenuItem, Classes} from "@blueprintjs/core";
 import "./OnboardingCompany.css";
+
+
 async function getCompaniesByUser(userId) {
   const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
   return companiesResponse.data;
@@ -30,9 +38,10 @@ class OnboardingCompany extends React.Component {
       isSaving: false,
       companies: [],
       company: null
-    };
 
+    };
   }
+
   async componentDidMount() {
     this.props.fetchCountries();
 
@@ -67,30 +76,57 @@ class OnboardingCompany extends React.Component {
     });
   };
 
+  selectCompany = () => {
+    this.setState({isSaving: true});
+    this.props.setOnboardingCompany(this.state.company.slug);
+    this.props.updateSlideOverlay(2);
+  };
+
   toggleNewCompany = () => {
-    if (this.state.addNewCompany) {
-      const {user} = this.props;
-      api.get(`api/companies/byUser/${user.id}`).then(companiesResponse => {
-        const companies = companiesResponse.data;
-        this.setState({companies, company: companies && companies.length && companies[0]});
-      });
+    this.setState({addNewCompany: !this.state.addNewCompany, name: "", labelUp: []});
+  }
+
+  validate = company => {
+    const errorNames = [];
+    if (!company.name || company.name === "") {
+      errorNames.push("name");
     }
-    this.setState({name: "", labelUp: [], addNewCompany: !this.state.addNewCompany});
+    if (errorNames.length) {
+      this.setState({error: {names: errorNames}, isSaving: false});
+      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
+      return false;
+    }
+    else {
+      this.setState({error: null});
+      return true;
+    }
   };
 
   saveCompany = () => {
+    console.log("yo");
     const company = {
       name: this.state.name,
       country_id: this.state.country_id || null
     };
 
-      this.props.saveCompany(company);
-
-  }
-  selectCompany = () => {
-    this.props.setOnboardingCompany(this.state.company.slug);
-    this.props.updateSlideOverlay(2);
+    this.setState({isSaving: true});
+    if (this.validate(company)) {
+      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
+      api.post("api/companies/", {...company}).then(companyResponse => {
+        this.setState({isSaving: false});
+        const companySlug = companyResponse.data.slug;
+        this.props.setOnboardingCompany(companySlug);
+        this.toggleNewCompany();
+        this.props.updateSlideOverlay(2);
+      })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
+
 
   handleCompanySelect = company => {
     this.setState({company});
@@ -109,14 +145,10 @@ class OnboardingCompany extends React.Component {
   }
 
 
+
   render() {
     const {countries} = this.props;
     const {isSaving, error, country, name, companies} = this.state;
-
-    const companiesOptions = companies.map(company =>
-      <option key={company.id} value={company.slug}>{company.name}</option>
-    );
-
     return (
       <div className="slide-inner company-onboarding">
         <div className={companies.length && !this.state.addNewCompany ? "fade-in-up existing-company-container" :  "fade-out hide"}>
@@ -131,9 +163,9 @@ class OnboardingCompany extends React.Component {
               <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
             </div>
           </Select>
-          <div className="description-text"onClick={this.toggleNewCompany}>Create a New Company</div>
+          <div className="description-text" onClick={this.toggleNewCompany}>Create a New Company</div>
           <button type="button" className="onboarding-button button-right" onClick={!isSaving ? this.selectCompany : null}>
-              Continue
+              Select Company
           </button>
         </div>
         <div className={!companies.length || this.state.addNewCompany ? "fade-in-up  create-company-container" : "fade-out hide"}>
@@ -173,8 +205,6 @@ class OnboardingCompany extends React.Component {
                 Create Company
           </button>
         </div>
-
-
       </div>
     );
   }

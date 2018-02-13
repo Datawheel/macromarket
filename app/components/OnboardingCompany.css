@@ -25,6 +25,7 @@
   & .pt-popover-target {
     width: 100%;
   }
+
   & .existing-company-select {
     display: block;
     margin: 20px auto 40px;
@@ -57,12 +58,12 @@
   0% {
     display: none;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   100% {
     display: block;
@@ -75,12 +76,12 @@
   0% {
     display: none;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   100% {
     display: block;
@@ -93,12 +94,12 @@
   0% {
     display: none;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 20px;
+    top: 0px;
   }
   100% {
     display: block;

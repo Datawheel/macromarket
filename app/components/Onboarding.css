@@ -37,13 +37,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     background: var(--red);
     height: 48px;
     border-radius: 0;
+    width: 50%;
     display: block;
     margin: 0 auto;
   }
-  .pt-callout.pt-intent-danger h5 {
+  & .pt-callout.pt-intent-danger h5 {
     color: white;
-    font-weight: 300;
-    font-size: 13px;
+    font-size: 15px;
     text-align: center;
     padding-bottom: 15px;
   }
