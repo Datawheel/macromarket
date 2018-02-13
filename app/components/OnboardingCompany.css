@@ -1,0 +1,108 @@
+/* Slide Specific Styles*/
+
+.company-onboarding {
+  & .onboarding-company-form {
+    display: flex;
+    margin: 25px 0px;
+  }
+  & .create-company-container, & .existing-company-container {
+    position: relative;
+    height: 350px;
+  }
+  & .input-wrapper {
+    width: 100%;
+    & .pt-icon-standard {
+      position: absolute;
+      font-size: 24px;
+      right: 12px;
+      top: 18px;
+      opacity: .7;
+    }
+  }
+  & .input-wrapper:first-child {
+    margin-right: 4px;
+  }
+  & .pt-popover-target {
+    width: 100%;
+  }
+  & .existing-company-select {
+    display: block;
+    margin: 20px auto 40px;
+  }
+}
+
+.fade-in-up {
+  -webkit-animation: fadeInUp .5s ease-out;
+}
+
+@-webkit-keyframes fadeInUp {
+  0% {
+    display: none;
+    opacity: 0;
+    top: 20px;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+    top: 0px;
+  }
+}
+
+@-moz-keyframes fadeInUp {
+  0% {
+    display: none;
+    opacity: 0;
+    top: 20px;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+    top: 0px;
+  }
+}
+
+@-o-keyframes fadeInUp {
+  0% {
+    display: none;
+    opacity: 0;
+    top: 20px;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+    top: 0px;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    display: none;
+    opacity: 0;
+    top: 20px;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+    top: 0px;
+  }
+}

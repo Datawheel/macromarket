@@ -69,7 +69,7 @@ ul {
   /* Background Blur*/
   & .main-content, & .nav-bar {
     filter: blur(4px) brightness(.8);
-    
+
 
   }
   & .onboarding-wrapper {
@@ -295,9 +295,6 @@ button {
 
 .fade-in {
   -webkit-animation: fadeInFromNone 0.5s ease-out;
-  -moz-animation: fadeInFromNone 0.5s ease-out;
-  -o-animation: fadeInFromNone 0.5s ease-out;
-  animation: fadeInFromNone 0.5s ease-out;
 }
 
 @-webkit-keyframes fadeInFromNone {
@@ -362,9 +359,6 @@ button {
 
 .fade-out {
   -webkit-animation: fadeOutFromNone 0.5s ease-out;
-  -moz-animation: fadeOutFromNone 0.5s ease-out;
-  -o-animation: fadeOutFromNone 0.5s ease-out;
-  animation: fadeOutFromNone 0.5s ease-out;
 }
 
 .hidden {
