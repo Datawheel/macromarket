@@ -17,9 +17,9 @@ class OnboardingSuccess extends React.Component {
         <p className="description-text">
           Select one of your companies to be listed under product.
         </p>
-        {user && user.activated !== undefined
+        {user && user.activated !== undefined && !user.activated
           ? <div>
-            <div className="title-wrapper">Verify Email</div>
+          
             <CanonActivate />
           </div>
           : null}

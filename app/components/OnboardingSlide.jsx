@@ -17,51 +17,6 @@ class OnboardingSlide extends React.Component {
     }
   }
 
-  // updateCompanySlideOverlay = () => {
-  //
-  //   if (this.state.addNewCompany) {
-  //
-  //   }
-  //   else {
-  //     this.props.updateSlideOverlay.bind(this, 2)
-  //   }
-  // }
-
-  validate = company => {
-    const errorNames = [];
-    if (!company.name || company.name === "") {
-      errorNames.push("name");
-    }
-    if (errorNames.length) {
-      this.setState({error: {names: errorNames}, isSaving: false});
-      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
-      toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
-      return false;
-    }
-    else {
-      this.setState({error: null});
-      return true;
-    }
-  };
-
-  saveCompany = company => {
-    this.setState({isSaving: true});
-    if (this.validate(company)) {
-      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-      toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
-      api.post("api/companies/", {...company}).then(companyResponse => {
-        this.setState({isSaving: false});
-        const companySlug = companyResponse.data.slug;
-        this.props.setOnboardingCompany(companySlug);
-        this.toggleNewCompany();
-        this.props.updateSlideOverlay(2);
-      })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  };
-
   render() {
     return (
       <div className="slider-wrapper">
@@ -82,7 +37,7 @@ class OnboardingSlide extends React.Component {
             <OnboardingGetStarted product={this.props.product}/>
           </div>
           <div className="slide slide-1" >
-            <OnboardingCompany saveCompany={this.saveCompany}/>
+            <OnboardingCompany/>
           </div>
           <div className="slide slide-2">
             <OnboardingProducts/>
