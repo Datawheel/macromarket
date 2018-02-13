@@ -1,4 +1,4 @@
-@import "../Variables";
+@import "./Variables";
 @import 'react-select/dist/react-select.css';
 body {
   margin: 0;
