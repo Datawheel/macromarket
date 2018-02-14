@@ -256,7 +256,7 @@ ul.pt-menu {
   }
   /* Slide Left */
   & .slide-container-0 {
-    left: 0px;
+    transform: translateX(0px);
   }
 }
 
@@ -304,6 +304,6 @@ ul.pt-menu {
   }
   /* Slide Left */
   & .slide-container-3 {
-    transform: translateX(-200px);
+    transform: translateX(-2200px);
   }
 }
