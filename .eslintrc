@@ -65,7 +65,7 @@
       }
     ],
     "generator-star-spacing": 2,
-    "global-require": 2,
+    "global-require": 0,
     "guard-for-in": 2,
     "handle-callback-err": 2,
     "id-match": 2,
@@ -86,7 +86,7 @@
     "keyword-spacing": 2,
     "lines-around-comment": 2,
     "max-nested-callbacks": 2,
-    "new-cap": 2,
+    "new-cap": [2, {"capIsNewExceptions": ["Radium"]}],
     "new-parens": 2,
     "no-cond-assign": 2,
     "no-constant-condition": 2,
@@ -155,6 +155,5 @@
       2,
       "never"
     ]
-  },
-  "parser": "babel-eslint"
+  }
 }

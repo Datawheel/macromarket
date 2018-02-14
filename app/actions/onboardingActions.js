@@ -22,8 +22,8 @@ export const onboardingSignup = userData => dispatch => {
 
   axios.post("/auth/local/signup", userData)
     .then(resp => {
-      console.log("DATA: ", resp.data);
-      dispatch({type: "SIGNUP_SUCCESS", payload: resp.data});
+      console.log("DATA: ", resp.data.user);
+      dispatch({type: "SIGNUP_SUCCESS", payload: resp.data.user});
     })
     .then(() => {
       dispatch(updateSlideOverlay(1));
@@ -38,7 +38,7 @@ export const onboardingLogin = userData => dispatch => {
 
   axios.post("/auth/local/login", userData)
     .then(resp => {
-      dispatch({type: "LOGIN_SUCCESS", payload: resp.data});
+      dispatch({type: "LOGIN_SUCCESS", payload: resp.data.user});
     })
     .then(() => {
       dispatch(updateSlideOverlay(1));

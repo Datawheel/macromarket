@@ -1,13 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {isAuthenticated} from "datawheel-canon";
-import NavBar from "./NavBar.jsx";
-import Footer from "./Footer.jsx";
-import OnboardingOverlay from "./OnboardingOverlay";
+import NavBar from "./components/NavBar.jsx";
+import Footer from "./components/Footer.jsx";
+import OnboardingOverlay from "./components/OnboardingOverlay";
 import "./App.css";
-import {toggleOverlay} from "../actions/onboardingActions";
+import {toggleOverlay} from "./actions/onboardingActions";
 import Helmet from "react-helmet";
-import header from "../helmet.js";
+import header from "./helmet.js";
 
 class App extends React.Component {
   constructor(props) {
