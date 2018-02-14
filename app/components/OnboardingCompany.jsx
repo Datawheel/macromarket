@@ -1,19 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
-import {Link, browserHistory} from "react-router";
+import {Intent, Position, Toaster} from "@blueprintjs/core";
 import CountrySearch from "../pages/admin/CountrySearch";
-<<<<<<< HEAD
 import {fetchCountries} from "../actions/countriesActions";
-import api, {url} from "../api";
-=======
-import {fetchUnNestedCountries} from "../actions/countriesActions";
-<<<<<<< HEAD
 import api from "../api";
->>>>>>> sucess form and edit products bug
-=======
-import api, {url} from "../api";
->>>>>>> company slide fixes
 import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
 import {Select} from "@blueprintjs/labs";
 import {MenuItem, Classes} from "@blueprintjs/core";
@@ -83,8 +73,15 @@ class OnboardingCompany extends React.Component {
   };
 
   toggleNewCompany = () => {
-    this.setState({addNewCompany: !this.state.addNewCompany, name: "", labelUp: []});
-  }
+    if (this.state.addNewCompany) {
+      const {user} = this.props;
+      api.get(`api/companies/byUser/${user.id}`).then(companiesResponse => {
+        const companies = companiesResponse.data;
+        this.setState({companies, company: companies && companies.length && companies[0]});
+      });
+    }
+    this.setState({name: "", labelUp: [], isSaving: false, addNewCompany: !this.state.addNewCompany});
+  };
 
   validate = company => {
     const errorNames = [];
@@ -94,7 +91,7 @@ class OnboardingCompany extends React.Component {
     if (errorNames.length) {
       this.setState({error: {names: errorNames}, isSaving: false});
       const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
-      toast.show({message: "You have errors in your form.", intent: Intent.DANGER});
+      toast.show({message: "A Company Name is required.", intent: Intent.DANGER});
       return false;
     }
     else {
@@ -104,7 +101,6 @@ class OnboardingCompany extends React.Component {
   };
 
   saveCompany = () => {
-    console.log("yo");
     const company = {
       name: this.state.name,
       country_id: this.state.country_id || null
@@ -125,6 +121,7 @@ class OnboardingCompany extends React.Component {
           console.log(error);
         });
     }
+
   };
 
 
@@ -156,15 +153,15 @@ class OnboardingCompany extends React.Component {
           <p className="description-text">
             Select one of your companies to be listed under product.
           </p>
-          <Select filterable={false} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
+          <Select filterable={false} value={this.state.company} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
             <div className="labelUp input-wrapper">
               <label>Company</label>
-              <input value={this.state.company && this.state.company.name }/>
+              <input value={this.state.company ? this.state.company.name : ""}/>
               <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
             </div>
           </Select>
-          <div className="description-text" onClick={this.toggleNewCompany}>Create a New Company</div>
-          <button type="button" className="onboarding-button button-right" onClick={!isSaving ? this.selectCompany : null}>
+          <div className="description-text link-text" onClick={this.toggleNewCompany}>Create a New Company</div>
+          <button type="button" className="onboarding-button button-right" onClick={this.selectCompany}>
               Select Company
           </button>
         </div>
@@ -182,7 +179,6 @@ class OnboardingCompany extends React.Component {
                 <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
                   <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
                 </div>
-                {error && error.names.includes("name") ? <div className="pt-form-helper-text">A company name is required.</div> : null}
               </div>
             </div>
             <div className="labelUp input-wrapper">
@@ -200,7 +196,7 @@ class OnboardingCompany extends React.Component {
               <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
             </div>
           </div>
-          {companies.length > 0 ? <div className="description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
+          {companies.length > 0 ? <div className=" link-text description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
           <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
                 Create Company
           </button>

@@ -27,7 +27,7 @@ class EditProducts extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchCountries();
+    // this.props.fetchCountries();
     this.props.fetchProducts();
 <<<<<<< HEAD
 <<<<<<< HEAD

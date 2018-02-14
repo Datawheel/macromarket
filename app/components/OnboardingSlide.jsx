@@ -14,7 +14,11 @@ class OnboardingSlide extends React.Component {
     this.state = {
       addNewCompany: true,
       company: null
-    }
+    };
+  }
+  productTab = () => {
+    const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+    toast.show({message: "You must select a company to continue", intent: Intent.DANGER});
   }
 
   render() {
@@ -23,7 +27,7 @@ class OnboardingSlide extends React.Component {
         <div className={this.props.slideNumber > 0 && this.props.slideNumber < 3 ? "tabs" : "tabs hidden"}>
           <div onClick={this.props.slideNumber !== 1 ? this.props.updateSlideOverlay.bind(this, 1) : null} className={this.props.slideNumber === 1 ? "active tab" : "tab"}><p>Company</p>
           </div>
-          <div className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
+          <div onClick={this.props.slideNumber !== 2 ? this.productTab : null} className={this.props.slideNumber ===  2 ? "active tab" : "tab"}><p>Products</p>
           </div>
           <div className={`line line-${this.props.slideNumber}`}></div>
         </div>

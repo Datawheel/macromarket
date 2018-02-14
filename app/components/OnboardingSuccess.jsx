@@ -15,11 +15,11 @@ class OnboardingSuccess extends React.Component {
       <div className="slide-inner">
         <h2>Congrats Your Company has been Listed!</h2>
         <p className="description-text">
-          Select one of your companies to be listed under product.
+          Before your company can be publically listed, you must verify your email address.
         </p>
         {user && user.activated !== undefined && !user.activated
           ? <div>
-          
+
             <CanonActivate />
           </div>
           : null}
