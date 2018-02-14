@@ -23,7 +23,7 @@ class TradeEdit extends React.Component {
       selectDestinations, selectOrigins, deleteProduct} = this.props;
 
     return (
-      <tr className="trade">
+      <tr className="trade onboarding-trade-edit">
         <td className="trade-product">
           {
             trade.product
