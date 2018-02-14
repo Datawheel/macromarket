@@ -39,19 +39,18 @@ class OnboardingLogin extends Component {
     this.setState({submitted: true});
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
 
     const {auth, mailgun, t} = this.props;
     const {email, submitted, toast} = this.state;
 
-    if (submitted && !auth.loading) {
+    if (submitted && !auth.loading && !prevState.submitted) {
 
       if (auth.error === "WRONG_PW") {
         toast.show({
           action: mailgun ? {
             onClick: () => {
               this.setState({submitted: true});
-              // this.props.resetPassword(email);
             },
             text: t("Reset.button")
           } : null,
