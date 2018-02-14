@@ -7,9 +7,9 @@
     -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
     transition: opacity 600ms ease-in-out, visibility 600ms;
   }
-  & input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+  & input:-webkit-autofill, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
-    box-shadow: 0 0 0px 1000px #000 inset;
+    box-shadow: 0 0 0px 1000px #303F4A inset;
   }
   & .onboarding-company-form {
     display: flex;
@@ -45,11 +45,6 @@
   opacity: 1;
   -webkit-transition: opacity .3s ease-in-out, visibility .3s;
   transition: opacity .3s ease-in-out, visibility .3s;
-}
-
-.fade-out {
-
-
 }
 
 @-webkit-keyframes fadeOut {
