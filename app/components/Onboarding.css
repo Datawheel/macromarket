@@ -12,14 +12,11 @@ ul.pt-menu {
 
 /* Change Autocomplete styles in Chrome*/
 
-
-
 .onboarding-wrapper {
   position: absolute;
   z-index: 100;
   width: 100%;
   height: 100%;
-
   & input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill, & textarea:-webkit-autofill, & select:-webkit-autofill, & select:-webkit-autofill:hover, & select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     box-shadow: 0 0 0px 1000px #000 inset;
@@ -52,7 +49,7 @@ ul.pt-menu {
   /* Generic Styles */
   & .description-text {
     font-size: 13px;
-    color:var(--light-grey);
+    color: var(--light-grey);
     line-height: 1.5em;
   }
   & .link-text {
@@ -73,7 +70,7 @@ ul.pt-menu {
   }
   & .tabs {
     display: flex;
-    margin: 20px 8% 40px;
+    margin: 20px 8%;
     width: 30%;
     position: relative;
     & .tab {
@@ -110,22 +107,26 @@ ul.pt-menu {
   }
   /* Get Started Logo */
   & .logo-wrapper {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align: center;
     & .mm-logo {
       display: block;
       margin: 0 auto;
-      padding-bottom: 8px;
+      padding-bottom: 6px;
+    }
+    &>img {
+      width: 18%;
     }
   }
+  & .text-wrapper {
+    padding-bottom: 25px;
+  }
   & .product-wrapper {
-    padding: 15px 0px 30px;
-  &  p {
-    color: var(--light-grey);
-      font-size: 18px;
-    &  span {
-      color: white;
-        font-weight: 500;
+    padding: 8px 0px 5px;
+    & p {
+      font-size: 20px;
+      & span {
+        font-weight: 600;
       }
     }
   }
@@ -215,7 +216,7 @@ ul.pt-menu {
     /* Left Transition */
     left: 0px;
     position: relative;
-    transition: .4s left ease-in-out;
+    transition: .4s transform ease-in-out;
     & .slide {
       position: relative;
       vertical-align: top;
@@ -225,6 +226,13 @@ ul.pt-menu {
       & .slide-inner {
         width: 84%;
         margin: 0 auto;
+        & .slide-content {
+          width: 85%;
+          margin: 0 auto;
+        }
+        & h2, & .onboarding-edit-products-table-container {
+          margin-top: 25px;
+        }
       }
       & .button-right {
         width: 165px;
@@ -264,7 +272,7 @@ ul.pt-menu {
   }
   /* Slide Left */
   & .slide-container-1 {
-    left: -500px;
+    transform: translateX(-500px);
   }
 }
 
@@ -280,7 +288,7 @@ ul.pt-menu {
   }
   /* Slide Left */
   & .slide-container-2 {
-    left: -1300px;
+    transform: translateX(-1300px);
   }
 }
 
@@ -296,6 +304,6 @@ ul.pt-menu {
   }
   /* Slide Left */
   & .slide-container-3 {
-    left: -2200px;
+    transform: translateX(-200px);
   }
 }
