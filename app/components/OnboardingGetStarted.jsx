@@ -42,12 +42,21 @@ class OnboardingGetStarted extends React.Component {
               <OnboardingLogin/>
           }
           {(isSignupFormVisible || isLoginFormVisible) &&
-              <div onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</div>
+              <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
           }
           {user &&
-              <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
+            <div>{product &&
+              <div className="text-wrapper">
+                <div className="product-wrapper">
+                  <p>Interested in being listed under <span>{product.name}</span>?</p>
+                </div>
+                <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+              </div>}
+            <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
+            </div>
           }
         </div>
+
       </div>
     );
   }

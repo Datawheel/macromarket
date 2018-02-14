@@ -19,6 +19,7 @@ ul.pt-menu {
   height: 100%;
   & input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill, & textarea:-webkit-autofill, & select:-webkit-autofill, & select:-webkit-autofill:hover, & select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
     box-shadow: 0 0 0px 1000px #303F4A inset;
   }
   /* Login and Signup Overide */
@@ -50,6 +51,10 @@ ul.pt-menu {
     font-size: 13px;
     color: var(--light-grey);
     line-height: 1.5em;
+    & span{
+      color: white;
+      font-weight: 500;
+    }
   }
   & .link-text {
     text-align: center;
