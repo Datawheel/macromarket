@@ -1,13 +1,19 @@
 /* Slide Specific Styles*/
 
 .company-onboarding {
+  & .hide {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
+    transition: opacity 600ms ease-in-out, visibility 600ms;
+  }
+  & input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    box-shadow: 0 0 0px 1000px #000 inset;
+  }
   & .onboarding-company-form {
     display: flex;
     margin: 25px 0px;
-  }
-  & .create-company-container, & .existing-company-container {
-    position: relative;
-    height: 350px;
   }
   & .input-wrapper {
     width: 100%;
@@ -25,85 +31,143 @@
   & .pt-popover-target {
     width: 100%;
   }
-
   & .existing-company-select {
     display: block;
-    margin: 20px auto 40px;
+    margin: 28px auto 30px;
+  }
+  & .onboarding-company-form {
+    margin: 28px auto 30px;
   }
 }
 
 .fade-in-up {
-  -webkit-animation: fadeInUp .5s ease-out;
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition: opacity .3s ease-in-out, visibility .3s;
+  transition: opacity .3s ease-in-out, visibility .3s;
 }
 
-@-webkit-keyframes fadeInUp {
+.fade-out {
+
+
+}
+
+@-webkit-keyframes fadeOut {
   0% {
-    display: none;
-    opacity: 0;
-    top: 20px;
+    display: block;
+    opacity: 1;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 20px;
   }
   100% {
-    display: block;
-    opacity: 1;
-    top: 0px;
+    display: none;
+    opacity: 0;
   }
 }
 
-@-moz-keyframes fadeInUp {
+@-moz-keyframes fadeOut {
   0% {
-    display: none;
-    opacity: 0;
-    top: 0px;
+    display: block;
+    opacity: 1;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 0px;
   }
   100% {
-    display: block;
-    opacity: 1;
-    top: 0px;
+    display: none;
+    opacity: 0;
   }
 }
 
-@-o-keyframes fadeInUp {
+@-o-keyframes fadeOut {
   0% {
-    display: none;
-    opacity: 0;
-    top: 0px;
+    display: block;
+    opacity: 1;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 0px;
   }
   100% {
-    display: block;
-    opacity: 1;
-    top: 0px;
+    display: none;
+    opacity: 0;
   }
 }
 
-@keyframes fadeInUp {
+@keyframes fadeOut {
   0% {
-    display: none;
-    opacity: 0;
-    top: 0px;
+    display: block;
+    opacity: 1;
   }
   1% {
     display: block;
     opacity: 0;
-    top: 0px;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
   }
   100% {
     display: block;
     opacity: 1;
-    top: 0px;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    display: block;
+    opacity: 1;
   }
 }

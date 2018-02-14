@@ -75,8 +75,8 @@ ul {
   & .onboarding-wrapper {
     visibility: visible;
     opacity: 1;
-    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
-    transition: opacity 600ms ease-in-out, visibility 600ms;
+    -webkit-transition: opacity .3s ease-in-out, visibility .3s;
+    transition: opacity .3s ease-in-out, visibility .3s;
   }
 }
 .close {
