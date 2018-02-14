@@ -52,7 +52,7 @@ ul.pt-menu {
   /* Generic Styles */
   & .description-text {
     font-size: 13px;
-    opacity: .6;
+    color:var(--light-grey);
     line-height: 1.5em;
   }
   & .link-text {
@@ -116,6 +116,17 @@ ul.pt-menu {
       display: block;
       margin: 0 auto;
       padding-bottom: 8px;
+    }
+  }
+  & .product-wrapper {
+    padding: 15px 0px 30px;
+  &  p {
+    color: var(--light-grey);
+      font-size: 18px;
+    &  span {
+      color: white;
+        font-weight: 500;
+      }
     }
   }
   & .onboarding-button {
