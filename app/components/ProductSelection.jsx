@@ -49,7 +49,6 @@ class ProductSelection extends React.Component {
 
           <Selection selectProduct={this.selectProduct} companyId={company.id} tradeFlow={"exports"} products={products}></Selection>
           <SelectedProduct companyId={company.id} tradeFlow={"exports"}></SelectedProduct>
-
         </div>
         <div className="button-wrapper">
           <Link to="/settings/country">

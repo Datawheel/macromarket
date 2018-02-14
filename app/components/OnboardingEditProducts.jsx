@@ -27,13 +27,11 @@ class EditProducts extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchCountries();
     this.props.fetchProducts();
-    const {companySlug} = this.props;
+    const {companySlug} = this.props.isOverlay ? this.props : {companySlug: null};
     const trades = [];
     if (companySlug && !this.props.isOverlay) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
-
         res.data.forEach(t => {
           const prodRow = trades.find(tt => tt.product.id === t.product_id);
           const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
@@ -97,7 +95,9 @@ class EditProducts extends React.Component {
     const company = this.getCompany();
     const tradesForServer = [];
     if (!unsavedTrades || newProduct) {
+      this.props.updateSlideOverlay(3);
       return;
+
     }
     trades.forEach(t => {
       if (!t.origins.length && !t.destinations.length) {
@@ -210,7 +210,7 @@ class EditProducts extends React.Component {
     const {auth, products, countries} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
     return (
-      <div className="onboarding-edit-products">
+      <div className="slide-inner onboarding-edit-products">
 
         {/*
         <div className="pt-form-group">
@@ -248,7 +248,7 @@ class EditProducts extends React.Component {
           : null
         }
 
-        <div>
+        <div className="picker-wrapper">
           <button type="button" className={newProduct ? "add-product-button add-product-button-disabled" : "add-product-button"} onClick={this.appendProductRow}>
             <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
             Add product

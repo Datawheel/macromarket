@@ -68,14 +68,15 @@ ul {
   width: 100%;
   /* Background Blur*/
   & .main-content, & .nav-bar {
-    filter: blur(3px);
+    filter: blur(4px) brightness(.8);
+
 
   }
   & .onboarding-wrapper {
     visibility: visible;
     opacity: 1;
-    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
-    transition: opacity 600ms ease-in-out, visibility 600ms;
+    -webkit-transition: opacity .3s ease-in-out, visibility .3s;
+    transition: opacity .3s ease-in-out, visibility .3s;
   }
 }
 .close {
@@ -207,6 +208,7 @@ input, p {
   font-family: var(--libreFranklin);
   font-weight: 300;
   font-size: 16px;
+  line-height: 1.4;
 }
 
 input:-webkit-autofill {
@@ -294,9 +296,6 @@ button {
 
 .fade-in {
   -webkit-animation: fadeInFromNone 0.5s ease-out;
-  -moz-animation: fadeInFromNone 0.5s ease-out;
-  -o-animation: fadeInFromNone 0.5s ease-out;
-  animation: fadeInFromNone 0.5s ease-out;
 }
 
 @-webkit-keyframes fadeInFromNone {
@@ -361,9 +360,6 @@ button {
 
 .fade-out {
   -webkit-animation: fadeOutFromNone 0.5s ease-out;
-  -moz-animation: fadeOutFromNone 0.5s ease-out;
-  -o-animation: fadeOutFromNone 0.5s ease-out;
-  animation: fadeOutFromNone 0.5s ease-out;
 }
 
 .hidden {

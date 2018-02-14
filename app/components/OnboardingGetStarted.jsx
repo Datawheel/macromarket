@@ -21,7 +21,7 @@ class OnboardingGetStarted extends React.Component {
       <div className="slide-inner">
         {product &&
               <div className="product-wrapper">
-                <p>Interested in being listed under {product.name} ?</p>
+                <p>Interested in being listed under <span>{product.name}</span> ?</p>
               </div>
         }
         {!user && !isSignupFormVisible && !isLoginFormVisible &&
