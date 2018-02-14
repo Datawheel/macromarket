@@ -20,7 +20,6 @@ ul.pt-menu {
   & input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill, & textarea:-webkit-autofill, & select:-webkit-autofill, & select:-webkit-autofill:hover, & select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     box-shadow: 0 0 0px 1000px #303F4A inset;
-    transition: background-color 5000s ease-in-out 0s;
   }
   /* Login and Signup Overide */
   & #login, & #signup {
@@ -119,7 +118,7 @@ ul.pt-menu {
     }
   }
   & .text-wrapper {
-    padding-bottom: 25px;
+    padding-bottom: 15px;
   }
   & .product-wrapper {
     padding: 8px 0px 5px;

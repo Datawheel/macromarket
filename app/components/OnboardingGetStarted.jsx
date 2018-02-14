@@ -20,18 +20,19 @@ class OnboardingGetStarted extends React.Component {
     return (
       <div className="slide-inner">
         <div className="slide-content">
-          {product &&
-                <div className="text-wrapper">
-                  <div className="product-wrapper">
-                    <p>Interested in being listed under <span>{product.name}</span>?</p>
-                  </div>
-                  <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
-                </div>
-          }
           {!user && !isSignupFormVisible && !isLoginFormVisible &&
               <div>
-                <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
-                <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+                {product &&
+                  <div className="text-wrapper">
+                    <div className="product-wrapper">
+                      <p>Interested in being listed under <span>{product.name}</span>?</p>
+                    </div>
+                    <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+                  </div>}
+                <div>
+                  <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
+                  <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+                </div>
               </div>
           }
           {isSignupFormVisible &&
@@ -41,7 +42,7 @@ class OnboardingGetStarted extends React.Component {
               <OnboardingLogin/>
           }
           {(isSignupFormVisible || isLoginFormVisible) &&
-              <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
+              <div onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</div>
           }
           {user &&
               <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
