@@ -27,17 +27,8 @@ class EditProducts extends React.Component {
   };
 
   componentDidMount() {
-    // this.props.fetchCountries();
     this.props.fetchProducts();
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const {companySlug} = this.props;
-=======
-    console.log(this.props.isOverlay, this.props, this.props.params);
-=======
->>>>>>> company slide fixes
     const {companySlug} = this.props.isOverlay ? this.props : {companySlug: null};
->>>>>>> sucess form and edit products bug
     const trades = [];
     if (companySlug && !this.props.isOverlay) {
       api.get(`/api/trades/company/${companySlug}`).then(res => {
@@ -104,7 +95,9 @@ class EditProducts extends React.Component {
     const company = this.getCompany();
     const tradesForServer = [];
     if (!unsavedTrades || newProduct) {
+      this.props.updateSlideOverlay(3);
       return;
+
     }
     trades.forEach(t => {
       if (!t.origins.length && !t.destinations.length) {
