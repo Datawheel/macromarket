@@ -55,11 +55,11 @@ class OnboardingSignUp extends Component {
 
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const {auth, t} = this.props;
     const {error, submitted} = this.state;
 
-    if (submitted && !auth.loading) {
+    if (submitted && !auth.loading && !prevState.submitted) {
       if (auth.error === "SIGNUP_EXISTS") {
         this.showToast(t("SignUp.error.Exists"), "blocked-person", Intent.WARNING);
         this.setState({submitted: false});
