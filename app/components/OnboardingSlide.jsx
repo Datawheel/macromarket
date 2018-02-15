@@ -47,7 +47,7 @@ class OnboardingSlide extends React.Component {
             <OnboardingProducts/>
           </div>
           <div className="slide slide-3">
-            <OnboardingSuccess/>
+            <OnboardingSuccess product={this.props.product}/>
           </div>
         </div>
       </div>

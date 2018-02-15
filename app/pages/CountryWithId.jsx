@@ -34,7 +34,6 @@ class CountryWithId extends React.Component {
   }
 
   arrowRenderer = () => <span className="chevron bottom"></span>;
-
   compare(a, b, attr) {
     if (a[attr] < b[attr]) {
       return -1;
@@ -62,6 +61,7 @@ class CountryWithId extends React.Component {
 
   introParagraph = () => {
     const {country, trades} = this.props.data;
+    console.log(trades, "traddeees");
     const tradesByCompany = nest()
       .key(d => d.company_id)
       .entries(trades)
@@ -74,6 +74,7 @@ class CountryWithId extends React.Component {
       .key(d => d.product_id)
       .entries(trades.filter(t => t.trade_flow === "imports"))
       .map(c => c.values[0].Product);
+          console.log(tradesByCompany, "hoho");
     const numCompanies = tradesByCompany.length;
     return numCompanies
       ? <p>
@@ -136,7 +137,7 @@ class CountryWithId extends React.Component {
         </div>
       );
     }
-
+    console.log(caTrades, "catrades");
     let allTrades;
     if (caTrades && trades) {
       // filter out duplicate countries
@@ -178,7 +179,7 @@ class CountryWithId extends React.Component {
         <div className="result-wrapper-outer">
           <div className="intro-text">
             <section>
-              {this.introParagraph()}
+              {trades && this.introParagraph()}
             </section>
           </div>
           {!allTrades
