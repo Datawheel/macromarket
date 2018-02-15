@@ -22,13 +22,13 @@ class OnboardingGetStarted extends React.Component {
         <div className="slide-content">
           {!user && !isSignupFormVisible && !isLoginFormVisible &&
               <div>
-                {product &&
-                  <div className="text-wrapper">
-                    <div className="product-wrapper">
-                      <p>Interested in being listed under <span>{product.name}</span>?</p>
-                    </div>
-                    <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+                <div className="text-wrapper">
+                  {product &&
+                  <div className="product-wrapper">
+                    <p>Interested in being listed under <span>{product.name}</span>?</p>
                   </div>}
+                  <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+                </div>
                 <div>
                   <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
                   <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
@@ -45,14 +45,15 @@ class OnboardingGetStarted extends React.Component {
               <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
           }
           {user &&
-            <div>{product &&
+            <div>
               <div className="text-wrapper">
+                {product &&
                 <div className="product-wrapper">
                   <p>Interested in being listed under <span>{product.name}</span>?</p>
-                </div>
+                </div>}
                 <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
-              </div>}
-            <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
+              </div>
+              <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
             </div>
           }
         </div>
