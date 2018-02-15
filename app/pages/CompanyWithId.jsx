@@ -54,7 +54,7 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    if (!company) {
+    if (!company || !company.activated) {
       return (
         <div className="error-404">
           <div className="error-gif"></div>

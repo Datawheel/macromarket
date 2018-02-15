@@ -29,7 +29,6 @@ class OnboardingSignUp extends Component {
     });
   }
   onBlur(e) {
-    console.log(this.state);
     if (e.target.value === "") {
       const index = this.state.labelUp.indexOf(e.target.name);
       this.setState({labelUp: this.state.labelUp.filter((_, i) => i !== index)})
