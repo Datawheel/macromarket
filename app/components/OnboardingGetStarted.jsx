@@ -26,7 +26,7 @@ class OnboardingGetStarted extends React.Component {
                   <p className="description-text">Thank you for visiting the Macro Market! The Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
                   {product &&
                   <div className="product-wrapper">
-                    <p>Create an account to be listed under <span>{product.name}</span></p>
+                    <p>Create an account to be listed under <span>{product.name}</span>.</p>
                   </div>}
                 </div>
                 <div>
