@@ -329,32 +329,24 @@
   & .image-overlay-wrapper {
     & .text-wrapper {
       width: 100%;
+      height: 55px;
+      bottom: 35px;
+      position: absolute;
       opacity: .8;
+      display: flex;
+      justify-content: space-between;
       padding-left: 0 !important;
       & .section-wrapper {
-        vertical-align: top;
-        display: inline-block;
-        width: 25%;
-        margin: 0;
-        max-width: 25%;
-        padding: 0px 16px;
-        height: 32px;
-        text-align: center;
-        & .img-wrapper {
-          display: inline-block;
-          vertical-align: top;
-        }
-        & p, & .address-wrapper {
+        flex: 1;
+        &>div {
+          display: flex;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
           & p {
-            max-width: 100%;
+            margin: 0;
+            text-align: left;
           }
-          margin: 0;
-          max-width: 85%;
-          text-align: left;
-          display: inline-block;
-        }
-        & p.country-name {
-          display: block;
         }
         & button {
           color: white;

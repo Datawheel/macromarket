@@ -64,9 +64,11 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
             : null}
           {company.company_email
             ? <div className="section-wrapper">
-              <a href={`mailto:${company.company_email}`}>
-                <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
-              </a>
+              <div>
+                <a href={`mailto:${company.company_email}`}>
+                  <button><img className="button-icon" src="/images/icons/icon-mail.svg"/>Get in Touch</button>
+                </a>
+              </div>
             </div>
             : null}
         </div>

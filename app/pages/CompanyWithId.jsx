@@ -37,8 +37,6 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error, trades} = this.props;
-    // console.log("this.props.trades", this.props.trades, this.isEmptyObject(this.props.trades))
-
     if (loading) {
       return (
         <div className="blue-loading">
