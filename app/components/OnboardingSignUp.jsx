@@ -31,7 +31,7 @@ class OnboardingSignUp extends Component {
   onBlur(e) {
     if (e.target.value === "") {
       const index = this.state.labelUp.indexOf(e.target.name);
-      this.setState({labelUp: this.state.labelUp.filter((_, i) => i !== index)})
+      this.setState({labelUp: this.state.labelUp.filter((_, i) => i !== index)});
     }
   }
   onSubmit(e) {
@@ -55,25 +55,33 @@ class OnboardingSignUp extends Component {
 
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const {auth, t} = this.props;
-    const {error, submitted} = this.state;
+  componentDidUpdate() {
+    const {error} = this.state;
 
-    if (submitted && !auth.loading) {
-      if (auth.error === "SIGNUP_EXISTS") {
-        this.showToast(t("SignUp.error.Exists"), "blocked-person", Intent.WARNING);
-        this.setState({submitted: false});
-      }
-      else if (!auth.error && auth.msg === "SIGNUP_SUCCESS") {
-        this.showToast(t("SignUp.success"), "endorsed", Intent.SUCCESS);
-      }
-    }
-    else if (error) {
+    if (error) {
       this.showToast(error.message, error.iconName, error.intent);
       this.setState({error: false});
     }
 
   }
+
+  componentWillReceiveProps(nextProps) {
+    const {auth, t} = nextProps;
+    const {submitted} = this.state;
+    console.log("SUBMITTDDD: ", submitted);
+
+    if (submitted && !auth.loading) {
+      if (auth.msg === "SIGNUP_SUCCESS") {
+        this.showToast(t("SignUp.success"), "endorsed", Intent.SUCCESS);
+      }
+      else if (auth.error === "SIGNUP_EXISTS") {
+        console.log("signup exists");
+        this.showToast(t("SignUp.error.Exists"), "blocked-person", Intent.WARNING);
+        this.setState({submitted: false});
+      }
+    }
+  }
+
 
   showToast(message, iconName = "lock", intent = Intent.DANGER) {
     const {toast} = this.state;

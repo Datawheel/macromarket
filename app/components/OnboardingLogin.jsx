@@ -38,9 +38,9 @@ class OnboardingLogin extends Component {
     this.setState({submitted: true});
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentWillReceiveProps(nextProps) {
 
-    const {auth, mailgun, t} = this.props;
+    const {auth, mailgun, t} = nextProps;
     const {email, submitted, toast} = this.state;
 
     if (submitted && !auth.loading) {
