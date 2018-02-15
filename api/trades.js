@@ -2,6 +2,17 @@ const axios = require("axios");
 const isAuthenticated = require("../api-helpers/authHelpers.js").isAuthenticated;
 const Op = require("sequelize").Op;
 
+async function isCompanyAccountActivated(company, db) {
+    const {uid} = company;
+    const user = await db.users.findOne({where: {id: uid}});
+    return user.activated;
+}
+
+async function filterTradesByCompanyActivated(trades, db) {
+  const tradesWithActivatedStatus = await Promise.all(trades.map(async trade => {return {trade, activated: await isCompanyAccountActivated(trade.Company, db)}}));
+  return tradesWithActivatedStatus.filter(data => data.activated).map(data => data.trade);
+}
+
 module.exports = function(app) {
   const {db} = app.settings;
 
@@ -105,27 +116,37 @@ module.exports = function(app) {
   });
 
   // TODO: rename to "/api/trades/byCountry/:countryId"
-  app.get("/api/trades/country/:countryId", (req, res) => {
-    const {countryId: country_id} = req.params;
-    db.Trade.findAll({
-      where: {
-        country_id
-      },
-      include: [db.Product, db.Company]
-    }).then(trades => res.json(trades))
-    .catch(err => res.json(err));
+  app.get("/api/trades/country/:countryId", async (req, res) => {
+      try {
+          const {countryId: country_id} = req.params;
+          const trades = await db.Trade.findAll({
+              where: {
+                  country_id
+              },
+              include: [db.Product, db.Company]
+          });
+          const activatedTrades = await filterTradesByCompanyActivated(trades, db);
+          res.json(activatedTrades);
+      } catch (error) {
+          res.json(error)
+      }
   });
 
   // TODO: rename to "/api/trades/byProduct/:productId"
-  app.get("/api/trades/product/:productId", (req, res) => {
-    const {productId: product_id} = req.params;
-    db.Trade.findAll({
-      where: {
-        product_id: {$ilike: `${product_id}%`}
-      },
-      include: [db.Country, db.Company]
-    }).then(trades => res.json(trades))
-    .catch(err => res.json(err));
+  app.get("/api/trades/product/:productId", async (req, res) => {
+    try {
+      const {productId: product_id} = req.params;
+      const trades = await db.Trade.findAll({
+        where: {
+          product_id: {$ilike: `${product_id}%`}
+        },
+        include: [db.Country, db.Company]
+      });
+      const activatedTrades = await filterTradesByCompanyActivated(trades, db);
+      res.json(activatedTrades);
+    } catch (error) {
+      res.json(error);
+    }
   });
 
   app.get("/api/trades/user/:uid", (req, res) => {
