@@ -61,7 +61,7 @@ class EditProducts extends React.Component {
       if (nextProps.onboardingProduct) {
         trades.push({product: nextProps.onboardingProduct, origins: [], destinations: []});
       }
-      this.setState({trades});
+      this.setState({unsavedTrades: true, trades});
     }
   }
 
