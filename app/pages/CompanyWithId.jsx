@@ -37,8 +37,6 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error, trades} = this.props;
-    // console.log("this.props.trades", this.props.trades, this.isEmptyObject(this.props.trades))
-
     if (loading) {
       return (
         <div className="blue-loading">
@@ -56,7 +54,7 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    if (!company) {
+    if (!company || !company.activated) {
       return (
         <div className="error-404">
           <div className="error-gif"></div>

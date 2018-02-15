@@ -39,6 +39,73 @@ ul {
   list-style-type: none;
 }
 
+/* Overlay Background Blur*/
+
+.overlay-bg {
+  & .main-content, & .nav-bar {
+    filter: blur(0px);
+    /* -webkit-transition: .7s -webkit-filter ease-in-out;
+    -moz-transition: .7s  -moz-filter ease-in-out;
+    -moz-transition: .7s   filter ease-in-out;
+    -ms-transition: .7s   -ms-filter ease-in-out;
+    -o-transition: .7s   -o-filter ease-in-out;
+    transition: .7s  filter ease-in-out, .3s -webkit-filter ease-in-out; */
+  }
+  & .onboarding-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 600ms ease-in-out, visibility 600ms;
+    transition: opacity 600ms ease-in-out, visibility 600ms;
+  }
+
+
+}
+
+.overlayOpen {
+  /* Override Scrolling*/
+  overflow-y: hidden;
+  position: fixed;
+  width: 100%;
+  /* Background Blur*/
+  & .main-content, & .nav-bar {
+    filter: blur(4px) brightness(.8);
+
+
+  }
+  & .onboarding-wrapper {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity .3s ease-in-out, visibility .3s;
+    transition: opacity .3s ease-in-out, visibility .3s;
+  }
+}
+.close {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  width: 28px;
+  height: 28px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 29px;
+  width: 2px;
+  top: 0px;
+  background-color: #ffffff;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+
 .chevron::before {
   border-style: solid;
   border-width: 0.1em 0.1em 0 0;
@@ -112,7 +179,7 @@ ul {
 }
 
 .visible {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 
 .Select, .Select-control {
@@ -141,6 +208,7 @@ input, p {
   font-family: var(--libreFranklin);
   font-weight: 300;
   font-size: 16px;
+  line-height: 1.4;
 }
 
 input:-webkit-autofill {
@@ -228,9 +296,6 @@ button {
 
 .fade-in {
   -webkit-animation: fadeInFromNone 0.5s ease-out;
-  -moz-animation: fadeInFromNone 0.5s ease-out;
-  -o-animation: fadeInFromNone 0.5s ease-out;
-  animation: fadeInFromNone 0.5s ease-out;
 }
 
 @-webkit-keyframes fadeInFromNone {
@@ -295,9 +360,6 @@ button {
 
 .fade-out {
   -webkit-animation: fadeOutFromNone 0.5s ease-out;
-  -moz-animation: fadeOutFromNone 0.5s ease-out;
-  -o-animation: fadeOutFromNone 0.5s ease-out;
-  animation: fadeOutFromNone 0.5s ease-out;
 }
 
 .hidden {
@@ -305,23 +367,50 @@ button {
 }
 
 @-moz-keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 
 @-o-keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 
 @keyframes fadeOutFromNone {
-  100% {
-    display: none;
+  0% {
+    opacity: 1;
+    height: initial;
+  }
+  99% {
     opacity: 0;
+    height: initial;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    height: 0;
   }
 }
 

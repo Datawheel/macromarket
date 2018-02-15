@@ -70,7 +70,7 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/companies/:slug", (req, res) => {
+  app.get("/api/companies/:slug", async (req, res) => {
     const {slug} = req.params;
     // const {id: uid} = req.user;
     // console.log("companyid:", id)
@@ -118,15 +118,19 @@ module.exports = function(app) {
       http.request(option, request).end();
     }
     else {
-      db.Company.findOne({
-        // where: {id, uid},
-        where: {slug},
-        include: [db.Country]
-      }).then(company => {
-        const err = company ? null : "Not found";
+      try {
+        const company = await db.Company.findOne({
+          // where: {id, uid},
+          where: {slug},
+          include: [db.Country]
+        });
+        const user = await db.users.findOne({where:{id: company.uid}});
+        company.dataValues.activated = user.activated;
+
         res.json(company);
-      })
-        .catch(err => res.json(err));
+      } catch (error) {
+        res.json(error);
+      }
     }
   });
 

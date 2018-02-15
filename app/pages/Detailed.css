@@ -189,6 +189,9 @@
     & button {
         font-size: 14px;
     }
+    & .section-wrapper {
+      padding: 25px 35px;
+    }
     & .button-icon, & .section-wrapper img {
         margin: 0 10px -3px 0;
         vertical-align: top;
@@ -246,7 +249,7 @@
     & .products {
 
       & h3 {
-        padding: 24px 16px 16px;
+            padding: 20px 0px 0px;
       }
       & button {
           color: white;

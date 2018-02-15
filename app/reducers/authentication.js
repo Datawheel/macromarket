@@ -25,6 +25,7 @@ export default (state = {
     case "LOG_IN_PENDING":
       return {...state,
         user: null,
+        error: null,
         loading: true
       };
     case "AUTH_FULFILLED":

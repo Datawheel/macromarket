@@ -39,25 +39,27 @@ class ProductSearch extends React.Component {
 
     return (
       <div>
-        <Suggest
-          inputProps={{placeholder: "Search for a product..."}}
-          inputValueRenderer={() => ""}
-          itemRenderer={this.renderProduct}
-          itemListPredicate={this.filterProducts}
-          items={products.filter(p => p.id.length === 8)}
-          noResults={"Please enter 3 or more characters."}
-          onItemSelect={this.selectProduct}
-          openOnKeyDown={false}
-          resetOnSelect={true}
-          resetOnClose={true}
-        />
+        {products
+          ? <Suggest
+            inputProps={{placeholder: "Search for a product..."}}
+            inputValueRenderer={() => ""}
+            itemRenderer={this.renderProduct}
+            itemListPredicate={this.filterProducts}
+            items={products.filter(p => p.id.length === 8)}
+            noResults={"Please enter 3 or more characters."}
+            onItemSelect={this.selectProduct}
+            openOnKeyDown={false}
+            resetOnSelect={true}
+            resetOnClose={true}
+          />
+          : null}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  products: state.data.products
+  products: state.products.productsForSearch
 });
 
 export default connect(mapStateToProps)(ProductSearch);

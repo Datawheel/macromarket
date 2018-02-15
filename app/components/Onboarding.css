@@ -1,0 +1,321 @@
+@import "../Variables";
+/* Onboarding Wrapper*/
+
+ul.pt-menu {
+  height: 150px;
+  max-height: 160px !important;
+}
+
+.pt-popover {
+  width: 300px;
+}
+
+/* Change Autocomplete styles in Chrome*/
+
+.onboarding-wrapper {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  & input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill, & textarea:-webkit-autofill, & select:-webkit-autofill, & select:-webkit-autofill:hover, & select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px #303F4A inset;
+  }
+  /* Login and Signup Overide */
+  & #login, & #signup {
+    margin: 0px
+  }
+  & .pt-callout.pt-intent-danger {
+    background: #303F4A;
+    padding: 20px 0px;
+    margin-top: 35px;
+    & button::focus {
+      outline: none;
+    }
+  }
+  & .pt-button.pt-intent-danger {
+    box-shadow: none;
+    background-image: none;
+    background: var(--red);
+    height: 48px;
+    border-radius: 0;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+  & .pt-callout.pt-intent-danger h5 {
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+  /* Generic Styles */
+  & .description-text {
+    font-size: 13px;
+    color: var(--light-grey);
+    line-height: 1.5em;
+    & span {
+      color: white;
+      font-weight: 500;
+    }
+  }
+  & .link-text {
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+  }
+  & p, & h2 {
+    color: white;
+  }
+  & ul.pt-menu {
+    height: 150px;
+    max-height: 160px !important;
+  }
+  & .hidden.tabs {
+    visibility: hidden;
+  }
+  & .tabs {
+    display: flex;
+    margin: 20px 8%;
+    width: 30%;
+    position: relative;
+    & .tab {
+      opacity: .5;
+      margin: 15px 0px 10px;
+      padding: 0px 5px;
+      width: 50%;
+      & p {
+        font-size: 14px;
+        color: white;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+    }
+    & .tab:first-child {
+      margin-left: 0px;
+    }
+    & .tab.active {
+      opacity: 1;
+    }
+    & .line {
+      width: 32%;
+      left: 0px;
+      transform: translate3d(0, 0, 0);
+      transition: .3s left ease-in-out;
+      position: absolute;
+      bottom: 0px;
+      height: 2px;
+      background: var(--accent-color);
+    }
+    /* Tab Line Animation */
+    & .line-2 {
+      left: 50%;
+    }
+  }
+  /* Get Started Logo */
+  & .logo-wrapper {
+    margin-bottom: 22px;
+    text-align: center;
+    & .mm-logo {
+      display: block;
+      margin: 0 auto;
+      padding-bottom: 6px;
+    }
+    &>img {
+      width: 18%;
+    }
+  }
+  & .text-wrapper {
+    padding-bottom: 15px;
+    & p {
+      font-size: 14px;
+    }
+  }
+  & .product-wrapper {
+    padding: 8px 0px 5px;
+    & p {
+      font-size: 18px;
+      & span {
+        font-weight: 600;
+      }
+    }
+  }
+  & .onboarding-button {
+    background: var(--accent-color);
+    border: none;
+    border-radius: 0px;
+    height: 48px;
+    box-shadow: none;
+    outline: none;
+    width: 100%;
+    margin: 3px 0px;
+  }
+  & input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  & .input-wrapper {
+    position: relative;
+    & label {
+      /* Positioning */
+      top: 25px;
+      left: 15px;
+      z-index: 1;
+      position: absolute;
+      /* Top Transition */
+      transition: transform 150ms ease-out, font-size 150ms ease-out;
+      /* Styles */
+      text-transform: uppercase;
+      font-size: 11px;
+      opacity: .5;
+    }
+    & input, & select {
+      height: 55px;
+      border-radius: 0px;
+      background: #303F4A;
+      border: none;
+      color: white;
+      width: 100%;
+      margin: 2px 0px;
+      box-shadow: none;
+      padding: 16px 14px 0px;
+    }
+  }
+  & .input-wrapper.labelUp {
+    & label {
+      transform: translate(0, -15px);
+      font-size: 9px;
+    }
+  }
+  & .onboarding-overlay {
+    /* Positioning */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Design */
+    background: var(--dark-blue);
+    opacity: .9;
+  }
+  & .slider-wrapper {
+    /* Positioning Slide Above Overlay */
+    position: relative;
+    z-index: 101;
+    margin: 8% auto;
+    height: 550px;
+    width: 600px;
+    overflow: hidden;
+    /* Width Transition */
+    transition: .3s width ease-in-out;
+    /* Design */
+    box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.1);
+    background: rgb(34, 45, 54, .75)
+  }
+  & .close {
+    /* Button Overrides */
+    background: none;
+    border: none;
+    outline: none;
+    /* Absolute Postioning */
+    top: 15px;
+    right: 15px;
+    opacity: .5;
+  }
+  & .slide-container {
+    width: 4000px;
+    margin: 20px 0px;
+    /* Left Transition */
+    left: 0px;
+    position: relative;
+    transition: .3s transform ease-in-out;
+    & .slide {
+      position: relative;
+      vertical-align: top;
+      display: inline-block;
+      min-height: 330px;
+      color: white;
+      & .slide-inner {
+        width: 84%;
+        margin: 0 auto;
+        & .slide-content {
+          width: 85%;
+          margin: 0 auto;
+        }
+        & h2, & .onboarding-edit-products-table-container {
+          margin-top: 25px;
+        }
+      }
+      & .button-right {
+        width: 165px;
+        position: absolute;
+        right: 8%;
+        bottom: 0px;
+      }
+    }
+  }
+}
+
+/* Slide  */
+
+.slide-0 {
+  width: 500px;
+}
+
+.onboarding-wrapper-0 {
+  & .slider-wrapper {
+    width: 500px;
+  }
+  /* Slide Left */
+  & .slide-container-0 {
+    transform: translateX(0px);
+  }
+}
+
+/* Slide  */
+
+.slide-1 {
+  width: 800px;
+}
+
+.onboarding-wrapper-1 {
+  & .slider-wrapper {
+    width: 800px;
+  }
+  /* Slide Left */
+  & .slide-container-1 {
+    transform: translateX(-500px);
+  }
+}
+
+/* Slide  */
+
+.slide-2 {
+  width: 900px;
+}
+
+.onboarding-wrapper-2 {
+  & .slider-wrapper {
+    width: 900px;
+  }
+  /* Slide Left */
+  & .slide-container-2 {
+    transform: translateX(-1300px);
+  }
+}
+
+/* Slide  */
+
+.slide-3 {
+  width: 500px;
+}
+
+.onboarding-wrapper-3 {
+  & .slider-wrapper {
+    width: 500px;
+  }
+  /* Slide Left */
+  & .slide-container-3 {
+    transform: translateX(-2200px);
+  }
+}

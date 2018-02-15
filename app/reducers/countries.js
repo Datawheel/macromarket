@@ -1,15 +1,17 @@
-const ACTION_TYPE = 'COUNTRIES';
+const ACTION_TYPE = "COUNTRIES";
 
-export default (state = {countries:null, loading:false}, action) => {
+export default (state = {countries: null, unnestedCountries: null, loading: false}, action) => {
   switch (action.type) {
     case `${ACTION_TYPE}_PENDING`:
-      return {countries:null, loading:true};
+      return {countries: null, loading: true};
 
     case `${ACTION_TYPE}_FULFILLED`:
       return {
         loading: false,
-        countries: action.data
+        countries: action.data.countries,
+        unnestedCountries: action.data.unnestedCountries
       };
+
     case `${ACTION_TYPE}_REJECTED`:
       return {
         loading: false,
@@ -18,4 +20,4 @@ export default (state = {countries:null, loading:false}, action) => {
       };
     default: return state;
   }
-}
+};

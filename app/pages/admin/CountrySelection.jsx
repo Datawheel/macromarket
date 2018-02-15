@@ -72,15 +72,14 @@ class CountrySelection extends React.Component {
   render() {
     const {allCountries} = this.props;
     const {countries} = this.state;
-
     return (
       <MultiSelect
-        items={allCountries.sort((a, b) => a.name.localeCompare(b.name))}
+        items={allCountries.sort((a, b) => a.name && a.name.localeCompare(b.name))}
         itemRenderer={this.renderCountry}
         itemPredicate={this.filterCountry}
         noResults={<MenuItem disabled text="No results." />}
         onItemSelect={this.handleCountrySelect}
-        tagInputProps={{tagProps: a => ({className: a.props.className}), onRemove: this.deleteTag, placeholder: "Add a country"}}
+        tagInputProps={{tagProps: a => ({className: a.props.className}), onRemove: this.deleteTag, placeholder: "Add a country", inputProps: {placeholder: "Add a country"}}}
         tagRenderer={this.renderTag}
         selectedItems={countries}
         resetOnClose={true}
