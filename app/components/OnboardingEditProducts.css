@@ -1,12 +1,12 @@
 .onboarding-edit-products {
   margin: 0 40px;
-  background-color: #25313A;
 }
 
 .onboarding-edit-products-table-container {
   max-height: 250px;
   overflow-y: scroll;
   display: block;
+  background-color: #25313A;
 }
 
 .onboarding-edit-products-table {
@@ -44,12 +44,12 @@
 
 .trade-dest {
   height: 50px;
-  transition: .4s  height ease-in-out;
+  transition: .4s height ease-in-out;
 }
 
 .add-product-button {
   background: #303F4A;
-  color: #888E93;
+  color:white;
   margin: 10px;
   border: none;
   border-radius: 0px;
@@ -59,10 +59,11 @@
   width: 25%;
   margin-top: 25px;
   opacity: 1;
-  transition: .4s  opacity ease-in-out;
+  transition: .4s opacity ease-in-out;
 }
 
 .add-product-button-disabled {
   cursor: not-allowed;
   opacity: .5;
+    color: #888E93;
 }
