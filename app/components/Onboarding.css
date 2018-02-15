@@ -29,6 +29,10 @@ ul.pt-menu {
   & .pt-callout.pt-intent-danger {
     background: #303F4A;
     padding: 20px 0px;
+    margin-top: 35px;
+    & button::focus {
+      outline: none;
+    }
   }
   & .pt-button.pt-intent-danger {
     box-shadow: none;
@@ -51,7 +55,7 @@ ul.pt-menu {
     font-size: 13px;
     color: var(--light-grey);
     line-height: 1.5em;
-    & span{
+    & span {
       color: white;
       font-weight: 500;
     }
@@ -98,7 +102,7 @@ ul.pt-menu {
     & .line {
       width: 32%;
       left: 0px;
-      transform: translate3d(0,0,0);
+      transform: translate3d(0, 0, 0);
       transition: .3s left ease-in-out;
       position: absolute;
       bottom: 0px;

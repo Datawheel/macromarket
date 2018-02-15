@@ -17,12 +17,13 @@ class OnboardingSuccess extends React.Component {
 
   componentDidMount() {
     this.props.isAuthenticated();
-
   }
-  navigateToSettings() {
+
+  navigateToSettings = () => {
     this.props.toggleOverlay();
     browserHistory.push("/settings/");
   }
+
   sendActivation(e) {
     e.preventDefault();
     console.log("here");

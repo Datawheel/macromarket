@@ -18,7 +18,7 @@ class OnboardingSlide extends React.Component {
   }
   productTab = () => {
     const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
-    toast.show({message: "You must select a company to continue", intent: Intent.DANGER});
+    toast.show({message: "You must select or create a company to continue.", intent: Intent.DANGER});
   }
 
   render() {
