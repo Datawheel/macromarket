@@ -59,12 +59,12 @@ class OnboardingSignUp extends Component {
     const {auth, t} = this.props;
     const {error, submitted} = this.state;
 
-    if (submitted && !auth.loading && !prevState.submitted) {
+    if (submitted && !auth.loading) {
       if (auth.error === "SIGNUP_EXISTS") {
         this.showToast(t("SignUp.error.Exists"), "blocked-person", Intent.WARNING);
         this.setState({submitted: false});
       }
-      else if (!auth.error) {
+      else if (!auth.error && auth.msg === "SIGNUP_SUCCESS") {
         this.showToast(t("SignUp.success"), "endorsed", Intent.SUCCESS);
       }
     }
@@ -84,7 +84,6 @@ class OnboardingSignUp extends Component {
     const {auth, legal, t} = this.props;
     const {agreedToTerms} = this.state;
     const email = this.state.email === null ? auth.error && auth.error.email ? auth.error.email : "" : this.state.email;
-    console.log(this.state.labelUp);
     return (
       <div>
         <form id="signup" onSubmit={this.onSubmit.bind(this)} className="login-container">

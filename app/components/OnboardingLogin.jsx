@@ -43,7 +43,7 @@ class OnboardingLogin extends Component {
     const {auth, mailgun, t} = this.props;
     const {email, submitted, toast} = this.state;
 
-    if (submitted && !auth.loading && !prevState.submitted) {
+    if (submitted && !auth.loading) {
 
       if (auth.error === "WRONG_PW") {
         toast.show({
@@ -67,7 +67,7 @@ class OnboardingLogin extends Component {
         toast.show({iconName: "error", intent: Intent.DANGER, message: t("Reset.actions.RESET_SEND_FAILURE")});
         this.setState({submitted: false});
       }
-      else if (!auth.error) {
+      else if (!auth.error && auth.msg === "LOGIN_SUCCESS") {
         toast.show({iconName: "endorsed", intent: Intent.SUCCESS, message: t("Login.success")});
       }
     }
