@@ -116,7 +116,7 @@ ul.pt-menu {
   }
   /* Get Started Logo */
   & .logo-wrapper {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
     & .mm-logo {
       display: block;
@@ -129,11 +129,14 @@ ul.pt-menu {
   }
   & .text-wrapper {
     padding-bottom: 15px;
+    & p {
+      font-size: 14px;
+    }
   }
   & .product-wrapper {
     padding: 8px 0px 5px;
     & p {
-      font-size: 20px;
+      font-size: 18px;
       & span {
         font-weight: 600;
       }
