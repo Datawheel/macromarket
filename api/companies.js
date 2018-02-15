@@ -125,8 +125,9 @@ module.exports = function(app) {
           include: [db.Country]
         });
         const user = await db.users.findOne({where:{id: company.uid}});
-        const result = user.activated ? company : "Not found";
-        res.json(result);
+        company.dataValues.activated = user.activated;
+
+        res.json(company);
       } catch (error) {
         res.json(error);
       }
