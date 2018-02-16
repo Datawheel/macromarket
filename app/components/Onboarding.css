@@ -78,7 +78,7 @@ ul.pt-menu {
   }
   & .tabs {
     display: flex;
-    margin: 20px 8%;
+    margin: 10px 8%;
     width: 30%;
     position: relative;
     & .tab {
@@ -142,7 +142,17 @@ ul.pt-menu {
       }
     }
   }
+  & .legal-terms {
+    margin: 20px;
+    font-weight: 300;
 
+    & span {
+      color:var(--light-grey);
+      margin-top: 7px;
+    }
+    & a {
+    }
+  }
   & .onboarding-button {
     background: var(--accent-color);
     border: none;
@@ -204,7 +214,7 @@ ul.pt-menu {
     position: relative;
     z-index: 101;
     margin: 8% auto;
-    height: 550px;
+    height: 600px;
     width: 600px;
     overflow: hidden;
     /* Width Transition */
