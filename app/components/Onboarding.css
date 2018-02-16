@@ -29,7 +29,7 @@ ul.pt-menu {
   & .pt-callout.pt-intent-danger {
     background: #303F4A;
     padding: 20px 0px;
-    margin-top: 35px;
+    margin: 20px 0;
     & button::focus {
       outline: none;
     }
@@ -40,7 +40,7 @@ ul.pt-menu {
     background: var(--red);
     height: 48px;
     border-radius: 0;
-    width: 50%;
+    width: 65%;
     display: block;
     margin: 0 auto;
   }
@@ -142,6 +142,7 @@ ul.pt-menu {
       }
     }
   }
+
   & .onboarding-button {
     background: var(--accent-color);
     border: none;
@@ -221,6 +222,19 @@ ul.pt-menu {
     top: 15px;
     right: 15px;
     opacity: .5;
+  }
+  & .buttons-wrapper {
+    display: flex;
+   &  button {
+      margin: 20px 5px;
+    }
+
+    & button:first-child {
+      margin-left: 0px;
+    }
+    & button:nth-child(1) {
+      margin-right: 0px;
+    }
   }
   & .slide-container {
     width: 4000px;
