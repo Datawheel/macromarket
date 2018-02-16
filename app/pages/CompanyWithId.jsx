@@ -37,6 +37,8 @@ class CompanyWithId extends React.Component {
 
   render() {
     const {company, loading, error, trades} = this.props;
+    const slug = this.props.params.companySlug;
+
     if (loading) {
       return (
         <div className="blue-loading">
@@ -54,7 +56,7 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    if (!company || !company.activated) {
+    if (!company || (!company.activated && slug.slice(0, 3) !== "ca_")) {
       return (
         <div className="error-404">
           <div className="error-gif"></div>
