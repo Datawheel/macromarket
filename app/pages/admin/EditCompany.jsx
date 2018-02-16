@@ -5,7 +5,7 @@ import {deleteCompany} from "../../actions/userActions";
 import CountrySearch from "./CountrySearch";
 import {fetchData} from "datawheel-canon";
 import api, {url} from "../../api";
-import {Dialog, Intent, Position, ProgressBar, Toaster} from "@blueprintjs/core";
+import {Dialog, Intent, Position, ProgressBar, Toaster, Button} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import "./EditCompany.css";
@@ -427,10 +427,10 @@ class EditCompany extends React.Component {
               </div>
               <div className="pt-dialog-footer">
                 <div className="pt-dialog-footer-actions">
-                  <button
+                  <Button
                     onClick={this.toggleConfirmDelete}
                     text="Cancel" />
-                  <button
+                  <Button
                     intent={Intent.DANGER}
                     onClick={() => {
                       this.deleteCompany();
