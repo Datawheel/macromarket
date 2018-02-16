@@ -14,7 +14,6 @@ class OnboardingSuccess extends React.Component {
     };
   }
 
-
   componentDidMount() {
     this.props.isAuthenticated();
   }
@@ -59,7 +58,11 @@ class OnboardingSuccess extends React.Component {
               </p>
               <div className="pt-callout pt-intent-danger">
                 <h5>E-mail: Not Verified</h5>
-                <button className="pt-button pt-fill pt-intent-danger" onClick={this.sendActivation.bind(this)}>{ "Send Activation Email" }</button>
+                <button className="pt-button pt-fill pt-intent-danger" onClick={this.sendActivation.bind(this)}>{ "Resend Activation Email" }</button>
+              </div>
+              <div className="buttons-wrapper">
+                <button onClick={this.navigateToSettings} className="onboarding-button">Continue Browsing</button>
+                <button onClick={this.navigateToSettings} className="onboarding-button">Settings</button>
               </div>
             </div>
             : <div><div className="text-wrapper">
@@ -67,7 +70,10 @@ class OnboardingSuccess extends React.Component {
                 . Make your company stand out by visiting your settings to add more information to your company!</p> :
                 <p className="description-text">Make your company stand out by visiting your settings to add more information to your company!</p>}
             </div>
-            <button onClick={this.navigateToSettings} className="onboarding-button">Settings</button>
+            <div className="buttons-wrapper">
+              <button onClick={this.props.toggleOverlay} className="onboarding-button">Continue Browsing</button>
+              <button onClick={this.navigateToSettings} className="onboarding-button">Settings</button>
+              </div>
             </div>
           }
         </div>

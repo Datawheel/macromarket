@@ -112,7 +112,7 @@ class OnboardingSignUp extends Component {
             <input value={this.state.passwordAgain} type="password" name="passwordAgain" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="4" />
           </div>
           { legal.privacy || legal.terms
-            ? <label className="pt-control pt-checkbox" htmlFor="ppcbox">
+            ? <label className=" legal-terms pt-control pt-checkbox" htmlFor="ppcbox">
               <input type="checkbox" id="ppcbox" name="agreedToTerms" checked={agreedToTerms} onChange={this.onChange} />
               <span className="pt-control-indicator"></span>
               <span dangerouslySetInnerHTML={{__html: legal.privacy && legal.terms ? t("SignUp.PrivacyTermsText") : legal.privacy ? t("SignUp.PrivacyText") : t("SignUp.TermsText"), legal}}></span>

@@ -23,7 +23,7 @@ class OnboardingGetStarted extends React.Component {
           {!user && !isSignupFormVisible && !isLoginFormVisible &&
               <div>
                 <div className="text-wrapper">
-                  <p className="description-text">Thank you for visiting the Macro Market! The Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+                  <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
                   {product &&
                   <div className="product-wrapper">
                     <p>Create an account to be listed under <span>{product.name}</span>.</p>
@@ -51,7 +51,7 @@ class OnboardingGetStarted extends React.Component {
                 <div className="product-wrapper">
                   <p>Interested in being listed under <span>{product.name}</span>?</p>
                 </div>}
-                <p className="description-text">Macro Market is a marketplace for exporting and importing goods. Create an account to list your company under different products and countries!</p>
+                <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
               </div>
               <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
             </div>
