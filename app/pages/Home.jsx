@@ -179,7 +179,7 @@ class Home extends React.Component {
                 {this.countries.map(c => <CardHome key={c.id} content={c} />)}
               </div>
               <div className="products row">
-                <h3>Prdoucts</h3>
+                <h3>Products</h3>
                 {this.products.map(p => <CardHome key={p.id} content={p} />)}
               </div>
               <div className="companies row">
