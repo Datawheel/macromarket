@@ -15,8 +15,8 @@
 #   import style from "style.yml";
 #
 
-dark: "rgb(61, 71, 55)"
-light: "rgb(101, 111, 95)"
+dark: "#141D23"
+light: "#DBB706"
 white: "#fafafa"
 
 nav-height: 40px

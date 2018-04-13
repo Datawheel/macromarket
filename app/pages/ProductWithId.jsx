@@ -4,6 +4,7 @@ import Select from "react-select";
 import {browserHistory} from "react-router";
 import Card from "../components/Card.jsx";
 import AnchorList from "../components/AnchorList.jsx";
+import Loading from "../components/Loading.jsx";
 import {Link} from "react-router";
 import {fetchProduct} from "../actions/productActions";
 import {fetchCountries} from "../actions/countriesActions";
@@ -149,11 +150,7 @@ class ProductWithId extends React.Component {
     const {product, productData} = data;
 
     if (loading || !product || !countries || !trades || !products) {
-      return (
-        <div className="blue-loading">
-          <div>loading...</div>
-        </div>
-      );
+      return <Loading />;
     }
 
     if (error || countriesError) {
@@ -184,8 +181,6 @@ class ProductWithId extends React.Component {
         first = false;
       });
     });
-
-
 
     let productCategory = "";
     if (products) {

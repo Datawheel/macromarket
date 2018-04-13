@@ -238,7 +238,6 @@ export function fetchProfileTradesByCompany(companySlug) {
         const imports = [];
         const countries = [];
 
-        console.log(response.data)
         response.data.map(product => {
 
           if (product.Country) {

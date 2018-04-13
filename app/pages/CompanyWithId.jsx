@@ -36,16 +36,8 @@ class CompanyWithId extends React.Component {
   isEmptyObject = o => !o || Object.keys(o).every(x => o[x] === "" || o[x] === null || !o[x].length);
 
   render() {
-    const {company, loading, error, trades} = this.props;
-    const slug = this.props.params.companySlug;
-
-    if (loading) {
-      return (
-        <div className="blue-loading">
-          <div>loading...</div>
-        </div>
-      );
-    }
+    const {company, error, trades} = this.props;
+    const {companySlug: slug} = this.props.params;
 
     if (error) {
       return (
@@ -240,7 +232,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   company: state.data.company,
-  loading: state.companyProfile.loading,
   error: state.companyProfile.error || null,
   trades: state.trades.profileTrades,
   tradesLoading: state.trades.loading,
