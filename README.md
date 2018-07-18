@@ -4,7 +4,7 @@
 
 * Clone the project
 ```Bash
-git clone https://github.com/Datawheel/macromarket.git --branch canon --single-branch [folder-name]
+git clone https://github.com/Datawheel/macromarket.git [folder-name]
 ```
 
 * Go to project's folder
