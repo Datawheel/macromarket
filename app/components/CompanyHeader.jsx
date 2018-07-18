@@ -74,15 +74,13 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
         </div>
         {company.ca_link
           ? <div className="page-links">
-            <a href={company.ca_link}>
-              <div className="link-wrapper">
-                <div className="icon-wrapper color-ca">
-                  <img src="/images/icons/icon-ca.png" />
-                </div>
-                <div className="colored-wrapper">
-                  <div className="darker-color color-ca"></div>
-                  <p>ConnectAmericas</p>
-                </div>
+            <a className="link-wrapper" href={company.ca_link}>
+              <div className="icon-wrapper color-ca">
+                <img src="/images/icons/icon-ca.png" />
+              </div>
+              <div className="colored-wrapper">
+                <div className="darker-color color-ca"></div>
+                <p>ConnectAmericas</p>
               </div>
             </a>
           </div>

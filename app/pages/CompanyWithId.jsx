@@ -104,15 +104,13 @@ class CompanyWithId extends React.Component {
                       ? <div>{trades.imports.map((trade, index) => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade.id}`}>
-                            <div className="product-wrapper">
-                              <div className={`icon-wrapper color-${id}`}>
-                                <img src={`/images/product_icon/hs_${id}.png`}></img>
-                              </div>
-                              <div className="colored-wrapper">
-                                <div className={`darker-color color-${id}`}></div>
-                                <p>{trade.name}</p>
-                              </div>
+                          <Link className="product-wrapper" key={index} to={`/product/${trade.id}`}>
+                            <div className={`icon-wrapper color-${id}`}>
+                              <img src={`/images/product_icon/hs_${id}.png`}></img>
+                            </div>
+                            <div className="colored-wrapper">
+                              <div className={`darker-color color-${id}`}></div>
+                              <p>{trade.name}</p>
                             </div>
                           </Link>
                         );
@@ -129,15 +127,13 @@ class CompanyWithId extends React.Component {
                       ? <div>{trades.exports.map((trade, index) => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade.id}`}>
-                            <div className="product-wrapper">
-                              <div className={`icon-wrapper color-${id}`}>
-                                <img src={`/images/product_icon/hs_${id}.png`}></img>
-                              </div>
-                              <div className="colored-wrapper">
-                                <div className={`darker-color color-${id}`}></div>
-                                <p>{trade.name}</p>
-                              </div>
+                          <Link className="product-wrapper" key={index} to={`/product/${trade.id}`}>
+                            <div className={`icon-wrapper color-${id}`}>
+                              <img src={`/images/product_icon/hs_${id}.png`}></img>
+                            </div>
+                            <div className="colored-wrapper">
+                              <div className={`darker-color color-${id}`}></div>
+                              <p>{trade.name}</p>
                             </div>
                           </Link>
                         );
@@ -161,15 +157,13 @@ class CompanyWithId extends React.Component {
                           const continentId = country.id.slice(0, 2);
                           const colorName = `color-${country.continent.toLowerCase().replace(" ", "-")}`;
                           return (
-                            <Link key={index} to={`/country/${country.id}`}>
-                              <div className="product-wrapper">
-                                <div className={`icon-wrapper ${colorName}`}>
-                                  <img src={`/images/flags/country_${continentId}.png`}></img>
-                                </div>
-                                <div className="colored-wrapper">
-                                  <div className={`darker-color ${colorName}`}></div>
-                                  <p>{country.name}</p>
-                                </div>
+                            <Link className="product-wrapper" key={index} to={`/country/${country.id}`}>
+                              <div className={`icon-wrapper ${colorName}`}>
+                                <img src={`/images/flags/country_${continentId}.png`}></img>
+                              </div>
+                              <div className="colored-wrapper">
+                                <div className={`darker-color ${colorName}`}></div>
+                                <p>{country.name}</p>
                               </div>
                             </Link>
                           );
@@ -203,15 +197,13 @@ class CompanyWithId extends React.Component {
                     <div key={industry.id} className="section-wrapper">
                       <h3>{industry.name}</h3>
                       {industry.products_services.map(ps =>
-                        <a key={ps.id} href={company.ca_link}>
-                          <div className="link-wrapper">
-                            <div className="icon-wrapper color-ca">
-                              <img src="/images/icons/icon-ca.png" />
-                            </div>
-                            <div className="colored-wrapper">
-                              <div className="darker-color color-ca"></div>
-                              <p>{ps.product_alias_name}</p>
-                            </div>
+                        <a className="link-wrapper" key={ps.id} href={company.ca_link}>
+                          <div className="icon-wrapper color-ca">
+                            <img src="/images/icons/icon-ca.png" />
+                          </div>
+                          <div className="colored-wrapper">
+                            <div className="darker-color color-ca"></div>
+                            <p>{ps.product_alias_name}</p>
                           </div>
                         </a>
                       )}

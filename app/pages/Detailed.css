@@ -101,7 +101,6 @@
                     text-transform: uppercase;
                     font-weight: 300;
                     text-align: left;
-                    vertical-align: baseline;
                     font-size: 13px;
                     margin: 0;
                 }
@@ -133,10 +132,6 @@
     }
 
     & .intro-text {
-      /*background: #212831;
-      display: inline-block;
-      float: right;
-      width: 25%;*/
       padding: 55px 0 24px 32px;
       flex: 0 0 25em;
 
@@ -200,17 +195,20 @@
     & .product-wrapper,
     & .link-wrapper {
       display: inline-block;
-      margin: 8px 16px;
-      width: 285px;
-      height: 64px;
+      margin: 10px 0;
+      vertical-align: top;
+      padding-left: 40px;
+      position: relative;
+
+      &:not(:last-of-type) {
+        margin-right: 20px;
+      }
 
       & .icon-wrapper {
-        position: relative;
-        display: inline-block;
-        width: 64px;
-        height: 64px;
-        margin: 0px;
-        z-index: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        width: 40px;
 
         & img {
           margin-right: 0px;
@@ -219,30 +217,15 @@
 
       & .colored-wrapper {
         display: inline-block;
-        width: 220px;
-        height: 64px;
+        min-height: 40px;
+        min-width: 170px;
+        max-width: 400px;
         padding: 0px;
         margin: 0px;
 
         & p {
-            font-size: 14px;
-            padding: 8px 10px 8px 12px;
-            width: 100%;
-        }
-      }
-    }
-    & .link-wrapper {
-      margin: 10px 0 0 0;
-
-      & .icon-wrapper {
-        height: 40px;
-        width: 40px;
-      }
-      & .colored-wrapper {
-        width: 170px;
-        height: 40px;
-        & p {
-          font-size: 16px;
+            padding: 0.625em 1em;
+            font-size: 16px;
         }
       }
     }

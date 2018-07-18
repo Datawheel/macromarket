@@ -227,8 +227,7 @@ button {
 
 .colored-wrapper {
   display: inline-block;
-  vertical-align: top;
-  height: 32px;
+  vertical-align: middle;
   width: 100%;
   text-align: left;
   position: relative;
@@ -244,21 +243,16 @@ button {
     height: 100%;
     width: 100%;
     top: 0;
+    left: 0;
     position: absolute;
   }
   & p {
     margin: 0;
-    position: absolute;
-    top: 50%;
-    width: 80%;
-    padding: 0 10%;
-    transform: translateY(-50%);
+    position: relative;
+    padding: 0 10 %;
     margin: 0;
     color: #fff;
     font-size: 9px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 

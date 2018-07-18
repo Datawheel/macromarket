@@ -338,7 +338,7 @@
       padding-left: 0 !important;
       & .section-wrapper {
         flex: 1;
-        &>div {
+        & div {
           display: flex;
           height: 100%;
           align-items: center;
@@ -367,7 +367,7 @@
       right: 32px;
       top: 32px;
       & .link-wrapper {
-        width: 210px;
+        min-width: 210px;
       }
     }
   }

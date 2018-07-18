@@ -25,7 +25,6 @@ function genRandId(path) {
   let candidates;
   if (path.includes("country")) {
     candidates = ["saper", "napri", "sapry", "ocnzl", "afken", "asbgd", "afzaf", "aschn", "asvnm", "eudeu", "eufra", "nacri", "namex", "nausa", "saarg", "sabra", "sachl", "euisl"];
-
   }
   else if (path.includes("product")) {
     candidates = ["010104", "14710410", "11540232", "15730210", "115512", "11570292", "115903", "02080540", "041601", "042306", "020804", "01010420", "01020649", "01020750", "01030614", "010406", "02070960", "02071220", "020713", "15820220", "15830120", "15830610", "02071332", "02080710", "15731520", "157414", "16848350", "06284210", "16842541", "168427", "18902111", "14710420", "168425"];
