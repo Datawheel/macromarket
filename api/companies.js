@@ -215,6 +215,7 @@ module.exports = function(app) {
           blobStream.on("error", err => {
             console.log("blobStream error\n\n");
             console.log(err);
+            return res.json({error: err});
           });
 
           blobStream.on("finish", () => {

@@ -155,12 +155,22 @@ class EditCompany extends React.Component {
             formData.append("image", uploadInput.files[0]);
             return api.post(`/api/companies/${id}/${imgType}`, formData, config);
           });
-          Promise.all(imgUploadPromises).then(imgUploadResponses => {
-            this.setState({newCompany: false, isSaving: false});
-            const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-            toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
-            browserHistory.push("/settings/");
-          });
+          Promise.all(imgUploadPromises)
+            .then(imgUploadResponses => {
+              this.setState({newCompany: false, isSaving: false});
+              const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+              const errs = imgUploadResponses.filter(d => d.data.error);
+              if(errs.length) {
+                toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
+              }
+              else {
+                toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
+              }
+              browserHistory.push("/settings/");
+            })
+            .catch(reason => { 
+              console.log("An error occured!", reason);
+            });
         });
       }
     }
