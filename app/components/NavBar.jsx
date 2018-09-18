@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router";
 import Search from "./Search.jsx";
 import {connect} from "react-redux";
-import {isAuthenticated} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
 import "./Navbar.css";
 
 import {Popover, PopoverInteractionKind, Position} from "@blueprintjs/core";
@@ -57,26 +57,28 @@ class NavBar extends React.Component {
               </Link>
             </li>
             { user
-                ? <Popover
-                    interactionKind={PopoverInteractionKind.HOVER}
-                    popoverClassName="pt-popover-content-sizing user-popover"
-                    position={Position.BOTTOM_RIGHT}
-                  >
-                    <li className="nav-bar-element nav-settings">
-                      <Link to="/settings/">Settings</Link>
-                    </li>
-                    <div className="nav-bar-dropdown">
-                      <Link to="/settings">Settings</Link>
-                      <a className="" href="/auth/logout">Logout</a>
-                    </div>
-                  </Popover>
-                : <li className="nav-bar-element">
-                  <Link to="/login">Log In</Link>
-                </li>}
+              ? <Popover
+                interactionKind={PopoverInteractionKind.HOVER}
+                popoverClassName="pt-popover-content-sizing user-popover"
+                position={Position.BOTTOM_RIGHT}
+              >
+                <li className="nav-bar-element nav-settings">
+                  <Link to="/settings/">Settings</Link>
+                </li>
+                <div className="nav-bar-dropdown">
+                  <Link to="/settings">Settings</Link>
+                  <a className="" href="/auth/logout">Logout</a>
+                </div>
+              </Popover>
+              : <li className="nav-bar-element">
+                <Link to="/login">Log In</Link>
+              </li>}
             {this.props.location.pathname === "/"
               ? null
               : <li className="nav-bar-element search-icon-wrapper">
-                <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={() => {activateSearch(true)}}></button>
+                <button type="button" className="pt-button pt-minimal pt-icon-search" onClick={() => { 
+activateSearch(true)
+ ;}}></button>
               </li>}
           </ul>
         </div>

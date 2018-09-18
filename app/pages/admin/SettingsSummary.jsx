@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import {Activate as CanonActivate} from "datawheel-canon";
+import {Activate as CanonActivate} from "@datawheel/canon-core";
 import {NonIdealState} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
-import {isAuthenticated} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
 import api from "../../api.js";
 import CompanyCard from "./CompanyCard";
 import {nest} from "d3-collection";

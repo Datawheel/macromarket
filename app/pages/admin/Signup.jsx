@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {signup} from "../../actions/authenticationActions";
-import {SignUp} from "datawheel-canon";
+import {SignUp} from "@datawheel/canon-core";
 import "./Settings.css";
 import Sidebar from "components/Sidebar";
 import "./Admin.css";
@@ -18,7 +18,7 @@ class Signup extends React.Component {
   }
 
   validateEmail = email => {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
@@ -73,16 +73,12 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {user: state.authentication.user, error: state.authentication.error};
-};
+const mapStateToProps = state => ({user: state.authentication.user, error: state.authentication.error});
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
     signup: (email, password) => {
       dispatch(signup(email, password));
     }
-  };
-};
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

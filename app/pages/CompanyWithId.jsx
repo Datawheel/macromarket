@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {fetchData} from "datawheel-canon";
+import {fetchData} from "@datawheel/canon-core";
 import {url} from "../api";
 import {fetchProfileTradesByCompany} from "../actions/tradesActions";
 import CompanyHeader from "../components/CompanyHeader";
@@ -48,7 +48,7 @@ class CompanyWithId extends React.Component {
       );
     }
 
-    if (!company || (!company.activated && slug.slice(0, 3) !== "ca_")) {
+    if (!company || !company.activated && slug.slice(0, 3) !== "ca_") {
       return (
         <div className="error-404">
           <div className="error-gif"></div>

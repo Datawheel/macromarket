@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Canon, isAuthenticated} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
 import NavBar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
 import OnboardingOverlay from "./components/OnboardingOverlay";
@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     const {isOpen} = this.props;
     return (
-      <Canon className={isOpen ? "overlayOpen overlay-bg" : "overlay-bg"}>
+      <div className={isOpen ? "overlayOpen overlay-bg" : "overlay-bg"}>
         <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
         <NavBar location={this.props.location} />
         <OnboardingOverlay query={this.props.location.query}/>
@@ -28,7 +28,7 @@ class App extends React.Component {
           {this.props.children}
           <Footer />
         </div>
-      </Canon>
+      </div>
     );
   }
 }

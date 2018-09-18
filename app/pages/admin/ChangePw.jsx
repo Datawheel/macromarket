@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
-import {isAuthenticated} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
 import api from "../../api.js";
 import "./Settings.css";
 import "./Admin.css";

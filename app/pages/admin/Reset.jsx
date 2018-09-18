@@ -1,6 +1,6 @@
 import React from "react";
 import {browserHistory} from "react-router";
-import {Reset as CanonReset} from "datawheel-canon";
+import {Reset as CanonReset} from "@datawheel/canon-core";
 import Sidebar from "components/Sidebar";
 import "./Admin.css";
 import "./Settings.css";

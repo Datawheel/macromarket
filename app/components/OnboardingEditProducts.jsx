@@ -66,7 +66,7 @@ class EditProducts extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-      return !nextState.isSaving;
+    return !nextState.isSaving;
   }
 
   handleChange = e => {
@@ -86,45 +86,45 @@ class EditProducts extends React.Component {
 
     api.get(`/api/trades/company/${company.slug}`).then(res => {
       res.data.forEach(t => {
-          const prodRow = trades.find(tt => tt.product.id === t.product_id);
-          const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
-          const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
-          const country = t.Country ? [t.Country] : [];
-          if (prodRow && country) {
-              prodRow[tKey] = prodRow[tKey].concat(country);
-          }
-          else {
-              trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
-          }
-      });
-        if (!unsavedTrades || newProduct) {
-            this.props.updateSlideOverlay(3);
-            return;
-
+        const prodRow = trades.find(tt => tt.product.id === t.product_id);
+        const tKey = t.trade_flow === "imports" ? "origins" : "destinations";
+        const tOtherKey = t.trade_flow === "imports" ? "destinations" : "origins";
+        const country = t.Country ? [t.Country] : [];
+        if (prodRow && country) {
+          prodRow[tKey] = prodRow[tKey].concat(country);
         }
-        trades.forEach(t => {
-            if (!t.origins.length && !t.destinations.length) {
-                tradesForServer.push({product: t.product, tradeFlow: "exports", country: null});
-            }
-            t.origins.forEach(o => {
-                tradesForServer.push({product: t.product, tradeFlow: "imports", country: o});
-            });
-            t.destinations.forEach(d => {
-                tradesForServer.push({product: t.product, tradeFlow: "exports", country: d});
-            });
-        });
+        else {
+          trades.push({product: t.Product, [tKey]: country, [tOtherKey]: []});
+        }
+      });
+      if (!unsavedTrades || newProduct) {
+        this.props.updateSlideOverlay(3);
+        return;
 
-        api.post(`/api/trades/company/${company.id}`, tradesForServer).then(() => {
-            const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-            toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
-            this.setState({unsavedTrades: false});
-            if (this.props.isOverlay) {
-                this.props.updateSlideOverlay(3);
-            }
-            else {
-                browserHistory.push("/settings/");
-            }
+      }
+      trades.forEach(t => {
+        if (!t.origins.length && !t.destinations.length) {
+          tradesForServer.push({product: t.product, tradeFlow: "exports", country: null});
+        }
+        t.origins.forEach(o => {
+          tradesForServer.push({product: t.product, tradeFlow: "imports", country: o});
         });
+        t.destinations.forEach(d => {
+          tradesForServer.push({product: t.product, tradeFlow: "exports", country: d});
+        });
+      });
+
+      api.post(`/api/trades/company/${company.id}`, tradesForServer).then(() => {
+        const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+        toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
+        this.setState({unsavedTrades: false});
+        if (this.props.isOverlay) {
+          this.props.updateSlideOverlay(3);
+        }
+        else {
+          browserHistory.push("/settings/");
+        }
+      });
 
     });
 

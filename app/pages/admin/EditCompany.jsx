@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, browserHistory} from "react-router";
+import {Link} from "react-router";
 import {deleteCompany} from "../../actions/userActions";
 import CountrySearch from "./CountrySearch";
-import {fetchData} from "datawheel-canon";
+import {fetchData} from "@datawheel/canon-core";
 import api, {url} from "../../api";
 import {Dialog, Intent, Position, ProgressBar, Toaster, Button} from "@blueprintjs/core";
+import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";
 import "./EditCompany.css";
@@ -106,6 +107,7 @@ class EditCompany extends React.Component {
   }
 
   saveCompany = () => {
+    const {router} = this.context;
     this.setState({isSaving: true});
     const {id} = this.props.company;
     const company = {
@@ -142,13 +144,13 @@ class EditCompany extends React.Component {
               this.setState({newCompany: false, isSaving: false});
               const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
               const errs = imgUploadResponses.filter(d => d.data.error);
-              if(errs.length) {
+              if (errs.length) {
                 toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
               }
               else {
                 toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
               }
-              browserHistory.push("/settings/");
+              router.push("/settings/");
             })
             .catch(error => {
               // Do something with response error
@@ -156,7 +158,7 @@ class EditCompany extends React.Component {
                 const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
                 toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
                 console.log("Image too large!");
-                browserHistory.push("/settings/");
+                router.push("/settings/");
               }
               return Promise.reject(error.response);
             });
@@ -176,13 +178,13 @@ class EditCompany extends React.Component {
               this.setState({newCompany: false, isSaving: false});
               const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
               const errs = imgUploadResponses.filter(d => d.data.error);
-              if(errs.length) {
+              if (errs.length) {
                 toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
               }
               else {
                 toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
               }
-              browserHistory.push("/settings/");
+              router.push("/settings/");
             })
             .catch(error => {
               // Do something with response error
@@ -190,7 +192,7 @@ class EditCompany extends React.Component {
                 const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
                 toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
                 console.log("Image too large!");
-                browserHistory.push("/settings/");
+                router.push("/settings/");
               }
               return Promise.reject(error.response);
             });
@@ -204,27 +206,30 @@ class EditCompany extends React.Component {
   }
 
   deleteCompany = () => {
+    const {router} = this.context;
     const {id} = this.props.company;
     console.log("deleteing compnay id ", id);
 
     api.delete(`/api/companies/${id}/`).then(() => {
       const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
       toast.show({message: "Company deleted.", intent: Intent.SUCCESS});
-      browserHistory.push("/settings/");
+      router.push("/settings/");
     });
   }
 
-  addImage = imgType => {
-    return (<div className="pt-non-ideal-state">
+  addImage = imgType => 
+    <div className="pt-non-ideal-state">
       <div className="pt-non-ideal-state-visual pt-non-ideal-state-icon">
         <span className="pt-icon pt-icon-media"></span>
       </div>
       <h4 className="pt-non-ideal-state-title">No Image</h4>
       <div className="pt-non-ideal-state-description">
-        <button className="pt-button pt-icon-plus pt-minimal" role="button"onClick={() => {this[imgType].click()}}>Click here to upload an image.</button>
+        <button className="pt-button pt-icon-plus pt-minimal" role="button"onClick={() => { 
+          this[imgType].click()
+          ; 
+        }}>Click here to upload an image.</button>
       </div>
-    </div>);
-  }
+    </div>
 
   renderProgress = amount => ({
     className: "tests",
@@ -414,7 +419,10 @@ class EditCompany extends React.Component {
             </label>
             {coverImage
               ? <div className="pt-button-group pt-minimal">
-                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.coverImgField.click()}}>Replace</button>
+                <button className="pt-button pt-icon-refresh" role="button" onClick={() => { 
+                  this.coverImgField.click()
+                  ;
+                }}>Replace</button>
                 <button className="pt-button pt-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "coverImage")}>Remove</button>
               </div>
               : null}
@@ -424,7 +432,9 @@ class EditCompany extends React.Component {
             : coverImage
               ? <img src={coverImage} />
               : this.addImage("coverImgField")}
-          <input ref={imgField => { this.coverImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
+          <input ref={imgField => {
+            this.coverImgField = imgField; 
+          }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="cover-img" />
         </div>
 
         <div className="img-container">
@@ -434,7 +444,10 @@ class EditCompany extends React.Component {
             </label>
             {profileImage
               ? <div className="pt-button-group pt-minimal">
-                <button className="pt-button pt-icon-refresh" role="button" onClick={() => {this.profileImgField.click()}}>Replace</button>
+                <button className="pt-button pt-icon-refresh" role="button" onClick={() => { 
+                  this.profileImgField.click() 
+                  ; 
+                }}>Replace</button>
                 <button className="pt-button pt-icon-trash" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
               </div>
               : null}
@@ -444,7 +457,9 @@ class EditCompany extends React.Component {
             : profileImage
               ? <img src={profileImage} />
               : this.addImage("profileImgField")}
-          <input ref={imgField => { this.profileImgField = imgField; }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
+          <input ref={imgField => {
+            this.profileImgField = imgField; 
+          }} onChange={this.previewImg} type="file" name="image" accept=".jpg,.jpeg,.png" id="profile-img" />
         </div>
 
         <div className="button-group">
@@ -489,6 +504,10 @@ class EditCompany extends React.Component {
     );
   }
 }
+
+EditCompany.contextTypes = {
+  router: PropTypes.object
+};
 
 EditCompany.preneed = [
   fetchData("countries", `${url}/api/countries`, res => res),

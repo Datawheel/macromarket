@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import Card from "../components/Card.jsx";
 import AnchorList from "../components/AnchorList.jsx";
 import Dropdown from "../components/Dropdown";
-import {fetchData} from "datawheel-canon";
+import {fetchData} from "@datawheel/canon-core";
 import {url} from "../api";
 import CountryHeader from "../components/CountryHeader";
 import {nest} from "d3-collection";
@@ -66,36 +66,36 @@ class CountryWithId extends React.Component {
     const numCompanies = tradesByCompany.length;
     return numCompanies
       ? <p>
-          <span>The following is a list of all the companies that export or import products or services from {country.name}. </span>
-          {
-            numCompanies === 1
-              ? <span>There is one company exporting or importing from {country.name} named <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`}/>.&nbsp;</span>
-              : <span>There are {tradesByCompany.length} companies exporting and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`}/>.&nbsp;</span>
-          }
-          {
-            exportsByProduct.length
-              ? exportsByProduct.length === 1
-                ? <span>{
-                      numCompanies === 1
-                        ? <span>This company exports one product</span>
-                        : <span>These companies export one product</span>
-                    }, <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
-                : <span>{
-                      numCompanies === 1
-                        ? <span>This company exports {exportsByProduct.length} products</span>
-                        : <span>These companies export {exportsByProduct.length} products</span>
-                    } including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
-              : null
-          }
-          {
-            importsByProduct.length
-              ? importsByProduct.length === 1
-                ? <span>They import one product,
-                    <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
-                : <span>They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
-              : null
-          }
-        </p>
+        <span>The following is a list of all the companies that export or import products or services from {country.name}. </span>
+        {
+          numCompanies === 1
+            ? <span>There is one company exporting or importing from {country.name} named <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`}/>.&nbsp;</span>
+            : <span>There are {tradesByCompany.length} companies exporting and importing from {country.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`}/>.&nbsp;</span>
+        }
+        {
+          exportsByProduct.length
+            ? exportsByProduct.length === 1
+              ? <span>{
+                numCompanies === 1
+                  ? <span>This company exports one product</span>
+                  : <span>These companies export one product</span>
+              }, <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
+              : <span>{
+                numCompanies === 1
+                  ? <span>This company exports {exportsByProduct.length} products</span>
+                  : <span>These companies export {exportsByProduct.length} products</span>
+              } including <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
+            : null
+        }
+        {
+          importsByProduct.length
+            ? importsByProduct.length === 1
+              ? <span>They import one product,
+              <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
+              : <span>They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
+            : null
+        }
+      </p>
       : null;
   }
 
@@ -104,16 +104,16 @@ class CountryWithId extends React.Component {
     const {country, countryData, importData, exportData} = this.props.data;
 
     if (!country || !products) {
-      return (<div className="detailed-content-wrapper blue-loading">
+      return <div className="detailed-content-wrapper blue-loading">
         <div>loading..</div>
-      </div>);
+      </div>;
     }
 
     if (country.error) {
-      return (<div className="error-404">
+      return <div className="error-404">
         <div className="error-gif"></div>
         <p>OOPS! There's nothing here. But checkout the following pages that are here:</p>
-      </div>);
+      </div>;
     }
 
     const dropDownProducts = [];
@@ -129,10 +129,10 @@ class CountryWithId extends React.Component {
     });
 
     if (error) {
-      return (<div className="detailed-content-wrapper">
+      return <div className="detailed-content-wrapper">
         <h2>Error</h2>
         <p>Please refresh the page.</p>
-      </div>);
+      </div>;
     }
     let allTrades;
     if (caTrades && trades) {
@@ -140,7 +140,7 @@ class CountryWithId extends React.Component {
       allTrades = trades.filter((trade, index, self) => self.findIndex(t => t.company_id === trade.company_id) === index).concat(caTrades);
     }
 
-    return (<div className="detailed-content-wrapper country">
+    return <div className="detailed-content-wrapper country">
       <Helmet title={`${header.title} - ${country.name}`}/>
       <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
       <div className="filter-wrapper">
@@ -206,14 +206,13 @@ class CountryWithId extends React.Component {
               </div>
         }
       </div>
-    </div>);
+    </div>;
   }
 }
 
 CountryWithId.preneed = [
   fetchData("country", `${url}/api/countries/<countryWithId>`, res => res),
-  fetchData("products", `${url}/api/products`, res => {
-    return nest().key(d => d.id.substring(0, 2)).sortKeys(ascending).key(d => d.id.substring(2, 4)).sortKeys(ascending).key(d => d.id.substring(4, 6)).sortKeys(ascending).entries(res).map(d => {
+  fetchData("products", `${url}/api/products`, res => nest().key(d => d.id.substring(0, 2)).sortKeys(ascending).key(d => d.id.substring(2, 4)).sortKeys(ascending).key(d => d.id.substring(4, 6)).sortKeys(ascending).entries(res).map(d => {
       const myHs2 = d.values.shift();
       const myNewValues = d.values.map(dd => {
         const myHs4 = dd.values.shift();
@@ -231,8 +230,7 @@ CountryWithId.preneed = [
       };
 
       return returnData;
-    });
-  })
+    }))
 ];
 
 CountryWithId.need = [
@@ -255,8 +253,7 @@ CountryWithId.postneed = [
   fetchData("exportData", "https://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.export>/", res => res.data[0])
 ];
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     data: state.data,
     country: state.countryProfile.country,
     loading: state.countryProfile.loading,
@@ -265,7 +262,6 @@ const mapStateToProps = state => {
     trades: state.data.trades,
     caTrades: state.data.caTrades,
     tradesError: state.trades.error
-  };
-};
+  });
 
 export default connect(mapStateToProps)(CountryWithId);

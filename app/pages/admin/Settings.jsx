@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, browserHistory} from "react-router";
-import {isAuthenticated} from "datawheel-canon";
-import {fetchData} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
+import {fetchData} from "@datawheel/canon-core";
 import {url} from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import "./Admin.css";

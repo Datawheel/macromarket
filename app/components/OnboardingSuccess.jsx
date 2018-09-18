@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {isAuthenticated} from "datawheel-canon";
+import {isAuthenticated} from "@datawheel/canon-core";
 import {browserHistory} from "react-router";
 import {toggleOverlay, sendActivation} from "../actions/onboardingActions";
 import {Intent, Toaster} from "@blueprintjs/core";
@@ -67,13 +67,13 @@ class OnboardingSuccess extends React.Component {
             </div>
             : <div><div className="text-wrapper">
               {this.props.product ? <p className="description-text">You company has been listed under <span>{this.props.product.name}</span>
-                . Make your company stand out by visiting your settings to add more information to your company!</p> :
-                <p className="description-text">Make your company stand out by visiting your settings to add more information to your company!</p>}
+                . Make your company stand out by visiting your settings to add more information to your company!</p>
+                : <p className="description-text">Make your company stand out by visiting your settings to add more information to your company!</p>}
             </div>
             <div className="buttons-wrapper">
               <button onClick={this.props.toggleOverlay} className="onboarding-button">Continue Browsing</button>
               <button onClick={this.navigateToSettings} className="onboarding-button">Settings</button>
-              </div>
+            </div>
             </div>
           }
         </div>

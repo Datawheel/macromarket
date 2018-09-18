@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import {fetchData} from "datawheel-canon";
+import {fetchData} from "@datawheel/canon-core";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import {url} from "../../api";
 import "./Admin.css";

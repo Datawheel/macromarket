@@ -14,7 +14,7 @@ import "./Detailed.css";
 import "../components/Dropdown.css";
 import ProductHeader from "../components/ProductHeader";
 import Dropdown from "../components/Dropdown";
-import {fetchData} from "datawheel-canon";
+import {fetchData} from "@datawheel/canon-core";
 import {url} from "../api";
 import {nest} from "d3-collection";
 import {NotFound} from "pages/NotFound";
@@ -254,8 +254,7 @@ class ProductWithId extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
     fetchProduct: id => {
       dispatch(fetchProduct(id));
     },
@@ -268,8 +267,7 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: () => {
       dispatch(fetchProducts());
     }
-  };
-};
+  });
 
 ProductWithId.preneed = [
   fetchData("product", `${url}/api/products/<productWithId>`, res => res),
@@ -281,8 +279,7 @@ ProductWithId.need = [
 ];
 ProductWithId.postneed = [];
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     data: state.data,
     product: state.productProfile.product,
     loading: state.productProfile.loading,
@@ -295,7 +292,6 @@ const mapStateToProps = state => {
     tradesError: state.trades.error,
     products: state.products.products,
     productsLoading: state.products.loading
-  };
-};
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductWithId);
