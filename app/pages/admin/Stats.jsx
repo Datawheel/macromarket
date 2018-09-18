@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 import {Tab2, Tabs2} from "@blueprintjs/core";
 import StatPanel from "./StatPanel";
+import PropTypes from "prop-types";
 import "./Settings.css";
 import "./Admin.css";
 
@@ -12,9 +12,10 @@ class Stats extends React.Component {
   }
 
   componentDidMount() {
+    const {router} = this.context;
     const {user, loading} = this.props.auth;
     if (!loading && user.role !== 2) {
-      browserHistory.push("/login");
+      router.push("/login");
     }
   }
 
@@ -32,5 +33,9 @@ class Stats extends React.Component {
     );
   }
 }
+
+Stats.contextTypes = {
+  router: PropTypes.object
+};
 
 export default connect(state => ({auth: state.auth}))(Stats);

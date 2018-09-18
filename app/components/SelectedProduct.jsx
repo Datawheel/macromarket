@@ -1,6 +1,5 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 import {uploadImage, deleteCompany} from "../actions/userActions";
 import {deleteTradeByProduct, createTrade} from "../actions/tradesActions";
 import {fetchSettingsTradesByCompany} from "../actions/tradesActions";
@@ -21,46 +20,40 @@ class ProductSelection extends React.Component {
     const filteredProducts = {};
 
     if (!products) {
-      return (<div className="selection-wrapper">
-        <div className="selected-products-wrapper"></div></div>);
+      return <div className="selection-wrapper">
+        <div className="selected-products-wrapper"></div></div>;
     }
     products.map(product => {
       if (!filteredProducts[product.product_id] && product.trade_flow === this.props.tradeFlow) {
-        filteredProducts[product.product_id] = product
+        filteredProducts[product.product_id] = product;
       }
     });
 
     return (
       <div className="selection-wrapper">
         <div className="selected-products-wrapper">
-          {Object.keys(filteredProducts).map((product, index) => {
-            return (
-              <div className="selected-product-wrapper" key={index}>
-                <div>
-                  <span>{filteredProducts[product].Product.name}</span>
-                  <div className="delete" onClick={this.props.deleteTradeByProduct.bind(this, this.props.companyId, filteredProducts[product].product_id, this.props.tradeFlow)}></div>
-                </div>
+          {Object.keys(filteredProducts).map((product, index) => 
+            <div className="selected-product-wrapper" key={index}>
+              <div>
+                <span>{filteredProducts[product].Product.name}</span>
+                <div className="delete" onClick={this.props.deleteTradeByProduct.bind(this, this.props.companyId, filteredProducts[product].product_id, this.props.tradeFlow)}></div>
               </div>
-            );
-          })}
+            </div>
+          )}
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchSettingsTradesByCompany: id => {
-      dispatch(fetchSettingsTradesByCompany(id));
-    },
-    deleteTradeByProduct: (companyId, productId, tradeFlow) => {
-      dispatch(deleteTradeByProduct(companyId, productId, tradeFlow));
-    }
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  fetchSettingsTradesByCompany: id => {
+    dispatch(fetchSettingsTradesByCompany(id));
+  },
+  deleteTradeByProduct: (companyId, productId, tradeFlow) => {
+    dispatch(deleteTradeByProduct(companyId, productId, tradeFlow));
+  }
+});
 
-const mapStateToProps = state => {
-  return {products: state.trades.settingsTrades, productsLoading: state.trades.loading, productsError: state.trades.error}
-}
+const mapStateToProps = state => ({products: state.trades.settingsTrades, productsLoading: state.trades.loading, productsError: state.trades.error});
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSelection);

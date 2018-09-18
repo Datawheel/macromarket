@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 import {signup} from "../../actions/authenticationActions";
 import {SignUp} from "@datawheel/canon-core";
-import "./Settings.css";
+import PropTypes from "prop-types";
 import Sidebar from "components/Sidebar";
+import "./Settings.css";
 import "./Admin.css";
 
 class Signup extends React.Component {
@@ -18,13 +18,14 @@ class Signup extends React.Component {
   }
 
   validateEmail = email => {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
   componentWillReceiveProps(nextProps) {
+    const {router} = this.context;
     if (!nextProps.loading && nextProps.user) {
-      browserHistory.push("/settings/user");
+      router.push("/settings/user");
     }
   }
 
@@ -73,12 +74,16 @@ class Signup extends React.Component {
   }
 }
 
+Signup.contextTypes = {
+  router: PropTypes.object
+};
+
 const mapStateToProps = state => ({user: state.authentication.user, error: state.authentication.error});
 
 const mapDispatchToProps = dispatch => ({
-    signup: (email, password) => {
-      dispatch(signup(email, password));
-    }
-  });
+  signup: (email, password) => {
+    dispatch(signup(email, password));
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

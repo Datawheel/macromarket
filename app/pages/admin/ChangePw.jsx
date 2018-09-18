@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import {isAuthenticated} from "@datawheel/canon-core";
 import api from "../../api.js";
+import PropTypes from "prop-types";
 import "./Settings.css";
 import "./Admin.css";
 
@@ -38,6 +38,7 @@ class ChangePw extends React.Component {
   }
 
   save = () => {
+    const {router} = this.context;
     const {password, password1, password2} = this.state;
     const {user} = this.props.auth;
     if (password1.length < 5 || password2.length < 5) {
@@ -55,10 +56,10 @@ class ChangePw extends React.Component {
       newPassword: password1
     };
     api.post("/api/auth/changePw", data, config)
-      .then(response => {
+      .then(() => {
         this.notify("Password successfully changed.", Intent.SUCCESS);
         setTimeout(() => {
-          browserHistory.push("/login");
+          router.push("/login");
         }, 3000);
         // console.log(response.data);
         // dispatch(receiveSaveUser(response.data));
@@ -110,6 +111,10 @@ class ChangePw extends React.Component {
     );
   }
 }
+
+ChangePw.contextTypes = {
+  router: PropTypes.object
+};
 
 const mapDispatchToProps = dispatch => ({
   isAuthenticated: () => {

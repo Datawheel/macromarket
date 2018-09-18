@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import Select from "react-select";
-import {browserHistory} from "react-router";
 import Card from "../components/Card.jsx";
 import AnchorList from "../components/AnchorList.jsx";
 import Loading from "../components/Loading.jsx";
@@ -255,19 +254,19 @@ class ProductWithId extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: id => {
-      dispatch(fetchProduct(id));
-    },
-    fetchCountries: () => {
-      dispatch(fetchCountries());
-    },
-    fetchTradesByProduct: id => {
-      dispatch(fetchTradesByProduct(id));
-    },
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    }
-  });
+  fetchProduct: id => {
+    dispatch(fetchProduct(id));
+  },
+  fetchCountries: () => {
+    dispatch(fetchCountries());
+  },
+  fetchTradesByProduct: id => {
+    dispatch(fetchTradesByProduct(id));
+  },
+  fetchProducts: () => {
+    dispatch(fetchProducts());
+  }
+});
 
 ProductWithId.preneed = [
   fetchData("product", `${url}/api/products/<productWithId>`, res => res),
@@ -280,18 +279,18 @@ ProductWithId.need = [
 ProductWithId.postneed = [];
 
 const mapStateToProps = state => ({
-    data: state.data,
-    product: state.productProfile.product,
-    loading: state.productProfile.loading,
-    error: state.productProfile.error,
-    countries: state.countries.countries,
-    countriesLoading: state.countries.loading,
-    countriesError: state.countries.error,
-    trades: state.trades.trades,
-    tradesLoading: state.trades.loading,
-    tradesError: state.trades.error,
-    products: state.products.products,
-    productsLoading: state.products.loading
-  });
+  data: state.data,
+  product: state.productProfile.product,
+  loading: state.productProfile.loading,
+  error: state.productProfile.error,
+  countries: state.countries.countries,
+  countriesLoading: state.countries.loading,
+  countriesError: state.countries.error,
+  trades: state.trades.trades,
+  tradesLoading: state.trades.loading,
+  tradesError: state.trades.error,
+  products: state.products.products,
+  productsLoading: state.products.loading
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductWithId);

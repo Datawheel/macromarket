@@ -1,9 +1,9 @@
 import React from "react";
 import {CardHome} from "../components/Card.jsx";
-import "./Home.css";
-import {browserHistory} from "react-router";
 import Select from "react-select";
 import api from "../api.js";
+import PropTypes from "prop-types";
+import "./Home.css";
 
 class Home extends React.Component {
   constructor(props) {
@@ -56,10 +56,11 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
+    const {router} = this.context;
     const type = suggestion.profile_type === "connectamericas"
       ? "company"
       : suggestion.profile_type;
-    browserHistory.push(`/${type}/${suggestion.id}`);
+    router.push(`/${type}/${suggestion.id}`);
   }
 
   search = (searchTerm, filter) => {
@@ -103,10 +104,11 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
+    const {router} = this.context;
     const type = suggestion.profile_type === "connectamericas"
       ? "company"
       : suggestion.profile_type;
-    browserHistory.push(`/${type}/${suggestion.id}`);
+    router.push(`/${type}/${suggestion.id}`);
   }
 
   render() {
@@ -136,17 +138,15 @@ class Home extends React.Component {
                 <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text" />
                 {searchResults.length > 0
                   ? <ul ref="area" className="suggestions-wrapper">
-                    {searchResults.map((suggestion, i) => {
-                      return <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
-                        <img className="icon" src={suggestion.profile_type === "Country"
-                          ? "/images/icons/icon-country-yellow.svg"
-                          : suggestion.profile_type === "Product"
-                            ? "/images/icons/icon-product-yellow.svg"
-                            : "/images/icons/icon-company-yellow.svg"}/>
-                        <p>{`${suggestion.name}  |
+                    {searchResults.map((suggestion, i) => <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
+                      <img className="icon" src={suggestion.profile_type === "Country"
+                        ? "/images/icons/icon-country-yellow.svg"
+                        : suggestion.profile_type === "Product"
+                          ? "/images/icons/icon-product-yellow.svg"
+                          : "/images/icons/icon-company-yellow.svg"}/>
+                      <p>{`${suggestion.name}  |
                       ${suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type}`}</p>
-                      </li>;
-                    })}
+                    </li>)}
                   </ul>
                   : null}
               </div>
@@ -193,5 +193,10 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.contextTypes = {
+  router: PropTypes.object
+};
+
 
 export default Home;

@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {fetchCountries} from "../actions/countriesActions";
 import "../pages/admin/Admin.css";
 import {Link} from "react-router";
-import {browserHistory} from "react-router";
 import Dropdown from "../components/Dropdown";
 import "../components/Dropdown.css";
 import {uploadImage, saveCompany2, deleteCompany} from "../actions/userActions";
@@ -24,7 +23,7 @@ class CompanyData extends React.Component {
       website: "",
       description: "",
       user_id: this.props.user.id
-    }
+    };
     let country = {
       value: null,
       label: null
@@ -72,7 +71,7 @@ class CompanyData extends React.Component {
   }
 
   validateWebsite(url) {
-    var re = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+    let re = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
     return re.test(url);
   }
 
@@ -103,14 +102,14 @@ class CompanyData extends React.Component {
   }
 
   compare(a, b, attr) {
-      if (a[attr] < b[attr]) {
-        return -1;
-      }
-      if (a[attr] > b[attr]) {
-        return 1;
-      }
-      return 0;
+    if (a[attr] < b[attr]) {
+      return -1;
     }
+    if (a[attr] > b[attr]) {
+      return 1;
+    }
+    return 0;
+  }
 
   selectDropDown = country => {
     this.setState({
@@ -122,7 +121,7 @@ class CompanyData extends React.Component {
   }
 
   saveCompany = () => {
-    let company = {
+    const company = {
       id: this.state.id,
       name: this.state.name,
       address: this.state.address,
@@ -143,32 +142,41 @@ class CompanyData extends React.Component {
     this.setState({phoneError: null});
     if (this.state.name.length === 0) {
       this.setState({nameError: "Company name is required."});
-    } else if (!this.validateWebsite(this.state.website) && this.state.website.length !== 0) {
+    }
+ else if (!this.validateWebsite(this.state.website) && this.state.website.length !== 0) {
       this.setState({websiteError: "Must enter a valid website."});
-    } else if (this.state.name.length > 255) {
+    }
+ else if (this.state.name.length > 255) {
       this.setState({nameError: "Must be fewer than 255 characters."});
-    } else if (this.state.website.length > 255) {
+    }
+ else if (this.state.website.length > 255) {
       this.setState({websiteError: "Must be fewer than 255 characters."});
-    } else if (this.state.address.length > 255) {
+    }
+ else if (this.state.address.length > 255) {
       this.setState({addressError: "Must be fewer than 255 characters."});
-    } else if (this.state.city.length > 255) {
+    }
+ else if (this.state.city.length > 255) {
       this.setState({cityError: "Must be fewer than 255 characters."});
-    } else if (this.state.region.length > 255) {
+    }
+ else if (this.state.region.length > 255) {
       this.setState({regionError: "Must be fewer than 255 characters."});
-    } else if (this.state.phone_number.length > 255) {
+    }
+ else if (this.state.phone_number.length > 255) {
       this.setState({phoneError: "Must be fewer than 255 characters."});
-    } else if (this.state.company_email.length > 255) {
+    }
+ else if (this.state.company_email.length > 255) {
       this.setState({emailError: "Must be fewer than 255 characters."});
-    } else {
+    }
+ else {
       company.country = this.state.country;
 
       const profile_image = this.state.profile_image
-        ? typeof this.state.profile_image.name == 'string'
+        ? typeof this.state.profile_image.name === "string"
           ? this.state.profile_image
           : null
         : null;
       const cover_image = this.state.cover_image
-        ? typeof this.state.cover_image.name == 'string'
+        ? typeof this.state.cover_image.name === "string"
           ? this.state.cover_image
           : null
         : null;
@@ -201,7 +209,7 @@ class CompanyData extends React.Component {
         <div className="detailed-content-wrapper loading-wrapper">
           <div>loading...</div>
         </div>
-      )
+      );
     }
 
     if (this.props.companySaved) {
@@ -214,14 +222,14 @@ class CompanyData extends React.Component {
             <button className=" button button-next">List Your Products</button>
           </Link>
         </div>
-      )
+      );
     }
 
     const dropDownCountries = [];
-    countries.sort((a,b) => this.compare(a,b, "key"));
+    countries.sort((a, b) => this.compare(a, b, "key"));
     countries.map(continent => {
       let first = true;
-      continent.values.sort((a,b) => this.compare(a,b, "name"));
+      continent.values.sort((a, b) => this.compare(a, b, "name"));
       continent.values.map(country => {
         dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
         first = false;
@@ -245,8 +253,8 @@ class CompanyData extends React.Component {
       <div className="section-wrapper company-data">
         {this.props.company
           ? <div>
-              <b>Edit Your Company</b>
-            </div>
+            <b>Edit Your Company</b>
+          </div>
           : <div>
             <b>Register a Company</b>
           </div>}
@@ -316,8 +324,8 @@ class CompanyData extends React.Component {
                 <div className="image-preview-wrapper">
                   {profileImage
                     ? <div className="image-preview" style={{
-                        backgroundImage: profileImage
-                      }}></div>
+                      backgroundImage: profileImage
+                    }}></div>
                     : null}
                 </div>
                 <div className="image-upload">
@@ -332,8 +340,8 @@ class CompanyData extends React.Component {
                 <div className="image-preview-wrapper">
                   {coverImage
                     ? <div className="image-preview" style={{
-                        backgroundImage: coverImage
-                      }}></div>
+                      backgroundImage: coverImage
+                    }}></div>
                     : null}
                 </div>
                 <div className="image-upload">
@@ -349,8 +357,8 @@ class CompanyData extends React.Component {
               </button>
               {this.props.companySaved
                 ? <div className="error-wrapper">
-                    <p>Company Saved Sucessfully!</p>
-                  </div>
+                  <p>Company Saved Sucessfully!</p>
+                </div>
                 : null}
             </div>
           </div>
@@ -360,8 +368,7 @@ class CompanyData extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
     fetchCountries: () => {
       dispatch(fetchCountries());
     },
@@ -371,11 +378,9 @@ const mapDispatchToProps = dispatch => {
     updateSave: () => {
       dispatch({type: "SAVE_FULFILLED", data: null});
     }
-  };
-};
+  });
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     user: state.authentication.user,
     companyLoading: state.user.loading,
     companySaved: state.user.company,
@@ -383,7 +388,6 @@ const mapStateToProps = state => {
     countries: state.countries.countries,
     loading: state.countries.loading,
     error: state.countries.error || null
-  };
-};
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyData);

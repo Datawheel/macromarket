@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import {isAuthenticated} from "@datawheel/canon-core";
-import {browserHistory} from "react-router";
 import {toggleOverlay, sendActivation} from "../actions/onboardingActions";
 import {Intent, Toaster} from "@blueprintjs/core";
+import PropTypes from "prop-types";
 
 class OnboardingSuccess extends React.Component {
   constructor(props) {
@@ -19,8 +19,9 @@ class OnboardingSuccess extends React.Component {
   }
 
   navigateToSettings = () => {
+    const {router} = this.context;
     this.props.toggleOverlay();
-    browserHistory.push("/settings/");
+    router.push("/settings/");
   }
 
   sendActivation(e) {
@@ -81,6 +82,10 @@ class OnboardingSuccess extends React.Component {
     );
   }
 }
+
+OnboardingSuccess.contextTypes = {
+  router: PropTypes.object
+};
 
 const mapStateToProps = state => ({
   auth: state.auth

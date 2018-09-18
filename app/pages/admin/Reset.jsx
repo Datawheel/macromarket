@@ -1,7 +1,7 @@
 import React from "react";
-import {browserHistory} from "react-router";
 import {Reset as CanonReset} from "@datawheel/canon-core";
 import Sidebar from "components/Sidebar";
+import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";
 
@@ -23,8 +23,9 @@ class Reset extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {router} = this.context;
     if (!nextProps.loading && nextProps.resetPw) {
-      browserHistory.push("/login");
+      router.push("/login");
     }
   }
 
@@ -71,5 +72,9 @@ class Reset extends React.Component {
     );
   }
 }
+
+Reset.contextTypes = {
+  router: PropTypes.object
+};
 
 export default Reset;

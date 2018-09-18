@@ -1,6 +1,5 @@
 import React from "react";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 import api from "../api";
 import {Intent, Position, Toaster} from "@blueprintjs/core";
 import "../pages/admin/Admin.css";
@@ -10,6 +9,7 @@ import TradeEdit from "./OnboardingTradeEdit";
 import {fetchUnNestedProducts} from "../actions/productsActions";
 import {fetchCountries} from "../actions/countriesActions";
 import {updateSlideOverlay} from "../actions/onboardingActions";
+import PropTypes from "prop-types";
 
 class EditProducts extends React.Component {
   constructor(props) {
@@ -79,6 +79,7 @@ class EditProducts extends React.Component {
   };
 
   saveTrades = () => {
+    const {router} = this.context;
     this.setState({isSaving: true});
     const {newProduct, trades, unsavedTrades} = this.state;
     const company = this.getCompany();
@@ -122,7 +123,7 @@ class EditProducts extends React.Component {
           this.props.updateSlideOverlay(3);
         }
         else {
-          browserHistory.push("/settings/");
+          router.push("/settings/");
         }
       });
 
@@ -132,11 +133,12 @@ class EditProducts extends React.Component {
   };
 
   cancel = () => {
+    const {router} = this.context;
     if (this.props.isOverlay) {
       this.props.updateSlideOverlay(1);
     }
     else {
-      browserHistory.push("/settings/");
+      router.push("/settings/");
     }
   };
 
@@ -273,6 +275,11 @@ class EditProducts extends React.Component {
     );
   }
 }
+
+EditProducts.contextTypes = {
+  router: PropTypes.object
+};
+
 const mapDispatchToProps = dispatch => ({
   fetchProducts: () => {
     dispatch(fetchUnNestedProducts());

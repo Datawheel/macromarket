@@ -1,10 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, browserHistory} from "react-router";
+import {Link} from "react-router";
 import {isAuthenticated} from "@datawheel/canon-core";
 import {fetchData} from "@datawheel/canon-core";
 import {url} from "../../api.js";
 import Sidebar from "../../components/Sidebar";
+import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";
 
@@ -55,9 +56,10 @@ class Settings extends React.Component {
   }
 
   componentDidUpdate() {
+    const {router} = this.context;
     const {user, loading} = this.props.auth;
     if (!user && !loading) {
-      browserHistory.push("/login");
+      router.push("/login");
     }
   }
 
@@ -106,6 +108,10 @@ class Settings extends React.Component {
     );
   }
 }
+
+Settings.contextTypes = {
+  router: PropTypes.object
+};
 
 const mapDispatchToProps = dispatch => ({
   isAuthenticated: () => {

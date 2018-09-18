@@ -2,7 +2,6 @@ import api from "../api.js";
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 // import {authenticateAndFetchCompany} from "../actions/companyActions";
 import Sidebar from "components/Sidebar";
 import "./ProductSelection.css";
@@ -32,7 +31,7 @@ class ProductSelection extends React.Component {
             <button className=" button button-next">Register a Company</button>
           </Link>
         </div>
-      )
+      );
     }
 
     return (
@@ -62,19 +61,15 @@ class ProductSelection extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {company: state.companyProfile.authCompany};
-};
+const mapStateToProps = state => ({company: state.companyProfile.authCompany});
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
     // authenticateAndFetchCompany: () => {
     //   dispatch(authenticateAndFetchCompany());
     // },
     createTradeForProduct: (companyId, productId, tradeFlow) => {
       dispatch(createTradeForProduct(companyId, productId, tradeFlow));
     }
-  };
-};
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSelection);
