@@ -136,14 +136,30 @@ class EditCompany extends React.Component {
             formData.append("image", uploadInput.files[0]);
             return api.post(`/api/companies/${newCompanyId}/${imgType}`, formData, config);
           });
-          Promise.all(imgUploadPromises).then(imgUploadResponses => {
-            // console.log("imgUploadResponses!", imgUploadResponses);
-            this.setState({newCompany: false, isSaving: false});
-            const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
-            toast.show({message: "New company created.", intent: Intent.SUCCESS});
-            // browserHistory.push(`/settings/company/${newCompanyId}`);
-            browserHistory.push("/settings/");
-          });
+          Promise.all(imgUploadPromises)
+            .then(imgUploadResponses => {
+              // console.log("imgUploadResponses!", imgUploadResponses);
+              this.setState({newCompany: false, isSaving: false});
+              const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+              const errs = imgUploadResponses.filter(d => d.data.error);
+              if(errs.length) {
+                toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
+              }
+              else {
+                toast.show({message: "Company data saved.", intent: Intent.SUCCESS});
+              }
+              browserHistory.push("/settings/");
+            })
+            .catch(error => {
+              // Do something with response error
+              if (error.response.status === 413) {
+                const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+                toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
+                console.log("Image too large!");
+                browserHistory.push("/settings/");
+              }
+              return Promise.reject(error.response);
+            });
         });
       }
       else {
@@ -168,8 +184,15 @@ class EditCompany extends React.Component {
               }
               browserHistory.push("/settings/");
             })
-            .catch(reason => { 
-              console.log("An error occured!", reason);
+            .catch(error => {
+              // Do something with response error
+              if (error.response.status === 413) {
+                const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+                toast.show({message: "Image size too large (5mb max).", intent: Intent.DANGER});
+                console.log("Image too large!");
+                browserHistory.push("/settings/");
+              }
+              return Promise.reject(error.response);
             });
         });
       }
