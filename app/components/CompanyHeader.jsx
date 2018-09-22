@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router";
 import "./Header.css";
 
-const CompanyHeader = ({company, connectamericas, profileImage}) => {
+const CompanyHeader = ({company, countries, connectamericas, profileImage}) => {
   let coverImage = {
     backgroundImage: `url(${company.cover_image})`
   };
@@ -39,7 +39,11 @@ const CompanyHeader = ({company, connectamericas, profileImage}) => {
                       ? `${company.city}, ${company.region}`
                       : null}
                   </p>
-                  {company.Country ? <p className="country-name"><Link to={`/country/${company.Country.id}`}>{company.Country.name}</Link></p> : null}
+                  {company.Country 
+                    ? connectamericas
+                      ? <p className="country-name"><Link to={`/country/${countries.find(c => `${c.id_ca}` == `${company.Country.id}`).id}`}>{company.Country.name}</Link></p> 
+                      : <p className="country-name"><Link to={`/country/${company.Country.id}`}>{company.Country.name}</Link></p> 
+                    : null}
                 </div>
               </div>
             </div>

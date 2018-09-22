@@ -36,7 +36,7 @@ class CompanyWithId extends React.Component {
   isEmptyObject = o => !o || Object.keys(o).every(x => o[x] === "" || o[x] === null || !o[x].length);
 
   render() {
-    const {company, error, trades} = this.props;
+    const {company, countries, error, trades} = this.props;
     const {companySlug: slug} = this.props.params;
 
     if (error) {
@@ -82,7 +82,7 @@ class CompanyWithId extends React.Component {
         </Sidebar>
 
         <div className="center-content">
-          <CompanyHeader company={company} profileImage={profileImage}  connectamericas={isConnectamericas}/>
+          <CompanyHeader company={company} countries={countries} profileImage={profileImage}  connectamericas={isConnectamericas}/>
 
           <div className="content-wrapper">
 
@@ -221,6 +221,7 @@ class CompanyWithId extends React.Component {
 }
 
 CompanyWithId.preneed = [
+  fetchData("countries", `${url}/api/countries`, res => res),
   fetchData("company", `${url}/api/companies/<companySlug>`, res => res)
 ];
 
@@ -232,6 +233,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   company: state.data.company,
+  countries: state.data.countries,
   error: state.companyProfile.error || null,
   trades: state.trades.profileTrades,
   tradesLoading: state.trades.loading,
