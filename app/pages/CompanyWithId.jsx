@@ -18,17 +18,13 @@ class CompanyWithId extends React.Component {
 
   componentDidMount() {
     const slug = this.props.params.companySlug;
-    if (slug.slice(0, 3) !== "ca_") {
-      this.props.fetchProfileTradesByCompany(slug);
-    }
+    this.props.fetchProfileTradesByCompany(slug);
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.params.companySlug !== newProps.params.companySlug) {
       const slug = newProps.params.companySlug;
-      if (slug.slice(0, 3) !== "ca_") {
-        this.props.fetchProfileTradesByCompany(slug);
-      }
+      this.props.fetchProfileTradesByCompany(slug);
       this.shouldUpdate = false;
     }
   }

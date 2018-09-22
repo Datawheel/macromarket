@@ -232,45 +232,49 @@ function compare(a, b) {
 export function fetchProfileTradesByCompany(companySlug) {
   return function(dispatch) {
     dispatch(requestProfileTrades());
-    return api.get(`/api/trades/company/${companySlug}`)
-      .then(response => {
-        const exports = [];
-        const imports = [];
-        const countries = [];
+    if (companySlug.slice(0, 3) === "ca_") {
+      return dispatch(receiveProfileTrades({exports: [], imports: [], countries: []}));
+    }
+    else {
+      return api.get(`/api/trades/company/${companySlug}`)
+        .then(response => {
+          const exports = [];
+          const imports = [];
+          const countries = [];
 
-        response.data.map(product => {
+          response.data.map(product => {
 
-          if (product.Country) {
-            if (!contains(product.Country.id, countries)) {
-              // countries.push(product.Country);
-              const index = findIndexX(product.Country.continent, product.Country.name, countries, "continent")
-              countries.splice(index, 0, product.Country);
-              countries.sort(compare);
+            if (product.Country) {
+              if (!contains(product.Country.id, countries)) {
+                // countries.push(product.Country);
+                const index = findIndexX(product.Country.continent, product.Country.name, countries, "continent");
+                countries.splice(index, 0, product.Country);
+                countries.sort(compare);
+              }
             }
-          }
-          if (product.trade_flow === "exports" && !contains(product.Product.id, exports)) {
+            if (product.trade_flow === "exports" && !contains(product.Product.id, exports)) {
 
-            const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, exports, "products")
-            exports.splice(index, 0, product.Product);
-          }
-          if (product.trade_flow === "imports" && !contains(product.Product.id, imports)) {
-            const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, imports, "products")
-            imports.splice(index, 0, product.Product);
-          }
+              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, exports, "products");
+              exports.splice(index, 0, product.Product);
+            }
+            if (product.trade_flow === "imports" && !contains(product.Product.id, imports)) {
+              const index = findIndexX(product.Product.id.slice(0, 2), product.Product.name, imports, "products");
+              imports.splice(index, 0, product.Product);
+            }
 
+          });
+
+          const sortedResponse = {
+            exports,
+            imports,
+            countries
+          };
+
+          dispatch(receiveProfileTrades(sortedResponse));
+        })
+        .catch(response => {
+          dispatch(tradesError(response.data));
         });
-
-        const sortedResponse = {
-          exports,
-          imports,
-          countries
-        }
-
-        dispatch(receiveProfileTrades(sortedResponse));
-
-      })
-      .catch(response => {
-        dispatch(tradesError(response.data));
-      });
+    }
   };
 }
