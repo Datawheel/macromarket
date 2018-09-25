@@ -21,7 +21,7 @@ import EditProducts from "pages/admin/EditProducts";
 import ChangePw from "pages/admin/ChangePw";
 import Inbox from "pages/Inbox";
 
-function genRandId(path) {
+const genRandId = path => {
   let candidates;
   if (path.includes("country")) {
     candidates = ["saper", "napri", "sapry", "ocnzl", "afken", "asbgd", "afzaf", "aschn", "asvnm", "eudeu", "eufra", "nacri", "namex", "nausa", "saarg", "sabra", "sachl", "euisl"];
@@ -32,13 +32,13 @@ function genRandId(path) {
   }
   else if (path.includes("company")) {
     const caCandidates = ["ca_21078", "ca_58962", "ca_4616", "ca_27687", "ca_56948", "ca_3855", "ca_9228", "ca_42430", "ca_62858", "ca_76847", "ca_76268", "ca_76847", "ca_76801", "ca_76460", "ca_77156", "ca_76579", "ca_5051", "ca_70762"];
-    const mmCandidates = ["pelican-international-trading-solutions", "carvalho-vernet-advogados", "standard-freight-incorporation", "akram-trading", "ems-shipping-and-logistics-agency", "shriji-luggageware-pvt-ltd", "al-ansari-teqmark-llc", "aureus-lubrico-trading-inc", "trinity-shipping-colombo-pvt-ltd", "w3-holding-trading-corp", "thundercom-technologies", "azexporter", "kariem-haddadin-farms", "mali-true-food", "kemal-ozgoren-textile-export-company", "sunbiz-services-and-solutions", "fruktville-delight-pvt-ltd", "sidick-general-trading-m-sdn-bhd", "ossa-productos-organicos", "globe-engineering", "crest-international", "ci-panandina-bh-sas", "premium-comex-ltda", "crest-international", "pento-business-associates-ltd", "interchemie-werken-de-adelaar", "kcc-exports"];
+    const mmCandidates = ["pelican-international-trading-solutions", "carvalho-vernet-advogados", "standard-freight-incorporation", "akram-trading", "ems-shipping-and-logistics-agency", "shriji-luggageware-pvt-ltd", "al-ansari-teqmark-llc", "aureus-lubrico-trading-inc", "trinity-shipping-colombo-pvt-ltd", "w3-holding-trading-corp", "thundercom-technologies", "azexporter", "kariem-haddadin-farms", "mali-true-food", "kemal-ozgoren-textile-export-company", "sunbiz-services-and-solutions", "fruktville-delight-pvt-ltd", "sidick-general-trading-m-sdn-bhd", "ossa-productos-organicos", "globe-engineering", "crest-international", "ci-panandina-bh-sas", "premium-comex-ltda", "crest-international", "pento-business-associates-ltd", "interchemie-werken-de-adelaar", "kcc-exports", "inversiones-martinez-perez", "travelpd", "mutara-africa-link-technologies"];
     candidates = caCandidates.concat(mmCandidates);
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
-}
+};
 
-function checkForId(nextState, replace) {
+const checkForId = (nextState, replace) => {
   if (!nextState.params.countryWithId && !nextState.params.productWithId && !nextState.params.companySlug) {
     const reqestedUrl = nextState.location.pathname;
 
@@ -54,32 +54,31 @@ function checkForId(nextState, replace) {
     // make sure it's legal
     return <NotFound/>;
   }
-}
+};
 
-export default function RouteCreate() {
-  return (
-    <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId} />
-      <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId} />
-      <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="terms" component={Terms} />
-      <Route path="privacy" component={Privacy} />
-      <Route path="reset" component={Reset} />
-      <Route path="activate" component={Activate} />
-      <Route path="settings" component={Settings}>
-        <IndexRoute component={SettingsSummary} />
-        <Route path="stats" component={Stats} />
-        <Route path="change-password" component={ChangePw} />
-        <Route path="company/:companySlug" component={CompanySummary}>
-          <IndexRoute component={EditCompany} />
-          <Route path="products" component={EditProducts} />
-        </Route>
+const RouteCreate = () =>
+  <Route path="/" component={App}>
+    <IndexRoute component={Home} />
+    <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId} />
+    <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId} />
+    <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+    <Route path="terms" component={Terms} />
+    <Route path="privacy" component={Privacy} />
+    <Route path="reset" component={Reset} />
+    <Route path="activate" component={Activate} />
+    <Route path="settings" component={Settings}>
+      <IndexRoute component={SettingsSummary} />
+      <Route path="stats" component={Stats} />
+      <Route path="change-password" component={ChangePw} />
+      <Route path="company/:companySlug" component={CompanySummary}>
+        <IndexRoute component={EditCompany} />
+        <Route path="products" component={EditProducts} />
       </Route>
-      <Route path="/inbox" component={Inbox} />
-      <Route path="*" exact={true} component={NotFound} />
     </Route>
-  );
-}
+    <Route path="/inbox" component={Inbox} />
+    <Route path="*" exact={true} component={NotFound} />
+  </Route>;
+
+export default RouteCreate;

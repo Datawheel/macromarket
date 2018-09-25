@@ -21,7 +21,7 @@ class Home extends React.Component {
       {type: "country", name: "USA", continent: "North America", id: "nausa", flickr_link: "https://flic.kr/p/8CZkZ7"},
       {type: "country", name: "Italy", continent: "Europe", id: "euita", flickr_link: "https://flic.kr/p/gonJ3Y"},
       {type: "country", name: "Vietnam", continent: "Asia", id: "asvnm", flickr_link: ""},
-      {type: "country", name: "Azerbaijan", continent: "Asia", id: "asaze", flickr_link: ""}
+      {type: "country", name: "Cote d'Ivoire", continent: "Africa", id: "afciv", flickr_link: "https://flic.kr/p/dd4Jxb"}
     ];
     this.products = [
       {type: "product", name: "Wine", category: "Foodstuffs", id: "042204", flickr_link: "https://flic.kr/p/a7awbU"},
@@ -32,13 +32,16 @@ class Home extends React.Component {
       {type: "product", name: "Electrical Transformers", category: "Machines", id: "168504", flickr_link: "https://flic.kr/p/6Bfnmw"}
     ];
     this.companies = [
+      {id: "mutara-africa-link-technologies", type: "company", name: "Mutara Africa Link Technologies", logo: "https://storage.googleapis.com/mm-company/company/company6023-mutara-logo-design.png"},
       {id: "chaochomvarnish-coltd", type: "company", name: "Chaochomvarnish Co.", logo: "https://storage.googleapis.com/mm-company/company/company277--.jpg"},
       {id: "sheabutter-guys-uk-limited", type: "company", name: "sheabutter guys UK Limited", logo: "https://storage.googleapis.com/mm-company/company/company254-official-logo.png"},
       {id: "dobropole", type: "company", name: "DOBROPOLE", logo: "https://storage.googleapis.com/mm-company/company/company284-ukrainian_flag-wallpaper-1024x1024.jpg"},
+      {id: "inversiones-martinez-perez", type: "company", name: "Inversiones Martinez Perez", logo: "https://storage.googleapis.com/mm-company/company/company6056-logo-cuadrado.jpeg"},
       {id: "shaylan-group", type: "company", name: "Shaylan Group", logo: "https://storage.googleapis.com/mm-company/company/company271-shaylan.png"},
-      {id: "algeria-universal-export", type: "company", name: "Algeria Universal Export", logo: "https://storage.googleapis.com/mm-company/company/company287-a.jpg"},
-      {id: "planet-port-export-and-imports", type: "company", name: "Planet Port Export and Imports", logo: "https://storage.googleapis.com/mm-company/company/company291-planet-port-logo_final-1-paint.jpg"},
-      {id: "shenzhen-wangjing-printing-coltd", type: "company", name: "Shenzhen Wangjing Printing", logo: "https://storage.googleapis.com/mm-company/company/company251-img_2104s.jpg"}
+      {id: "planet-port-export-and-imports", type: "company", name: "Planet Port Export and Imports", logo: "https://storage.googleapis.com/mm-company/company/company291-planet-port-logo_final-1-paint.jpg"}
+
+      // {id: "shenzhen-wangjing-printing-coltd", type: "company", name: "Shenzhen Wangjing Printing", logo: "https://storage.googleapis.com/mm-company/company/company251-img_2104s.jpg"}
+      // {id: "algeria-universal-export", type: "company", name: "Algeria Universal Export", logo: "https://storage.googleapis.com/mm-company/company/company287-a.jpg"},
 
       // {type: "company", name: "Al Hafar Transport", id: "al-hafar-transport-and-cont-llc-1", logo: "https://storage.googleapis.com/mm-company/company/company259-cat-966h.jpg"}
       // {type: "company", name: "Kandil Egypt Lighting", id: "kandil-egypt-for-chandeliers-and-decorative-lighting", logo: "https://storage.googleapis.com/mm-company/company/company255-kandil-logo-english.jpg"},
@@ -137,7 +140,7 @@ class Home extends React.Component {
               <div className="search-input-wrapper">
                 <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text" />
                 {searchResults.length > 0
-                  ? <ul ref="area" className="suggestions-wrapper">
+                  ? <ul className="suggestions-wrapper">
                     {searchResults.map((suggestion, i) => <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
                       <img className="icon" src={suggestion.profile_type === "Country"
                         ? "/images/icons/icon-country-yellow.svg"
