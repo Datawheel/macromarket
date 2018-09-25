@@ -33,6 +33,8 @@ class OnboardingGetStarted extends React.Component {
                   <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
                   <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
                 </div>
+                <p className="hr-line">or</p>
+                <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
               </div>
           }
           {isSignupFormVisible &&
@@ -54,6 +56,8 @@ class OnboardingGetStarted extends React.Component {
                 <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
               </div>
               <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
+              <p className="hr-line">or</p>
+              <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
             </div>
           }
         </div>

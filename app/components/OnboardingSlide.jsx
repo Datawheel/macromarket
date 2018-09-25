@@ -38,7 +38,7 @@ class OnboardingSlide extends React.Component {
               <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
               <img src="/images/icons/logos/orange-market-logo.svg"></img>
             </div>
-            <OnboardingGetStarted product={this.props.product}/>
+            <OnboardingGetStarted product={this.props.product} toggleOverlay={this.props.toggleOverlay} />
           </div>
           <div className="slide slide-1" >
             <OnboardingCompany/>

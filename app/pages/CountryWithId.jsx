@@ -91,7 +91,7 @@ class CountryWithId extends React.Component {
           importsByProduct.length
             ? importsByProduct.length === 1
               ? <span>They import one product,
-              <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
+                <AnchorList items={exportsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
               : <span>They import {importsByProduct.length} products including <AnchorList items={importsByProduct.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`}/>.&nbsp;</span>
             : null
         }
@@ -178,32 +178,33 @@ class CountryWithId extends React.Component {
         {
           !allTrades
             ? <div className="result-wrapper loading-wrapper">
-                <p>Loading...</p>
-              </div>
+              <p>Loading...</p>
+            </div>
             : <div className="result-wrapper">
-                {
-                  allTrades.length > 0
-                    ? allTrades.map(trade => {
-                      if (!trade.profile_type) {
-                        const content = trade.Company;
-                        content.profile_type = "company";
-                        if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
-                          return <Card key={trade.id} content={content}/>;
-                        }
-                      } else {
-                        if (this.state.selectedOption === "all" && this.state.product.value === "all") {
-                          return <Card key={trade.id} content={trade}/>;
-                        }
+              {
+                allTrades.length > 0
+                  ? allTrades.map(trade => {
+                    if (!trade.profile_type) {
+                      const content = trade.Company;
+                      content.profile_type = "company";
+                      if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
+                        return <Card key={trade.id} content={content}/>;
                       }
-                    })
-                    : <div className="result-wrapper no-companies">
-                        <p>There are no companies listed. Be the first one!</p>
-                        <Link to={"/settings"}>
-                          <button className="list-company">List Your Company</button>
-                        </Link>
-                      </div>
-                }
-              </div>
+                    }
+ else {
+                      if (this.state.selectedOption === "all" && this.state.product.value === "all") {
+                        return <Card key={trade.id} content={trade}/>;
+                      }
+                    }
+                  })
+                  : <div className="result-wrapper no-companies">
+                    <p>There are no companies listed. Be the first one!</p>
+                    <Link to={"/settings"}>
+                      <button className="list-company">List Your Company</button>
+                    </Link>
+                  </div>
+              }
+            </div>
         }
       </div>
     </div>;
@@ -213,24 +214,24 @@ class CountryWithId extends React.Component {
 CountryWithId.preneed = [
   fetchData("country", `${url}/api/countries/<countryWithId>`, res => res),
   fetchData("products", `${url}/api/products`, res => nest().key(d => d.id.substring(0, 2)).sortKeys(ascending).key(d => d.id.substring(2, 4)).sortKeys(ascending).key(d => d.id.substring(4, 6)).sortKeys(ascending).entries(res).map(d => {
-      const myHs2 = d.values.shift();
-      const myNewValues = d.values.map(dd => {
-        const myHs4 = dd.values.shift();
-        const innerValues = dd.values.map(ddd => {
-          const myHs6 = ddd.values.shift();
-          return {key: ddd.key, values: ddd.values, name: myHs6.name};
-        });
-        return {key: dd.key, values: innerValues, name: myHs4.values[0].name};
+    const myHs2 = d.values.shift();
+    const myNewValues = d.values.map(dd => {
+      const myHs4 = dd.values.shift();
+      const innerValues = dd.values.map(ddd => {
+        const myHs6 = ddd.values.shift();
+        return {key: ddd.key, values: ddd.values, name: myHs6.name};
       });
-      const returnData = {
-        key: d.key,
-        values: myNewValues,
-        name: myHs2.values[0].values[0].name
+      return {key: dd.key, values: innerValues, name: myHs4.values[0].name};
+    });
+    const returnData = {
+      key: d.key,
+      values: myNewValues,
+      name: myHs2.values[0].values[0].name
 
-      };
+    };
 
-      return returnData;
-    }))
+    return returnData;
+  }))
 ];
 
 CountryWithId.need = [
@@ -254,14 +255,14 @@ CountryWithId.postneed = [
 ];
 
 const mapStateToProps = state => ({
-    data: state.data,
-    country: state.countryProfile.country,
-    loading: state.countryProfile.loading,
-    error: state.countryProfile.error || null,
-    products: state.data.products,
-    trades: state.data.trades,
-    caTrades: state.data.caTrades,
-    tradesError: state.trades.error
-  });
+  data: state.data,
+  country: state.countryProfile.country,
+  loading: state.countryProfile.loading,
+  error: state.countryProfile.error || null,
+  products: state.data.products,
+  trades: state.data.trades,
+  caTrades: state.data.caTrades,
+  tradesError: state.trades.error
+});
 
 export default connect(mapStateToProps)(CountryWithId);
