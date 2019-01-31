@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {fetchData} from "@datawheel/canon-core";
 import {Intent} from "@blueprintjs/core";
-import {url} from "helpers/api";
+import {url} from "helpers/api.js";
 import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";

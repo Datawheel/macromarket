@@ -13,7 +13,6 @@ import "./Detailed.css";
 import ProductHeader from "components/ProductHeader";
 // import Dropdown from "components/Dropdown";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "helpers/api";
 import {nest} from "d3-collection";
 
 import Helmet from "react-helmet";

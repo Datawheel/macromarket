@@ -4,7 +4,7 @@ import {Link} from "react-router";
 import {deleteCompany} from "actions/userActions";
 import CountrySearch from "./CountrySearch";
 import {fetchData} from "@datawheel/canon-core";
-import api, {url} from "helpers/api";
+import api, {url} from "helpers/api.js";
 import {Dialog, Intent, ProgressBar, Button} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import "./Admin.css";

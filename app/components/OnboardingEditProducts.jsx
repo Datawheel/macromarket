@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import api from "helpers/api";
+import api from "helpers/api.js";
 import {Intent} from "@blueprintjs/core";
 import "pages/admin/Admin.css";
 import "pages/admin/Settings.css";

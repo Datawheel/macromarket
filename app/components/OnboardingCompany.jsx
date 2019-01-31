@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {Intent} from "@blueprintjs/core";
 import CountrySearch from "pages/admin/CountrySearch";
 import {fetchCountries} from "actions/countriesActions";
-import api from "helpers/api";
+import api from "helpers/api.js";
 import {setOnboardingCompany, updateSlideOverlay} from "actions/onboardingActions";
 import {Select} from "@blueprintjs/select";
 import {MenuItem, Classes} from "@blueprintjs/core";

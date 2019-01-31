@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import OnboardingSlide from "components/OnboardingSlide";
 import "./Onboarding.css";
 import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "actions/onboardingActions";
-import api from "helpers/api";
+import api from "helpers/api.js";
 
 async function getProduct(productId) {
   const productResponse = await api.get(`api/products/${productId}`);

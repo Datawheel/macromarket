@@ -3,7 +3,6 @@ import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "helpers/api";
 import {fetchProfileTradesByCompany} from "actions/tradesActions";
 import CompanyHeader from "components/CompanyHeader";
 import "./Detailed.css";

@@ -5,7 +5,7 @@ import Card from "components/Card.jsx";
 import AnchorList from "components/AnchorList.jsx";
 // import Dropdown from "components/Dropdown";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "helpers/api";
+import {url} from "helpers/api.js";
 import CountryHeader from "components/CountryHeader";
 import {nest} from "d3-collection";
 import "./Detailed.css";
