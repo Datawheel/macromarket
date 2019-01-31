@@ -1,4 +1,4 @@
-import api from "../api.js";
+import api from "helpers/api.js";
 import {nest} from "d3-collection";
 import {ascending} from "d3-array";
 function requestProducts() {

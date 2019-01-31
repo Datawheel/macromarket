@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import api from "../../api.js";
+import api from "helpers/api.js";
 import moment from "moment";
 import {Icon, Intent} from "@blueprintjs/core";
 import "./Settings.css";
@@ -42,7 +42,7 @@ class StatPanel extends React.Component {
       <div>
         <h2>Users</h2>
         {users.length
-          ? <table className="pt-table pt-striped">
+          ? <table className="bp3-html-table bp3-html-table-striped">
             <thead>
               <tr>
                 <th>Username</th>
@@ -57,7 +57,7 @@ class StatPanel extends React.Component {
                   <td>{u.username}</td>
                   <td>{u.email}</td>
                   <td>{moment(u.createdAt).format("MMMM Do YYYY")}</td>
-                  <td>{u.activated ? <Icon iconName="endorsed" intent={Intent.SUCCESS} iconSize={Icon.SIZE_LARGE} /> : <Icon iconName="delete" intent={Intent.DANGER} iconSize={Icon.SIZE_LARGE} />}</td>
+                  <td>{u.activated ? <Icon icon="endorsed" intent={Intent.SUCCESS} iconSize={Icon.SIZE_LARGE} /> : <Icon icon="delete" intent={Intent.DANGER} iconSize={Icon.SIZE_LARGE} />}</td>
                 </tr>
               )}
             </tbody>
@@ -66,7 +66,7 @@ class StatPanel extends React.Component {
 
         <h2>Companies</h2>
         {companies.length
-          ? <table className="pt-table pt-striped">
+          ? <table className="bp3-html-table bp3-html-table-striped">
             <thead>
               <tr>
                 <th>Name</th>
@@ -92,7 +92,7 @@ class StatPanel extends React.Component {
 
         <h2>Trades</h2>
         {companies.length
-          ? <table className="pt-table pt-striped">
+          ? <table className="bp3-html-table bp3-html-table-striped">
             <thead>
               <tr>
                 <th>Company</th>

@@ -1,9 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {signup} from "../../actions/authenticationActions";
+import {signup} from "actions/authenticationActions";
 import {SignUp} from "@datawheel/canon-core";
 import PropTypes from "prop-types";
-import Sidebar from "components/Sidebar";
 import "./Settings.css";
 import "./Admin.css";
 

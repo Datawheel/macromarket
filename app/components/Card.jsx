@@ -10,6 +10,7 @@ class Card extends React.Component {
   }
 
   render() {
+    const {key} = this.props;
     let icon = "/images/icons/icon-product-yellow.svg";
     let img = "";
     let id = this.content.id;
@@ -49,10 +50,13 @@ class Card extends React.Component {
     }
 
     return (
-      <div className="card fade-in">
+      <div className="card fade-in" key={key}>
         <Link to={`/${this.content.profile_type === "connectamericas"
           ? "company"
-          : this.content.profile_type}/${id}`} onClick={() => {this.props.activateSearch(false)}}>
+          : this.content.profile_type}/${id}`} onClick={() => {
+          this.props.activateSearch(false)
+          ;
+        }}>
           <div className="image-wrapper">
             <div style={{
               backgroundImage: img ? `url(${img})` : "url('/images/default-business.png')"
@@ -71,7 +75,7 @@ class Card extends React.Component {
             {this.props.countries
               ? this.props.countries.map((country, index) => {
                 if (index < 7) {
-                  return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>
+                  return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>;
                 }
               })
               : null}

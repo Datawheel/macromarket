@@ -4,7 +4,7 @@
   }
 
   & input[type="file"] {
-    visibility: hidden;
+    /* visibility: hidden; */
   }
 
   & header {
@@ -12,15 +12,15 @@
     justify-content: space-between;
   }
 
-  & .pt-inline .pt-label {
+  & .bp3-inline .bp3-label {
     min-width: 100px;
   }
 
-  & .pt-form-group .pt-form-group {
+  & .bp3-form-group .bp3-form-group {
     margin: 0;
   }
 
-  & .pt-form-group .pt-input-group input {
+  & .bp3-form-group .bp3-input-group input {
     min-width: 200px;
   }
 

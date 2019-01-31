@@ -1,6 +1,6 @@
 
 @import "../../Variables";
-ul.pt-menu {
+ul.bp3-menu {
   height: 150px;
   max-height: 160px !important;
 }
@@ -144,10 +144,10 @@ ul.pt-menu {
   }
 }
 
-.pt-navbar {
+.bp3-navbar {
   box-shadow: none;
   background-color: transparent;
-  & .pt-navbar-heading {
+  & .bp3-navbar-heading {
     font-weight: bold;
     font-size: 20px;
   }

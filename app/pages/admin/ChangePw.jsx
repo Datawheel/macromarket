@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Intent, Position, Toaster} from "@blueprintjs/core";
+import {Intent} from "@blueprintjs/core";
 import {isAuthenticated} from "@datawheel/canon-core";
-import api from "../../api.js";
+import api from "helpers/api.js";
 import PropTypes from "prop-types";
 import "./Settings.css";
 import "./Admin.css";
@@ -30,15 +30,12 @@ class ChangePw extends React.Component {
   }
 
   notify(message, intent) {
-    const toast = Toaster.create({
-      className: "company-saved-toast",
-      position: Position.TOP_CENTER
-    });
+    const toast = this.context.toast.current;
     toast.show({message, intent});
   }
 
   save = () => {
-    const {router} = this.context;
+    const {router} = this.props;
     const {password, password1, password2} = this.state;
     const {user} = this.props.auth;
     if (password1.length < 5 || password2.length < 5) {
@@ -75,34 +72,34 @@ class ChangePw extends React.Component {
     return (
       <div>
         <div>
-          <div className="pt-form-group">
-            <label className="pt-label" htmlFor="example-form-group-input-a">
-              <span className="pt-icon pt-icon-lock"></span> Current password
+          <div className="bp3-form-group">
+            <label className="bp3-label" htmlFor="pw-original">
+              <span className="bp3-icon bp3-icon-lock"></span> Current password
             </label>
-            <div className="pt-form-content">
-              <input name="password" onChange={this.handleChange} id="example-form-group-input-a" className="pt-input" type="password" dir="auto" />
+            <div className="bp3-form-content">
+              <input name="password" onChange={this.handleChange} id="pw-original" className="bp3-input" type="password" dir="auto" />
             </div>
           </div>
 
           <hr />
 
-          <div className="pt-form-group">
-            <label className="pt-label" htmlFor="example-form-group-input-a">
-              <span className="pt-icon pt-icon-lock"></span> New password
+          <div className="bp3-form-group">
+            <label className="bp3-label" htmlFor="pw-new1">
+              <span className="bp3-icon bp3-icon-lock"></span> New password
             </label>
-            <div className="pt-form-content">
-              <input name="password1" onChange={this.handleChange} id="example-form-group-input-a" className="pt-input" type="password" dir="auto" />
-              <div className="pt-form-helper-text">Must be at least 5 digits.</div>
+            <div className="bp3-form-content">
+              <input name="password1" onChange={this.handleChange} id="pw-new1" className="bp3-input" type="password" dir="auto" />
+              <div className="bp3-form-helper-text">Must be at least 5 digits.</div>
             </div>
-            <div className="pt-form-content">
-              <input name="password2" onChange={this.handleChange} id="example-form-group-input-a" className="pt-input" type="password" dir="auto" />
+            <div className="bp3-form-content">
+              <input name="password2" onChange={this.handleChange} id="pw-new2" className="bp3-input" type="password" dir="auto" />
             </div>
           </div>
 
           <div>
-            <button type="button" className="pt-button pt-intent-success" onClick={this.save}>
+            <button type="button" className="bp3-button bp3-intent-success" onClick={this.save}>
               Save
-              <span className="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
+              <span className="bp3-icon-standard bp3-icon-arrow-right bp3-align-right"></span>
             </button>
           </div>
         </div>
@@ -113,7 +110,7 @@ class ChangePw extends React.Component {
 }
 
 ChangePw.contextTypes = {
-  router: PropTypes.object
+  toast: PropTypes.object
 };
 
 const mapDispatchToProps = dispatch => ({

@@ -1,8 +1,7 @@
 import React from "react";
-import {CardHome} from "../components/Card.jsx";
-import Select from "react-select";
-import api from "../api.js";
-import PropTypes from "prop-types";
+import {CardHome} from "components/Card.jsx";
+// import Select from "react-select";
+import api from "helpers/api.js";
 import "./Home.css";
 
 class Home extends React.Component {
@@ -14,7 +13,7 @@ class Home extends React.Component {
       suggestionsVisible: true,
       active: null,
       searchResults: [],
-      filter: {value: "All", label: "All"}
+      filter: "All"
     };
     this.countries = [
       {type: "country", name: "Chile", continent: "South America", id: "sachl", flickr_link: "https://flic.kr/p/g2TM9U"},
@@ -99,10 +98,10 @@ class Home extends React.Component {
     //  - else
     // clear the results but submitting an empty string
     if (e.target.value.length > 2) {
-      this.search(e.target.value, filter.value.toLowerCase());
+      this.search(e.target.value, filter.toLowerCase());
     }
     else {
-      this.search("", filter.value.toLowerCase());
+      this.search("", filter.toLowerCase());
     }
   }
 
@@ -123,83 +122,69 @@ class Home extends React.Component {
       {value: "Product", label: "Products"}
     ];
 
-    return (
-      <div className="home-background">
-        <div className="home">
-          <div className="content-wrapper">
-            <div className="header-wrapper">
-              <div className="home-logo">
-                <div className="oec-logo-wrapper">
-                  <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
-                </div>
-                <img src="/images/icons/logos/orange-market-logo.svg"></img>
+    return <div className="home-background">
+      <div className="home">
+        <div className="content-wrapper">
+          <div className="header-wrapper">
+            <div className="home-logo">
+              <div className="oec-logo-wrapper">
+                <img className="mm-logo" src="/images/icons/logos/macro-market.svg"></img>
               </div>
-              <p className="tagline">Market for exported and imported goods.</p>
+              <img src="/images/icons/logos/orange-market-logo.svg"></img>
             </div>
-            <div className="search-wrapper">
-              <div className="search-input-wrapper">
-                <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text" />
-                {searchResults.length > 0
-                  ? <ul className="suggestions-wrapper">
-                    {searchResults.map((suggestion, i) => <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
+            <p className="tagline">Market for exported and imported goods.</p>
+          </div>
+          <div className="search-wrapper">
+            <div className="search-input-wrapper">
+              <input onChange={this.handleChange} value={this.state.keyword} className="search-input" placeholder="Enter a Search" type="text" />
+              {searchResults.length > 0
+                ? <ul className="suggestions-wrapper">
+                  {searchResults.map((suggestion, i) =>
+                    <li key={i} onClick={this.selectSuggestion.bind(this, suggestion)} className="dropdown-item">
                       <img className="icon" src={suggestion.profile_type === "Country"
                         ? "/images/icons/icon-country-yellow.svg"
                         : suggestion.profile_type === "Product"
                           ? "/images/icons/icon-product-yellow.svg"
                           : "/images/icons/icon-company-yellow.svg"}/>
-                      <p>{`${suggestion.name}  |
+                      <p>{`${suggestion.name} |
                       ${suggestion.profile_type === "connectamericas" ? "company" : suggestion.profile_type}`}</p>
-                    </li>)}
-                  </ul>
-                  : null}
-              </div>
-              <Select
-                optionClassName={"dropdown-option"}
-                arrowRenderer={() => <span className="chevron bottom"></span>}
-                clearable={false}
-                searchable={false}
-                name="form-field-name"
-                value={filter}
-                options={options}
-                onChange={item => {
-                  this.setState({filter: item});
-                }}
-              />
+                    </li>
+                  )}
+                </ul>
+                : null}
             </div>
+            <select className="Select" onChange={evt => this.setState({filter: evt.target.value})} value={filter}>
+              {options.map(option => <option key={option.value} value={option.value}>{option.value}</option>)}
+            </select>
+          </div>
 
-            <div className="logos-wrapper">
-              <p>Created in Collaboration</p>
-              <div className="img-wrapper">
-                <a href="https://connectamericas.com/" rel="noopener noreferrer" target="_blank"><img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" /></a>
-                <a href="https://www.media.mit.edu/groups/collective-learning/overview/" rel="noopener noreferrer" target="_blank"><img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" /></a>
-                <a href="https://www.media.mit.edu/" rel="noopener noreferrer" target="_blank"><img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" /></a>
-                <a href="http://www.datawheel.us/" rel="noopener noreferrer" target="_blank"><img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" /></a>
-              </div>
+          <div className="logos-wrapper">
+            <p>Created in Collaboration</p>
+            <div className="img-wrapper">
+              <a href="https://connectamericas.com/" rel="noopener noreferrer" target="_blank"><img className="connect" src="/images/icons/logos/connectAmericasLogo.png" alt="IADB Connect Americas Logo" /></a>
+              <a href="https://www.media.mit.edu/groups/collective-learning/overview/" rel="noopener noreferrer" target="_blank"><img className="collective-learning" src="/images/icons/logos/collective-learning.png" alt="Collective Learning Logo" /></a>
+              <a href="https://www.media.mit.edu/" rel="noopener noreferrer" target="_blank"><img className="media-lab" src="/images/icons/logos/mit-media-lab.png" alt="MIT Media Lab Logo" /></a>
+              <a href="http://www.datawheel.us/" rel="noopener noreferrer" target="_blank"><img className="datawheel" src="/images/icons/logos/datawheel.png" alt="Datawheel Logo" /></a>
             </div>
-            <div className="grid-wrapper">
-              <div className="countries row">
-                <h3>Countries</h3>
-                {this.countries.map(c => <CardHome key={c.id} content={c} />)}
-              </div>
-              <div className="products row">
-                <h3>Products</h3>
-                {this.products.map(p => <CardHome key={p.id} content={p} />)}
-              </div>
-              <div className="companies row">
-                <h3>companies</h3>
-                {this.companies.map(c => <CardHome key={c.id} content={c} />)}
-              </div>
+          </div>
+          <div className="grid-wrapper">
+            <div className="countries row">
+              <h3>Countries</h3>
+              {this.countries.map(c => <CardHome key={c.id} content={c} />)}
+            </div>
+            <div className="products row">
+              <h3>Products</h3>
+              {this.products.map(p => <CardHome key={p.id} content={p} />)}
+            </div>
+            <div className="companies row">
+              <h3>companies</h3>
+              {this.companies.map(c => <CardHome key={c.id} content={c} />)}
             </div>
           </div>
         </div>
       </div>
-    );
+    </div>;
   }
 }
-
-Home.contextTypes = {
-  router: PropTypes.object
-};
-
 
 export default Home;

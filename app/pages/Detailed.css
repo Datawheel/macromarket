@@ -1,9 +1,9 @@
 @import "../Variables";
 .detailed-content-wrapper {
-  & .pt-non-ideal-state {
+  & .bp3-non-ideal-state {
     color: white;
     margin: 40px auto;
-    & .pt-non-ideal-state-title {
+    & .bp3-non-ideal-state-title {
       color: white;
     }
   }

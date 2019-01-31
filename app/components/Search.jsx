@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "./Card.jsx";
+import Card from "components/Card.jsx";
 import "./Search.css";
-import api from "../api.js";
+import api from "helpers/api.js";
 
 class Search extends React.Component {
   constructor(props) {
@@ -14,6 +14,17 @@ class Search extends React.Component {
       error: null,
       filter: "all"
     };
+    // create a ref to store the textInput DOM element
+    this.searchInput = null;
+
+    this.setTextInputRef = element => {
+      this.searchInput = element;
+    };
+
+    this.focusTextInput = () => {
+      // Focus the text input using the raw DOM API
+      if (this.searchInput) this.searchInput.focus();
+    };
   }
 
   componentDidUpdate = prevProps => {
@@ -21,7 +32,7 @@ class Search extends React.Component {
     const {searchActive} = this.props;
     if (prevSearchActive === false && searchActive === true) {
       document.addEventListener("keydown", this.escFunc, false);
-      this.searchInput.focus();
+      // this.focusTextInput();
     }
     if (prevSearchActive === true && searchActive === false) {
       document.removeEventListener("keydown", this.escFunc, false);
@@ -100,16 +111,14 @@ class Search extends React.Component {
 
     return (
       <div className={this.props.searchActive ? "fade-in content-wrapper overlay" : "hidden content-wrapper overlay" }>
-        <div onClick={() => {this.props.toggleSearch(false)}} className="delete">
+        <div onClick={() => this.props.toggleSearch(false)} className="delete">
           <img src="/images/icons/icon-close-white.svg"/>
         </div>
         <div className="overlay-inner">
           <div className="search-container">
             <div className="search-wrapper">
               <input
-                ref={input => {
-                  this.searchInput = input;
-                }}
+                // ref={this.setTextInputRef}
                 placeholder="Search"
                 className="search-input"
                 value={query}

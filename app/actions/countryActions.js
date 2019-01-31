@@ -1,4 +1,4 @@
-import api from "../api";
+import api from "helpers/api";
 
 function requestCountry() {
   return {
@@ -40,24 +40,24 @@ function caTradesError(json) {
 }
 
 
-//Fetch country then fetchs connectamericas companies in that coutnry
+// Fetch country then fetchs connectamericas companies in that coutnry
 export function fetchCountry(id) {
   return function(dispatch) {
     dispatch(requestCountry());
     return api.get(`/api/countries/${id}`)
-    .then(response => {
-      dispatch(receiveCountry(response.data));
-      dispatch(requestCaTrades());
-      return api.get(`/api/trades/ca_country/${response.data.id_ca}`)
-        .then(response => {
-          dispatch(receiveCaTrades(response.data));
-        })
-        .catch(response => {
-          dispatch(caTradesError(response.data));
-        });
-    })
-    .catch(response => {
-      dispatch(countryError(response.data));
-    });
+      .then(response => {
+        dispatch(receiveCountry(response.data));
+        dispatch(requestCaTrades());
+        return api.get(`/api/trades/ca_country/${response.data.id_ca}`)
+          .then(response => {
+            dispatch(receiveCaTrades(response.data));
+          })
+          .catch(response => {
+            dispatch(caTradesError(response.data));
+          });
+      })
+      .catch(response => {
+        dispatch(countryError(response.data));
+      });
   };
 }

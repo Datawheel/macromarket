@@ -1,4 +1,4 @@
-import api from "../api.js";
+import api from "helpers/api.js";
 
 function requestSaveUser() {
   return {
@@ -115,7 +115,8 @@ export function isAuthenticated() {
   return function(dispatch) {
     dispatch(requestAuth());
     api.get("/api/auth/isAuthenticated", {
-      withCredentials: true
+      withCredentials: true,
+      validateStatus: status => status < 401
     }).then(response => {
       if (response.data.msg) {
         dispatch(receiveAuthError(response.data.msg));
@@ -174,12 +175,12 @@ export function updateUser(id, email, password, newPassword) {
       password,
       newPassword
     }, config)
-    .then(response => {
-      dispatch(receiveSaveUser(response.data));
-    })
-    .catch(() => {
-      dispatch(saveUserError("The password you entered is incorect."));
-    });
+      .then(response => {
+        dispatch(receiveSaveUser(response.data));
+      })
+      .catch(() => {
+        dispatch(saveUserError("The password you entered is incorect."));
+      });
   };
 }
 

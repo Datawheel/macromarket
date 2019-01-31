@@ -2,7 +2,6 @@ import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {isAuthenticated, Login as CanonLogin} from "@datawheel/canon-core";
-import Sidebar from "components/Sidebar";
 import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";

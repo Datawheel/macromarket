@@ -1,12 +1,12 @@
 @import "../Variables";
 /* Onboarding Wrapper*/
 
-ul.pt-menu {
+ul.bp3-menu {
   height: 150px;
   max-height: 160px !important;
 }
 
-.pt-popover {
+.bp3-popover {
   width: 300px;
 }
 
@@ -49,7 +49,7 @@ ul.pt-menu {
   & #login, & #signup {
     margin: 0px
   }
-  & .pt-callout.pt-intent-danger {
+  & .bp3-callout.bp3-intent-danger {
     background: #303F4A;
     padding: 20px 0px;
     margin: 20px 0;
@@ -57,7 +57,7 @@ ul.pt-menu {
       outline: none;
     }
   }
-  & .pt-button.pt-intent-danger {
+  & .bp3-button.bp3-intent-danger {
     box-shadow: none;
     background-image: none;
     background: var(--red);
@@ -67,7 +67,7 @@ ul.pt-menu {
     display: block;
     margin: 0 auto;
   }
-  & .pt-callout.pt-intent-danger h5 {
+  & .bp3-callout.bp3-intent-danger h5 {
     color: white;
     font-size: 15px;
     text-align: center;
@@ -92,7 +92,7 @@ ul.pt-menu {
   & p, & h2 {
     color: white;
   }
-  & ul.pt-menu {
+  & ul.bp3-menu {
     height: 150px;
     max-height: 160px !important;
   }

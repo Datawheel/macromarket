@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {onboardingSignup as signup} from "../actions/onboardingActions";
+import PropTypes from "prop-types";
+import {onboardingSignup as signup} from "actions/onboardingActions";
 import {translate} from "react-i18next";
-import {Intent, Toaster} from "@blueprintjs/core";
+import {Intent} from "@blueprintjs/core";
 
 class OnboardingSignUp extends Component {
 
@@ -16,7 +17,7 @@ class OnboardingSignUp extends Component {
       email: null,
       labelUp: [],
       submitted: false,
-      toast: typeof window !== "undefined" ? Toaster.create() : null
+      username: ""
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -68,7 +69,6 @@ class OnboardingSignUp extends Component {
   componentWillReceiveProps(nextProps) {
     const {auth, t} = nextProps;
     const {submitted} = this.state;
-    console.log("SUBMITTDDD: ", submitted);
 
     if (submitted && !auth.loading) {
       if (auth.msg === "SIGNUP_SUCCESS") {
@@ -84,7 +84,7 @@ class OnboardingSignUp extends Component {
 
 
   showToast(message, iconName = "lock", intent = Intent.DANGER) {
-    const {toast} = this.state;
+    const toast = this.context.toast.current;
     toast.show({iconName, intent, message});
   }
 
@@ -112,9 +112,9 @@ class OnboardingSignUp extends Component {
             <input value={this.state.passwordAgain} type="password" name="passwordAgain" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="4" />
           </div>
           { legal.privacy || legal.terms
-            ? <label className=" legal-terms pt-control pt-checkbox" htmlFor="ppcbox">
+            ? <label className=" legal-terms bp3-control bp3-checkbox" htmlFor="ppcbox">
               <input type="checkbox" id="ppcbox" name="agreedToTerms" checked={agreedToTerms} onChange={this.onChange} />
-              <span className="pt-control-indicator"></span>
+              <span className="bp3-control-indicator"></span>
               <span dangerouslySetInnerHTML={{__html: legal.privacy && legal.terms ? t("SignUp.PrivacyTermsText") : legal.privacy ? t("SignUp.PrivacyText") : t("SignUp.TermsText"), legal}}></span>
             </label>
             : null }
@@ -125,6 +125,10 @@ class OnboardingSignUp extends Component {
 
   }
 }
+
+OnboardingSignUp.contextTypes = {
+  toast: PropTypes.object
+};
 
 OnboardingSignUp.defaultProps = {
   redirect: "/"

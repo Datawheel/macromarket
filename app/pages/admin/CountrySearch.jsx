@@ -1,9 +1,9 @@
 import React from "react";
-import {Suggest} from "@blueprintjs/labs";
+import {Suggest} from "@blueprintjs/select";
 import {Classes, MenuItem} from "@blueprintjs/core";
-import "./Admin.css";
-import "./Settings.css";
-import "@blueprintjs/labs/dist/blueprint-labs.css";
+import "pages/admin/Settings.css";
+import "pages/admin/Admin.css";
+import "@blueprintjs/select/lib/css/blueprint-select.css";
 
 
 class CountrySearch extends React.Component {
@@ -21,9 +21,10 @@ class CountrySearch extends React.Component {
     }
   }
 
-  renderCountry = ({handleClick, isActive, item: country}) =>
+  renderCountry = (country, {handleClick, modifiers, query}) =>
     <MenuItem
-      className={isActive ? Classes.ACTIVE : ""}
+      className={modifiers.active ? Classes.ACTIVE : ""}
+      disabled={modifiers.disabled}
       key={country.id}
       onClick={handleClick}
       text={`${country.name}`}
@@ -52,7 +53,7 @@ class CountrySearch extends React.Component {
       inputValueRenderer={c => c.name}
       itemRenderer={this.renderCountry}
       itemListPredicate={this.filterCountries}
-      items={countries.filter(p => p.id && p.id.length === 5)}
+      items={countries.filter(p => p.id && p.name && p.id.length === 5)}
       onItemSelect={this.selectCountry}
       resetOnSelect={true}
       resetOnClose={true}

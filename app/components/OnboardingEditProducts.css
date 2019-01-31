@@ -12,11 +12,11 @@
 .onboarding-edit-products-table {
   color: #888E93;
   border-collapse: collapse;
-  max-height: 250px;
+  /* max-height: 250px; */
   width: 100%;
-  overflow-y: scroll;
-  display: table;
-  table-layout: fixed;
+  /* overflow-y: scroll; */
+  /* display: table; */
+  /* table-layout: fixed; */
   & .small-table-column {
     width: 75px;
   }

@@ -1,15 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
 
-export default class Inbox extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Inbox = () => <div>Inbox</div>;
 
-  render() {
-    return (
-      <div>Inbox</div>
-    );
-  }
-
-}
+export default Inbox;

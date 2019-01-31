@@ -1,19 +1,19 @@
 import React from "react";
 import {Link} from "react-router";
 import {connect} from "react-redux";
-import Card from "../components/Card.jsx";
-import AnchorList from "../components/AnchorList.jsx";
-import Dropdown from "../components/Dropdown";
+import Card from "components/Card.jsx";
+import AnchorList from "components/AnchorList.jsx";
+// import Dropdown from "components/Dropdown";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "../api";
-import CountryHeader from "../components/CountryHeader";
+import {url} from "helpers/api";
+import CountryHeader from "components/CountryHeader";
 import {nest} from "d3-collection";
 import "./Detailed.css";
-import "../components/Dropdown.css";
+// import "../components/Dropdown.css";
 import {ascending} from "d3-array";
 
 import Helmet from "react-helmet";
-import header from "../helmet.js";
+import header from "helpers/helmet.js";
 
 class CountryWithId extends React.Component {
   constructor(props) {
@@ -58,6 +58,9 @@ class CountryWithId extends React.Component {
 
   introParagraph = () => {
     const {country, trades} = this.props.data;
+
+    if (!trades) return <div></div>;
+    if (!trades.length) return <div></div>;
 
     const tradesByCompany = nest().key(d => d.company_id).entries(trades).map(c => c.values[0].Company);
     const exportsByProduct = nest().key(d => d.product_id).entries(trades.filter(t => t.trade_flow === "exports")).map(c => c.values[0].Product);
@@ -135,7 +138,7 @@ class CountryWithId extends React.Component {
       </div>;
     }
     let allTrades;
-    if (caTrades && trades) {
+    if (caTrades && trades && Array.isArray(trades)) {
       // filter out duplicate countries
       allTrades = trades.filter((trade, index, self) => self.findIndex(t => t.company_id === trade.company_id) === index).concat(caTrades);
     }
@@ -158,7 +161,7 @@ class CountryWithId extends React.Component {
           <div className="label">
             <p>Filter Products</p>
           </div>
-          <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown>
+          {/* <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown> */}
         </div>
         <div className="filter button-wrapper">
           <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
@@ -191,7 +194,7 @@ class CountryWithId extends React.Component {
                         return <Card key={trade.id} content={content}/>;
                       }
                     }
- else {
+                    else {
                       if (this.state.selectedOption === "all" && this.state.product.value === "all") {
                         return <Card key={trade.id} content={trade}/>;
                       }
@@ -235,13 +238,13 @@ CountryWithId.preneed = [
 ];
 
 CountryWithId.need = [
-  fetchData("trades", `${url}/api/trades/country/<country.id>`, res => res),
-  fetchData("caTrades", `${url}/api/trades/ca_country/<country.id_ca>`, res => res),
+  fetchData("trades", "/api/trades/country/<country.id>", res => res),
+  fetchData("caTrades", "/api/trades/ca_country/<country.id_ca>", res => res),
   fetchData("countryData", "https://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
     const response = res.data[0];
 
-    const importId = response.top_export_hs4.slice(2, response.length);
-    const exportId = response.top_import_hs4.slice(2, response.length);
+    const importId = response.top_import_hs4.slice(2, response.length);
+    const exportId = response.top_export_hs4.slice(2, response.length);
     response.import = importId;
     response.export = exportId;
     return response;

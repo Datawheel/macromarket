@@ -1,14 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Intent, Position, Toaster} from "@blueprintjs/core";
-import CountrySearch from "../pages/admin/CountrySearch";
-import {fetchCountries} from "../actions/countriesActions";
-import api from "../api";
-import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
-import {Select} from "@blueprintjs/labs";
+import PropTypes from "prop-types";
+import {Intent} from "@blueprintjs/core";
+import CountrySearch from "pages/admin/CountrySearch";
+import {fetchCountries} from "actions/countriesActions";
+import api from "helpers/api";
+import {setOnboardingCompany, updateSlideOverlay} from "actions/onboardingActions";
+import {Select} from "@blueprintjs/select";
 import {MenuItem, Classes} from "@blueprintjs/core";
 import "./OnboardingCompany.css";
-
 
 async function getCompaniesByUser(userId) {
   const companiesResponse = await api.get(`api/companies/byUser/${userId}`);
@@ -84,13 +84,14 @@ class OnboardingCompany extends React.Component {
   };
 
   validate = company => {
+    console.log("validations!, company:", company);
     const errorNames = [];
     if (!company.name || company.name === "") {
       errorNames.push("name");
     }
     if (errorNames.length) {
       this.setState({error: {names: errorNames}, isSaving: false});
-      const toast = Toaster.create({className: "company-error-toast", position: Position.TOP_CENTER});
+      const toast = this.context.toast.current;
       toast.show({message: "A Company Name is required.", intent: Intent.DANGER});
       return false;
     }
@@ -101,6 +102,7 @@ class OnboardingCompany extends React.Component {
   };
 
   saveCompany = () => {
+    console.log("this.state!", this.state);
     const company = {
       name: this.state.name,
       country_id: this.state.country_id || null
@@ -108,7 +110,7 @@ class OnboardingCompany extends React.Component {
 
     this.setState({isSaving: true});
     if (this.validate(company)) {
-      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      const toast = this.context.toast.current;
       toast.show({message: "Saving company data...", intent: Intent.PRIMARY});
       api.post("api/companies/", {...company}).then(companyResponse => {
         this.setState({isSaving: false});
@@ -129,82 +131,79 @@ class OnboardingCompany extends React.Component {
     this.setState({company});
   }
 
-  renderCompanies = ({handleClick, isActive, item: company}) => {
-    return (
-      <MenuItem
-        className={isActive ? Classes.ACTIVE : ""}
-        key={company.name}
-        onClick={handleClick}
-        text={company.name}
-        shouldDismissPopover={false}
-      />
-    );
-  }
-
-
+  renderCompanies = (company, {handleClick, modifiers, query}) =>
+    <MenuItem
+      className={modifiers.ctive ? Classes.ACTIVE : ""}
+      key={company.name}
+      onClick={handleClick}
+      text={company.name}
+      shouldDismissPopover={false}
+    />
 
   render() {
     const {countries} = this.props;
     const {isSaving, error, country, name, companies} = this.state;
-    return (
-      <div className="slide-inner company-onboarding">
-        <div className={companies.length && !this.state.addNewCompany ? "fade-in-up existing-company-container" :  "fade-out hide"}>
-          <h2>Choose an Existing Company</h2>
-          <p className="description-text">
+    return <div className="slide-inner company-onboarding">
+      <div className={companies.length && !this.state.addNewCompany ? "fade-in-up existing-company-container" :  "fade-out hide"}>
+        <h2>Choose an Existing Company</h2>
+        <p className="description-text">
             Select one of your companies to be listed under product.
-          </p>
-          <Select filterable={false} value={this.state.company} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
-            <div className="labelUp input-wrapper">
-              <label>Company</label>
-              <input value={this.state.company ? this.state.company.name : ""}/>
-              <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
-            </div>
-          </Select>
-          <div className="description-text link-text" onClick={this.toggleNewCompany}>Create a New Company</div>
-          <button type="button" className="onboarding-button button-right" onClick={this.selectCompany}>
+        </p>
+        <Select filterable={false} value={this.state.company} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
+          <div className="labelUp input-wrapper">
+            <label>Company</label>
+            <input value={this.state.company ? this.state.company.name : ""} onChange={() => console.log("company slide input")} />
+            <span className="bp3-icon-standard bp3-icon-caret-down bp3-align-right"></span>
+          </div>
+        </Select>
+        <div className="description-text link-text" onClick={this.toggleNewCompany}>Create a New Company</div>
+        <button type="button" className="onboarding-button button-right" onClick={this.selectCompany}>
               Select Company
-          </button>
-        </div>
-        <div className={!companies.length || this.state.addNewCompany ? "fade-in-up  create-company-container" : "fade-out hide"}>
-          <h2>Create a Company</h2>
-          <p className="description-text">
+        </button>
+      </div>
+      <div className={!companies.length || this.state.addNewCompany ? "fade-in-up  create-company-container" : "fade-out hide"}>
+        <h2>Create a Company</h2>
+        <p className="description-text">
           This information will be listed on your company’s profile. You can update this information and add more  later!
-          </p>
-          <div className="onboarding-company-form">
-            <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
-              <label  htmlFor="input-company-name">
+        </p>
+        <div className="onboarding-company-form">
+          <div className={this.state.labelUp.includes("name") ? "input-wrapper labelUp" : "input-wrapper" }>
+            <label htmlFor="input-company-name">
                 Company Name *
-              </label>
-              <div>
-                <div className={error && error.names.includes("name") ? "pt-input-group pt-intent-danger" : ""}>
-                  <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
-                </div>
+            </label>
+            <div>
+              <div className={error && error.names.includes("name") ? "bp3-input-group bp3-intent-danger" : ""}>
+                <input name="name" onFocus={this.handleChange} onChange={this.handleChange} id="input-company-name" value={name} type="text" dir="auto" />
               </div>
-            </div>
-            <div className="labelUp input-wrapper">
-              <label htmlFor="input-address-country">
-                Country Of Origin
-              </label>
-              <div>
-                <div>
-                  { countries
-                    ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
-                    : <span>Loading country list...</span>
-                  }
-                </div>
-              </div>
-              <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
             </div>
           </div>
-          {companies.length > 0 ? <div className=" link-text description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
-          <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
-                Create Company
-          </button>
+          <div className="labelUp input-wrapper">
+            <label htmlFor="input-address-country">
+                Country Of Origin
+            </label>
+            <div>
+              <div>
+                { countries
+                  ? <CountrySearch country={country} countries={countries} selectCountry={this.selectCountry} />
+                  : <span>Loading country list...</span>
+                }
+              </div>
+            </div>
+            <span className="bp3-icon-standard bp3-icon-caret-down bp3-align-right"></span>
+          </div>
         </div>
+        {companies.length > 0 ? <div className=" link-text description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
+        <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
+                Create Company
+        </button>
       </div>
-    );
+    </div>;
   }
 }
+
+OnboardingCompany.contextTypes = {
+  toast: PropTypes.object
+};
 
 const mapStateToProps = state => ({
   countries: state.countries.unnestedCountries,
@@ -212,7 +211,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchCountries: () => {
+  fetchCountries: () => {
     dispatch(fetchCountries());
   },
   setOnboardingCompany: companyId => {

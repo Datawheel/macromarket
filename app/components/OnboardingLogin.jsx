@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {onboardingLogin as login} from "../actions/onboardingActions";
+import {onboardingLogin as login} from "actions/onboardingActions";
 import {translate} from "react-i18next";
-import {Intent, Toaster} from "@blueprintjs/core";
+import {Intent} from "@blueprintjs/core";
 
 class OnboardingLogin extends Component {
 
@@ -13,7 +13,7 @@ class OnboardingLogin extends Component {
       email: "",
       labelUp: [],
       submitted: false,
-      toast: typeof window !== "undefined" ? Toaster.create() : null
+      toast: typeof window !== "undefined" ? this.context.toast.current : null
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -84,11 +84,11 @@ class OnboardingLogin extends Component {
         <form id="login" onSubmit={this.onSubmit.bind(this)} className="login-container">
           <div className={this.state.labelUp.includes("email") ? "input-wrapper labelUp" : "input-wrapper" }>
             <label>Email</label>
-            <input className="pt-input" value={email} type="email" name="email" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} tabIndex="1" />
+            <input className="bp3-input" value={email} type="email" name="email" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} tabIndex="1" />
           </div>
           <div className={this.state.labelUp.includes("password") ? "input-wrapper labelUp" : "input-wrapper" }>
             <label>Password</label>
-            <input className="pt-input" value={password} type="password" name="password" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
+            <input className="bp3-input" value={password} type="password" name="password" onBlur={this.onBlur.bind(this)} onFocus={this.onChange} onChange={this.onChange} autoComplete="Off" tabIndex="3" />
           </div>
           <button className="onboarding-button" type="submit" tabIndex="5">{ t("Login.Login") }</button>
         </form>

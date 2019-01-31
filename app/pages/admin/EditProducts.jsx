@@ -1,13 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import api, {url} from "../../api";
-import {Intent, Position, Toaster} from "@blueprintjs/core";
+import api, {url} from "helpers/api";
+import {Intent} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
-import TradeEdit from "./TradeEdit";
-import {fetchUnNestedProducts} from "../../actions/productsActions";
-import {fetchCountries} from "../../actions/countriesActions";
-import {updateSlideOverlay} from "../../actions/onboardingActions";
+import TradeEdit from "pages/admin/TradeEdit";
+import {fetchUnNestedProducts} from "actions/productsActions";
+import {fetchCountries} from "actions/countriesActions";
+import {updateSlideOverlay} from "actions/onboardingActions";
 import PropTypes from "prop-types";
 
 class EditProducts extends React.Component {
@@ -62,7 +62,7 @@ class EditProducts extends React.Component {
   };
 
   saveTrades = () => {
-    const {router} = this.context;
+    const {router} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
     const company = this.getCompany();
     const tradesForServer = [];
@@ -82,7 +82,7 @@ class EditProducts extends React.Component {
     });
 
     api.post(`/api/trades/company/${company.id}`, tradesForServer).then(() => {
-      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      const toast = this.context.toast.current;
       toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
       this.setState({unsavedTrades: false});
       if (this.props.isOverlay) {
@@ -95,7 +95,7 @@ class EditProducts extends React.Component {
   };
 
   cancel = () => {
-    const {router} = this.context;
+    const {router} = this.props;
     if (this.props.isOverlay) {
       this.props.updateSlideOverlay(1);
     }
@@ -107,7 +107,7 @@ class EditProducts extends React.Component {
   addProduct = product => {
     const trades = this.state.trades.filter(t => t.product);
     if (trades.length >= 10) {
-      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      const toast = this.context.toast.current;
       toast.show({
         timeout: 10000,
         message: "Max products exceeded. You may only list your company on 10 product pages.",
@@ -115,7 +115,7 @@ class EditProducts extends React.Component {
       });
     }
     else if (trades.filter(t => t.product.id === product.id).length > 0) {
-      const toast = Toaster.create({className: "company-saved-toast", position: Position.TOP_CENTER});
+      const toast = this.context.toast.current;
       toast.show({
         timeout: 10000,
         message: "This product is already listed.",
@@ -184,14 +184,14 @@ class EditProducts extends React.Component {
       <div>
 
         {/*
-        <div className="pt-form-group">
+        <div className="bp3-form-group">
           <p>...or browse and select from the list</p>
           <ProductBrowse products={products} selectProduct={this.addProduct} />
         </div>
         */}
 
         { trades.length
-          ? <table className="pt-table pt-bordered trades">
+          ? <table className="bp3-html-table bp3-html-table-bordered trades">
             <thead>
               <tr>
                 <th>Product</th>
@@ -201,9 +201,9 @@ class EditProducts extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {trades.map((trade, i) =>
+              {trades.map(trade =>
                 <TradeEdit
-                  key={i}
+                  key={trade.id}
                   trade={trade}
                   countries={countries}
                   selectProduct={this.addProduct}
@@ -218,21 +218,21 @@ class EditProducts extends React.Component {
         }
 
         <div>
-          <button type="button" className={newProduct ? "pt-button pt-large pt-disabled" : "pt-button pt-large"} onClick={this.appendProductRow}>
-            <span className="pt-icon-standard pt-icon-plus pt-align-left"></span>
+          <button type="button" className={newProduct ? "bp3-button bp3-large bp3-disabled" : "bp3-button bp3-large"} onClick={this.appendProductRow}>
+            <span className="bp3-icon-standard bp3-icon-plus bp3-align-left"></span>
             Add product
           </button>
           {/* <ProductPicker isOpen={isOpen} toggleProductMenu={this.toggleProductMenu} /> */}
         </div>
         <hr />
         <div className="button-group">
-          <button type="button" className="pt-button pt-large" onClick={this.cancel}>
+          <button type="button" className="bp3-button bp3-large" onClick={this.cancel}>
             Cancel
-            <span className="pt-icon-standard pt-icon-disable pt-align-right"></span>
+            <span className="bp3-icon-standard bp3-icon-disable bp3-align-right"></span>
           </button>
-          <button type="button" className={unsavedTrades && !newProduct ? "pt-button pt-intent-success pt-large" : "pt-button pt-intent-success pt-large pt-disabled"} onClick={this.saveTrades}>
+          <button type="button" className={unsavedTrades && !newProduct ? "bp3-button bp3-intent-success bp3-large" : "bp3-button bp3-intent-success bp3-large bp3-disabled"} onClick={this.saveTrades}>
             Save
-            <span className="pt-icon-standard pt-icon-tick pt-align-right"></span>
+            <span className="bp3-icon-standard bp3-icon-tick bp3-align-right"></span>
           </button>
         </div>
       </div>
@@ -241,7 +241,7 @@ class EditProducts extends React.Component {
 }
 
 EditProducts.contextTypes = {
-  router: PropTypes.object
+  toast: PropTypes.object
 };
 
 const mapDispatchToProps = dispatch => ({

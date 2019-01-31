@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import OnboardingSlide from "./OnboardingSlide";
+import OnboardingSlide from "components/OnboardingSlide";
 import "./Onboarding.css";
-import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "../actions/onboardingActions";
-import api from "../api";
+import {toggleOverlay, updateSlideOverlay, setOnboardingProduct} from "actions/onboardingActions";
+import api from "helpers/api";
 
 async function getProduct(productId) {
   const productResponse = await api.get(`api/products/${productId}`);
@@ -24,18 +24,16 @@ class OnboardingOverlay extends React.Component {
 
   render() {
     const {product, isUserLoggedIn, slideNumber, updateSlideOverlay, toggleOverlay} = this.props;
-    return (
-      <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
-        <div className="onboarding-overlay"></div>
-        <OnboardingSlide
-          toggleOverlay={toggleOverlay}
-          product={product}
-          isUserLoggedIn={isUserLoggedIn}
-          slideNumber={slideNumber}
-          updateSlideOverlay={updateSlideOverlay}
-        />
-      </div>
-    );
+    return <div className={`onboarding-wrapper onboarding-wrapper-${slideNumber}`}>
+      <div className="onboarding-overlay"></div>
+      <OnboardingSlide
+        toggleOverlay={toggleOverlay}
+        product={product}
+        isUserLoggedIn={isUserLoggedIn}
+        slideNumber={slideNumber}
+        updateSlideOverlay={updateSlideOverlay}
+      />
+    </div>;
   }
 }
 

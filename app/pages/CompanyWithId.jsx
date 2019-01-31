@@ -3,13 +3,13 @@ import Sidebar from "components/Sidebar";
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "../api";
-import {fetchProfileTradesByCompany} from "../actions/tradesActions";
-import CompanyHeader from "../components/CompanyHeader";
+import {url} from "helpers/api";
+import {fetchProfileTradesByCompany} from "actions/tradesActions";
+import CompanyHeader from "components/CompanyHeader";
 import "./Detailed.css";
 
 import Helmet from "react-helmet";
-import header from "../helmet.js";
+import header from "helpers/helmet.js";
 
 class CompanyWithId extends React.Component {
   constructor(props) {
@@ -89,10 +89,10 @@ class CompanyWithId extends React.Component {
                     <h3>Products Imported</h3>
                     <div className="yellow-line"></div>
                     {trades.imports
-                      ? <div>{trades.imports.map((trade, index) => {
+                      ? <div>{trades.imports.map(trade => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade.id}`}>
+                          <Link key={trade.id} to={`/product/${trade.id}`}>
                             <div className="product-wrapper">
                               <div className={`icon-wrapper color-${id}`}>
                                 <img src={`/images/product_icon/hs_${id}.png`}></img>
@@ -114,10 +114,10 @@ class CompanyWithId extends React.Component {
                     <h3>Products Exported</h3>
                     <div className="yellow-line"></div>
                     {trades.exports
-                      ? <div>{trades.exports.map((trade, index) => {
+                      ? <div>{trades.exports.map(trade => {
                         const id = trade.id.slice(0, 2);
                         return (
-                          <Link key={index} to={`/product/${trade.id}`}>
+                          <Link key={trade.id} to={`/product/${trade.id}`}>
                             <div className="product-wrapper">
                               <div className={`icon-wrapper color-${id}`}>
                                 <img src={`/images/product_icon/hs_${id}.png`}></img>
@@ -145,11 +145,11 @@ class CompanyWithId extends React.Component {
                     <div className="yellow-line"></div>
                     {trades.countries
                       ? <div>
-                        {trades.countries.map((country, index) => {
+                        {trades.countries.map(country => {
                           const continentId = country.id.slice(0, 2);
                           const colorName = `color-${country.continent.toLowerCase().replace(" ", "-")}`;
                           return (
-                            <Link key={index} to={`/country/${country.id}`}>
+                            <Link key={country.id} to={`/country/${country.id}`}>
                               <div className="product-wrapper">
                                 <div className={`icon-wrapper ${colorName}`}>
                                   <img src={`/images/flags/country_${continentId}.png`}></img>
@@ -173,12 +173,12 @@ class CompanyWithId extends React.Component {
                   </a> : null}
               </div>
               : !isConnectamericas
-                ? <div className="pt-non-ideal-state">
-                  <div className="pt-non-ideal-state-visual pt-non-ideal-state-icon">
-                    <span className="pt-icon pt-icon-search"></span>
+                ? <div className="bp3-non-ideal-state">
+                  <div className="bp3-non-ideal-state-visual bp3-non-ideal-state-icon">
+                    <span className="bp3-icon bp3-icon-search"></span>
                   </div>
-                  <h4 className="pt-non-ideal-state-title">No Products</h4>
-                  <div className="pt-non-ideal-state-description">
+                  <h4 className="bp3-non-ideal-state-title">No Products</h4>
+                  <div className="bp3-non-ideal-state-description">
                     This company hasn&apos;t selected any exports or imports yet.
                   </div>
                 </div>
@@ -217,8 +217,8 @@ class CompanyWithId extends React.Component {
 }
 
 CompanyWithId.preneed = [
-  fetchData("countries", `${url}/api/countries`, res => res),
-  fetchData("company", `${url}/api/companies/<companySlug>`, res => res)
+  fetchData("countries", "/api/countries", res => res),
+  fetchData("company", "/api/companies/<companySlug>", res => res)
 ];
 
 const mapDispatchToProps = dispatch => ({

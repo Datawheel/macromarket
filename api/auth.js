@@ -40,7 +40,7 @@ module.exports = function(app) {
           return res.status(400).json("The password you entered is Incorrect.");
         }
       })
-      .catch(err => res.json(err));
+        .catch(err => res.json(err));
     }
     else {
       return res.status(400).json("Not logged in!");

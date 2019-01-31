@@ -3,4 +3,10 @@
   d3plus-react visualization rendered on the page.
 */
 
-export default {};
+export default {
+  shapeConfig: {
+    labelConfig: {
+      fontFamily: "Roboto"
+    }
+  }
+};

@@ -1,15 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import {isAuthenticated} from "@datawheel/canon-core";
-import {toggleOverlay, sendActivation} from "../actions/onboardingActions";
-import {Intent, Toaster} from "@blueprintjs/core";
+import {toggleOverlay, sendActivation} from "actions/onboardingActions";
+import {Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 
 class OnboardingSuccess extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toast: typeof window !== "undefined" ? Toaster.create() : null,
       submitted: false
     };
   }
@@ -34,7 +33,8 @@ class OnboardingSuccess extends React.Component {
 
   componentDidUpdate() {
     const {auth} = this.props;
-    const {toast, submitted} = this.state;
+    const {submitted} = this.state;
+    const {toast} = this.context;
     if (submitted && !auth.loading && (auth.msg || auth.error)) {
       if (auth.msg === "ACTIVATE_SEND_SUCCESS") {
         toast.show({iconName: "inbox", intent: Intent.SUCCESS, message: `An email has been sent to ${auth.user.email}.`});
@@ -57,9 +57,9 @@ class OnboardingSuccess extends React.Component {
               <p className="description-text">
                 Before your company can be publically listed, you must verify your email address.
               </p>
-              <div className="pt-callout pt-intent-danger">
+              <div className="bp3-callout bp3-intent-danger">
                 <h5>E-mail: Not Verified</h5>
-                <button className="pt-button pt-fill pt-intent-danger" onClick={this.sendActivation.bind(this)}>{ "Resend Activation Email" }</button>
+                <button className="bp3-button bp3-fill bp3-intent-danger" onClick={this.sendActivation.bind(this)}>{ "Resend Activation Email" }</button>
               </div>
               <div className="buttons-wrapper">
                 <button onClick={this.navigateToSettings} className="onboarding-button">Continue Browsing</button>
@@ -84,7 +84,8 @@ class OnboardingSuccess extends React.Component {
 }
 
 OnboardingSuccess.contextTypes = {
-  router: PropTypes.object
+  router: PropTypes.object,
+  toast: PropTypes.object
 };
 
 const mapStateToProps = state => ({

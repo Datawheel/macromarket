@@ -1,5 +1,5 @@
 import {nest} from "d3-collection";
-import api from "../api";
+import api from "helpers/api";
 
 function requestCountries() {
   return {type: "COUNTRIES_PENDING"};

@@ -1,6 +1,5 @@
 import React from "react";
 import {Reset as CanonReset} from "@datawheel/canon-core";
-import Sidebar from "components/Sidebar";
 import PropTypes from "prop-types";
 import "./Admin.css";
 import "./Settings.css";
@@ -55,12 +54,6 @@ class Reset extends React.Component {
   }
 
   render() {
-    const {token} = this.props.location.query;
-    const {loading, msg, error, user} = this.props;
-    const {error: localError} = this.state;
-    const changePw = this.changePw.bind(this);
-    const sendResetEmail = this.sendResetEmail.bind(this);
-
     return (
       <div className="login">
         <div className="inner-content-wrapper">

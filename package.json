@@ -1,40 +1,37 @@
 {
-  "name": "macro.market",
-  "version": "1.0.0",
-  "description": "Macro Marketplace to connect int'l vendors and buyers of goods",
+  "name": "macromarket",
+  "version": "1.1.0",
+  "description": "Macro Marketplace to connect international vendors and buyers of goods",
   "main": "src/index.js",
   "scripts": {
-    "dev": "canon-dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "canon-build",
-    "start": "canon-start",
+    "dev": "canon-dev",
     "locales": "canon-locales",
+    "release": "canon-release",
     "setup": "canon-setup",
-    "release": "canon-release"
+    "start": "canon-start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Datawheel/oecm.git"
+    "url": "git+https://github.com/Datawheel/macromarket.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "trade",
+    "data",
+    "dataviz"
+  ],
+  "author": "Datawheel",
   "license": "AGPL-1.0",
   "bugs": {
-    "url": "https://github.com/Datawheel/oecm/issues"
+    "url": "https://github.com/Datawheel/macromarket/issues"
   },
-  "homepage": "https://github.com/Datawheel/oecm#readme",
+  "homepage": "https://github.com/Datawheel/macromarket#readme",
   "dependencies": {
-    "@blueprintjs/labs": "^0.10.0",
-    "@datawheel/canon-core": "^0.16.10",
-    "@google-cloud/storage": "^1.3.1",
-    "express-session": "^1.15.6",
-    "localforage": "^1.5.0",
-    "mailgun-js": "^0.13.1",
-    "multer": "^1.3.0",
-    "opbeat": "^4.17.0",
-    "react-select": "^1.0.0-rc.5",
-    "sequelize-slugify": "^0.5.0"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.0.1"
+    "@blueprintjs/select": "^3.6.0",
+    "@datawheel/canon-core": "^0.17.1",
+    "@google-cloud/storage": "^2.3.4",
+    "multer": "^1.4.1",
+    "sequelize-slugify": "^0.6.1"
   }
 }

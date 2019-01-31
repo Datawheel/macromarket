@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {OnboardingSignUp} from "./OnboardingSignUp";
-import {OnboardingLogin} from "./OnboardingLogin";
-import {updateSlideOverlay} from "../actions/onboardingActions";
+import {OnboardingSignUp} from "components/OnboardingSignUp";
+import {OnboardingLogin} from "components/OnboardingLogin";
+import {updateSlideOverlay} from "actions/onboardingActions";
 
 class OnboardingGetStarted extends React.Component {
   constructor(props) {
@@ -17,10 +17,9 @@ class OnboardingGetStarted extends React.Component {
     const {isSignupFormVisible, isLoginFormVisible} = this.state;
     const {user, updateSlideOverlay, product} = this.props;
 
-    return (
-      <div className="slide-inner">
-        <div className="slide-content">
-          {!user && !isSignupFormVisible && !isLoginFormVisible &&
+    return <div className="slide-inner">
+      <div className="slide-content">
+        {!user && !isSignupFormVisible && !isLoginFormVisible &&
               <div>
                 <div className="text-wrapper">
                   <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
@@ -36,17 +35,17 @@ class OnboardingGetStarted extends React.Component {
                 <p className="hr-line">or</p>
                 <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
               </div>
-          }
-          {isSignupFormVisible &&
+        }
+        {isSignupFormVisible &&
               <OnboardingSignUp/>
-          }
-          {isLoginFormVisible &&
+        }
+        {isLoginFormVisible &&
               <OnboardingLogin/>
-          }
-          {(isSignupFormVisible || isLoginFormVisible) &&
+        }
+        {(isSignupFormVisible || isLoginFormVisible) &&
               <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
-          }
-          {user &&
+        }
+        {user &&
             <div>
               <div className="text-wrapper">
                 {product &&
@@ -59,11 +58,10 @@ class OnboardingGetStarted extends React.Component {
               <p className="hr-line">or</p>
               <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
             </div>
-          }
-        </div>
-
+        }
       </div>
-    );
+
+    </div>;
   }
 }
 

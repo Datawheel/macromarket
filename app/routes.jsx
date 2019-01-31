@@ -1,19 +1,19 @@
 import React from "react";
-import {Route, IndexRoute} from "react-router";
+import {Route, IndexRoute, browserHistory} from "react-router";
+
 import App from "./App";
-import Home from "pages/Home";
+import Home from "./pages/Home";
 import NotFound from "pages/NotFound";
-import Terms from "pages/Terms";
-import Privacy from "pages/Privacy";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
-import Stats from "pages/admin/Stats";
+
 import Login from "pages/admin/Login";
 import Signup from "pages/admin/Signup";
 import Reset from "pages/admin/Reset";
 import Activate from "pages/admin/Activate";
 import Settings from "pages/admin/Settings";
+import Stats from "pages/admin/Stats";
 import SettingsSummary from "pages/admin/SettingsSummary";
 import CompanySummary from "pages/admin/CompanySummary";
 import EditCompany from "pages/admin/EditCompany";
@@ -21,10 +21,11 @@ import EditProducts from "pages/admin/EditProducts";
 import ChangePw from "pages/admin/ChangePw";
 import Inbox from "pages/Inbox";
 
+
 const genRandId = path => {
   let candidates;
   if (path.includes("country")) {
-    candidates = ["saper", "napri", "sapry", "ocnzl", "afken", "asbgd", "afzaf", "aschn", "asvnm", "eudeu", "eufra", "nacri", "namex", "nausa", "saarg", "sabra", "sachl", "euisl"];
+    candidates = ["saper", "sapry", "ocnzl", "afken", "asbgd", "afzaf", "aschn", "asvnm", "eudeu", "eufra", "nacri", "namex", "nausa", "saarg", "sabra", "sachl", "euisl"];
 
   }
   else if (path.includes("product")) {
@@ -57,15 +58,13 @@ const checkForId = (nextState, replace) => {
 };
 
 const RouteCreate = () =>
-  <Route path="/" component={App}>
+  <Route path="/" component={App} history={browserHistory}>
     <IndexRoute component={Home} />
     <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId} />
     <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId} />
     <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
-    <Route path="terms" component={Terms} />
-    <Route path="privacy" component={Privacy} />
     <Route path="reset" component={Reset} />
     <Route path="activate" component={Activate} />
     <Route path="settings" component={Settings}>
@@ -78,7 +77,6 @@ const RouteCreate = () =>
       </Route>
     </Route>
     <Route path="/inbox" component={Inbox} />
-    <Route path="*" exact={true} component={NotFound} />
   </Route>;
 
 export default RouteCreate;

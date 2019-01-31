@@ -6,8 +6,8 @@ import {NonIdealState} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
 import {isAuthenticated} from "@datawheel/canon-core";
-import api from "../../api.js";
-import CompanyCard from "./CompanyCard";
+import api from "helpers/api.js";
+import CompanyCard from "pages/admin/CompanyCard";
 import {nest} from "d3-collection";
 
 class SettingsSummary extends React.Component {
@@ -45,18 +45,18 @@ class SettingsSummary extends React.Component {
       <div>
         { user.activated
           ? companies.length
-            ? <nav className="pt-navbar">
-              <div className="pt-navbar-group pt-align-left">
-                <div className="pt-navbar-heading">My Companies</div>
+            ? <nav className="bp3-navbar">
+              <div className="bp3-navbar-group bp3-align-left">
+                <div className="bp3-navbar-heading">My Companies</div>
               </div>
-              <div className="pt-navbar-group pt-align-right">
-                <Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">
+              <div className="bp3-navbar-group bp3-align-right">
+                <Link to="/settings/company/new" role="button" className="bp3-button bp3-icon-plus bp3-intent-success">
                   List your company
                 </Link>
               </div>
             </nav>
             : <NonIdealState
-              action={<Link to="/settings/company/new" role="button" className="pt-button pt-icon-plus pt-intent-success">Add company</Link>}
+              action={<Link to="/settings/company/new" role="button" className="bp3-button bp3-icon-plus bp3-intent-success">Add company</Link>}
               visual="search"
               title="No companies listed"
               description="Click below to add your first company listing."

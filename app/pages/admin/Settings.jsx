@@ -2,8 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {isAuthenticated} from "@datawheel/canon-core";
-import {fetchData} from "@datawheel/canon-core";
-import {url} from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import PropTypes from "prop-types";
 import "./Admin.css";
@@ -34,12 +32,12 @@ const Breadcrumb = props => {
     });
 
   return (
-    <ul className="pt-breadcrumbs">
+    <ul className="bp3-breadcrumbs">
       {cleanRoutes.map((r, i) =>
         <li key={i}>
           { i === cleanRoutes.length - 1
-            ? <span className="pt-breadcrumb pt-breadcrumb-current">{r.path}</span>
-            : <Link className="pt-breadcrumb" to={r.fullpath}>{r.path}</Link>}
+            ? <span className="bp3-breadcrumb bp3-breadcrumb-current">{r.path}</span>
+            : <Link className="bp3-breadcrumb" to={r.fullpath}>{r.path}</Link>}
         </li>
       )}
     </ul>
@@ -86,13 +84,13 @@ class Settings extends React.Component {
             {user.email}
           </p>
 
-          <Link to="/settings/change-password" role="button" className="pt-button pt-icon-lock">
+          <Link to="/settings/change-password" role="button" className="bp3-button bp3-icon-lock">
             Change Password
           </Link>
           <br />
 
           {user.role === 2
-            ? <Link to="/settings/stats" role="button" className="pt-button pt-icon-timeline-line-chart">
+            ? <Link to="/settings/stats" role="button" className="bp3-button bp3-icon-timeline-line-chart">
               View Stats
             </Link>
             : null}
@@ -101,7 +99,7 @@ class Settings extends React.Component {
         <div className="center-content form-wrapper">
           <div className="form">
             <Breadcrumb params={params} routes={routes} />
-            {this.props.children}
+            <div>{this.props.children}</div>
           </div>
         </div>
       </div>

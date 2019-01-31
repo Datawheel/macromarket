@@ -1,25 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import Select from "react-select";
-import Card from "../components/Card.jsx";
-import AnchorList from "../components/AnchorList.jsx";
-import Loading from "../components/Loading.jsx";
+import Card from "components/Card.jsx";
+import AnchorList from "components/AnchorList.jsx";
+import Loading from "components/Loading.jsx";
 import {Link} from "react-router";
-import {fetchProduct} from "../actions/productActions";
-import {fetchCountries} from "../actions/countriesActions";
-import {fetchProducts} from "../actions/productsActions";
-import {fetchTradesByProduct} from "../actions/tradesActions";
+import {fetchProduct} from "actions/productActions";
+import {fetchCountries} from "actions/countriesActions";
+import {fetchProducts} from "actions/productsActions";
+import {fetchTradesByProduct} from "actions/tradesActions";
 import "./Detailed.css";
-import "../components/Dropdown.css";
-import ProductHeader from "../components/ProductHeader";
-import Dropdown from "../components/Dropdown";
+// import "components/Dropdown.css";
+import ProductHeader from "components/ProductHeader";
+// import Dropdown from "components/Dropdown";
 import {fetchData} from "@datawheel/canon-core";
-import {url} from "../api";
+import {url} from "helpers/api";
 import {nest} from "d3-collection";
-import {NotFound} from "pages/NotFound";
 
 import Helmet from "react-helmet";
-import header from "../helmet.js";
+import header from "helpers/helmet.js";
 
 class ProductWithId extends React.Component {
   constructor(props) {
@@ -209,7 +207,7 @@ class ProductWithId extends React.Component {
             <div className="label country-dropdown-label">
               <p>Country</p>
             </div>
-            <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value} options={dropDownCountries}></Dropdown>
+            {/* <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value} options={dropDownCountries}></Dropdown> */}
           </div>
           <div className="filter button-wrapper">
             <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
@@ -269,8 +267,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 ProductWithId.preneed = [
-  fetchData("product", `${url}/api/products/<productWithId>`, res => res),
-  fetchData("trades", `${url}/api/trades/product/<productWithId>`, res => res)
+  fetchData("product", "/api/products/<productWithId>", res => res),
+  fetchData("trades", "/api/trades/product/<productWithId>", res => res)
 ];
 
 ProductWithId.need = [

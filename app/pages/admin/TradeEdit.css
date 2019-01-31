@@ -1,7 +1,7 @@
 .trade {
 
-  & .pt-input.pt-active,
-  & .pt-input {
+  & .bp3-input.bp3-active,
+  & .bp3-input {
     background: transparent;
     border: none;
     box-shadow: none;
@@ -14,7 +14,7 @@
   justify-content: space-between;*/
 }
 
-.pt-table {
+.bp3-html-table {
   width: 100%;
 }
 

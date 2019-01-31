@@ -2,7 +2,7 @@ const http = require("https");
 const multer = require("multer");
 const path = require("path");
 const memoryStorage = multer.memoryStorage;
-const storage = require("@google-cloud/storage");
+const {Storage} = require("@google-cloud/storage");
 const isAuthenticated = require("../api-helpers/authHelpers.js").isAuthenticated;
 const Op = require("sequelize").Op;
 
@@ -42,12 +42,12 @@ module.exports = function(app) {
       include: [db.Country],
       order: [["createdAt", "DESC"]]
     })
-    .then(companies => res.json(companies))
-    .catch(err => res.json(err));
+      .then(companies => res.json(companies))
+      .catch(err => res.json(err));
   });
 
   // Instantiate a storage client
-  const googleCloudStorage = storage({
+  const googleCloudStorage = new Storage({
     projectId: process.env.GCLOUD_STORAGE_BUCKET,
     keyFilename: process.env.GCLOUD_KEY_FILE
   });
@@ -70,7 +70,7 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/companies/:slug", async (req, res) => {
+  app.get("/api/companies/:slug", async(req, res) => {
     const {slug} = req.params;
     // const {id: uid} = req.user;
     // console.log("companyid:", id)
@@ -107,7 +107,7 @@ module.exports = function(app) {
             phone_number: json.phone_number,
             description: json.bussiness_objetives,
             address: json.address + json.address_line2 + json.city + json.country,
-            Country: {id:json.country_id, name:json.country},
+            Country: {id: json.country_id, name: json.country},
             profile_image: json.photo_url,
             ca_link: json.public_url,
             catalog: json.catalog
@@ -124,11 +124,12 @@ module.exports = function(app) {
           where: {slug},
           include: [db.Country]
         });
-        const user = await db.users.findOne({where:{id: company.uid}});
+        const user = await db.users.findOne({where: {id: company.uid}});
         company.dataValues.activated = user.activated;
 
         res.json(company);
-      } catch (error) {
+      }
+ catch (error) {
         res.json(error);
       }
     }
@@ -160,9 +161,9 @@ module.exports = function(app) {
           })
         );
       })
-      .catch(err => res.json({error: "File doesn't exist", resp: err}));
+        .catch(err => res.json({error: "File doesn't exist", resp: err}));
     })
-    .catch(err => res.json(err));
+      .catch(err => res.json(err));
   });
 
   /** POST /:id - Uploads new image to google storage and updates DB
@@ -240,7 +241,7 @@ module.exports = function(app) {
 
       });
     })
-    .catch(err => res.json(err));
+      .catch(err => res.json(err));
   });
 
   /** POST / - Create a new entity */
@@ -292,8 +293,8 @@ module.exports = function(app) {
           query: req.query
         })
       )
-      .catch(err => res.json({error: "Unable to delete company.", resp: err}));
+        .catch(err => res.json({error: "Unable to delete company.", resp: err}));
     })
-    .catch(err => res.json(err));
+      .catch(err => res.json(err));
   });
 };

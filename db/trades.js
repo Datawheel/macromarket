@@ -1,7 +1,7 @@
 module.exports = function(sequelize, db) {
   const Trade = sequelize.define("Trade", {
     trade_flow: db.STRING,
-    product_id: db.INTEGER,
+    product_id: db.STRING,
     company_id: db.INTEGER,
     country_id: db.INTEGER
   });

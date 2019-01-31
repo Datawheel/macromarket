@@ -1,4 +1,4 @@
-import api from "../api.js";
+import api from "helpers/api.js";
 
 function requestCaTrades() {
   return {

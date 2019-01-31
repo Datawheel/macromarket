@@ -11,7 +11,7 @@ export default class Sidebar extends React.Component {
       <div className="sidebar-wrapper">
         <div className="sidebar">
           <div className="sidebar-inner">
-            {this.props.children}
+            <div>{this.props.children}</div>
           </div>
         </div>
       </div>

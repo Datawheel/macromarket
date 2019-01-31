@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import EditProducts from "./OnboardingEditProducts";
-import {setOnboardingCompany, updateSlideOverlay} from "../actions/onboardingActions";
-import api from "../api";
+import EditProducts from "components/OnboardingEditProducts";
+import {setOnboardingCompany, updateSlideOverlay} from "actions/onboardingActions";
+import api from "helpers/api";
 
 async function getCompany(slug) {
   const companyResponse = await api.get(`api/companies/${slug}`);
