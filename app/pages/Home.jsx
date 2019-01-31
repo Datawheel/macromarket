@@ -58,7 +58,7 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
-    const {router} = this.context;
+    const {router} = this.props;
     const type = suggestion.profile_type === "connectamericas"
       ? "company"
       : suggestion.profile_type;
@@ -106,7 +106,7 @@ class Home extends React.Component {
   }
 
   selectSuggestion = suggestion => {
-    const {router} = this.context;
+    const {router} = this.props;
     const type = suggestion.profile_type === "connectamericas"
       ? "company"
       : suggestion.profile_type;
