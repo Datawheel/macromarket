@@ -1,0 +1,77 @@
+.selector {
+  margin-bottom: 10px;
+  & .title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+
+  & .filter-selector {
+    width: 100%;
+
+    & .bp3-popover-target {
+      display: block;
+      & .bp3-button {
+        width: 100%;
+        justify-content: space-between;
+        background: var(--base);
+        color: var(--white);
+        border: 1px solid var(--base);
+        border-radius: 0px;
+      }
+    }
+  }
+
+}
+
+.option {
+  justify-content: space-between;
+  display: flex;
+
+  & .country {
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+
+  & .flag {
+    height: 20px;
+    margin-right: 10px;
+  }
+}
+
+.bp3-menu {
+  background: var(--base) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--base);
+  border-radius: 0px;
+  padding: 0px !important;
+  max-height: 300px;
+  overflow: scroll;
+
+  & li {
+    border-radius: 0px !important;
+  }
+
+  & .is-selected {
+    background: var(--light);
+    color: var(--base);
+  }
+}
+
+.bp3-input {
+  background: var(--base) !important;
+  color: var(--white) !important;
+  opacity: 0.7;
+}
+
+.bp3-input-group {
+  & svg {
+    color: var(--white) !important;
+  }
+}
+
+.bp3-popover-arrow-fill {
+  fill: var(--base) !important;
+}

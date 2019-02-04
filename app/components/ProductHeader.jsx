@@ -1,43 +1,39 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import "./Header.css";
-import Sidebar from "../components/Sidebar.jsx";
+import "components/Header.css";
 
-export default class ProductHeader extends React.Component {
+class ProductHeader extends React.Component {
   constructor(props) {
     super(props);
   }
 
   nameLookup = id => {
-    let result = ""
-    const countries = this.props.countries;
-    for (let i = 0; i < countries.length; i++) {
-      for (let j = 0; j < countries[i].values.length; j++) {
-        const country = countries[i].values[j];
-        if (country.id === id) {
-          return country.name;
-        }
-      }
+    const {countries} = this.props;
+    if (countries) {
+      const flatCountries = countries.reduce((flatList, continent) => flatList.concat(continent.values), []);
+      const country = flatCountries.find(c => c.id === id);
+      return country ? country.name : "";
     }
+    return "";
   };
 
   abbrNum(number, decPlaces) {
     // 2 decimal places => 100, 3 => 1000, etc
     decPlaces = Math.pow(10, decPlaces);
     // Enumerate number abbreviations
-    var abbrev = ["k", "m", "b", "t"];
+    const abbrev = ["k", "m", "b", "t"];
     // Go through the array backwards, so we do the largest first
-    for (var i = abbrev.length - 1; i >= 0; i--) {
+    for (let i = abbrev.length - 1; i >= 0; i--) {
       // Convert array index to "1000", "1000000", etc
-      var size = Math.pow(10, (i + 1) * 3);
+      const size = Math.pow(10, (i + 1) * 3);
       // If the number is bigger or equal do the abbreviation
       if (size <= number) {
         // Here, we multiply by decPlaces, round, and then divide by decPlaces.
         // This gives us nice rounding to a particular decimal place.
         number = Math.round(number * decPlaces / size) / decPlaces;
         // Handle special case where we round up to the next abbreviation
-        if ((number == 1000) && (i < abbrev.length - 1)) {
+        if (number == 1000 && i < abbrev.length - 1) {
           number = 1;
           i++;
         }
@@ -148,3 +144,9 @@ export default class ProductHeader extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  countries: state.countries.countries
+});
+
+export default connect(mapStateToProps)(ProductHeader);

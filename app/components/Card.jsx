@@ -74,7 +74,7 @@ class Card extends React.Component {
             <p className="name">{this.content.name}</p>
             {this.props.countries
               ? this.props.countries.map((country, index) => {
-                if (index < 7) {
+                if (index < 7 && country) {
                   return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>;
                 }
               })

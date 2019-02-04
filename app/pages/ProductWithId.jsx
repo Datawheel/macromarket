@@ -9,93 +9,82 @@ import {fetchCountries} from "actions/countriesActions";
 import {fetchProducts} from "actions/productsActions";
 import {fetchTradesByProduct} from "actions/tradesActions";
 import "./Detailed.css";
-// import "components/Dropdown.css";
 import ProductHeader from "components/ProductHeader";
-// import Dropdown from "components/Dropdown";
+import CountryDropdown from "components/CountryDropdown";
 import {fetchData} from "@datawheel/canon-core";
 import {nest} from "d3-collection";
+import {Button, ButtonGroup} from "@blueprintjs/core";
 
 import Helmet from "react-helmet";
 import header from "helpers/helmet.js";
 
+
 class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
+
+    this.countriesWithTrades = nest()
+      .key(d => d.country_id)
+      .entries(props.data.trades.filter(t => t.country_id))
+      .map(c => ({count: new Set(c.values.map(d => d.company_id)).size, ...c.values[0].Country}))
+      .sort((a, b) => b.count - a.count);
+    // prepend "all" as default selected option
+    this.countriesWithTrades.unshift({name: "All", id: "all"});
+
     this.state = {
       selectedOption: "all",
-      country: {
-        label: "All",
-        value: "all"
-      }
+      country: {name: "All Countries", id: "all"},
+      filteredTrades: props.data.trades,
+      tradeFlow: null
     };
   }
 
   componentDidMount() {
     const id = this.props.params.productWithId;
-    this.props.fetchCountries();
-    this.props.fetchProducts();
+    // this.props.fetchCountries();
+    // this.props.fetchProducts();
     this.props.fetchTradesByProduct(id);
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.params.productWithId !== newProps.params.productWithId) {
       const id = newProps.params.productWithId;
-      this.props.fetchCountries();
-      this.props.fetchProducts();
+      // this.props.fetchCountries();
+      // this.props.fetchProducts();
       this.props.fetchTradesByProduct(id);
     }
   }
 
-  handleOptionChange = selectedOption => {
-    this.setState({selectedOption});
-  }
+  filterTrades = () => {
+    const {country, tradeFlow} = this.state;
+    const {trades} = this.props.data;
+    // const filteredTrades = country.id === "all" ? trades : trades.filter(trade => trade.country_id === country.id);
+    const filteredTrades = trades.filter(trade => {
+      if (country.id !== "all" && tradeFlow) {
+        return trade.country_id === country.id && trade.trade_flow === tradeFlow;
+      }
+      if (country.id !== "all" && !tradeFlow) {
+        return trade.country_id === country.id;
+      }
+      if (tradeFlow) {
+        return trade.trade_flow === tradeFlow;
+      }
+      return true;
+    });
 
-  filterCompanies(trades) {
-    const seen = [];
-    const filteredResult = [];
-    for (let i = 0; i < trades.length; i++) {
-      const trade = trades[i];
-      const unique = !seen.includes(trade.company_id);
-      const tradeFlow = this.state.selectedOption === "all" || trade.trade_flow === `${this.state.selectedOption}s`;
-      const country = this.state.country.value === "all" || this.state.country.value === trade.country_id;
-      if (tradeFlow && country && unique) {
-        seen.push(trade.company_id);
-        trade.countries = trade.country_id ? [trade.country_id] : [];
-        filteredResult.push(trade);
-      }
-      else {
-        filteredResult.map(t => {
-          if (t.company_id === trade.company_id && trade.country_id) {
-            t.countries.push(trade.country_id);
-          }
-        });
-      }
-    }
-    return filteredResult;
+    this.setState({filteredTrades});
   }
 
   selectDropDown = country => {
-    this.setState({country});
+    this.setState({country}, this.filterTrades);
+  }
+
+  changeTradeFlow = tradeFlow => {
+    this.setState({tradeFlow}, this.filterTrades);
   }
 
   removeSelection = () => {
-    this.setState({
-      country: {
-        label: "All",
-        value: "all"
-      },
-      selectedOption: "all"
-    });
-  }
-
-  compare(a, b, attr) {
-    if (a[attr] < b[attr]) {
-      return -1;
-    }
-    if (a[attr] > b[attr]) {
-      return 1;
-    }
-    return 0;
+    this.setState({country: {name: "All", id: "all"}, tradeFlow: null}, this.filterTrades);
   }
 
   introParagraph = () => {
@@ -133,23 +122,12 @@ class ProductWithId extends React.Component {
           : null}
       </p>
       : null;
-
-    return tradesByCompany.length
-      ? <p>
-        There are {tradesByCompany.length} companies trading {product.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.
-        These companies export them from {exportsByCountry.length} different countries including <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.
-        They import them from {importsByCountry.length} different countries including <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.
-      </p>
-      : null;
   }
 
   render() {
-    const {loading, error, countriesLoading, countriesError, countries, trades, products, data} = this.props;
+    const {error, countriesError, countries, products, data} = this.props;
+    const {country, filteredTrades, tradeFlow} = this.state;
     const {product, productData} = data;
-
-    if (loading || !product || !countries || !trades || !products) {
-      return <Loading />;
-    }
 
     if (error || countriesError) {
       return (
@@ -169,17 +147,6 @@ class ProductWithId extends React.Component {
       );
     }
 
-    const dropDownCountries = [];
-    countries.sort((a, b) => this.compare(a, b, "key"));
-    countries.map(continent => {
-      let first = true;
-      continent.values.sort((a, b) => this.compare(a, b, "name"));
-      continent.values.map(country => {
-        dropDownCountries.push({continent: continent.key, value: country.id, label: country.name, first});
-        first = false;
-      });
-    });
-
     let productCategory = "";
     if (products) {
       products.map(product => {
@@ -189,32 +156,45 @@ class ProductWithId extends React.Component {
       });
     }
 
+    const companies = nest()
+      .key(d => d.company_id)
+      .entries(filteredTrades)
+      .map(c => ({countries: [...new Set(c.values.map(d => d.country_id))], ...c.values[0]}))
+      .sort((a, b) => b.count - a.count);
+
     return (
       <div className="detailed-content-wrapper product">
         <Helmet title={ `${ header.title } - ${ product.name }` } />
         <ProductHeader countries={countries} productData= {productData} product={product} productCategory={productCategory}/>
-        <div className="filter-wrapper">
-          <div className="filter export-import">
-            <label className="label radio-label">
-              <input className="radio" onChange={this.handleOptionChange.bind(this, "export")} type="radio" value="export" checked={this.state.selectedOption === "export"}/>
-              <p>export</p>
-            </label>
-            <label className="label radio-label">
-              <input className="radio" onChange={this.handleOptionChange.bind(this, "import")} type="radio" value="import" checked={this.state.selectedOption === "import"}/>
-              <p>import</p>
-            </label>
-          </div>
-          <div className="filter">
-            <div className="label country-dropdown-label">
-              <p>Country</p>
+
+        <div className="filter-bg">
+          <div className="filter-wrapper">
+
+            <div className="filter">
+              <div className="label trade-flow-label">
+                <p>Trade Flow</p>
+              </div>
+              <br />
+              <ButtonGroup className="bp3-dark">
+                <Button onClick={() => this.changeTradeFlow(null)} active={tradeFlow ? false : true} icon="arrows-horizontal">All</Button>
+                <Button onClick={() => this.changeTradeFlow("exports")} active={tradeFlow === "exports" ? true : false} icon="arrow-right">Export</Button>
+                <Button onClick={() => this.changeTradeFlow("imports")} active={tradeFlow === "imports" ? true : false} icon="arrow-left">Import</Button>
+              </ButtonGroup>
             </div>
-            {/* <Dropdown type="countries" select={this.selectDropDown} value={this.state.country.value} options={dropDownCountries}></Dropdown> */}
-          </div>
-          <div className="filter button-wrapper">
-            <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
-              <span><img src="/images/icons/icon-clear-white.svg"/></span>
-              Clear All Filters
-            </button>
+
+            <div className="filter">
+              <div className="label country-dropdown-label">
+                <p>Country</p>
+              </div>
+              <CountryDropdown data={this.countriesWithTrades} handleSelection={this.selectDropDown} selectedItem={country} />
+            </div>
+
+            {/* <div className="filter button-wrapper">
+              <ButtonGroup className="bp3-dark">
+                <Button className="bp3-dark" onClick={this.removeSelection} icon="ban-circle">Clear All Filters</Button>
+              </ButtonGroup>
+            </div> */}
+
           </div>
         </div>
 
@@ -226,27 +206,19 @@ class ProductWithId extends React.Component {
 
         <div>
           <div className="result-wrapper-outer">
-            {trades
+            {companies.length
               ? <div className="result-wrapper">
-                {this.filterCompanies(trades).length > 0 ? this.filterCompanies(trades).map((trade, index) => {
-                  const content = trade.Company;
-                  content.profile_type = "company";
-                  if ((trade.trade_flow === `${this.state.selectedOption}s` || this.state.selectedOption === "all") && (this.state.country.value === "all" || this.state.country.value === trade.country_id)) {
-                    return <Card key={index} countries={trade.countries} content={content}/>;
-                  }
-                  else {
-                    return null;
-                  }
-                }) : <div className="result-wrapper no-companies">
-                  <p>There are no companies listed. Be the first one!</p>
-                  <Link to={"/settings"}>
-                    <button className="list-company">List Your Company</button>
-                  </Link>
-                </div>}
+                {companies.map(trade => <Card key={trade.id} countries={trade.countries} content={{profile_type: "company", ...trade.Company}} />)}
               </div>
-              : null}
+              : <div className="result-wrapper no-companies">
+                <p>There are no companies listed. Be the first one!</p>
+                <Link to={"/settings"}>
+                  <button className="list-company">List Your Company</button>
+                </Link>
+              </div>}
           </div>
         </div>
+
       </div>
     );
   }
@@ -275,7 +247,6 @@ ProductWithId.preneed = [
 ProductWithId.need = [
   fetchData("productData", "https://atlas.media.mit.edu/hs92/import/2015/all/all/<product.id_hs92>/", res => res.data[0])
 ];
-ProductWithId.postneed = [];
 
 const mapStateToProps = state => ({
   data: state.data,

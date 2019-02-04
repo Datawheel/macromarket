@@ -8,6 +8,9 @@
   top: 0;
   width: 100%;
   z-index: 100;
+  & .bp3-heading {
+    color: white;
+  }
   & .bp3-non-ideal-state-visual {
     max-width: 200px;
     width: 100%;

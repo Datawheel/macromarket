@@ -16,7 +16,8 @@
 #
 
 dark: "#141D23"
-light: "#DBB706"
+base: "#182026" # dark blue for backgrounds
+light: "#DBB706" # macro-market yellow
 white: "#fafafa"
 
 nav-height: 40px
