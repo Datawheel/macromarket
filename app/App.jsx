@@ -20,7 +20,6 @@ class App extends Component {
 
   render() {
     const {isOpen} = this.props;
-    console.log("isOpen:", isOpen);
     return <div className={isOpen ? "overlayOpen overlay-bg" : "overlay-bg"}>
       <Helmet title={ header.title } link={ header.link } meta={ header.meta } />
       <NavBar location={this.props.location} />

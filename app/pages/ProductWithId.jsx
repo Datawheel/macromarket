@@ -105,13 +105,15 @@ class ProductWithId extends React.Component {
       .entries(trades)
       .map(c => c.values[0].Company);
     const exportsByCountry = nest()
-      .key(d => d.product_id)
+      .key(d => d.country_id)
       .entries(trades.filter(t => t.trade_flow === "exports" && t.country_id))
-      .map(c => c.values[0].Country);
+      .map(c => ({count: c.values.length, ...c.values[0].Country}))
+      .sort((a, b) => b.count - a.count);
     const importsByCountry = nest()
-      .key(d => d.product_id)
+      .key(d => d.country_id)
       .entries(trades.filter(t => t.trade_flow === "imports" && t.country_id))
-      .map(c => c.values[0].Country);
+      .map(c => ({count: c.values.length, ...c.values[0].Country}))
+      .sort((a, b) => b.count - a.count);
 
     const numCompanies = tradesByCompany.length;
     return numCompanies
@@ -121,13 +123,13 @@ class ProductWithId extends React.Component {
           : <span>There are {tradesByCompany.length} companies trading {product.name} including <AnchorList items={tradesByCompany.slice(0, 3)} name={c => c.name} url={c => `/company/${c.slug}`} />.&nbsp;</span>}
         {exportsByCountry.length
           ? exportsByCountry.length === 1
-            ? <span>{numCompanies === 1 ? <span>This company exports them from</span> : <span>These companies export them from</span>} <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
-            : <span>{numCompanies === 1 ? <span>This company exports them from {exportsByCountry.length} different countries</span> : <span>These companies export them from {exportsByCountry.length} different countries</span>} including <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            ? <span>{numCompanies === 1 ? <span>This company exports them from</span> : <span>These companies export them from</span>} <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.&nbsp;</span>
+            : <span>{numCompanies === 1 ? <span>This company exports them from {exportsByCountry.length} different countries</span> : <span>These companies export them from {exportsByCountry.length} different countries</span>} including <AnchorList items={exportsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.&nbsp;</span>
           : null}
         {importsByCountry.length
           ? importsByCountry.length === 1
-            ? <span>They import them from one country, <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
-            : <span>They import them from {importsByCountry.length} different countries including <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/product/${c.id}`} />.&nbsp;</span>
+            ? <span>They import them from one country, <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.&nbsp;</span>
+            : <span>They import them from {importsByCountry.length} different countries including <AnchorList items={importsByCountry.slice(0, 3)} name={c => c.name} url={c => `/country/${c.id}`} />.&nbsp;</span>
           : null}
       </p>
       : null;
