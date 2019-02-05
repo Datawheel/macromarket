@@ -59,19 +59,20 @@
     color: var(--base);
   }
 }
-
-.bp3-input {
-  background: var(--base) !important;
-  color: var(--white) !important;
-  opacity: 0.7;
-}
-
-.bp3-input-group {
-  & svg {
+.selector {
+  & .bp3-input {
+    background: var(--base) !important;
     color: var(--white) !important;
+    opacity: 0.7;
   }
-}
 
-.bp3-popover-arrow-fill {
-  fill: var(--base) !important;
+  & .bp3-input-group {
+    & svg {
+      color: var(--white) !important;
+    }
+  }
+
+  & .bp3-popover-arrow-fill {
+    fill: var(--base) !important;
+  }
 }

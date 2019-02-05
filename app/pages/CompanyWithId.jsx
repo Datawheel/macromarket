@@ -77,7 +77,7 @@ class CompanyWithId extends React.Component {
         </Sidebar>
 
         <div className="center-content">
-          <CompanyHeader company={company} countries={countries} profileImage={profileImage}  connectamericas={isConnectamericas}/>
+          <CompanyHeader company={company} countries={countries} profileImage={profileImage} connectamericas={isConnectamericas} />
 
           <div className="content-wrapper">
 

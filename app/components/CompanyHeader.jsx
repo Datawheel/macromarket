@@ -3,9 +3,14 @@ import {Link} from "react-router";
 import "./Header.css";
 
 const CompanyHeader = ({company, countries, connectamericas, profileImage}) => {
+  // if (!company || !company.id) {
+  //   return <div className="header-image-wrapper">loading...</div>;
+  // }
   let coverImage = {
     backgroundImage: `url(${company.cover_image})`
   };
+
+  // console.log("COMPANY!!!! (IN HEADER)", company);
 
   if (!company.cover_image) {
     const country = company.Country;
@@ -39,10 +44,10 @@ const CompanyHeader = ({company, countries, connectamericas, profileImage}) => {
                       ? `${company.city}, ${company.region}`
                       : null}
                   </p>
-                  {company.Country 
+                  {company.Country
                     ? connectamericas
-                      ? <p className="country-name"><Link to={`/country/${countries.find(c => `${c.id_ca}` == `${company.Country.id}`).id}`}>{company.Country.name}</Link></p> 
-                      : <p className="country-name"><Link to={`/country/${company.Country.id}`}>{company.Country.name}</Link></p> 
+                      ? <p className="country-name"><Link to={countries.find(c => `${c.id_ca}` == `${company.Country.id}`) ? `/country/${countries.find(c => `${c.id_ca}` === `${company.Country.id}`).id}` : ""}>{company.Country.name}</Link></p>
+                      : <p className="country-name"><Link to={`/country/${company.Country.id}`}>{company.Country.name}</Link></p>
                     : null}
                 </div>
               </div>

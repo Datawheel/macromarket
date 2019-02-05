@@ -1,9 +1,4 @@
 @import "../Variables";
-.bp3-navbar {
-  lost-utility: clearfix;
-  padding: 40px !important;
-  height: auto !important;
-}
 .detailed-content-wrapper {
   & .bp3-non-ideal-state {
     color: white;

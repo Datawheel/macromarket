@@ -14,7 +14,7 @@
       "greeting": "Hi {{username}},",
       "link": "Or copy and paste the following into your browser: {{confirmLink}}",
       "signature": "The {{site}} Team",
-      "title": "E-mail Verification",
+      "title": "Macro Market Account Verification",
       "welcome": "Welcome to {{site}}!"
     }
   },

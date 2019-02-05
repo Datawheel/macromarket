@@ -8,31 +8,20 @@ class CountryHeader extends React.Component {
     super(props);
   }
 
-  nameLookup = (id, products, name) => {
-    let result = name;
-    const stem = id.slice(0, 2);
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      if (product.key === stem) {
-        result = product.name;
-        if (id.length > 2) {
-          return this.nameLookup(id.slice(2, id.length), product.values, result);
-        }
-        return result;
-      }
-    }
-
+  nameLookup = (id, products) => {
+    const prodObj = products.find(p => p.id === id);
+    return prodObj ? prodObj.name : id;
   };
 
   abbrNum(number, decPlaces) {
     // 2 decimal places => 100, 3 => 1000, etc
     decPlaces = Math.pow(10, decPlaces);
     // Enumerate number abbreviations
-    let abbrev = ["k", "m", "b", "t"];
+    const abbrev = ["k", "m", "b", "t"];
     // Go through the array backwards, so we do the largest first
     for (let i = abbrev.length - 1; i >= 0; i--) {
       // Convert array index to "1000", "1000000", etc
-      let size = Math.pow(10, (i + 1) * 3);
+      const size = Math.pow(10, (i + 1) * 3);
       // If the number is bigger or equal do the abbreviation
       if (size <= number) {
         // Here, we multiply by decPlaces, round, and then divide by decPlaces.
@@ -60,8 +49,8 @@ class CountryHeader extends React.Component {
     let exportName;
 
     if (countryData && importData && exportData) {
-      importName = this.nameLookup(importData.hs92_id, products, "");
-      exportName = this.nameLookup(exportData.hs92_id, products, "");
+      importName = this.nameLookup(importData.hs92_id, products);
+      exportName = this.nameLookup(exportData.hs92_id, products);
       exportValue = `$${this.abbrNum(countryData.export_val, 2)}`;
       importValue = `$${this.abbrNum(countryData.import_val, 2)}`;
     }

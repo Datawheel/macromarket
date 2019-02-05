@@ -417,10 +417,6 @@ class EditCompany extends React.Component {
             </label>
             {coverImage
               ? <div className="bp3-button-group bp3-minimal">
-                <button className="bp3-button bp3-icon-refresh" role="button" onClick={() => {
-                  this.coverImgField.current.click()
-                  ;
-                }}>Replace</button>
                 <button className="bp3-button bp3-icon-trash" tabIndex="0" role="button" onClick={this.removeImg.bind(null, "coverImage")}>Remove</button>
               </div>
               : null}
@@ -440,10 +436,6 @@ class EditCompany extends React.Component {
             </label>
             {profileImage
               ? <div className="bp3-button-group bp3-minimal">
-                <button className="bp3-button bp3-icon-refresh" role="button" onClick={() => {
-                  this.profileImgField.current.click()
-                  ;
-                }}>Replace</button>
                 <button className="bp3-button bp3-icon-trash" role="button" onClick={this.removeImg.bind(null, "profileImage")}>Remove</button>
               </div>
               : null}

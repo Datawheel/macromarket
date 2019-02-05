@@ -10,7 +10,7 @@ class Card extends React.Component {
   }
 
   render() {
-    const {key} = this.props;
+    const {key, fromSearch} = this.props;
     let icon = "/images/icons/icon-product-yellow.svg";
     let img = "";
     let id = this.content.id;
@@ -51,12 +51,7 @@ class Card extends React.Component {
 
     return (
       <div className="card fade-in" key={key}>
-        <Link to={`/${this.content.profile_type === "connectamericas"
-          ? "company"
-          : this.content.profile_type}/${id}`} onClick={() => {
-          this.props.activateSearch(false)
-          ;
-        }}>
+        <Link to={`/${this.content.profile_type === "connectamericas" ? "company" : this.content.profile_type}/${id}`} onClick={fromSearch ? () => this.props.activateSearch(false) : null}>
           <div className="image-wrapper">
             <div style={{
               backgroundImage: img ? `url(${img})` : "url('/images/default-business.png')"
@@ -73,11 +68,18 @@ class Card extends React.Component {
                   : "company"}</p>
             <p className="name">{this.content.name}</p>
             {this.props.countries
-              ? this.props.countries.map((country, index) => {
-                if (index < 7 && country) {
-                  return <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>;
-                }
-              })
+              ? this.props.countries.map((country, index) =>
+                index < 7 && country
+                  ? <div className="flag-wrapper"><img className="company-flags" src={`/images/flags/country_${country}.png`}/></div>
+                  : null
+              )
+              : null}
+            {this.props.products
+              ? this.props.products.map((product, index) =>
+                index < 7 && product
+                  ? <div className={`icon-wrapper color-${product}`}><img className="company-flags" src={`/images/product_icon/hs_${product}.png`}/></div>
+                  : null
+              )
               : null}
           </div>
         </Link>

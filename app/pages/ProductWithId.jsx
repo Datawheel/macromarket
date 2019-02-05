@@ -23,18 +23,21 @@ class ProductWithId extends React.Component {
   constructor(props) {
     super(props);
 
-    this.countriesWithTrades = nest()
-      .key(d => d.country_id)
-      .entries(props.data.trades.filter(t => t.country_id))
-      .map(c => ({count: new Set(c.values.map(d => d.company_id)).size, ...c.values[0].Country}))
-      .sort((a, b) => b.count - a.count);
-    // prepend "all" as default selected option
-    this.countriesWithTrades.unshift({name: "All", id: "all"});
+    this.countriesWithTrades = [];
+    if (props.data.trades) {
+      this.countriesWithTrades = nest()
+        .key(d => d.country_id)
+        .entries(props.data.trades.filter(t => t.country_id))
+        .map(c => ({count: new Set(c.values.map(d => d.company_id)).size, ...c.values[0].Country}))
+        .sort((a, b) => b.count - a.count);
+      // prepend "all" as default selected option
+      this.countriesWithTrades.unshift({name: "All", id: "all"});
+    }
 
     this.state = {
       selectedOption: "all",
       country: {name: "All Countries", id: "all"},
-      filteredTrades: props.data.trades,
+      filteredTrades: props.data.trades || [],
       tradeFlow: null
     };
   }
@@ -138,7 +141,7 @@ class ProductWithId extends React.Component {
       );
     }
 
-    if (product.error) {
+    if (!product || product.error) {
       return (
         <div className="error-404">
           <div className="error-gif"></div>

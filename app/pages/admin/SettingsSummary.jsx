@@ -5,7 +5,7 @@ import {Activate as CanonActivate} from "@datawheel/canon-core";
 import {NonIdealState} from "@blueprintjs/core";
 import "./Admin.css";
 import "./Settings.css";
-import {isAuthenticated} from "@datawheel/canon-core";
+
 import api from "helpers/api.js";
 import CompanyCard from "pages/admin/CompanyCard";
 import {nest} from "d3-collection";
@@ -18,7 +18,7 @@ class SettingsSummary extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {user} = this.props.auth;
     api.get(`api/companies/byUser/${user.id}`)
       .then(companiesResp => {
@@ -83,10 +83,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const mapDispatchToProps = dispatch => ({
-  isAuthenticated: () => {
-    dispatch(isAuthenticated());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsSummary);
+export default connect(mapStateToProps)(SettingsSummary);

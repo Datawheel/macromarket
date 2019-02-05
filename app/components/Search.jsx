@@ -93,7 +93,7 @@ class Search extends React.Component {
     if (results.length !== 0) {
       return (
         <div className="fade-in result-wrapper">
-          {results.map(result => <Card products={this.props.products} key={result.id} content={result}/>)}
+          {results.map(result => <Card fromSearch={true} products={this.props.products} key={result.id} content={result}/>)}
         </div>
       );
     }

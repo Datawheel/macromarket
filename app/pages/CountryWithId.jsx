@@ -3,14 +3,13 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import Card from "components/Card.jsx";
 import AnchorList from "components/AnchorList.jsx";
-// import Dropdown from "components/Dropdown";
+import ProductDropdown from "components/ProductDropdown";
 import {fetchData} from "@datawheel/canon-core";
 import {url} from "helpers/api.js";
 import CountryHeader from "components/CountryHeader";
 import {nest} from "d3-collection";
 import "./Detailed.css";
-// import "../components/Dropdown.css";
-import {ascending} from "d3-array";
+import {Button, ButtonGroup} from "@blueprintjs/core";
 
 import Helmet from "react-helmet";
 import header from "helpers/helmet.js";
@@ -18,42 +17,54 @@ import header from "helpers/helmet.js";
 class CountryWithId extends React.Component {
   constructor(props) {
     super(props);
+
+    this.productsWithTrades = [];
+    if (props.trades) {
+      this.productsWithTrades = nest()
+        .key(d => d.product_id)
+        .entries(props.trades.filter(t => t.product_id))
+        .map(c => ({count: new Set(c.values.map(d => d.company_id)).size, ...c.values[0].Product}))
+        .sort((a, b) => b.count - a.count);
+      // prepend "all" as default selected option
+      this.productsWithTrades.unshift({name: "All", id: "all"});
+    }
+
     this.state = {
       selectedOption: "all",
-      product: {
-        label: "All",
-        value: "all"
-      }
+      product: {name: "All Products", id: "all"},
+      filteredTrades: props.trades || [],
+      tradeFlow: null
     };
   }
 
-  handleOptionChange = selectedOption => {
-    this.setState({selectedOption});
-  }
-
   arrowRenderer = () => <span className="chevron bottom"></span>;
-  compare(a, b, attr) {
-    if (a[attr] < b[attr]) {
-      return -1;
-    }
-    if (a[attr] > b[attr]) {
-      return 1;
-    }
-    return 0;
-  }
 
-  removeSelection = () => {
-    this.setState({
-      product: {
-        label: "All",
-        value: "all"
-      },
-      selectedOption: "all"
+  filterTrades = () => {
+    const {product, tradeFlow} = this.state;
+    const {trades} = this.props.data;
+    // const filteredTrades = product.id === "all" ? trades : trades.filter(trade => trade.product_id === product.id);
+    const filteredTrades = trades.filter(trade => {
+      if (product.id !== "all" && tradeFlow) {
+        return trade.product_id === product.id && trade.trade_flow === tradeFlow;
+      }
+      if (product.id !== "all" && !tradeFlow) {
+        return trade.product_id === product.id;
+      }
+      if (tradeFlow) {
+        return trade.trade_flow === tradeFlow;
+      }
+      return true;
     });
+
+    this.setState({filteredTrades});
   }
 
-  selectDropDown = item => {
-    this.setState({product: item});
+  selectDropDown = product => {
+    this.setState({product}, this.filterTrades);
+  }
+
+  changeTradeFlow = tradeFlow => {
+    this.setState({tradeFlow}, this.filterTrades);
   }
 
   introParagraph = () => {
@@ -103,8 +114,9 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {loading, error, products, trades, caTrades} = this.props;
+    const {error, products, trades, caTrades} = this.props;
     const {country, countryData, importData, exportData} = this.props.data;
+    const {filteredTrades, product, tradeFlow} = this.state;
 
     if (!country || !products) {
       return <div className="detailed-content-wrapper blue-loading">
@@ -119,122 +131,77 @@ class CountryWithId extends React.Component {
       </div>;
     }
 
-    const dropDownProducts = [];
-
-    products.sort((a, b) => this.compare(a, b, "name"));
-    products.map(category => {
-      let first = true;
-      category.values.sort((a, b) => this.compare(a, b, "name"));
-      category.values.map(product => {
-        dropDownProducts.push({categoryId: category.key, name: category.name, value: product.key, label: product.name, first});
-        first = false;
-      });
-    });
-
     if (error) {
       return <div className="detailed-content-wrapper">
         <h2>Error</h2>
         <p>Please refresh the page.</p>
       </div>;
     }
-    let allTrades;
-    if (caTrades && trades && Array.isArray(trades)) {
-      // filter out duplicate countries
-      allTrades = trades.filter((trade, index, self) => self.findIndex(t => t.company_id === trade.company_id) === index).concat(caTrades);
+
+    let companies = nest()
+      .key(d => d.company_id)
+      .entries(filteredTrades)
+      .map(c => ({products: [...new Set(c.values.map(d => d.product_id.substring(0, 2)))], ...c.values[0]}));
+
+    if (product.id === "all" && !tradeFlow) {
+      companies = companies.concat(caTrades);
     }
 
     return <div className="detailed-content-wrapper country">
       <Helmet title={`${header.title} - ${country.name}`}/>
       <CountryHeader country={country} importData={importData} exportData={exportData} products={products} countryData={countryData || null}/>
-      <div className="filter-wrapper">
-        <div className="filter export-import">
-          <label className="label radio-label">
-            <input className="radio" onChange={this.handleOptionChange.bind(this, "exports")} type="radio" value="exports" checked={this.state.selectedOption === "exports"}/>
-            <p>Exports</p>
-          </label>
-          <label className="label radio-label">
-            <input className="radio" onChange={this.handleOptionChange.bind(this, "imports")} type="radio" value="imports" checked={this.state.selectedOption === "imports"}/>
-            <p>Imports</p>
-          </label>
-        </div>
-        <div className="filter">
-          <div className="label">
-            <p>Filter Products</p>
+
+      <div className="filter-bg">
+        <div className="filter-wrapper">
+
+          <div className="filter">
+            <div className="label trade-flow-label">
+              <p>Trade Flow</p>
+            </div>
+            <br />
+            <ButtonGroup className="bp3-dark">
+              <Button onClick={() => this.changeTradeFlow(null)} active={tradeFlow ? false : true} icon="arrows-horizontal">All</Button>
+              <Button onClick={() => this.changeTradeFlow("exports")} active={tradeFlow === "exports" ? true : false} icon="arrow-right">Export</Button>
+              <Button onClick={() => this.changeTradeFlow("imports")} active={tradeFlow === "imports" ? true : false} icon="arrow-left">Import</Button>
+            </ButtonGroup>
           </div>
-          {/* <Dropdown removeSelection={this.removeSelection} clearable={true} type="products" select={this.selectDropDown} value={this.state.product.value} options={dropDownProducts}></Dropdown> */}
-        </div>
-        <div className="filter button-wrapper">
-          <button className="clear-filters" onClick={this.removeSelection.bind(this)}>
-            <span>
-              <img src="/images/icons/icon-clear-white.svg"/>
-            </span>
-            Clear All Filters</button>
+
+          <div className="filter">
+            <div className="label country-dropdown-label">
+              <p>Product</p>
+            </div>
+            <ProductDropdown data={this.productsWithTrades} handleSelection={this.selectDropDown} selectedItem={product} />
+          </div>
         </div>
       </div>
 
-      <div className="result-wrapper-outer">
-        <div className="intro-text">
-          <section>
-            {trades && this.introParagraph()}
-          </section>
+      <div>
+        <div className="result-wrapper-outer">
+          <div className="intro-text">
+            <section>
+              {trades && this.introParagraph()}
+            </section>
+          </div>
+          {companies.length
+            ? <div className="result-wrapper">
+              {companies.map(trade => <Card key={trade.id} products={trade.products} content={trade.Company ? {profile_type: "company", ...trade.Company} : {...trade}} />)}
+            </div>
+            : <div className="result-wrapper no-companies">
+              <p>There are no companies listed. Be the first one!</p>
+              <Link to={"/settings"}>
+                <button className="list-company">List Your Company</button>
+              </Link>
+            </div>}
         </div>
-        {
-          !allTrades
-            ? <div className="result-wrapper loading-wrapper">
-              <p>Loading...</p>
-            </div>
-            : <div className="result-wrapper">
-              {
-                allTrades.length > 0
-                  ? allTrades.map(trade => {
-                    if (!trade.profile_type) {
-                      const content = trade.Company;
-                      content.profile_type = "company";
-                      if ((trade.trade_flow === `${this.state.selectedOption}` || this.state.selectedOption === "all") && (this.state.product.value === "all" || this.state.product.value === trade.product_id.slice(0, 2))) {
-                        return <Card key={trade.id} content={content}/>;
-                      }
-                    }
-                    else {
-                      if (this.state.selectedOption === "all" && this.state.product.value === "all") {
-                        return <Card key={trade.id} content={trade}/>;
-                      }
-                    }
-                  })
-                  : <div className="result-wrapper no-companies">
-                    <p>There are no companies listed. Be the first one!</p>
-                    <Link to={"/settings"}>
-                      <button className="list-company">List Your Company</button>
-                    </Link>
-                  </div>
-              }
-            </div>
-        }
       </div>
+
     </div>;
   }
 }
 
 CountryWithId.preneed = [
   fetchData("country", `${url}/api/countries/<countryWithId>`, res => res),
-  fetchData("products", `${url}/api/products`, res => nest().key(d => d.id.substring(0, 2)).sortKeys(ascending).key(d => d.id.substring(2, 4)).sortKeys(ascending).key(d => d.id.substring(4, 6)).sortKeys(ascending).entries(res).map(d => {
-    const myHs2 = d.values.shift();
-    const myNewValues = d.values.map(dd => {
-      const myHs4 = dd.values.shift();
-      const innerValues = dd.values.map(ddd => {
-        const myHs6 = ddd.values.shift();
-        return {key: ddd.key, values: ddd.values, name: myHs6.name};
-      });
-      return {key: dd.key, values: innerValues, name: myHs4.values[0].name};
-    });
-    const returnData = {
-      key: d.key,
-      values: myNewValues,
-      name: myHs2.values[0].values[0].name
-
-    };
-
-    return returnData;
-  }))
+  fetchData("products", `${url}/api/products`, res => res)
 ];
 
 CountryWithId.need = [
