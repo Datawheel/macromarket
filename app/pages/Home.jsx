@@ -16,7 +16,7 @@ class Home extends React.Component {
       filter: "All"
     };
     this.countries = [
-      {type: "country", name: "Chile", continent: "South America", id: "sachl", flickr_link: "https://flic.kr/p/g2TM9U"},
+      {type: "country", name: "Brazil", continent: "South America", id: "sabra", flickr_link: "https://flic.kr/p/g2TM9U"},
       {type: "country", name: "USA", continent: "North America", id: "nausa", flickr_link: "https://flic.kr/p/8CZkZ7"},
       {type: "country", name: "Italy", continent: "Europe", id: "euita", flickr_link: "https://flic.kr/p/gonJ3Y"},
       {type: "country", name: "Vietnam", continent: "Asia", id: "asvnm", flickr_link: ""},
@@ -31,13 +31,15 @@ class Home extends React.Component {
       {type: "product", name: "Electrical Transformers", category: "Machines", id: "168504", flickr_link: "https://flic.kr/p/6Bfnmw"}
     ];
     this.companies = [
-      {id: "mutara-africa-link-technologies", type: "company", name: "Mutara Africa Link Technologies", logo: "https://storage.googleapis.com/mm-company/company/company6023-mutara-logo-design.png"},
+      {id: "cabo-virgenes-espana-6870", type: "company", name: "Cabo Vírgenes", logo: "https://storage.googleapis.com/mm-company/company/company6870-fondo_01.jpg"},
       {id: "chaochomvarnish-coltd", type: "company", name: "Chaochomvarnish Co.", logo: "https://storage.googleapis.com/mm-company/company/company277--.jpg"},
       {id: "sheabutter-guys-uk-limited", type: "company", name: "sheabutter guys UK Limited", logo: "https://storage.googleapis.com/mm-company/company/company254-official-logo.png"},
       {id: "dobropole", type: "company", name: "DOBROPOLE", logo: "https://storage.googleapis.com/mm-company/company/company284-ukrainian_flag-wallpaper-1024x1024.jpg"},
       {id: "inversiones-martinez-perez", type: "company", name: "Inversiones Martinez Perez", logo: "https://storage.googleapis.com/mm-company/company/company6056-logo-cuadrado.jpeg"},
       {id: "shaylan-group", type: "company", name: "Shaylan Group", logo: "https://storage.googleapis.com/mm-company/company/company271-shaylan.png"},
-      {id: "planet-port-export-and-imports", type: "company", name: "Planet Port Export and Imports", logo: "https://storage.googleapis.com/mm-company/company/company291-planet-port-logo_final-1-paint.jpg"}
+      {id: "mutara-africa-link-technologies", type: "company", name: "Mutara Africa Link Technologies", logo: "https://storage.googleapis.com/mm-company/company/company6023-mutara-logo-design.png"}
+
+      // {id: "planet-port-export-and-imports", type: "company", name: "Planet Port Export and Imports", logo: "https://storage.googleapis.com/mm-company/company/company291-planet-port-logo_final-1-paint.jpg"}
 
       // {id: "shenzhen-wangjing-printing-coltd", type: "company", name: "Shenzhen Wangjing Printing", logo: "https://storage.googleapis.com/mm-company/company/company251-img_2104s.jpg"}
       // {id: "algeria-universal-export", type: "company", name: "Algeria Universal Export", logo: "https://storage.googleapis.com/mm-company/company/company287-a.jpg"},
