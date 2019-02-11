@@ -19,10 +19,10 @@ class CountryWithId extends React.Component {
     super(props);
 
     this.productsWithTrades = [];
-    if (props.trades) {
+    if (props.countryTrades) {
       this.productsWithTrades = nest()
         .key(d => d.product_id)
-        .entries(props.trades.filter(t => t.product_id))
+        .entries(props.countryTrades.filter(t => t.product_id))
         .map(c => ({count: new Set(c.values.map(d => d.company_id)).size, ...c.values[0].Product}))
         .sort((a, b) => b.count - a.count);
       // prepend "all" as default selected option
@@ -32,7 +32,7 @@ class CountryWithId extends React.Component {
     this.state = {
       selectedOption: "all",
       product: {name: "All Products", id: "all"},
-      filteredTrades: props.trades || [],
+      filteredTrades: props.countryTrades || [],
       tradeFlow: null
     };
   }
@@ -41,9 +41,9 @@ class CountryWithId extends React.Component {
 
   filterTrades = () => {
     const {product, tradeFlow} = this.state;
-    const {trades} = this.props.data;
+    const {countryTrades} = this.props.data;
     // const filteredTrades = product.id === "all" ? trades : trades.filter(trade => trade.product_id === product.id);
-    const filteredTrades = trades.filter(trade => {
+    const filteredTrades = countryTrades.filter(trade => {
       if (product.id !== "all" && tradeFlow) {
         return trade.product_id === product.id && trade.trade_flow === tradeFlow;
       }
@@ -68,14 +68,14 @@ class CountryWithId extends React.Component {
   }
 
   introParagraph = () => {
-    const {country, trades} = this.props.data;
+    const {country, countryTrades} = this.props.data;
 
-    if (!trades) return <div></div>;
-    if (!trades.length) return <div></div>;
+    if (!countryTrades) return <div></div>;
+    if (!countryTrades.length) return <div></div>;
 
-    const tradesByCompany = nest().key(d => d.company_id).entries(trades).map(c => c.values[0].Company);
-    const exportsByProduct = nest().key(d => d.product_id).entries(trades.filter(t => t.trade_flow === "exports")).map(c => c.values[0].Product);
-    const importsByProduct = nest().key(d => d.product_id).entries(trades.filter(t => t.trade_flow === "imports")).map(c => c.values[0].Product);
+    const tradesByCompany = nest().key(d => d.company_id).entries(countryTrades).map(c => c.values[0].Company);
+    const exportsByProduct = nest().key(d => d.product_id).entries(countryTrades.filter(t => t.trade_flow === "exports")).map(c => c.values[0].Product);
+    const importsByProduct = nest().key(d => d.product_id).entries(countryTrades.filter(t => t.trade_flow === "imports")).map(c => c.values[0].Product);
 
     const numCompanies = tradesByCompany.length;
     return numCompanies
@@ -114,7 +114,7 @@ class CountryWithId extends React.Component {
   }
 
   render() {
-    const {error, products, trades, caTrades} = this.props;
+    const {error, products, countryTrades, caTrades} = this.props;
     const {country, countryData, importData, exportData} = this.props.data;
     const {filteredTrades, product, tradeFlow} = this.state;
 
@@ -179,7 +179,7 @@ class CountryWithId extends React.Component {
         <div className="result-wrapper-outer">
           <div className="intro-text">
             <section>
-              {trades && this.introParagraph()}
+              {countryTrades && this.introParagraph()}
             </section>
           </div>
           {companies.length
@@ -205,7 +205,7 @@ CountryWithId.preneed = [
 ];
 
 CountryWithId.need = [
-  fetchData("trades", "/api/trades/country/<country.id>", res => res),
+  fetchData("countryTrades", "/api/trades/country/<country.id>", res => res),
   fetchData("caTrades", "/api/trades/ca_country/<country.id_ca>", res => res),
   fetchData("countryData", "https://atlas.media.mit.edu/hs92/export/2015/<country.id_3char>/all/all/", res => {
     const response = res.data[0];
@@ -220,8 +220,8 @@ CountryWithId.need = [
 ];
 
 CountryWithId.postneed = [
-  fetchData("importData", "https://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.import>/", res => res.data[0]),
-  fetchData("exportData", "https://atlas.media.mit.edu/hs92/import/2015/all/all/<countryData.export>/", res => res.data[0])
+  fetchData("importData", "https://atlas.media.mit.edu/hs92/import/2017/all/all/<countryData.import>/", res => res.data[0]),
+  fetchData("exportData", "https://atlas.media.mit.edu/hs92/import/2017/all/all/<countryData.export>/", res => res.data[0])
 ];
 
 const mapStateToProps = state => ({
@@ -230,7 +230,7 @@ const mapStateToProps = state => ({
   loading: state.countryProfile.loading,
   error: state.countryProfile.error || null,
   products: state.data.products,
-  trades: state.data.trades,
+  countryTrades: state.data.countryTrades,
   caTrades: state.data.caTrades,
   tradesError: state.trades.error
 });

@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import "components/Header.css";
+import {AnchorButton} from "@blueprintjs/core";
 
 class ProductHeader extends React.Component {
   constructor(props) {
@@ -68,80 +69,79 @@ class ProductHeader extends React.Component {
         ? `/images/product/${product.id.slice(0, -2)}.jpg`
         : `/images/product/${fallbackId}.jpg`;
 
-    return (
-      <div className="header">
+    return <div className="header">
 
+      <div className="header-image-wrapper">
+        <div className="fade-in background-image" style={{backgroundImage: `url(${img})`}}>
 
-        <div className="header-image-wrapper">
-          <div className="fade-in background-image" style={{backgroundImage: `url(${img})`}}>
-            <div className="image-overlay"></div>
-          </div>
+          {/* bg image */}
+          {/* <div className="image-overlay"></div> */}
+
+          {/* top info */}
           <div className="header-info">
 
-            <div className="header-wrapper name page-title section-wrapper">
-              <div className="name-image">
-                <img src={"/images/icons/icon-product-white.svg"}/>
-              </div>
-              <div className="name-text">
+            <div className="page-title">
+              <span className="name-text">
                 <h2>{product.name}</h2>
                 <h4 className="product-category">{productCategory}</h4>
-              </div>
-
+              </span>
               <p>{product.description}</p>
             </div>
+
             <div className="page-links">
-              <Link to={"/settings/product"}>
-                <button className="list-company">List Your Company</button>
-              </Link>
+              <AnchorButton className="header-list-company" minimal={false} intent={"danger"} large={true} rightIcon="add" href="/settings">
+                List Your Company
+              </AnchorButton>
               {product.id_hs92
-                ? <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
-                    View on the OEC <span className="chevron right"></span></a>
+                ? <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
+                    View on the OEC
+                </AnchorButton>
                 : null}
             </div>
-          </div>
-          {productValue
-            ? <div className="image-overlay-wrapper">
 
-              <div className="text-wrapper">
-                <div className="section-wrapper total-data">
-                  <div className="data">
-                    <h4>Exports</h4>
-                    <p className="value">{productValue}</p>
+          </div>{/* end top info */}
+
+          {/* bottom header stats */}
+          {productValue
+            ? <div className="header-stats">
+              <ul>
+                <li className="header-stat">
+                  <h4>Exports</h4>
+                  <p className="value">{productValue}</p>
+                </li>
+
+                <li className="header-stat">
+                  <h4>Imports</h4>
+                  <p className="value">{productValue}</p>
+                </li>
+
+                <li className="header-stat">
+                  <h4>Top Exporter</h4>
+                  <div className="top-country">
+                    <Link to={`/country/${topExporter}`}>
+                      <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
+                      <h3>{exportName}</h3>
+                    </Link>
                   </div>
-                  <div className="data">
-                    <h4>Imports</h4>
-                    <p className="value">{productValue}</p>
+                </li>
+
+                <li className="header-stat">
+                  <h4>Top Importer</h4>
+                  <div className="top-country">
+                    <Link to={`/country/${topImporter}`}>
+                      <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
+                      <h3>{importName}</h3>
+                    </Link>
                   </div>
-                </div>
-                <div className="section-wrapper top-data">
-                  <div className="data">
-                    <h4>Top Exporter</h4>
-                    <div className="top-country">
-                      <Link to={`/country/${topExporter}`}>
-                        <img className="flag-icon" src={`/images/flags/country_${topExporter}.png`}></img>
-                        <h3>{exportName}</h3>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="data">
-                    <h4>Top Importer</h4>
-                    <div className="top-country">
-                      <Link to={`/country/${topImporter}`}>
-                        <img className="flag-icon" src={`/images/flags/country_${topImporter}.png`}></img>
-                        <h3>{importName}</h3>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
             : null}
 
         </div>
+
       </div>
-
-
-    );
+    </div>;
   }
 }
 

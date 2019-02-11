@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import "./Header.css";
+import "components/Header.css";
+import {AnchorButton} from "@blueprintjs/core";
 
 class CountryHeader extends React.Component {
   constructor(props) {
@@ -59,80 +60,81 @@ class CountryHeader extends React.Component {
     const placeImg = country.flickr_link
       ? `/images/country/${country.id}.jpg`
       : `/images/country/${continentId}.jpg`;
-    return (
+    return <div className="header">
+
       <div className="header-image-wrapper">
-        <div className="fade-in background-image" style={{
-          backgroundImage: `url(${placeImg})`
-        }}><div className="image-overlay"></div>
-        </div>
-        <div className="header-info">
+        <div className="fade-in background-image" style={{backgroundImage: `url(${placeImg})`}}>
 
-          <div className="name page-title section-wrapper">
-            <div className="name-image">
-              <img className="flag" src={`/images/flags/country_${country.id}.png`}></img>
-            </div>
-            <div className="name-text">
-              <h2>{country.name}</h2>
-              <h4>{country.continent}</h4>
-            </div>
-          </div>
-          <div className="page-links">
-            <Link to={"/settings"}>
-              <button className="list-company">List Your Company</button>
-            </Link>
-            <a className="oec-link" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
-              View on the OEC <span className="chevron right"></span></a>
-          </div>
-        </div>
-        <div className="image-overlay-wrapper">
+          {/* bg image */}
+          {/* <div className="image-overlay"></div> */}
 
-          <div className="text-wrapper">
-            <div className="section-wrapper continent-wrapper">
-              <img src={`/images/flags/country_${continentId}.png`}></img>
-            </div>
-            {exportValue && importValue
-              ? <div className="section-wrapper total-data">
+          {/* top info */}
+          <div className="header-info">
 
-                <div className="data exports">
+            <div className="page-title">
+              <span className="name-text">
+                <h2 style={{background: `url('/images/flags/country_${country.id}.png') 0 50% no-repeat`, backgroundSize: "40px"}}>
+                  {country.name}
+                </h2>
+                <h4>{country.continent}</h4>
+              </span>
+            </div>
+
+            <div className="page-links">
+              <AnchorButton className="header-list-company" minimal={false} intent={"danger"} large={true} rightIcon="add" href="/settings">
+                List Your Company
+              </AnchorButton>
+              <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
+                View on the OEC
+              </AnchorButton>
+            </div>
+          </div>{/* end top info */}
+
+          {/* bottom header stats */}
+          <div className="header-stats">
+            <ul>
+
+              {/* country flag */}
+              <li className="header-stat">
+                <img src={`/images/flags/country_${continentId}.png`}></img>
+              </li>
+
+              {exportValue
+                ? <li className="header-stat">
                   <h4>Exports</h4>
-                  <h3 className="value">{exportValue}</h3>
-                </div>
-                <div className="data imports">
-                  <h4 >Imports</h4>
-                  <h3 className="value">{importValue}</h3>
-                </div>
+                  <p className="value">{exportValue}</p>
+                </li> : null}
 
-              </div>
+              {importValue
+                ? <li className="header-stat">
+                  <h4>Imports</h4>
+                  <p className="value">{importValue}</p>
+                </li> : null}
 
-
-              : null}
-            {exportName && importName
-              ? <div className="section-wrapper top-data">
-                <div className="data top-export">
+              {exportName
+                ? <li className="header-stat">
                   <h4>Top Export</h4>
-                  <div className="name-wrapper">
-                    <img className="icon" src={`/images/product_icon/hs_${exportData.hs92_id.slice(0, 2)}.png`}></img>
-                    <Link to={`/product/${exportData.hs92_id}`}>
-                      <h3>{exportName}</h3>
-                    </Link>
-                  </div>
-                </div>
+                  <Link to={`/product/${exportData.hs92_id}`}>
+                    <p className="value">{exportName}</p>
+                  </Link>
+                </li> : null}
 
-                <div className="data top-import">
+              {importName
+                ? <li className="header-stat">
                   <h4>Top Import</h4>
-                  <div className="name-wrapper">
-                    <img className="icon" src={`/images/product_icon/hs_${importData.hs92_id.slice(0, 2)}.png`}></img>
-                    <Link to={`/product/${importData.hs92_id}`}>
-                      <h3>{importName}</h3>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              : null}
-          </div>
-        </div>
-      </div>
-    );
+                  <Link to={`/product/${importData.hs92_id}`}>
+                    <p className="value">{importName}</p>
+                  </Link>
+                </li> : null}
+
+            </ul>
+          </div> {/* end header-stats */}
+
+        </div> {/* end fade-in background-image */}
+
+      </div> {/* end header-image-wrapper */}
+      {/* end header */}
+    </div>;
   }
 }
 

@@ -9,21 +9,25 @@
   }
 }
 
+.nav-bar-container {
+  lost-utility: clearfix;
+  background: var(--accent-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  /* padding: 32px 80px 32px 40px; */
+}
+
 .nav-bar {
   display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   list-style-type: none;
-  text-align: right;
-  position: fixed;
   z-index: 20;
-  top: 0;
-  width: 100%;
-  background: var(--accent-color);
-  margin: 0;
-  padding: 32px 80px 32px 40px;
+  &.left {
+    lost-column: 1/4 0 0px;
+  }
+  &.right {
+    lost-column: 3/4 0 0px;
+    margin: 20px 0 0 0;
+    text-align: right;
+  }
   & .profile-image-wrapper {
     margin-left: 10px;
     display: inline-block;
@@ -43,7 +47,7 @@
       width: 25px;
     }
     & a, & a:visited, & button {
-      padding: 8px 30px;
+      padding: 0 30px;
       color: black;
       letter-spacing: 2px;
       font-size: 14px;
@@ -54,43 +58,22 @@
     & button {
       background: transparent;
       border: none;
-      margin-right: 20px;
     }
   }
   & .nav-bar-element.company-name a {
-    padding-left: 15px;
-    padding-right: 15px;
+    /* padding-left: 15px;
+    padding-right: 15px; */
   }
   & .nav-bar-element.nav-settings a {
-    padding-right: 5px;
+    /* padding-right: 5px; */
   }
-  & .logo-wrapper {
-    width: 70px;
-    & img {
-      padding: 2px;
-      width: 90%;
-      top: 10px;
-      left: 0px;
-      position: absolute;
-    }
-    & .market-logo {
-      top: 40px;
-    }
-  }
-  & .logo {
-    position: absolute;
-    left: 30px;
-    top: 8px;
-    & a {
-      display: block;
-      height: 60px;
-    }
+  & img.mm-logo {
+    padding: 2px;
+    max-width: 125px;
+    width: 100%;
   }
   & .search-icon-wrapper {
     & button {
-      top: 26px;
-      right: 8px;
-      position: absolute;
       &:before {
         color: black;
       }
@@ -121,7 +104,7 @@
   }
 }
 
-& .nav-bar-dropdown:after {
+/* & .nav-bar-dropdown:after {
   bottom: 100%;
   left: 90%;
   border: solid transparent;
@@ -197,7 +180,7 @@
     left: 30px;
     top: 8px;
   }
-}
+} */
 
 .home {
   & .nav-bar {
@@ -206,6 +189,18 @@
     & .nav-bar-element {
       & a, & a:visited {
         color: var(--accent-color);
+      }
+    }
+  }
+}
+
+@media all and (max-width: 480px) {
+  .nav-bar {
+    margin: 5px 0 0 0 !important;
+    & .nav-bar-element {
+      & a, & a:visited, & button {
+        font-size: 11px;
+        padding: 0 5px;
       }
     }
   }
