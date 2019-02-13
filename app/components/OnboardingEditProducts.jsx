@@ -79,7 +79,7 @@ class EditProducts extends React.Component {
   };
 
   saveTrades = () => {
-    const {router} = this.props;
+    const {router, saveTrades} = this.props;
     this.setState({isSaving: true});
     const {newProduct, trades, unsavedTrades} = this.state;
     const company = this.getCompany();
@@ -120,7 +120,7 @@ class EditProducts extends React.Component {
         toast.show({message: "Product trades updated.", intent: Intent.SUCCESS});
         this.setState({unsavedTrades: false});
         if (this.props.isOverlay) {
-          this.props.updateSlideOverlay(3);
+          saveTrades();
         }
         else {
           router.push("/settings/");

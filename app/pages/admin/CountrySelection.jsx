@@ -80,7 +80,8 @@ class CountrySelection extends React.Component {
         items={allCountries.sort((a, b) => a.name && a.name.localeCompare(b.name))}
         noResults={<MenuItem disabled text="No results." />}
         onItemSelect={this.handleCountrySelect}
-        popoverProps={onboardingPopup ? {boundary: ".slider-wrapper"} : {}}
+        // popoverProps={onboardingPopup ? {boundary: ".slider-wrapper"} : {}}
+        popoverProps={onboardingPopup ? {boundary: "viewport", portalClassName: "onboarding-country-popover", portalContainer: document.querySelector(".slider-wrapper")} : {}}
         resetOnClose={true}
         resetOnSelect={true}
         selectedItems={countries}

@@ -69,7 +69,7 @@ class OnboardingCompany extends React.Component {
   selectCompany = () => {
     this.setState({isSaving: true});
     this.props.setOnboardingCompany(this.state.company.slug);
-    this.props.updateSlideOverlay(2);
+    this.props.selectCompany();
   };
 
   toggleNewCompany = () => {
@@ -117,7 +117,7 @@ class OnboardingCompany extends React.Component {
         const companySlug = companyResponse.data.slug;
         this.props.setOnboardingCompany(companySlug);
         this.toggleNewCompany();
-        this.props.updateSlideOverlay(2);
+        this.props.selectCompany();
       })
         .catch(error => {
           console.log(error);
@@ -149,7 +149,15 @@ class OnboardingCompany extends React.Component {
         <p className="description-text">
             Select one of your companies to be listed under product.
         </p>
-        <Select filterable={false} value={this.state.company} className="existing-company-select" onItemSelect={this.handleCompanySelect} itemRenderer={this.renderCompanies} items={companies}>
+        <Select
+          filterable={false}
+          value={this.state.company}
+          className="existing-company-select"
+          onItemSelect={this.handleCompanySelect}
+          itemRenderer={this.renderCompanies}
+          items={companies}
+          popoverProps={{popoverClassName: "company-popover"}}
+        >
           <div className="labelUp input-wrapper">
             <label>Company</label>
             <input value={this.state.company ? this.state.company.name : ""} onChange={() => console.log("company slide input")} />
@@ -158,7 +166,7 @@ class OnboardingCompany extends React.Component {
         </Select>
         <div className="description-text link-text" onClick={this.toggleNewCompany}>Create a New Company</div>
         <button type="button" className="onboarding-button button-right" onClick={this.selectCompany}>
-              Select Company
+          Select Company
         </button>
       </div>
       <div className={!companies.length || this.state.addNewCompany ? "fade-in-up  create-company-container" : "fade-out hide"}>
@@ -194,7 +202,7 @@ class OnboardingCompany extends React.Component {
         </div>
         {companies.length > 0 ? <div className=" link-text description-text" onClick={this.toggleNewCompany}> Select an existing Company</div> : null }
         <button className="onboarding-button button-right" type="button" onClick={!isSaving ? this.saveCompany : null}>
-                Create Company
+          Create Company
         </button>
       </div>
     </div>;
@@ -216,9 +224,6 @@ const mapDispatchToProps = dispatch => ({
   },
   setOnboardingCompany: companyId => {
     dispatch(setOnboardingCompany(companyId));
-  },
-  updateSlideOverlay: slideNumber => {
-    dispatch(updateSlideOverlay(slideNumber));
   }
 });
 

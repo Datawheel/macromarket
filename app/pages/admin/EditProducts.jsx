@@ -181,14 +181,7 @@ class EditProducts extends React.Component {
     const {auth, products, countries} = this.props;
     const {newProduct, trades, unsavedTrades} = this.state;
     return (
-      <div>
-
-        {/*
-        <div className="bp3-form-group">
-          <p>...or browse and select from the list</p>
-          <ProductBrowse products={products} selectProduct={this.addProduct} />
-        </div>
-        */}
+      <div className="trades-container">
 
         { trades.length
           ? <table className="bp3-html-table bp3-html-table-bordered trades">

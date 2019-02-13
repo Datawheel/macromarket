@@ -36,7 +36,7 @@ class OnboardingProducts extends React.Component {
 
     return (
       <div>
-        <EditProducts onboardingCompany={company} onboardingProduct={product} companySlug={this.props.companySlug}/>
+        <EditProducts onboardingCompany={company} onboardingProduct={product} companySlug={this.props.companySlug} saveTrades={this.props.saveTrades} />
       </div>
     );
   }

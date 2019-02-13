@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 import {onboardingLogin as login} from "actions/onboardingActions";
 import {translate} from "react-i18next";
 import {Intent} from "@blueprintjs/core";
@@ -12,8 +13,8 @@ class OnboardingLogin extends Component {
       password: "",
       email: "",
       labelUp: [],
-      submitted: false,
-      toast: typeof window !== "undefined" ? this.context.toast.current : null
+      submitted: false
+      // toast: typeof window !== "undefined" ? this.context.toast.current : null
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -36,17 +37,18 @@ class OnboardingLogin extends Component {
     const {email, password} = this.state;
     this.props.login({email, password});
     this.setState({submitted: true});
+    this.props.loginSubmitted();
   }
 
   componentWillReceiveProps(nextProps) {
-
+    const {toast} = this.context;
     const {auth, mailgun, t} = nextProps;
-    const {email, submitted, toast} = this.state;
+    const {email, submitted} = this.state;
 
     if (submitted && !auth.loading) {
 
       if (auth.error === "WRONG_PW") {
-        toast.show({
+        toast.current.show({
           action: mailgun ? {
             onClick: () => {
               this.setState({submitted: true});
@@ -60,15 +62,15 @@ class OnboardingLogin extends Component {
         this.setState({submitted: false});
       }
       else if (auth.msg === "RESET_SEND_SUCCESS") {
-        toast.show({iconName: "inbox", intent: Intent.SUCCESS, message: t("Reset.actions.RESET_SEND_SUCCESS", {email})});
+        toast.current.show({iconName: "inbox", intent: Intent.SUCCESS, message: t("Reset.actions.RESET_SEND_SUCCESS", {email})});
         this.setState({submitted: false});
       }
       else if (auth.error === "RESET_SEND_FAILURE") {
-        toast.show({iconName: "error", intent: Intent.DANGER, message: t("Reset.actions.RESET_SEND_FAILURE")});
+        toast.current.show({iconName: "error", intent: Intent.DANGER, message: t("Reset.actions.RESET_SEND_FAILURE")});
         this.setState({submitted: false});
       }
       else if (!auth.error && auth.msg === "LOGIN_SUCCESS") {
-        toast.show({iconName: "endorsed", intent: Intent.SUCCESS, message: t("Login.success")});
+        toast.current.show({iconName: "endorsed", intent: Intent.SUCCESS, message: t("Login.success")});
       }
     }
 
@@ -97,6 +99,10 @@ class OnboardingLogin extends Component {
 
   }
 }
+
+OnboardingLogin.contextTypes = {
+  toast: PropTypes.object
+};
 
 OnboardingLogin.defaultProps = {
   redirect: "/"

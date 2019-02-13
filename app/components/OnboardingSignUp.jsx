@@ -51,6 +51,7 @@ class OnboardingSignUp extends Component {
     }
     else {
       this.props.signup({username, email, password});
+      this.props.loginSubmitted();
       this.setState({submitted: true});
     }
 

@@ -15,49 +15,49 @@ class OnboardingGetStarted extends React.Component {
 
   render() {
     const {isSignupFormVisible, isLoginFormVisible} = this.state;
-    const {user, updateSlideOverlay, product} = this.props;
+    const {product, user, updateSlideOverlay} = this.props;
 
     return <div className="slide-inner">
       <div className="slide-content">
         {!user && !isSignupFormVisible && !isLoginFormVisible &&
-              <div>
-                <div className="text-wrapper">
-                  <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
-                  {product &&
-                  <div className="product-wrapper">
-                    <p>Create an account to be listed under <span>{product.name}</span>.</p>
-                  </div>}
-                </div>
-                <div>
-                  <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
-                  <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
-                </div>
-                <p className="hr-line">or</p>
-                <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
-              </div>
+          <div>
+            <div className="text-wrapper">
+              <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
+              {product &&
+              <div className="product-wrapper">
+                <p>Create an account to be listed under <span>{product.name}</span>.</p>
+              </div>}
+            </div>
+            <div>
+              <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: true})}>Sign Up</button>
+              <button className="onboarding-button" onClick={() => this.setState({isLoginFormVisible: true})}>Log In</button>
+            </div>
+            <p className="hr-line">or</p>
+            <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
+          </div>
         }
         {isSignupFormVisible &&
-              <OnboardingSignUp/>
+          <OnboardingSignUp loginSubmitted={this.props.loginSubmitted} />
         }
         {isLoginFormVisible &&
-              <OnboardingLogin/>
+          <OnboardingLogin loginSubmitted={this.props.loginSubmitted} />
         }
         {(isSignupFormVisible || isLoginFormVisible) &&
-              <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
+          <button className="onboarding-button" onClick={() => this.setState({isSignupFormVisible: false, isLoginFormVisible: false})}>Back</button>
         }
         {user &&
-            <div>
-              <div className="text-wrapper">
-                {product &&
-                <div className="product-wrapper">
-                  <p>Interested in being listed under <span>{product.name}</span>?</p>
-                </div>}
-                <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
-              </div>
-              <button className="onboarding-button" onClick={() => updateSlideOverlay(1)}>Get Started</button>
-              <p className="hr-line">or</p>
-              <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
+          <div>
+            <div className="text-wrapper">
+              {product &&
+              <div className="product-wrapper">
+                <p>Interested in being listed under <span>{product.name}</span>?</p>
+              </div>}
+              <p className="description-text">Thank you for visiting Macro Market. Macro Market is a global directory of exporters and importers. Create an account to list your company, or search for other companies. It's free.</p>
             </div>
+            <button className="onboarding-button" onClick={() => this.props.loginSuccess()}>Get Started</button>
+            <p className="hr-line">or</p>
+            <button className="onboarding-button" onClick={this.props.toggleOverlay}>Continue to the site</button>
+          </div>
         }
       </div>
 

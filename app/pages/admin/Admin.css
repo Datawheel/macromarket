@@ -395,3 +395,7 @@
 .bp3-navbar {
   padding: 0;
 }
+
+.trades-container {
+  overflow-x: scroll;
+}

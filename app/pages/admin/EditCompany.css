@@ -31,4 +31,8 @@
       margin: 0 0 0 15px;
     }
   }
+
+  & .img-container {
+    overflow: hidden;
+  }
 }

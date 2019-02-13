@@ -237,3 +237,23 @@ ul.bp3-menu {
     }
   }
 }
+
+@media all and (max-width: 480px) {
+  .settings {
+    padding: 10px 0;
+  }
+  .settings, .login, .signup {
+    & .center-content {
+      width: 100%;
+    }
+
+    & .sidebar-wrapper {
+      display: block;
+      width: 100%;
+    }
+  }
+  .bp3-navbar {
+    height: auto !important;
+    overflow: auto;
+  }
+}
