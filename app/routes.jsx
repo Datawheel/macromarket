@@ -21,6 +21,8 @@ import EditProducts from "pages/admin/EditProducts";
 import ChangePw from "pages/admin/ChangePw";
 import Inbox from "pages/Inbox";
 
+import Terms from "pages/Terms";
+import Privacy from "pages/Privacy";
 
 const genRandId = path => {
   let candidates;
@@ -33,7 +35,7 @@ const genRandId = path => {
   }
   else if (path.includes("company")) {
     const caCandidates = ["ca_21078", "ca_58962", "ca_4616", "ca_27687", "ca_56948", "ca_3855", "ca_9228", "ca_42430", "ca_62858", "ca_76847", "ca_76268", "ca_76847", "ca_76801", "ca_76460", "ca_77156", "ca_76579", "ca_5051", "ca_70762"];
-    const mmCandidates = ["pelican-international-trading-solutions", "carvalho-vernet-advogados", "standard-freight-incorporation", "akram-trading", "ems-shipping-and-logistics-agency", "shriji-luggageware-pvt-ltd", "al-ansari-teqmark-llc", "aureus-lubrico-trading-inc", "trinity-shipping-colombo-pvt-ltd", "w3-holding-trading-corp", "thundercom-technologies", "azexporter", "kariem-haddadin-farms", "mali-true-food", "kemal-ozgoren-textile-export-company", "sunbiz-services-and-solutions", "fruktville-delight-pvt-ltd", "sidick-general-trading-m-sdn-bhd", "ossa-productos-organicos", "globe-engineering", "crest-international", "ci-panandina-bh-sas", "premium-comex-ltda", "crest-international", "pento-business-associates-ltd", "interchemie-werken-de-adelaar", "kcc-exports", "inversiones-martinez-perez", "travelpd", "mutara-africa-link-technologies"];
+    const mmCandidates = ["ukrainiancattleleather", "piar-yapi-construction-and-architecture-company-limited", "brazilian-fish", "molstruction-inc", "kule-mobilya", "elite-infoworld", "private-stock-affiliated-co-ltd-psa-malawi", "cabo-virgenes-espana-6870", "chaochomvarnish-coltd", "sheabutter-guys-uk-limited", "dobropole", "shaylan-group", "pelican-international-trading-solutions", "carvalho-vernet-advogados", "standard-freight-incorporation", "akram-trading", "ems-shipping-and-logistics-agency", "shriji-luggageware-pvt-ltd", "al-ansari-teqmark-llc", "aureus-lubrico-trading-inc", "trinity-shipping-colombo-pvt-ltd", "w3-holding-trading-corp", "thundercom-technologies", "azexporter", "kariem-haddadin-farms", "mali-true-food", "kemal-ozgoren-textile-export-company", "sunbiz-services-and-solutions", "fruktville-delight-pvt-ltd", "sidick-general-trading-m-sdn-bhd", "ossa-productos-organicos", "globe-engineering", "crest-international", "ci-panandina-bh-sas", "premium-comex-ltda", "crest-international", "pento-business-associates-ltd", "interchemie-werken-de-adelaar", "kcc-exports", "inversiones-martinez-perez", "travelpd", "mutara-africa-link-technologies"];
     candidates = caCandidates.concat(mmCandidates);
   }
   return candidates[Math.floor(Math.random() * candidates.length)];
@@ -65,6 +67,8 @@ const RouteCreate = () =>
     <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
+    <Route path="terms" component={Terms} />
+    <Route path="privacy" component={Privacy} />
     <Route path="reset" component={Reset} />
     <Route path="activate" component={Activate} />
     <Route path="settings" component={Settings}>
@@ -77,6 +81,7 @@ const RouteCreate = () =>
       </Route>
     </Route>
     <Route path="/inbox" component={Inbox} />
+    <Route path="*" exact={true} component={NotFound} />
   </Route>;
 
 export default RouteCreate;
