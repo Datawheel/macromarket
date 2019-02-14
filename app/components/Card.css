@@ -106,3 +106,23 @@
         }
     }
 }
+
+@media all and (max-width: 480px) {
+    .result-wrapper {
+        & .card {
+            width: 150px;
+            & .text-wrapper {
+                padding: 10px;
+                & .profile_type_icon {
+                    display: none;
+                }
+            }
+            & .image-wrapper {
+                height: 100px;
+                & .image {
+                    height: 100px;
+                }
+            }
+        }
+    }
+}

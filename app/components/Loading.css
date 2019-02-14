@@ -1,4 +1,12 @@
 .loading {
+  & .bp3-heading {
+    color: white;
+  }
+}
+
+.bp3-non-ideal-state {
+  max-width: 200px;
+  width: 100%;
   background-color: var(--dark);
   color: var(--white);
   height: 100vh;
@@ -8,17 +16,10 @@
   top: 0;
   width: 100%;
   z-index: 100;
-  & .bp3-heading {
-    color: white;
+  & .bp3-progress-meter {
+    background-color: var(--light) !important;
   }
-  & .bp3-non-ideal-state-visual {
-    max-width: 200px;
-    width: 100%;
-    & .bp3-progress-meter {
-      background-color: var(--light);
-    }
-  }
-  & .bp3-non-ideal-state-title {
-    color: var(--white);
-  }
+}
+.bp3-non-ideal-state-title {
+  color: var(--white);
 }

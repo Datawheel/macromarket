@@ -65,9 +65,6 @@ class CountryHeader extends React.Component {
       <div className="header-image-wrapper">
         <div className="fade-in background-image" style={{backgroundImage: `url(${placeImg})`}}>
 
-          {/* bg image */}
-          {/* <div className="image-overlay"></div> */}
-
           {/* top info */}
           <div className="header-info">
 
@@ -95,7 +92,7 @@ class CountryHeader extends React.Component {
             <ul>
 
               {/* country flag */}
-              <li className="header-stat">
+              <li className="header-stat continent-img">
                 <img src={`/images/flags/country_${continentId}.png`}></img>
               </li>
 

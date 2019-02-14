@@ -177,7 +177,6 @@ class ProductWithId extends React.Component {
               <div className="label trade-flow-label">
                 <p>Trade Flow</p>
               </div>
-              <br />
               <ButtonGroup className="bp3-dark">
                 <Button onClick={() => this.changeTradeFlow(null)} active={tradeFlow ? false : true} icon="arrows-horizontal">All</Button>
                 <Button onClick={() => this.changeTradeFlow("exports")} active={tradeFlow === "exports" ? true : false} icon="arrow-right">Export</Button>

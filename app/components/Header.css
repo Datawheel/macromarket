@@ -3,8 +3,14 @@
   position: relative;
   overflow: hidden;
 
+  & .background-image {
+    padding: 20px;
+  }
+
   & .header-info {
     lost-utility: clearfix;
+    position: relative;
+    z-index: 1;
 
     & > div {
       lost-column: 1/2;
@@ -18,7 +24,7 @@
         }
         & .name-text {
           display: inline-block;
-          margin-left: 16px;
+          /* margin-left: 16px; */
           vertical-align: top;
           & h2 {
             color: white;
@@ -28,7 +34,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             line-height: 3rem;
-            margin: 8px 0px 0px;
+            margin: 0;
             padding: 0 0 0 55px;
             background: url('/images/icons/icon-product-white.svg') 0 50% no-repeat;
             background-size: 35px;
@@ -36,13 +42,14 @@
           & h4 {
             color: white;
             display: block;
-            position: relative;
             font-weight: normal;
+            margin: 0;
+            position: relative;
           }
         }
       }
       &.page-links {
-        padding: 20px 20px 0 0;
+        /* padding: 20px 20px 0 0; */
         text-align: right;
         & .oec-link {
           margin: 0 0 0 30px;
@@ -53,6 +60,9 @@
   }
 
   & .header-stats {
+    position: relative;
+    z-index: 1;
+
     & li {
       display: inline-block;
       margin-right: 48px;
@@ -122,6 +132,16 @@
     filter: blur(10px);
   }
   & .background-image {
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 0;
+      background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5) 0%,rgba(0, 0, 0, 0.3) 10%,rgba(0, 0, 0, 0.5) 50%, #000000 100%);
+    }
     width: 100%;
     position: relative;
     height: 100%;
@@ -220,13 +240,21 @@
 
 @media all and (max-width: 480px) {
   .header-image-wrapper {
-    & .header-info {
-      & .page-title {
-        & .name-text {
-          & h2 {
-            background-image: none !important;
-            padding: 0 !important;
+    & .background-image {
+      padding: 10px;
+      & .header-info {
+        & .page-title {
+          & .name-text {
+            & h2 {
+              background-image: none !important;
+              padding: 0 !important;
+            }
           }
+        }
+      }
+      & .header-stats {
+        & .header-stat.continent-img {
+          display: none;
         }
       }
     }
