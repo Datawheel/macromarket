@@ -109,6 +109,7 @@
 
 @media all and (max-width: 480px) {
     .result-wrapper {
+        padding: 20px;
         & .card {
             width: 150px;
             & .text-wrapper {

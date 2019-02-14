@@ -101,6 +101,67 @@
     }
   }
 
+  & .header-contact-info {
+    bottom: 0;
+    position: absolute;
+    z-index: 1;
+
+    & ul {
+      align-items: start;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    & li {
+      display: inline-block;
+      border-right: 1px solid gainsboro;
+      flex: 1;
+      margin: 0 40px 20px 0;
+      vertical-align: top;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      & .bp3-tag {
+        background-color: transparent;
+        & .bp3-icon {
+          margin-right: 7px !important;
+        }
+      }
+
+      & h3 {
+        color: white;
+        display: inline-block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 2px;
+        vertical-align: top;
+      }
+      & h4 {
+        color: white;
+        display: inline-block;
+        vertical-align: top;
+        letter-spacing: 1px;
+        margin: 5px 0;
+        font-size: 12px;
+        font-weight: 200;
+        text-transform: uppercase;
+      }
+      & .value {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 2px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+      & img {
+        margin-right: 12px;
+      }
+    }
+  }
+
   & .image-overlay-wrapper {
     /* position: absolute; */
     width: 100%;
@@ -227,6 +288,14 @@
   }
 }
 
+.company .header-image-wrapper {
+  min-height: 400px;
+  & .background-image {
+    min-height: 400px;
+  }
+}
+
+
 @media (max-width:1000px) {
   .header-image-wrapper {
     & .text-wrapper {
@@ -257,6 +326,20 @@
           display: none;
         }
       }
+    }
+    & .header-contact-info {
+      & li {
+        display: inline-block;
+        border-right: none;
+      }
+    }
+  }
+
+  /* company page specific */
+  .company .header-image-wrapper {
+    & .background-image {
+      padding: 0;
+      min-height: inherit;
     }
   }
 }

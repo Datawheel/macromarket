@@ -268,9 +268,17 @@
         }
         & .intro-text {
             padding: 20px;
+            & p a {
+                word-break: break-word;
+            }
         }
         & .result-wrapper {
             padding: 10px;
+        }
+        /* for company pages */
+        & .center-content {
+            display: block;
+            width: 100%;
         }
     }
 }

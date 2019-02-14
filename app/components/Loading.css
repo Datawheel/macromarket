@@ -1,10 +1,4 @@
-.loading {
-  & .bp3-heading {
-    color: white;
-  }
-}
-
-.bp3-non-ideal-state {
+.loading.bp3-non-ideal-state {
   max-width: 200px;
   width: 100%;
   background-color: var(--dark);

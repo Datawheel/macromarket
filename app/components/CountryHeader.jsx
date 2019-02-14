@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import "components/Header.css";
 import {AnchorButton} from "@blueprintjs/core";
+import "components/Header.css";
 
 class CountryHeader extends React.Component {
   constructor(props) {
