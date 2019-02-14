@@ -25,7 +25,7 @@ class NavBar extends Component {
     const {auth, activateSearch, searchActive} = this.props;
     const {loading, user} = auth;
 
-    return <div className={this.props.location.pathname === "/" ? "home nav-bar-container" : "nav-bar-container"}>
+    return <div className={this.props.location.pathname === "/" ? "home-nav-bar-container nav-bar-container" : "nav-bar-container"}>
       {this.props.location.pathname !== "/" ? <Search toggleSearch={activateSearch} searchActive={searchActive} /> : null}
       <ul className="nav-bar left">
         <li className="logo nav-bar-element">

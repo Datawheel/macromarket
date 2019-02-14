@@ -13,6 +13,9 @@
   & .bp3-progress-meter {
     background-color: var(--light) !important;
   }
+  & h4.bp3-heading {
+    color: var(--white) !important;
+  }
 }
 .bp3-non-ideal-state-title {
   color: var(--white);

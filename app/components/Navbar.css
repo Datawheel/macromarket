@@ -182,6 +182,28 @@
   }
 } */
 
+.home-nav-bar-container {
+  background: black;
+  color: var(--light);
+  position: relative;
+  z-index: 99;
+  & .nav-bar .nav-bar-element a {
+    color: var(--light);
+  }
+  & .nav-bar {
+    display: inline-block;
+    list-style-type: none;
+    z-index: 20;
+    text-align: center;
+    &.left {
+      display: none;
+    }
+    &.right {
+      lost-column: 1/1;
+    }
+  }
+}
+
 .home {
   & .nav-bar {
     background: none;

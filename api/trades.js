@@ -136,8 +136,6 @@ module.exports = function(app) {
   app.get("/api/trades/product/:productId", async(req, res) => {
     try {
       const {productId: product_id} = req.params;
-      console.log("product_id!!!", product_id, "db.Trade", db.Trade);
-      console.log("db.Country", db.Country);
       const trades = await db.Trade.findAll({
         where: {
           product_id: {[Op.iLike]: `${product_id}%`}
