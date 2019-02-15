@@ -107,7 +107,7 @@
     z-index: 1;
 
     & ul {
-      align-items: start;
+      align-items: stretch;
       display: flex;
       flex-wrap: wrap;
     }
@@ -127,6 +127,12 @@
         background-color: transparent;
         & .bp3-icon {
           margin-right: 7px !important;
+        }
+      }
+      & a.bp3-tag {
+        &:hover {
+          text-decoration: none;
+          background-color: rgba(255, 255, 255, 0.2);
         }
       }
 

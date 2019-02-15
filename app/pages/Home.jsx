@@ -32,12 +32,14 @@ class Home extends React.Component {
     ];
     this.companies = [
       {id: "cabo-virgenes-espana-6870", type: "company", name: "Cabo Vírgenes", logo: "https://storage.googleapis.com/mm-company/company/company6870-fondo_01.jpg"},
-      {id: "chaochomvarnish-coltd", type: "company", name: "Chaochomvarnish Co.", logo: "https://storage.googleapis.com/mm-company/company/company277--.jpg"},
+      {id: "olivus-floris", type: "company", name: "Olivus Floris", logo: "https://storage.googleapis.com/mm-company/company/company8244-olivusfloris_green.png"},
       {id: "sheabutter-guys-uk-limited", type: "company", name: "sheabutter guys UK Limited", logo: "https://storage.googleapis.com/mm-company/company/company254-official-logo.png"},
       {id: "dobropole", type: "company", name: "DOBROPOLE", logo: "https://storage.googleapis.com/mm-company/company/company284-ukrainian_flag-wallpaper-1024x1024.jpg"},
       {id: "inversiones-martinez-perez", type: "company", name: "Inversiones Martinez Perez", logo: "https://storage.googleapis.com/mm-company/company/company6056-logo-cuadrado.jpeg"},
       {id: "shaylan-group", type: "company", name: "Shaylan Group", logo: "https://storage.googleapis.com/mm-company/company/company271-shaylan.png"},
       {id: "mutara-africa-link-technologies", type: "company", name: "Mutara Africa Link Technologies", logo: "https://storage.googleapis.com/mm-company/company/company6023-mutara-logo-design.png"}
+
+      // {id: "chaochomvarnish-coltd", type: "company", name: "Chaochomvarnish Co.", logo: "https://storage.googleapis.com/mm-company/company/company277--.jpg"},
 
       // {id: "planet-port-export-and-imports", type: "company", name: "Planet Port Export and Imports", logo: "https://storage.googleapis.com/mm-company/company/company291-planet-port-logo_final-1-paint.jpg"}
 

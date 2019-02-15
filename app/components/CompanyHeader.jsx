@@ -52,7 +52,7 @@ const CompanyHeader = ({company, countries, connectamericas, profileImage}) => {
                 ? <li className="info-item">{company.Country
                   ? <a href={countryUrl} className="bp3-tag bp3-large">
                     <span className="bp3-icon bp3-icon-large bp3-icon-map-marker"></span>
-                    {company.city && company.region ? `${company.city}, ${company.region}, ${company.Country.name}` : null}
+                    {company.city && company.region ? `${company.city}, ${company.region}, ${company.Country.name}` : `${company.Country.name}`}
                   </a>
                   : <span className="bp3-tag bp3-large">
                     <span className="bp3-icon bp3-icon-large bp3-icon-map-marker"></span>
