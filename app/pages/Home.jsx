@@ -32,7 +32,7 @@ class Home extends React.Component {
     ];
     this.companies = [
       {id: "cabo-virgenes-espana-6870", type: "company", name: "Cabo Vírgenes", logo: "https://storage.googleapis.com/mm-company/company/company6870-fondo_01.jpg"},
-      {id: "olivus-floris", type: "company", name: "Olivus Floris", logo: "https://storage.googleapis.com/mm-company/company/company8244-olivusfloris_green.png"},
+      {id: "olivus-floris", type: "company", name: "Olivus Floris", logo: "https://olivusfloris.com/wp-content/uploads/elementor/thumbs/logo-o4tj55vdhvjkb4zkx2ex6dfl9a90n525j4y86z5tsu.png"},
       {id: "sheabutter-guys-uk-limited", type: "company", name: "sheabutter guys UK Limited", logo: "https://storage.googleapis.com/mm-company/company/company254-official-logo.png"},
       {id: "dobropole", type: "company", name: "DOBROPOLE", logo: "https://storage.googleapis.com/mm-company/company/company284-ukrainian_flag-wallpaper-1024x1024.jpg"},
       {id: "inversiones-martinez-perez", type: "company", name: "Inversiones Martinez Perez", logo: "https://storage.googleapis.com/mm-company/company/company6056-logo-cuadrado.jpeg"},
