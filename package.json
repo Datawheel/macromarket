@@ -10,7 +10,7 @@
     "locales": "canon-locales",
     "release": "canon-release",
     "setup": "canon-setup",
-    "start": "canon-start"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

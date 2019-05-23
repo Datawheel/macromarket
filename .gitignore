@@ -20,8 +20,9 @@ packages/*/static/reports
 dockerfiles/nginx/certs/*
 dockerfiles/nginx/conf.d/default.conf
 
-# for VS Code specific configs
-.vscode
-
 # ignore private key file
 mm-keyfile.json
+
+
+# pm2 ecosystem config
+*.config.js
