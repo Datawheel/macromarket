@@ -30,7 +30,7 @@ const Footer = () =>
       <div className="link-column">
         <div className="title">Community</div>
         <a href="https://connectamericas.com/" rel="noopener noreferrer" target="_blank">ConnectAmericas</a>
-        <a href="http://atlas.media.mit.edu/" rel="noopener noreferrer" target="_blank">Observatory of Economic Complexity</a>
+        <a href="https://oec.world/" rel="noopener noreferrer" target="_blank">Observatory of Economic Complexity</a>
         <a href="https://www.media.mit.edu/groups/collective-learning/overview/" rel="noopener noreferrer" target="_blank">Collective Learning Group</a>
         <a href="https://www.media.mit.edu/" rel="noopener noreferrer" target="_blank">MIT Media Lab</a>
       </div>

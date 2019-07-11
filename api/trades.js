@@ -188,10 +188,11 @@ module.exports = function(app) {
           };
           companies.push(newCompany);
         });
-        res.json(companies);
+        return res.json(companies);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        console.log("Error: Unable to fetch companies from ConnectAmerica API.");
+        return res.json([]);
       });
   });
 

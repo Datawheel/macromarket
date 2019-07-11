@@ -247,7 +247,7 @@ ProductWithId.preneed = [
 ];
 
 ProductWithId.need = [
-  fetchData("productData", "https://atlas.media.mit.edu/hs92/import/2017/all/all/<product.id_hs92>/", res => res.data[0])
+  fetchData("productData", "https://oec.world/hs92/import/2017/all/all/<product.id_hs92>/", res => res.data[0])
 ];
 
 const mapStateToProps = state => ({

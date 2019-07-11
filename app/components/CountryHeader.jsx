@@ -81,7 +81,7 @@ class CountryHeader extends React.Component {
               <AnchorButton className="header-list-company" minimal={false} intent={"danger"} large={true} rightIcon="add" href="/settings">
                 List Your Company
               </AnchorButton>
-              <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`http://atlas.media.mit.edu/en/profile/country/${country.id_3char}`}>
+              <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`https://oec.world/en/profile/country/${country.id_3char}`}>
                 View on the OEC
               </AnchorButton>
             </div>

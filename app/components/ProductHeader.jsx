@@ -93,7 +93,7 @@ class ProductHeader extends React.Component {
                 List Your Company
               </AnchorButton>
               {product.id_hs92
-                ? <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`http://atlas.media.mit.edu/en/profile/hs92/${product.id_hs92}`}>
+                ? <AnchorButton className="oec-link" minimal={false} intent={"primary"} large={true} rightIcon="share" href={`https://oec.world/en/profile/hs92/${product.id_hs92}`}>
                     View on the OEC
                 </AnchorButton>
                 : null}

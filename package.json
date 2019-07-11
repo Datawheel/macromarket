@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/Datawheel/macromarket#readme",
   "dependencies": {
-    "@blueprintjs/select": "^3.8.0",
-    "@datawheel/canon-core": "^0.17.25",
+    "@blueprintjs/select": "^3.9.0",
+    "@datawheel/canon-core": "^0.17.35",
     "@google-cloud/storage": "^2.5.0",
     "multer": "^1.4.1",
     "nodejs-storage": "0.0.2",
