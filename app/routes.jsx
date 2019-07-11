@@ -7,6 +7,8 @@ import NotFound from "pages/NotFound";
 import CountryWithId from "pages/CountryWithId";
 import CompanyWithId from "pages/CompanyWithId";
 import ProductWithId from "pages/ProductWithId";
+import ProductBrowse from "pages/ProductBrowse";
+import ProductBrowseWithId from "pages/ProductBrowseWithId";
 
 import Login from "pages/admin/Login";
 import Signup from "pages/admin/Signup";
@@ -64,7 +66,9 @@ const RouteCreate = () =>
     <IndexRoute component={Home} />
     <Route path="/country(/:countryWithId)" onEnter={checkForId} component={CountryWithId} />
     <Route path="/company(/:companySlug)" onEnter={checkForId} component={CompanyWithId} />
-    <Route path="/product(/:productWithId)" onEnter={checkForId} component={ProductWithId} />
+    <Route path="/product" component={ProductBrowse} />
+    <Route path="/product/:productWithId" component={ProductWithId} />
+    <Route path="/product/browse/:chapterId" component={ProductBrowseWithId} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="terms" component={Terms} />
