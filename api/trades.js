@@ -116,13 +116,17 @@ module.exports = function(app) {
   // TODO: rename to "/api/trades/byCountry/:countryId"
   app.get("/api/trades/country/:countryId", async(req, res) => {
     try {
+      const {limit, offset} = req.query;
       const {countryId: country_id} = req.params;
+      const sanitizedLimit = limit && !isNaN(limit) ? parseInt(limit, 10) <= 120 && parseInt(limit, 10) > 0 ? parseInt(limit, 10) : 120 : 120;
+      const sanitizedOffset = offset && !isNaN(offset) ? parseInt(offset, 10) >= 0 ? parseInt(offset, 10) : 0 : 0;
       const trades = await db.Trade.findAll({
         where: {
           country_id
         },
         include: [db.Product, db.Company],
-        limit: 120
+        limit: sanitizedLimit,
+        offset: sanitizedOffset
       });
       const activatedTrades = await filterTradesByCompanyActivated(trades, db);
       res.json(activatedTrades);
@@ -136,11 +140,42 @@ module.exports = function(app) {
   app.get("/api/trades/product/:productId", async(req, res) => {
     try {
       const {productId: product_id} = req.params;
+      const {limit, offset} = req.query;
+      const sanitizedProductId = product_id.length % 2 ? `0${product_id}` : product_id;
+      const sanitizedLimit = limit && !isNaN(limit) ? parseInt(limit, 10) <= 120 && parseInt(limit, 10) > 0 ? parseInt(limit, 10) : 120 : 120;
+      const sanitizedOffset = offset && !isNaN(offset) ? parseInt(offset, 10) >= 0 ? parseInt(offset, 10) : 0 : 0;
       const trades = await db.Trade.findAll({
         where: {
-          product_id: {[Op.iLike]: `${product_id}%`}
+          product_id: {[Op.iLike]: `${sanitizedProductId}%`}
         },
-        include: [db.Country, db.Company]
+        include: [db.Country, db.Company],
+        limit: sanitizedLimit,
+        offset: sanitizedOffset
+      });
+      const activatedTrades = await filterTradesByCompanyActivated(trades, db);
+      res.json(activatedTrades);
+    }
+    catch (error) {
+      res.json(error);
+    }
+  });
+
+  // TODO: rename to "/api/trades/byCountryAndProduct/:countryId"
+  app.get("/api/trades/country/:countryId/product/:productId", async(req, res) => {
+    try {
+      const {limit, offset} = req.query;
+      const {countryId: country_id, productId: product_id} = req.params;
+      const sanitizedProductId = product_id.length % 2 ? `0${product_id}` : product_id;
+      const sanitizedLimit = limit && !isNaN(limit) ? parseInt(limit, 10) <= 120 && parseInt(limit, 10) > 0 ? parseInt(limit, 10) : 120 : 120;
+      const sanitizedOffset = offset && !isNaN(offset) ? parseInt(offset, 10) >= 0 ? parseInt(offset, 10) : 0 : 0;
+      const trades = await db.Trade.findAll({
+        where: {
+          country_id,
+          product_id: {[Op.iLike]: `${sanitizedProductId}%`}
+        },
+        include: [db.Product, db.Company],
+        limit: sanitizedLimit,
+        offset: sanitizedOffset
       });
       const activatedTrades = await filterTradesByCompanyActivated(trades, db);
       res.json(activatedTrades);
